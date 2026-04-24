@@ -1,0 +1,57 @@
+[
+  {
+    "slug": "praise",
+    "labelFr": "Louange",
+    "count": 8
+  },
+  {
+    "slug": "prophethood",
+    "labelFr": "Prophétie et mission",
+    "count": 38
+  },
+  {
+    "slug": "intercession",
+    "labelFr": "Rang divin et intercession",
+    "count": 44
+  },
+  {
+    "slug": "eschatology",
+    "labelFr": "Eschatologie",
+    "count": 12
+  },
+  {
+    "slug": "purity",
+    "labelFr": "Pureté et sainteté",
+    "count": 10
+  },
+  {
+    "slug": "virtues",
+    "labelFr": "Qualités morales",
+    "count": 28
+  },
+  {
+    "slug": "miraj",
+    "labelFr": "Voyage nocturne (Miʿrāj)",
+    "count": 6
+  },
+  {
+    "slug": "guidance",
+    "labelFr": "Attributs de guidance",
+    "count": 6
+  },
+  {
+    "slug": "light",
+    "labelFr": "Beauté et lumière",
+    "count": 14
+  },
+  {
+    "slug": "nobility",
+    "labelFr": "Origine noble",
+    "count": 14
+  },
+  {
+    "slug": "devotion",
+    "labelFr": "Dévotion et adoration",
+    "count": 21
+  }
+]
