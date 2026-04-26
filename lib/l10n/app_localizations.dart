@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Asmāʾ an-Nabī'**
+  /// **'Sirah Hub'**
   String get appTitle;
 
   /// No description provided for @navHome.
@@ -181,6 +181,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'As-salāmu ʿalaykum'**
   String get homeGreeting;
+
+  /// No description provided for @homeTagline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connaître, aimer et suivre le Prophète ﷺ'**
+  String get homeTagline;
 
   /// No description provided for @homeCategorySection.
   ///
@@ -413,7 +419,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsThemeFeminine.
   ///
   /// In fr, this message translates to:
-  /// **'Féminin'**
+  /// **'Constellation'**
   String get settingsThemeFeminine;
 
   /// No description provided for @settingsSectionNotif.

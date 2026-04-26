@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appTitle => 'Asmāʾ an-Nabī';
+  String get appTitle => 'Sirah Hub';
 
   @override
   String get navHome => 'Accueil';
@@ -50,6 +50,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get homeGreeting => 'As-salāmu ʿalaykum';
+
+  @override
+  String get homeTagline => 'معرفة النبيّ ﷺ ومحبّته واتّباعه';
 
   @override
   String get homeCategorySection => 'Explorer par catégorie';
@@ -182,7 +185,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsThemeDark => 'Sombre';
 
   @override
-  String get settingsThemeFeminine => 'Féminin';
+  String get settingsThemeFeminine => 'Constellation';
 
   @override
   String get settingsSectionNotif => 'Notification quotidienne';

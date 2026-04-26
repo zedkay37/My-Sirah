@@ -94,8 +94,16 @@ class _HomeHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.homeGreeting, style: typo.displayMedium),
-          SizedBox(height: space.xs),
+          Text(
+            l10n.appTitle,
+            style: typo.displayMedium.copyWith(color: colors.accent),
+          ),
+          SizedBox(height: space.xs / 2),
+          Text(
+            l10n.homeTagline,
+            style: typo.body.copyWith(color: colors.muted),
+          ),
+          SizedBox(height: space.sm),
           Text(
             _gregorian,
             style: typo.caption.copyWith(color: colors.muted),
