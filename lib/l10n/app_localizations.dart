@@ -419,7 +419,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsThemeFeminine.
   ///
   /// In fr, this message translates to:
-  /// **'Constellation'**
+  /// **'Violet'**
   String get settingsThemeFeminine;
 
   /// No description provided for @settingsSectionNotif.

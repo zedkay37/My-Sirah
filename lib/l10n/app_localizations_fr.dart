@@ -185,7 +185,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsThemeDark => 'Sombre';
 
   @override
-  String get settingsThemeFeminine => 'Constellation';
+  String get settingsThemeFeminine => 'Violet';
 
   @override
   String get settingsSectionNotif => 'Notification quotidienne';
