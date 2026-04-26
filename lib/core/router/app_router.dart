@@ -71,12 +71,14 @@ class _ShellScaffold extends StatelessWidget {
 // ── Router ────────────────────────────────────────────────────────────────────
 
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final settings = ref.watch(settingsProvider);
+  final onboardingCompletedAt = ref.watch(
+    settingsProvider.select((s) => s.onboardingCompletedAt),
+  );
 
   final router = GoRouter(
     initialLocation: '/home',
     redirect: (context, state) {
-      final onboarded = settings.onboardingCompletedAt != null;
+      final onboarded = onboardingCompletedAt != null;
       final onOnboarding = state.matchedLocation.startsWith('/onboarding');
       if (!onboarded && !onOnboarding) return '/onboarding';
       if (onboarded && onOnboarding) return '/home';
