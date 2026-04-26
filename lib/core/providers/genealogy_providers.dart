@@ -11,14 +11,4 @@ final genealogyMembersProvider = FutureProvider<List<FamilyMember>>((ref) async 
   return repo.getAll();
 });
 
-final genealogyFilterProvider = StateProvider<GenealogyFilter>(
-  (_) => GenealogyFilter.all,
-);
 
-enum GenealogyFilter {
-  all,
-  spousesAndChildren,
-  ascendants,
-  unclesAndAunts,
-  ahlAlBayt,
-}

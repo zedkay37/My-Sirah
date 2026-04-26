@@ -309,4 +309,43 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get treeListView => 'Vue liste';
+
+  @override
+  String get treeRiverPaternal => 'Lignée paternelle';
+
+  @override
+  String get treeRiverMaternal => 'Lignée maternelle';
+
+  @override
+  String get treeRiverDescendants => 'Descendants';
+
+  @override
+  String get treePersonOpenDetail => 'Voir la fiche →';
+
+  @override
+  String get treeLoadError => 'Erreur de chargement';
+
+  @override
+  String get treeBridgeToTree => 'Explorer la lignée →';
+
+  @override
+  String get treeBridgeRelatedNames => 'Noms du Prophète ﷺ liés';
+
+  @override
+  String get treeListViewTitle => 'Tous les membres';
+
+  @override
+  String get treeListSectionAncestors => 'Ascendants';
+
+  @override
+  String get treeListSectionWives => 'Épouses';
+
+  @override
+  String get treeListSectionChildren => 'Enfants & petits-enfants';
+
+  @override
+  String get treeListSectionUncles => 'Oncles & tantes';
+
+  @override
+  String get treeListSectionOther => 'Autres';
 }

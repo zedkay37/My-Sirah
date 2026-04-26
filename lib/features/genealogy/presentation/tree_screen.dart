@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
+import 'package:sirah_app/features/genealogy/presentation/constellation/constellation_view.dart';
+import 'package:sirah_app/features/genealogy/presentation/radial/radial_view.dart';
+import 'package:sirah_app/features/genealogy/presentation/river/river_view.dart';
 import 'package:sirah_app/features/genealogy/presentation/shared/mode_selector.dart';
 
 class TreeScreen extends ConsumerWidget {
@@ -40,20 +44,10 @@ class TreeScreen extends ConsumerWidget {
   }
 
   Widget _viewForMode(String mode, BuildContext context) {
-    final l10n = context.l10n;
     return switch (mode) {
-      'river' => _ModePlaceholder(
-          icon: Icons.timeline_outlined,
-          label: l10n.treeModeRiver,
-        ),
-      'constellation' => _ModePlaceholder(
-          icon: Icons.auto_awesome_outlined,
-          label: l10n.treeModeConstellation,
-        ),
-      _ => _ModePlaceholder(
-          icon: Icons.hub_outlined,
-          label: l10n.treeModeRadial,
-        ),
+      'river' => const RiverView(),
+      'constellation' => const ConstellationView(),
+      _ => const RadialView(),
     };
   }
 }
@@ -82,32 +76,15 @@ class _Header extends StatelessWidget {
             ),
           ),
           ModeSelector(active: mode, onSelect: onModeChange),
-        ],
-      ),
-    );
-  }
-}
-
-class _ModePlaceholder extends StatelessWidget {
-  const _ModePlaceholder({required this.icon, required this.label});
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 48, color: context.colors.muted),
-          SizedBox(height: context.space.md),
-          Text(
-            label,
-            style:
-                context.typo.headline.copyWith(color: context.colors.muted),
+          SizedBox(width: context.space.sm),
+          IconButton(
+            icon: Icon(Icons.list_outlined, color: context.colors.muted),
+            tooltip: context.l10n.treeListView,
+            onPressed: () => context.push('/tree/list'),
           ),
         ],
       ),
     );
   }
 }
+

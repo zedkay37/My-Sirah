@@ -149,5 +149,18 @@
   "treePersonShare": "Partager",
   "treeSearchHint": "Rechercher dans la lignée…",
   "treeResetView": "Recentrer",
-  "treeListView": "Vue liste"
+  "treeListView": "Vue liste",
+  "treeRiverPaternal": "Lignée paternelle",
+  "treeRiverMaternal": "Lignée maternelle",
+  "treeRiverDescendants": "Descendants",
+  "treePersonOpenDetail": "Voir la fiche →",
+  "treeLoadError": "Erreur de chargement",
+  "treeBridgeToTree": "Explorer la lignée →",
+  "treeBridgeRelatedNames": "Noms du Prophète ﷺ liés",
+  "treeListViewTitle": "Tous les membres",
+  "treeListSectionAncestors": "Ascendants",
+  "treeListSectionWives": "Épouses",
+  "treeListSectionChildren": "Enfants & petits-enfants",
+  "treeListSectionUncles": "Oncles & tantes",
+  "treeListSectionOther": "Autres"
 }
