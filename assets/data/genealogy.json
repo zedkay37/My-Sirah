@@ -272,7 +272,7 @@
       ],
       "death": "3 AH · Uḥud",
       "role": "uncle",
-      "bio": "Le « Lion d'Allāh ». Embrassa l'islam après une provocation de Abū Jahl. Martyr de Uḥud.",
+      "bio": "Oncle et frère de lait du Prophète ﷺ. Embrassa l'islam en l'an 6 de la prophétie après qu'Abū Jahl eut offensé le Prophète ﷺ — il le frappa avec son arc et proclama sa foi (Ibn Hishām). Héros de Badr (2 AH). Martyrisé à Uḥud (3 AH) par Waḥshī ibn Ḥarb, lanceur de javelot affranchi de Jubayr ibn Muṭʿim. Son corps fut mutilé par Hind bint ʿUtba. Le Prophète ﷺ pleura abondamment à sa vue et dit : « Je ne serai plus jamais frappé d'un deuil pareil. » Il lui donna le titre de Sayyid al-Shuhadāʾ. Enterré sur le champ d'Uḥud.",
       "parentId": "abdulmuttalib"
     },
     {
@@ -282,7 +282,7 @@
       "kunya": "Abū al-Faḍl",
       "death": "32 AH",
       "role": "uncle",
-      "bio": "Ancêtre des califes abbassides. Embrassa l'islam tardivement, joua un rôle clé à la conquête de La Mecque.",
+      "bio": "Plus âgé que le Prophète ﷺ ou de même génération (Ibn Saʿd). Maintint la protection de son neveu tout en gardant les apparences tribales. Fait prisonnier à Badr (2 AH) et racheté contre rançon. Embrassa ouvertement l'islam avant la conquête de La Mecque (8 AH). Le Prophète ﷺ lui confia la charge de l'eau de Zamzam — honneur perpétué jusqu'à nos jours. Décédé en 32 AH à Médine à un âge avancé. Ancêtre éponyme de la dynastie abbasside (132–656 AH).",
       "parentId": "abdulmuttalib"
     },
     {
@@ -291,7 +291,7 @@
       "transliteration": "Abū Ṭālib (ʿAbd Manāf)",
       "death": "~620 EC · Mecque",
       "role": "uncle",
-      "bio": "Éleva Muḥammad ﷺ. Le protégea pendant les premières années de la prédication. Décédé l'« Année de la tristesse ».",
+      "bio": "Prit en charge Muḥammad ﷺ à l'âge de 8 ans à la mort de ʿAbd al-Muṭṭalib. Le défendit 42 ans face aux Quraysh sans jamais plier. Durant le boycott des Banū Hāshim (7–10ᵉ année prophétique), il résista à toutes les pressions. Il ne fit pas profession d'islam formellement selon les sources les plus solides (Bukhārī 1360, Muslim 24) — le Prophète ﷺ reçut la révélation lui interdisant de demander pardon pour lui (Coran 9:113). Sa mort, survenue l'« Année de la tristesse » (ʿĀm al-Ḥuzn), peu avant la Hijra, fut l'une des épreuves les plus lourdes pour le Prophète ﷺ.",
       "parentId": "abdulmuttalib"
     },
     {
@@ -300,7 +300,7 @@
       "transliteration": "Abū Lahab (ʿAbd al-ʿUzzā)",
       "death": "2 AH",
       "role": "uncle",
-      "bio": "Mentionné dans la sourate al-Masad pour son hostilité au Prophète ﷺ.",
+      "bio": "Oncle du Prophète ﷺ, l'un de ses adversaires les plus virulents. Déshérité son fils ʿUtba qui avait embrassé l'islam. La sourate al-Masad (111) fut révélée à son sujet et celui de son épouse. Décédé de honte 7 jours après Badr (2 AH), sans avoir vu les captifs ramenés (Ibn Hishām).",
       "parentId": "abdulmuttalib"
     },
     {
@@ -308,6 +308,7 @@
       "arabic": "ٱلزُّبَيْر",
       "transliteration": "al-Zubayr ibn ʿAbd al-Muṭṭalib",
       "role": "uncle",
+      "bio": "Oncle du Prophète ﷺ. Père de Ḍubāʿa bint al-Zubayr, compagne du Prophète ﷺ (Ibn Saʿd).",
       "parentId": "abdulmuttalib"
     },
     {
@@ -315,6 +316,7 @@
       "arabic": "ٱلْحَارِث",
       "transliteration": "al-Ḥārith ibn ʿAbd al-Muṭṭalib",
       "role": "uncle",
+      "bio": "L'aîné des fils de ʿAbd al-Muṭṭalib. Oncle du Prophète ﷺ (Ibn Saʿd, Ṭabaqāt vol. 4).",
       "parentId": "abdulmuttalib"
     },
     {
@@ -330,7 +332,7 @@
       "transliteration": "Ṣafiyya bint ʿAbd al-Muṭṭalib",
       "death": "20 AH",
       "role": "aunt",
-      "bio": "Tante musulmane, sœur de Ḥamza. Brave combattante.",
+      "bio": "Sœur de Ḥamza, parmi les premières femmes de la famille prophétique à embrasser l'islam. À Uḥud, prit les armes pour défendre le Prophète ﷺ (Ibn Hishām). Mère de al-Zubayr ibn al-ʿAwwām, l'un des dix à qui le paradis fut promis. Décédée à Médine en 20 AH.",
       "parentId": "abdulmuttalib"
     },
     {
@@ -338,7 +340,7 @@
       "arabic": "عَاتِكَة",
       "transliteration": "ʿĀtika bint ʿAbd al-Muṭṭalib",
       "role": "aunt",
-      "bio": "Connue pour son rêve prémonitoire avant la bataille de Badr.",
+      "bio": "Eut un rêve prémonitoire 3 jours avant la bataille de Badr annonçant une catastrophe pour Quraysh — le récit parvint aux oreilles d'Abū Jahl (Ibn Hishām, Sīra). Embrassa l'islam selon Ibn Saʿd (Ṭabaqāt vol. 8).",
       "parentId": "abdulmuttalib"
     },
     {
@@ -346,6 +348,7 @@
       "arabic": "أَرْوَى",
       "transliteration": "Arwā bint ʿAbd al-Muṭṭalib",
       "role": "aunt",
+      "bio": "Tante du Prophète ﷺ. Mère de Ṭulayyib ibn ʿUmayr, l'un des premiers à embrasser l'islam (Ibn Saʿd).",
       "parentId": "abdulmuttalib"
     },
     {
@@ -361,6 +364,7 @@
       "arabic": "بَرَّة",
       "transliteration": "Barra bint ʿAbd al-Muṭṭalib",
       "role": "aunt",
+      "bio": "Tante du Prophète ﷺ. Mère d'Abū Salama ibn ʿAbd al-Asad, le premier époux de Umm Salama (Ibn Hishām).",
       "parentId": "abdulmuttalib"
     },
     {
@@ -385,7 +389,7 @@
       "death": "10ᵉ année prophétique · Mecque",
       "marriageOrder": 1,
       "role": "wife",
-      "bio": "Première épouse, mère de tous ses enfants sauf Ibrāhīm. Première à embrasser l'islam. Le Prophète ﷺ ne prit aucune autre épouse de son vivant.",
+      "bio": "Femme d'affaires prospère et deux fois veuve avant son mariage au Prophète ﷺ. Elle l'employa comme marchand, puis lui proposa le mariage par l'intermédiaire de Nafīsa bint Munabih — il avait ~25 ans, elle ~40. Première à croire à la révélation, elle le réconforta à la grotte de Ḥirāʾ : « Jamais ! Par Allah, Il ne te fera jamais honte. » Jibrīl lui transmit le salaam d'Allah et la bonne nouvelle d'une demeure en paradis (Bukhārī 3820). Le Prophète ﷺ ne cessa de l'évoquer avec amour après sa mort — ce qui suscitait parfois la jalousie de ʿĀʾisha (Bukhārī 3818). Mère de tous ses enfants sauf Ibrāhīm.",
       "spouseOf": "muhammad"
     },
     {
@@ -395,7 +399,7 @@
       "death": "54 AH",
       "marriageOrder": 2,
       "role": "wife",
-      "bio": "Première épouse après Khadīja.",
+      "bio": "Veuve d'al-Sakrān ibn ʿAmr mort en Abyssinie après y avoir émigré. Mariée au Prophète ﷺ durant l'ʿĀm al-Ḥuzn (~619 EC). Prit soin de ses filles durant les premières années de la vie à Médine. Connue pour sa générosité et sa bonté. En vieillissant, céda volontairement sa nuit au Prophète ﷺ à ʿĀʾisha par amour pour lui (Bukhārī 2593).",
       "spouseOf": "muhammad"
     },
     {
@@ -409,7 +413,7 @@
       "death": "58 AH",
       "marriageOrder": 3,
       "role": "wife",
-      "bio": "Grande savante, transmit ~2200 hadiths. Fille du calife Abū Bakr.",
+      "bio": "Fille d'Abū Bakr al-Ṣiddīq. Transmit environ 2 210 hadiths — l'une des plus grandes sources du fiqh islamique. Le Prophète ﷺ dit qu'elle était sa bien-aimée parmi les femmes (Bukhārī 3662). La révélation descendait uniquement quand il était dans sa couverture parmi toutes ses épouses (Bukhārī 2581). Maîtresse de la langue arabe, de la poésie, de la médecine et de la généalogie. Les Compagnons lui soumettaient les questions les plus complexes après la mort du Prophète ﷺ. Vécut 46 ans après lui, demeurant une référence pour l'ensemble de la communauté.",
       "spouseOf": "muhammad"
     },
     {
@@ -442,7 +446,7 @@
       "death": "62 AH",
       "marriageOrder": 6,
       "role": "wife",
-      "bio": "Veuve d'Abū Salama, savante éminente. Conseil clé lors de Ḥudaybiyya.",
+      "bio": "Veuve d'Abū Salama ibn ʿAbd al-Asad, émigra deux fois : en Abyssinie puis à Médine. Lors de Ḥudaybiyya (6 AH), c'est elle qui conseilla au Prophète ﷺ de procéder lui-même à son rasage pour briser l'immobilisme des Compagnons — ils suivirent immédiatement (Bukhārī 2731). Réputée pour sa sagesse, sa beauté et sa science. Transmit de nombreux hadiths. Décédée en 62 AH, la dernière des Mères des Croyants à quitter ce monde selon certaines sources.",
       "spouseOf": "muhammad"
     },
     {
@@ -452,7 +456,7 @@
       "death": "20 AH",
       "marriageOrder": 7,
       "role": "wife",
-      "bio": "Cousine du Prophète ﷺ. Mariage révélé dans le Coran (33:37).",
+      "bio": "Fille de Umayma bint ʿAbd al-Muṭṭalib, cousine du Prophète ﷺ. Divorcée de Zayd ibn Ḥāritha (fils adoptif). Son mariage avec le Prophète ﷺ fut ordonné directement par révélation coranique (33:37) pour abolir la règle d'adoption prohibant ce mariage. Connue pour sa piété intense et sa générosité envers les pauvres — ʿĀʾisha dit : « Je n'ai jamais vu de femme plus pieuse qu'elle. » Décédée en 20 AH à Médine (Ibn Saʿd).",
       "spouseOf": "muhammad"
     },
     {
@@ -462,7 +466,7 @@
       "death": "50 AH",
       "marriageOrder": 8,
       "role": "wife",
-      "bio": "Issue des Banū al-Muṣṭaliq. Son mariage entraîna la libération de 100 prisonniers.",
+      "bio": "Fille du chef des Banū al-Muṣṭaliq. Faite prisonnière lors de la bataille d'al-Muraysīʿ (5 AH). Vint trouver le Prophète ﷺ pour l'aider à payer sa rançon — il lui proposa le mariage. Les Compagnons libérèrent aussitôt tous leurs prisonniers des Banū al-Muṣṭaliq par égard pour leur lien avec le Prophète ﷺ. ʿĀʾisha dit d'elle : « Je ne connais pas de femme plus bénie pour son peuple qu'elle. » (Ibn Hishām, Sīra).",
       "spouseOf": "muhammad"
     },
     {
@@ -472,7 +476,7 @@
       "death": "44 AH",
       "marriageOrder": 9,
       "role": "wife",
-      "bio": "Fille d'Abū Sufyān. Émigra en Abyssinie.",
+      "bio": "Fille d'Abū Sufyān ibn Ḥarb (avant son islamisation). Émigra en Abyssinie avec son premier mari ʿUbayd Allāh ibn Jaḥsh, qui apostasia et mourut chrétien. Le roi al-Najāshī célébra son mariage avec le Prophète ﷺ par procuration (~7 AH) et versa lui-même la dot de 4 000 dirhams (Ibn Saʿd). Son mariage fut un message à Abū Sufyān, encore ennemi de l'islam à l'époque.",
       "spouseOf": "muhammad"
     },
     {
@@ -482,7 +486,7 @@
       "death": "50 AH",
       "marriageOrder": 10,
       "role": "wife",
-      "bio": "Descendante d'Aaron (Hārūn ʿalayhi-s-salām). Issue des Banū al-Naḍīr.",
+      "bio": "Issue des Banū al-Naḍīr de Médine, tribu judéo-arabe se réclamant de la descendance de Hārūn ʿalayhi-s-salām. Faite prisonnière à Khaybar (7 AH). Le Prophète ﷺ lui offrit le choix de retourner chez les siens ou d'embrasser l'islam et de l'épouser — elle choisit l'islam. Son affranchissement valut dot (Bukhārī 371). Connue pour sa noblesse, sa sagesse et sa beauté.",
       "spouseOf": "muhammad"
     },
     {
@@ -492,7 +496,7 @@
       "death": "51 AH",
       "marriageOrder": 11,
       "role": "wife",
-      "bio": "Dernière épouse.",
+      "bio": "Sœur de Umm al-Faḍl (épouse de al-ʿAbbās). Mariée au Prophète ﷺ lors de la ʿUmrat al-Qaḍāʾ (7 AH). Décédée à Sarif — le lieu même de son mariage — lors d'un voyage de retour vers Médine, et enterrée sur place (Ibn Saʿd). Dernière épouse du Prophète ﷺ à décéder.",
       "spouseOf": "muhammad"
     },
     {
@@ -502,7 +506,7 @@
       "death": "16 AH",
       "marriageOrder": 12,
       "role": "wife",
-      "bio": "Concubine offerte par le Muqawqis d'Égypte. Mère d'Ibrāhīm.",
+      "bio": "Envoyée par le Muqawqis (gouverneur byzantin d'Égypte) avec sa sœur Sīrīn comme cadeau au Prophète ﷺ (~7 AH). Mère d'Ibrāhīm ibn Muḥammad, décédé à ~18 mois (10 AH). Le Prophète ﷺ dit lors de son décès : « Le cœur est attristé et l'œil pleure, mais nous ne disons que ce qui plaît à notre Seigneur. » Décédée à Médine en 16 AH, enterrée au Baqīʿ.",
       "variant": "Statut concubine selon la majorité ; certains la classent parmi les épouses.",
       "spouseOf": "muhammad"
     }
@@ -525,7 +529,7 @@
       "motherId": "khadija",
       "death": "8 AH",
       "role": "child",
-      "bio": "Fille aînée. Mariée à Abū al-ʿĀṣ ibn al-Rabīʿ. Mère d'Umāma."
+      "bio": "Fille aînée du Prophète ﷺ et de Khadīja. Mariée avant la prophétie à Abū al-ʿĀṣ ibn al-Rabīʿ (son cousin maternel). À Badr (2 AH), son mari fut fait prisonnier — elle envoya son collier de noces pour sa rançon, ce qui toucha profondément le Prophète ﷺ. Rejoignit Médine après la libération de son mari, qui embrassa l'islam peu après. Mère de Umāma. Décédée en 8 AH (Ibn Saʿd)."
     },
     {
       "id": "ruqayya",
@@ -535,7 +539,7 @@
       "motherId": "khadija",
       "death": "2 AH",
       "role": "child",
-      "bio": "Mariée à ʿUthmān ibn ʿAffān. Émigra en Abyssinie puis à Médine."
+      "bio": "Fille du Prophète ﷺ et de Khadīja. Émigra en Abyssinie avec son époux ʿUthmān ibn ʿAffān — le Prophète ﷺ dit alors : « Ils sont les premiers à avoir émigré vers Allah après Lūṭ et Ibrāhīm. » Décédée à Médine lors de la bataille de Badr (2 AH) — ʿUthmān demeura à ses côtés et ne participa pas au combat (Bukhārī 3130)."
     },
     {
       "id": "umm-kulthum",
@@ -545,7 +549,7 @@
       "motherId": "khadija",
       "death": "9 AH",
       "role": "child",
-      "bio": "Mariée à ʿUthmān après le décès de Ruqayya — d'où son surnom Dhū al-Nūrayn."
+      "bio": "Fille du Prophète ﷺ et de Khadīja. Mariée à ʿUthmān ibn ʿAffān en 4 AH après le décès de sa sœur Ruqayya. Ce second mariage valut à ʿUthmān le titre de Dhū al-Nūrayn — « Possesseur des deux lumières ». Décédée en 9 AH à Médine (Ibn Saʿd)."
     },
     {
       "id": "fatima",
@@ -559,7 +563,7 @@
       ],
       "death": "11 AH",
       "role": "child",
-      "bio": "Fille préférée. Mariée à ʿAlī ibn Abī Ṭālib. Seule à survivre au Prophète ﷺ — décédée 6 mois après lui. Mère de Ḥasan, Ḥusayn et Zaynab."
+      "bio": "Fille cadette à avoir survécu. Mariée à ʿAlī ibn Abī Ṭālib en 2 AH. Le Prophète ﷺ dit : « Fāṭima est une partie de moi ; ce qui lui nuit me nuit, ce qui la réjouit me réjouit. » (Bukhārī 3767). Il se levait à son entrée et lui cédait sa place. La seule de ses enfants à lui survivre — décédée 6 mois après lui (11 AH / 632 EC), enterrée à Médine. Mère de al-Ḥasan, al-Ḥusayn, Zaynab et Umm Kulthūm."
     },
     {
       "id": "abdullah-son",
@@ -600,7 +604,7 @@
         "Sayyid Shabāb Ahl al-Janna"
       ],
       "role": "grandchild",
-      "bio": "Aîné de Fāṭima. Bref califat avant abdication en faveur de Muʿāwiya pour préserver l'unité."
+      "bio": "Premier petit-fils du Prophète ﷺ. Ce dernier dit de lui et de son frère : « Eux deux sont les maîtres des jeunes du paradis. » (Tirmidhī, ṣaḥīḥ). Calife pendant ~6 mois (40–41 AH), puis céda le pouvoir à Muʿāwiya pour préserver l'unité — le Prophète ﷺ avait prophétisé : « Ce fils est un sayyid ; peut-être Allah réconciliera-t-il par lui deux grands groupes de musulmans. » (Bukhārī 2704). Décédé à Médine en 50 AH, enterré au Baqīʿ."
     },
     {
       "id": "husayn",
@@ -617,7 +621,7 @@
         "Sayyid Shabāb Ahl al-Janna"
       ],
       "role": "grandchild",
-      "bio": "Martyrisé à Karbalāʾ. Lignée des Sādat (descendants honorés)."
+      "bio": "Deuxième petit-fils du Prophète ﷺ. Le Prophète ﷺ dit : « al-Ḥasan et al-Ḥusayn sont les maîtres des jeunes du paradis. » Après la mort de Muʿāwiya (60 AH), refusa l'allégeance à Yazīd ibn Muʿāwiya. En route vers Kūfa avec sa famille sur invitation de ses habitants, il fut intercepté. Martyrisé le 10 Muḥarram 61 AH (680 EC) à Karbalāʾ (Irak actuel) avec la plupart de ses compagnons. Sa tête fut portée à Damas. Enterré à Karbalāʾ. Son martyre est l'un des événements les plus lourds de l'histoire islamique."
     },
     {
       "id": "zaynab-fatima",
@@ -629,7 +633,7 @@
       ],
       "death": "62 AH",
       "role": "grandchild",
-      "bio": "Témoin de Karbalāʾ, porteuse du message après le martyre de Ḥusayn."
+      "bio": "Fille de ʿAlī et Fāṭima, petite-fille du Prophète ﷺ. Présente à Karbalāʾ lors du martyre de son frère al-Ḥusayn (61 AH). Faite prisonnière et conduite à Damas, elle tint des discours courageux devant Yazīd ibn Muʿāwiya. Son rôle dans la transmission du message de Karbalāʾ à la communauté fut capital. Décédée en 62 AH."
     },
     {
       "id": "umm-kulthum-fatima",
@@ -640,7 +644,7 @@
         "ali"
       ],
       "role": "grandchild",
-      "bio": "Mariée à ʿUmar ibn al-Khaṭṭāb."
+      "bio": "Fille de ʿAlī et Fāṭima. Mariée à ʿUmar ibn al-Khaṭṭāb durant son califat selon Ibn Saʿd (Ṭabaqāt vol. 8). Cette union marqua les liens entre la famille prophétique et le 2ᵉ calife."
     },
     {
       "id": "umama",
@@ -650,7 +654,7 @@
         "zaynab-bint"
       ],
       "role": "grandchild",
-      "bio": "Petite-fille via Zaynab. Le Prophète ﷺ l'aimait beaucoup et priait en la portant."
+      "bio": "Fille de Zaynab bint Muḥammad et Abū al-ʿĀṣ ibn al-Rabīʿ. Le Prophète ﷺ la portait lors de la prière et la posait à terre lors des prosternations (Bukhārī 516). Après le décès de Fāṭima (11 AH), ʿAlī ibn Abī Ṭālib l'épousa — Fāṭima le lui avait demandé expressément avant de mourir."
     }
   ],
   "cousins": [
@@ -661,7 +665,7 @@
       "kunya": "Abū al-Ḥasan, Abū Turāb",
       "death": "40 AH",
       "role": "cousin",
-      "bio": "Élevé dans la maison du Prophète ﷺ. Premier enfant musulman. Mari de Fāṭima. Père de Ḥasan et Ḥusayn. 4ᵉ calife.",
+      "bio": "Cousin du Prophète ﷺ, élevé dans sa maison dès l'enfance. Premier enfant à embrasser l'islam selon l'opinion majoritaire. Lors de la Hijra, dormit dans le lit du Prophète ﷺ pour lui permettre de quitter La Mecque sans éveiller les soupçons. Le Prophète ﷺ lui dit : « Tu es pour moi ce qu'Hārūn était pour Mūsā. » (Bukhārī 4416). Époux de Fāṭima (2 AH). 4ᵉ calife (35–40 AH). Assassiné le 17 Ramaḍān 40 AH à Kūfa par Ibn Muljam al-Murādī.",
       "parentId": "abutalib",
       "spouseOf": "fatima"
     }
