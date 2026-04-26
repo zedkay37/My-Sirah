@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserState {
 
- ThemeKey get theme; TextSize get textSize; Set<int> get favorites; Set<int> get learned; Set<int> get viewed; Map<int, DateTime> get lastSeen; DateTime? get onboardingCompletedAt; int? get dailyNotifHour; int get quizzesCompleted; int get totalQuizScore;
+ ThemeKey get theme; TextSize get textSize; Set<int> get favorites; Set<int> get learned; Set<int> get viewed; Map<int, DateTime> get lastSeen; DateTime? get onboardingCompletedAt; int? get dailyNotifHour; int get quizzesCompleted; int get totalQuizScore;// Genealogy module
+ Set<String> get favoriteMembers; Set<String> get viewedMembers; String get preferredTreeView;
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +26,16 @@ $UserStateCopyWith<UserState> get copyWith => _$UserStateCopyWithImpl<UserState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.textSize, textSize) || other.textSize == textSize)&&const DeepCollectionEquality().equals(other.favorites, favorites)&&const DeepCollectionEquality().equals(other.learned, learned)&&const DeepCollectionEquality().equals(other.viewed, viewed)&&const DeepCollectionEquality().equals(other.lastSeen, lastSeen)&&(identical(other.onboardingCompletedAt, onboardingCompletedAt) || other.onboardingCompletedAt == onboardingCompletedAt)&&(identical(other.dailyNotifHour, dailyNotifHour) || other.dailyNotifHour == dailyNotifHour)&&(identical(other.quizzesCompleted, quizzesCompleted) || other.quizzesCompleted == quizzesCompleted)&&(identical(other.totalQuizScore, totalQuizScore) || other.totalQuizScore == totalQuizScore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserState&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.textSize, textSize) || other.textSize == textSize)&&const DeepCollectionEquality().equals(other.favorites, favorites)&&const DeepCollectionEquality().equals(other.learned, learned)&&const DeepCollectionEquality().equals(other.viewed, viewed)&&const DeepCollectionEquality().equals(other.lastSeen, lastSeen)&&(identical(other.onboardingCompletedAt, onboardingCompletedAt) || other.onboardingCompletedAt == onboardingCompletedAt)&&(identical(other.dailyNotifHour, dailyNotifHour) || other.dailyNotifHour == dailyNotifHour)&&(identical(other.quizzesCompleted, quizzesCompleted) || other.quizzesCompleted == quizzesCompleted)&&(identical(other.totalQuizScore, totalQuizScore) || other.totalQuizScore == totalQuizScore)&&const DeepCollectionEquality().equals(other.favoriteMembers, favoriteMembers)&&const DeepCollectionEquality().equals(other.viewedMembers, viewedMembers)&&(identical(other.preferredTreeView, preferredTreeView) || other.preferredTreeView == preferredTreeView));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,theme,textSize,const DeepCollectionEquality().hash(favorites),const DeepCollectionEquality().hash(learned),const DeepCollectionEquality().hash(viewed),const DeepCollectionEquality().hash(lastSeen),onboardingCompletedAt,dailyNotifHour,quizzesCompleted,totalQuizScore);
+int get hashCode => Object.hash(runtimeType,theme,textSize,const DeepCollectionEquality().hash(favorites),const DeepCollectionEquality().hash(learned),const DeepCollectionEquality().hash(viewed),const DeepCollectionEquality().hash(lastSeen),onboardingCompletedAt,dailyNotifHour,quizzesCompleted,totalQuizScore,const DeepCollectionEquality().hash(favoriteMembers),const DeepCollectionEquality().hash(viewedMembers),preferredTreeView);
 
 @override
 String toString() {
-  return 'UserState(theme: $theme, textSize: $textSize, favorites: $favorites, learned: $learned, viewed: $viewed, lastSeen: $lastSeen, onboardingCompletedAt: $onboardingCompletedAt, dailyNotifHour: $dailyNotifHour, quizzesCompleted: $quizzesCompleted, totalQuizScore: $totalQuizScore)';
+  return 'UserState(theme: $theme, textSize: $textSize, favorites: $favorites, learned: $learned, viewed: $viewed, lastSeen: $lastSeen, onboardingCompletedAt: $onboardingCompletedAt, dailyNotifHour: $dailyNotifHour, quizzesCompleted: $quizzesCompleted, totalQuizScore: $totalQuizScore, favoriteMembers: $favoriteMembers, viewedMembers: $viewedMembers, preferredTreeView: $preferredTreeView)';
 }
 
 
@@ -45,7 +46,7 @@ abstract mixin class $UserStateCopyWith<$Res>  {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) _then) = _$UserStateCopyWithImpl;
 @useResult
 $Res call({
- ThemeKey theme, TextSize textSize, Set<int> favorites, Set<int> learned, Set<int> viewed, Map<int, DateTime> lastSeen, DateTime? onboardingCompletedAt, int? dailyNotifHour, int quizzesCompleted, int totalQuizScore
+ ThemeKey theme, TextSize textSize, Set<int> favorites, Set<int> learned, Set<int> viewed, Map<int, DateTime> lastSeen, DateTime? onboardingCompletedAt, int? dailyNotifHour, int quizzesCompleted, int totalQuizScore, Set<String> favoriteMembers, Set<String> viewedMembers, String preferredTreeView
 });
 
 
@@ -62,7 +63,7 @@ class _$UserStateCopyWithImpl<$Res>
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? textSize = null,Object? favorites = null,Object? learned = null,Object? viewed = null,Object? lastSeen = null,Object? onboardingCompletedAt = freezed,Object? dailyNotifHour = freezed,Object? quizzesCompleted = null,Object? totalQuizScore = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? textSize = null,Object? favorites = null,Object? learned = null,Object? viewed = null,Object? lastSeen = null,Object? onboardingCompletedAt = freezed,Object? dailyNotifHour = freezed,Object? quizzesCompleted = null,Object? totalQuizScore = null,Object? favoriteMembers = null,Object? viewedMembers = null,Object? preferredTreeView = null,}) {
   return _then(_self.copyWith(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as ThemeKey,textSize: null == textSize ? _self.textSize : textSize // ignore: cast_nullable_to_non_nullable
@@ -74,7 +75,10 @@ as Map<int, DateTime>,onboardingCompletedAt: freezed == onboardingCompletedAt ? 
 as DateTime?,dailyNotifHour: freezed == dailyNotifHour ? _self.dailyNotifHour : dailyNotifHour // ignore: cast_nullable_to_non_nullable
 as int?,quizzesCompleted: null == quizzesCompleted ? _self.quizzesCompleted : quizzesCompleted // ignore: cast_nullable_to_non_nullable
 as int,totalQuizScore: null == totalQuizScore ? _self.totalQuizScore : totalQuizScore // ignore: cast_nullable_to_non_nullable
-as int,
+as int,favoriteMembers: null == favoriteMembers ? _self.favoriteMembers : favoriteMembers // ignore: cast_nullable_to_non_nullable
+as Set<String>,viewedMembers: null == viewedMembers ? _self.viewedMembers : viewedMembers // ignore: cast_nullable_to_non_nullable
+as Set<String>,preferredTreeView: null == preferredTreeView ? _self.preferredTreeView : preferredTreeView // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -159,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeKey theme,  TextSize textSize,  Set<int> favorites,  Set<int> learned,  Set<int> viewed,  Map<int, DateTime> lastSeen,  DateTime? onboardingCompletedAt,  int? dailyNotifHour,  int quizzesCompleted,  int totalQuizScore)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeKey theme,  TextSize textSize,  Set<int> favorites,  Set<int> learned,  Set<int> viewed,  Map<int, DateTime> lastSeen,  DateTime? onboardingCompletedAt,  int? dailyNotifHour,  int quizzesCompleted,  int totalQuizScore,  Set<String> favoriteMembers,  Set<String> viewedMembers,  String preferredTreeView)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserState() when $default != null:
-return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.viewed,_that.lastSeen,_that.onboardingCompletedAt,_that.dailyNotifHour,_that.quizzesCompleted,_that.totalQuizScore);case _:
+return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.viewed,_that.lastSeen,_that.onboardingCompletedAt,_that.dailyNotifHour,_that.quizzesCompleted,_that.totalQuizScore,_that.favoriteMembers,_that.viewedMembers,_that.preferredTreeView);case _:
   return orElse();
 
 }
@@ -180,10 +184,10 @@ return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.v
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeKey theme,  TextSize textSize,  Set<int> favorites,  Set<int> learned,  Set<int> viewed,  Map<int, DateTime> lastSeen,  DateTime? onboardingCompletedAt,  int? dailyNotifHour,  int quizzesCompleted,  int totalQuizScore)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeKey theme,  TextSize textSize,  Set<int> favorites,  Set<int> learned,  Set<int> viewed,  Map<int, DateTime> lastSeen,  DateTime? onboardingCompletedAt,  int? dailyNotifHour,  int quizzesCompleted,  int totalQuizScore,  Set<String> favoriteMembers,  Set<String> viewedMembers,  String preferredTreeView)  $default,) {final _that = this;
 switch (_that) {
 case _UserState():
-return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.viewed,_that.lastSeen,_that.onboardingCompletedAt,_that.dailyNotifHour,_that.quizzesCompleted,_that.totalQuizScore);case _:
+return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.viewed,_that.lastSeen,_that.onboardingCompletedAt,_that.dailyNotifHour,_that.quizzesCompleted,_that.totalQuizScore,_that.favoriteMembers,_that.viewedMembers,_that.preferredTreeView);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +204,10 @@ return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.v
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeKey theme,  TextSize textSize,  Set<int> favorites,  Set<int> learned,  Set<int> viewed,  Map<int, DateTime> lastSeen,  DateTime? onboardingCompletedAt,  int? dailyNotifHour,  int quizzesCompleted,  int totalQuizScore)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeKey theme,  TextSize textSize,  Set<int> favorites,  Set<int> learned,  Set<int> viewed,  Map<int, DateTime> lastSeen,  DateTime? onboardingCompletedAt,  int? dailyNotifHour,  int quizzesCompleted,  int totalQuizScore,  Set<String> favoriteMembers,  Set<String> viewedMembers,  String preferredTreeView)?  $default,) {final _that = this;
 switch (_that) {
 case _UserState() when $default != null:
-return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.viewed,_that.lastSeen,_that.onboardingCompletedAt,_that.dailyNotifHour,_that.quizzesCompleted,_that.totalQuizScore);case _:
+return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.viewed,_that.lastSeen,_that.onboardingCompletedAt,_that.dailyNotifHour,_that.quizzesCompleted,_that.totalQuizScore,_that.favoriteMembers,_that.viewedMembers,_that.preferredTreeView);case _:
   return null;
 
 }
@@ -215,7 +219,7 @@ return $default(_that.theme,_that.textSize,_that.favorites,_that.learned,_that.v
 
 
 class _UserState implements UserState {
-  const _UserState({this.theme = ThemeKey.light, this.textSize = TextSize.medium, final  Set<int> favorites = const {}, final  Set<int> learned = const {}, final  Set<int> viewed = const {}, final  Map<int, DateTime> lastSeen = const {}, this.onboardingCompletedAt, this.dailyNotifHour, this.quizzesCompleted = 0, this.totalQuizScore = 0}): _favorites = favorites,_learned = learned,_viewed = viewed,_lastSeen = lastSeen;
+  const _UserState({this.theme = ThemeKey.light, this.textSize = TextSize.medium, final  Set<int> favorites = const {}, final  Set<int> learned = const {}, final  Set<int> viewed = const {}, final  Map<int, DateTime> lastSeen = const {}, this.onboardingCompletedAt, this.dailyNotifHour, this.quizzesCompleted = 0, this.totalQuizScore = 0, final  Set<String> favoriteMembers = const {}, final  Set<String> viewedMembers = const {}, this.preferredTreeView = 'radial'}): _favorites = favorites,_learned = learned,_viewed = viewed,_lastSeen = lastSeen,_favoriteMembers = favoriteMembers,_viewedMembers = viewedMembers;
   
 
 @override@JsonKey() final  ThemeKey theme;
@@ -252,6 +256,23 @@ class _UserState implements UserState {
 @override final  int? dailyNotifHour;
 @override@JsonKey() final  int quizzesCompleted;
 @override@JsonKey() final  int totalQuizScore;
+// Genealogy module
+ final  Set<String> _favoriteMembers;
+// Genealogy module
+@override@JsonKey() Set<String> get favoriteMembers {
+  if (_favoriteMembers is EqualUnmodifiableSetView) return _favoriteMembers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_favoriteMembers);
+}
+
+ final  Set<String> _viewedMembers;
+@override@JsonKey() Set<String> get viewedMembers {
+  if (_viewedMembers is EqualUnmodifiableSetView) return _viewedMembers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_viewedMembers);
+}
+
+@override@JsonKey() final  String preferredTreeView;
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
@@ -263,16 +284,16 @@ _$UserStateCopyWith<_UserState> get copyWith => __$UserStateCopyWithImpl<_UserSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.textSize, textSize) || other.textSize == textSize)&&const DeepCollectionEquality().equals(other._favorites, _favorites)&&const DeepCollectionEquality().equals(other._learned, _learned)&&const DeepCollectionEquality().equals(other._viewed, _viewed)&&const DeepCollectionEquality().equals(other._lastSeen, _lastSeen)&&(identical(other.onboardingCompletedAt, onboardingCompletedAt) || other.onboardingCompletedAt == onboardingCompletedAt)&&(identical(other.dailyNotifHour, dailyNotifHour) || other.dailyNotifHour == dailyNotifHour)&&(identical(other.quizzesCompleted, quizzesCompleted) || other.quizzesCompleted == quizzesCompleted)&&(identical(other.totalQuizScore, totalQuizScore) || other.totalQuizScore == totalQuizScore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserState&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.textSize, textSize) || other.textSize == textSize)&&const DeepCollectionEquality().equals(other._favorites, _favorites)&&const DeepCollectionEquality().equals(other._learned, _learned)&&const DeepCollectionEquality().equals(other._viewed, _viewed)&&const DeepCollectionEquality().equals(other._lastSeen, _lastSeen)&&(identical(other.onboardingCompletedAt, onboardingCompletedAt) || other.onboardingCompletedAt == onboardingCompletedAt)&&(identical(other.dailyNotifHour, dailyNotifHour) || other.dailyNotifHour == dailyNotifHour)&&(identical(other.quizzesCompleted, quizzesCompleted) || other.quizzesCompleted == quizzesCompleted)&&(identical(other.totalQuizScore, totalQuizScore) || other.totalQuizScore == totalQuizScore)&&const DeepCollectionEquality().equals(other._favoriteMembers, _favoriteMembers)&&const DeepCollectionEquality().equals(other._viewedMembers, _viewedMembers)&&(identical(other.preferredTreeView, preferredTreeView) || other.preferredTreeView == preferredTreeView));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,theme,textSize,const DeepCollectionEquality().hash(_favorites),const DeepCollectionEquality().hash(_learned),const DeepCollectionEquality().hash(_viewed),const DeepCollectionEquality().hash(_lastSeen),onboardingCompletedAt,dailyNotifHour,quizzesCompleted,totalQuizScore);
+int get hashCode => Object.hash(runtimeType,theme,textSize,const DeepCollectionEquality().hash(_favorites),const DeepCollectionEquality().hash(_learned),const DeepCollectionEquality().hash(_viewed),const DeepCollectionEquality().hash(_lastSeen),onboardingCompletedAt,dailyNotifHour,quizzesCompleted,totalQuizScore,const DeepCollectionEquality().hash(_favoriteMembers),const DeepCollectionEquality().hash(_viewedMembers),preferredTreeView);
 
 @override
 String toString() {
-  return 'UserState(theme: $theme, textSize: $textSize, favorites: $favorites, learned: $learned, viewed: $viewed, lastSeen: $lastSeen, onboardingCompletedAt: $onboardingCompletedAt, dailyNotifHour: $dailyNotifHour, quizzesCompleted: $quizzesCompleted, totalQuizScore: $totalQuizScore)';
+  return 'UserState(theme: $theme, textSize: $textSize, favorites: $favorites, learned: $learned, viewed: $viewed, lastSeen: $lastSeen, onboardingCompletedAt: $onboardingCompletedAt, dailyNotifHour: $dailyNotifHour, quizzesCompleted: $quizzesCompleted, totalQuizScore: $totalQuizScore, favoriteMembers: $favoriteMembers, viewedMembers: $viewedMembers, preferredTreeView: $preferredTreeView)';
 }
 
 
@@ -283,7 +304,7 @@ abstract mixin class _$UserStateCopyWith<$Res> implements $UserStateCopyWith<$Re
   factory _$UserStateCopyWith(_UserState value, $Res Function(_UserState) _then) = __$UserStateCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeKey theme, TextSize textSize, Set<int> favorites, Set<int> learned, Set<int> viewed, Map<int, DateTime> lastSeen, DateTime? onboardingCompletedAt, int? dailyNotifHour, int quizzesCompleted, int totalQuizScore
+ ThemeKey theme, TextSize textSize, Set<int> favorites, Set<int> learned, Set<int> viewed, Map<int, DateTime> lastSeen, DateTime? onboardingCompletedAt, int? dailyNotifHour, int quizzesCompleted, int totalQuizScore, Set<String> favoriteMembers, Set<String> viewedMembers, String preferredTreeView
 });
 
 
@@ -300,7 +321,7 @@ class __$UserStateCopyWithImpl<$Res>
 
 /// Create a copy of UserState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? textSize = null,Object? favorites = null,Object? learned = null,Object? viewed = null,Object? lastSeen = null,Object? onboardingCompletedAt = freezed,Object? dailyNotifHour = freezed,Object? quizzesCompleted = null,Object? totalQuizScore = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? textSize = null,Object? favorites = null,Object? learned = null,Object? viewed = null,Object? lastSeen = null,Object? onboardingCompletedAt = freezed,Object? dailyNotifHour = freezed,Object? quizzesCompleted = null,Object? totalQuizScore = null,Object? favoriteMembers = null,Object? viewedMembers = null,Object? preferredTreeView = null,}) {
   return _then(_UserState(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as ThemeKey,textSize: null == textSize ? _self.textSize : textSize // ignore: cast_nullable_to_non_nullable
@@ -312,7 +333,10 @@ as Map<int, DateTime>,onboardingCompletedAt: freezed == onboardingCompletedAt ? 
 as DateTime?,dailyNotifHour: freezed == dailyNotifHour ? _self.dailyNotifHour : dailyNotifHour // ignore: cast_nullable_to_non_nullable
 as int?,quizzesCompleted: null == quizzesCompleted ? _self.quizzesCompleted : quizzesCompleted // ignore: cast_nullable_to_non_nullable
 as int,totalQuizScore: null == totalQuizScore ? _self.totalQuizScore : totalQuizScore // ignore: cast_nullable_to_non_nullable
-as int,
+as int,favoriteMembers: null == favoriteMembers ? _self._favoriteMembers : favoriteMembers // ignore: cast_nullable_to_non_nullable
+as Set<String>,viewedMembers: null == viewedMembers ? _self._viewedMembers : viewedMembers // ignore: cast_nullable_to_non_nullable
+as Set<String>,preferredTreeView: null == preferredTreeView ? _self.preferredTreeView : preferredTreeView // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

@@ -61,6 +61,9 @@ class HiveSource {
         'dailyNotifHour': s.dailyNotifHour,
         'quizzesCompleted': s.quizzesCompleted,
         'totalQuizScore': s.totalQuizScore,
+        'favoriteMembers': s.favoriteMembers.toList(),
+        'viewedMembers': s.viewedMembers.toList(),
+        'preferredTreeView': s.preferredTreeView,
       };
 
   static UserState _fromMap(Map<String, dynamic> m) {
@@ -87,6 +90,9 @@ class HiveSource {
 
     final onboardingStr = m['onboardingCompletedAt'] as String?;
 
+    final favMemberList = m['favoriteMembers'] as List<dynamic>? ?? [];
+    final viewedMemberList = m['viewedMembers'] as List<dynamic>? ?? [];
+
     return UserState(
       theme: theme,
       textSize: textSize,
@@ -99,6 +105,9 @@ class HiveSource {
       dailyNotifHour: m['dailyNotifHour'] as int?,
       quizzesCompleted: m['quizzesCompleted'] as int? ?? 0,
       totalQuizScore: m['totalQuizScore'] as int? ?? 0,
+      favoriteMembers: Set<String>.from(favMemberList.map((e) => e as String)),
+      viewedMembers: Set<String>.from(viewedMemberList.map((e) => e as String)),
+      preferredTreeView: m['preferredTreeView'] as String? ?? 'radial',
     );
   }
 }

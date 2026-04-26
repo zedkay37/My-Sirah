@@ -62,6 +62,27 @@ class SettingsNotifier extends Notifier<UserState> {
           totalQuizScore: state.totalQuizScore + correctAnswers,
         ),
       );
+
+  // ── Genealogy ─────────────────────────────────────────────────────────────
+
+  Future<void> toggleFavoriteMember(String id) {
+    final favs = Set<String>.from(state.favoriteMembers);
+    if (favs.contains(id)) {
+      favs.remove(id);
+    } else {
+      favs.add(id);
+    }
+    return _save(state.copyWith(favoriteMembers: favs));
+  }
+
+  Future<void> markMemberViewed(String id) {
+    if (state.viewedMembers.contains(id)) return Future.value();
+    final viewed = Set<String>.from(state.viewedMembers)..add(id);
+    return _save(state.copyWith(viewedMembers: viewed));
+  }
+
+  Future<void> setPreferredTreeView(String view) =>
+      _save(state.copyWith(preferredTreeView: view));
 }
 
 final settingsProvider = NotifierProvider<SettingsNotifier, UserState>(

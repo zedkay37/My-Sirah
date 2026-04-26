@@ -17,5 +17,9 @@ abstract class UserState with _$UserState {
     int? dailyNotifHour,
     @Default(0) int quizzesCompleted,
     @Default(0) int totalQuizScore,
+    // Genealogy module
+    @Default({}) Set<String> favoriteMembers,
+    @Default({}) Set<String> viewedMembers,
+    @Default('radial') String preferredTreeView,
   }) = _UserState;
 }
