@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/notifications/notification_service.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
+import 'package:sirah_app/features/genealogy/presentation/detail/person_detail_screen.dart';
+import 'package:sirah_app/features/genealogy/presentation/tree_screen.dart';
 import 'package:sirah_app/features/names/presentation/detail/detail_screen.dart';
 import 'package:sirah_app/features/names/presentation/home/home_screen.dart';
 import 'package:sirah_app/features/names/presentation/list/discover_screen.dart';

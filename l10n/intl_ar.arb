@@ -19,5 +19,27 @@
   "favoriteAdd": "Ajouter aux favoris",
   "favoriteRemove": "Retirer des favoris",
 
-  "discoverNoResults": "Aucun résultat"
+  "discoverNoResults": "Aucun résultat",
+
+  "navTree": "الشجرة",
+
+  "treeTitle": "النسب النبوي الشريف",
+  "treeModeRadial": "المدارات",
+  "treeModeRiver": "نهر النور",
+  "treeModeConstellation": "النجوم",
+
+  "treePersonBack": "العودة",
+  "treePersonRelation": "الصلة بالنبي ﷺ",
+  "treePersonPath": "سلسلة النسب",
+  "treePersonMarkers": "تواريخ",
+  "treePersonBirth": "الولادة",
+  "treePersonDeath": "الوفاة",
+  "treePersonNarrative": "السيرة",
+  "treePersonSeeAlso": "انظر أيضاً",
+  "treePersonFavoriteAdd": "إضافة إلى المفضلة",
+  "treePersonFavoriteRemove": "إزالة من المفضلة",
+  "treePersonShare": "مشاركة",
+  "treeSearchHint": "ابحث في النسب…",
+  "treeResetView": "إعادة التمركز",
+  "treeListView": "عرض القائمة"
 }

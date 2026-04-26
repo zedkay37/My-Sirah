@@ -252,4 +252,61 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get discoverNoResults => 'Aucun résultat';
+
+  @override
+  String get navTree => 'الشجرة';
+
+  @override
+  String get treeTitle => 'النسب النبوي الشريف';
+
+  @override
+  String get treeModeRadial => 'المدارات';
+
+  @override
+  String get treeModeRiver => 'نهر النور';
+
+  @override
+  String get treeModeConstellation => 'النجوم';
+
+  @override
+  String get treePersonBack => 'العودة';
+
+  @override
+  String get treePersonRelation => 'الصلة بالنبي ﷺ';
+
+  @override
+  String get treePersonPath => 'سلسلة النسب';
+
+  @override
+  String get treePersonMarkers => 'تواريخ';
+
+  @override
+  String get treePersonBirth => 'الولادة';
+
+  @override
+  String get treePersonDeath => 'الوفاة';
+
+  @override
+  String get treePersonNarrative => 'السيرة';
+
+  @override
+  String get treePersonSeeAlso => 'انظر أيضاً';
+
+  @override
+  String get treePersonFavoriteAdd => 'إضافة إلى المفضلة';
+
+  @override
+  String get treePersonFavoriteRemove => 'إزالة من المفضلة';
+
+  @override
+  String get treePersonShare => 'مشاركة';
+
+  @override
+  String get treeSearchHint => 'ابحث في النسب…';
+
+  @override
+  String get treeResetView => 'إعادة التمركز';
+
+  @override
+  String get treeListView => 'عرض القائمة';
 }

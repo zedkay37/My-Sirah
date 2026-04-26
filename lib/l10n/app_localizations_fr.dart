@@ -252,4 +252,61 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get discoverNoResults => 'Aucun résultat';
+
+  @override
+  String get navTree => 'Arbre';
+
+  @override
+  String get treeTitle => 'Lignée prophétique';
+
+  @override
+  String get treeModeRadial => 'Orbites';
+
+  @override
+  String get treeModeRiver => 'Rivière';
+
+  @override
+  String get treeModeConstellation => 'Constellation';
+
+  @override
+  String get treePersonBack => 'Retour à l\'arbre';
+
+  @override
+  String get treePersonRelation => 'Lien avec le Prophète ﷺ';
+
+  @override
+  String get treePersonPath => 'Chemin de parenté';
+
+  @override
+  String get treePersonMarkers => 'Repères';
+
+  @override
+  String get treePersonBirth => 'Naissance';
+
+  @override
+  String get treePersonDeath => 'Décès';
+
+  @override
+  String get treePersonNarrative => 'Récit';
+
+  @override
+  String get treePersonSeeAlso => 'Voir aussi';
+
+  @override
+  String get treePersonFavoriteAdd => 'Ajouter aux favoris';
+
+  @override
+  String get treePersonFavoriteRemove => 'Retirer des favoris';
+
+  @override
+  String get treePersonShare => 'Partager';
+
+  @override
+  String get treeSearchHint => 'Rechercher dans la lignée…';
+
+  @override
+  String get treeResetView => 'Recentrer';
+
+  @override
+  String get treeListView => 'Vue liste';
 }

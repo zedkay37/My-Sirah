@@ -127,5 +127,27 @@
   "favoriteAdd": "Ajouter aux favoris",
   "favoriteRemove": "Retirer des favoris",
 
-  "discoverNoResults": "Aucun résultat"
+  "discoverNoResults": "Aucun résultat",
+
+  "navTree": "Arbre",
+
+  "treeTitle": "Lignée prophétique",
+  "treeModeRadial": "Orbites",
+  "treeModeRiver": "Rivière",
+  "treeModeConstellation": "Constellation",
+
+  "treePersonBack": "Retour à l'arbre",
+  "treePersonRelation": "Lien avec le Prophète ﷺ",
+  "treePersonPath": "Chemin de parenté",
+  "treePersonMarkers": "Repères",
+  "treePersonBirth": "Naissance",
+  "treePersonDeath": "Décès",
+  "treePersonNarrative": "Récit",
+  "treePersonSeeAlso": "Voir aussi",
+  "treePersonFavoriteAdd": "Ajouter aux favoris",
+  "treePersonFavoriteRemove": "Retirer des favoris",
+  "treePersonShare": "Partager",
+  "treeSearchHint": "Rechercher dans la lignée…",
+  "treeResetView": "Recentrer",
+  "treeListView": "Vue liste"
 }

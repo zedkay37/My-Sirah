@@ -553,6 +553,120 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucun résultat'**
   String get discoverNoResults;
+
+  /// No description provided for @navTree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arbre'**
+  String get navTree;
+
+  /// No description provided for @treeTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lignée prophétique'**
+  String get treeTitle;
+
+  /// No description provided for @treeModeRadial.
+  ///
+  /// In fr, this message translates to:
+  /// **'Orbites'**
+  String get treeModeRadial;
+
+  /// No description provided for @treeModeRiver.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rivière'**
+  String get treeModeRiver;
+
+  /// No description provided for @treeModeConstellation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Constellation'**
+  String get treeModeConstellation;
+
+  /// No description provided for @treePersonBack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à l\'arbre'**
+  String get treePersonBack;
+
+  /// No description provided for @treePersonRelation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien avec le Prophète ﷺ'**
+  String get treePersonRelation;
+
+  /// No description provided for @treePersonPath.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chemin de parenté'**
+  String get treePersonPath;
+
+  /// No description provided for @treePersonMarkers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repères'**
+  String get treePersonMarkers;
+
+  /// No description provided for @treePersonBirth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Naissance'**
+  String get treePersonBirth;
+
+  /// No description provided for @treePersonDeath.
+  ///
+  /// In fr, this message translates to:
+  /// **'Décès'**
+  String get treePersonDeath;
+
+  /// No description provided for @treePersonNarrative.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récit'**
+  String get treePersonNarrative;
+
+  /// No description provided for @treePersonSeeAlso.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir aussi'**
+  String get treePersonSeeAlso;
+
+  /// No description provided for @treePersonFavoriteAdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter aux favoris'**
+  String get treePersonFavoriteAdd;
+
+  /// No description provided for @treePersonFavoriteRemove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer des favoris'**
+  String get treePersonFavoriteRemove;
+
+  /// No description provided for @treePersonShare.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager'**
+  String get treePersonShare;
+
+  /// No description provided for @treeSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher dans la lignée…'**
+  String get treeSearchHint;
+
+  /// No description provided for @treeResetView.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recentrer'**
+  String get treeResetView;
+
+  /// No description provided for @treeListView.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vue liste'**
+  String get treeListView;
 }
 
 class _AppLocalizationsDelegate
