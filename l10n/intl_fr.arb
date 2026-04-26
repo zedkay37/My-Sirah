@@ -1,0 +1,131 @@
+{
+  "@@locale": "fr",
+
+  "appTitle": "Asmāʾ an-Nabī",
+
+  "navHome": "Accueil",
+  "navDiscover": "Découvrir",
+  "navProfile": "Profil",
+
+  "onboardingWelcomeTitle": "Les 201 noms du Prophète ﷺ",
+  "onboardingWelcomeSubtitle": "Apprenez, méditez, connectez-vous.",
+  "onboardingWelcomeCta": "Commencer",
+  "onboardingThemeTitle": "Choisissez votre ambiance",
+  "onboardingThemeCta": "Continuer",
+  "onboardingNotifTitle": "Un nom chaque jour",
+  "onboardingNotifSubtitle": "Recevez le nom du jour à l'heure qui vous convient",
+  "onboardingNotifActivate": "Activer les notifications",
+  "onboardingNotifLater": "Plus tard",
+
+  "homeGreeting": "As-salāmu ʿalaykum",
+  "homeCategorySection": "Explorer par catégorie",
+  "homeDiscoverName": "Découvrir ce nom",
+  "homeCategoryLearned": "{learned}/{total} appris",
+  "@homeCategoryLearned": {
+    "placeholders": {
+      "learned": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "homeNameNumber": "#{number}",
+  "@homeNameNumber": {
+    "placeholders": {
+      "number": { "type": "String" }
+    }
+  },
+
+  "discoverAllNames": "Tous les noms",
+  "discoverQuiz": "Quiz",
+  "discoverFilterAll": "Tous",
+  "discoverSearchHint": "Rechercher (arabe, translittération, français)",
+
+  "detailSectionEtymology": "Étymologie",
+  "detailSectionCommentary": "Commentaires classiques",
+  "detailSectionReferences": "Références",
+  "detailSectionSources": "Sources",
+  "detailNameLabel": "Nom #{number}",
+  "@detailNameLabel": {
+    "placeholders": {
+      "number": { "type": "String" }
+    }
+  },
+  "detailProgress": "{current} / {total}",
+  "@detailProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "detailMaskedName": "[ce nom]",
+
+  "quizTitle": "Quiz rapide",
+  "quizSubtitle": "5 questions · ~1 minute",
+  "quizTypeMCQ": "QCM",
+  "quizTypeMCQDesc": "Trouvez le nom à partir de sa description",
+  "quizTypeFlashcards": "Flashcards",
+  "quizTypeFlashcardsDesc": "Retournez les cartes pour réviser",
+  "quizStartCta": "Démarrer",
+  "quizCardKnow": "Je connais",
+  "quizCardReview": "À revoir",
+  "quizProgress": "{current}/{total}",
+  "@quizProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+
+  "quizResultExcellent": "MāshāʾAllāh. Chaque nom est une porte vers Sa lumière. Continuez à explorer.",
+  "quizResultGood": "Chaque nom mérite qu'on s'y attarde. Revenez demain, ils deviendront familiers.",
+  "quizResultKeepGoing": "La connaissance commence par la patience. Explorez la fiche des noms pour les apprivoiser.",
+  "quizResultScore": "Vous avez répondu correctement à {score}/{total}",
+  "@quizResultScore": {
+    "placeholders": {
+      "score": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "quizReplayCta": "Rejouer",
+  "quizExploreNamesCta": "Explorer les noms",
+
+  "profileLearnedSubtitle": "sur 201 noms du Prophète ﷺ",
+  "profileFavorites": "Mes favoris",
+  "profileSettings": "Paramètres",
+
+  "settingsTitle": "Paramètres",
+  "settingsSectionTheme": "Thème",
+  "settingsThemeLight": "Clair",
+  "settingsThemeDark": "Sombre",
+  "settingsThemeFeminine": "Féminin",
+  "settingsSectionNotif": "Notification quotidienne",
+  "settingsSectionTextSize": "Taille du texte",
+  "settingsTextSmall": "Petit",
+  "settingsTextMedium": "Moyen",
+  "settingsTextLarge": "Grand",
+  "settingsSectionAbout": "À propos",
+  "settingsReportError": "Signaler une erreur",
+
+  "favoritesTitle": "Mes favoris",
+  "favoritesEmpty": "Aucun favori pour l'instant",
+  "favoritesEmptyCta": "Explorer les noms",
+
+  "flashcardFlipHint": "Appuyez sur la carte pour la retourner",
+  "qcmNext": "Suivant",
+
+  "detailShare": "Partager",
+
+  "settingsNotifEnable": "Activer",
+  "settingsNotifDisable": "Désactiver",
+
+  "profileConstellationTitle": "Constellation",
+  "profileLegendLearned": "appris",
+  "profileLegendViewed": "vu",
+  "profileLegendUnknown": "non découvert",
+
+  "detailLearningProgress": "Mémorisation en cours…",
+
+  "favoriteAdd": "Ajouter aux favoris",
+  "favoriteRemove": "Retirer des favoris",
+
+  "discoverNoResults": "Aucun résultat"
+}

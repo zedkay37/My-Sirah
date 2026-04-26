@@ -1,0 +1,4 @@
+storePassword=<mot_de_passe_keystore>
+keyPassword=<mot_de_passe_cle>
+keyAlias=asma-nabi-key
+storeFile=../asma-nabi-release.jks

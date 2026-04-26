@@ -1,0 +1,669 @@
+{
+  "prophet": {
+    "id": "muhammad",
+    "arabic": "مُحَمَّد ﷺ",
+    "transliteration": "Muḥammad ibn ʿAbd Allāh ﷺ",
+    "kunya": "Abū al-Qāsim",
+    "laqab": [
+      "Khātam al-Nabiyyīn",
+      "al-Muṣṭafā",
+      "Rasūl Allāh"
+    ],
+    "birth": "~570 EC · ʿĀm al-Fīl",
+    "death": "11 AH / 632 EC · Médine",
+    "bio": "Sceau des prophètes ﷺ, né à La Mecque. Orphelin tôt, élevé par son grand-père ʿAbd al-Muṭṭalib puis son oncle Abū Ṭālib. Reçut la révélation à 40 ans dans la grotte de Ḥirāʾ.",
+    "role": "prophet",
+    "parentId": "abdullah",
+    "motherId": "amina"
+  },
+  "paternalAscendants": [
+    {
+      "id": "abdullah",
+      "arabic": "عَبْد ٱللَّٰه",
+      "transliteration": "ʿAbd Allāh ibn ʿAbd al-Muṭṭalib",
+      "generation": 1,
+      "role": "father",
+      "birth": "~545 EC",
+      "death": "~570 EC · Médine",
+      "bio": "Décédé avant la naissance du Prophète ﷺ, lors d'un voyage commercial. Fils préféré de ʿAbd al-Muṭṭalib, échappé du sacrifice.",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "abdulmuttalib",
+      "arabic": "عَبْد ٱلْمُطَّلِب",
+      "transliteration": "ʿAbd al-Muṭṭalib (Shayba)",
+      "generation": 2,
+      "role": "paternalAscendant",
+      "birth": "~497 EC",
+      "death": "~578 EC · Mecque",
+      "bio": "Chef de Quraysh, gardien de la Kaʿba. Redécouvrit le puits de Zamzam. Éleva Muḥammad ﷺ après la mort d'Āmina.",
+      "parentId": "hashim"
+    },
+    {
+      "id": "hashim",
+      "arabic": "هَاشِم",
+      "transliteration": "Hāshim ibn ʿAbd Manāf",
+      "generation": 3,
+      "role": "paternalAscendant",
+      "death": "Gaza",
+      "bio": "Fondateur des Banū Hāshim. Instaura les caravanes commerciales d'hiver (Yémen) et d'été (Shām).",
+      "parentId": "abdmanaf"
+    },
+    {
+      "id": "abdmanaf",
+      "arabic": "عَبْد مَنَاف",
+      "transliteration": "ʿAbd Manāf (al-Mughīra)",
+      "generation": 4,
+      "role": "paternalAscendant",
+      "bio": "Chef respecté de Quraysh.",
+      "parentId": "qusay"
+    },
+    {
+      "id": "qusay",
+      "arabic": "قُصَيّ",
+      "transliteration": "Quṣayy ibn Kilāb",
+      "generation": 5,
+      "role": "paternalAscendant",
+      "bio": "Réunifia Quraysh et reprit le contrôle de la Kaʿba. Le grand rassembleur (al-Mujammiʿ).",
+      "parentId": "kilab"
+    },
+    {
+      "id": "kilab",
+      "arabic": "كِلَاب",
+      "transliteration": "Kilāb ibn Murra",
+      "generation": 6,
+      "role": "paternalAscendant",
+      "parentId": "murra"
+    },
+    {
+      "id": "murra",
+      "arabic": "مُرَّة",
+      "transliteration": "Murra ibn Kaʿb",
+      "generation": 7,
+      "role": "paternalAscendant",
+      "parentId": "kaab"
+    },
+    {
+      "id": "kaab",
+      "arabic": "كَعْب",
+      "transliteration": "Kaʿb ibn Luʾayy",
+      "generation": 8,
+      "role": "paternalAscendant",
+      "parentId": "luayy"
+    },
+    {
+      "id": "luayy",
+      "arabic": "لُؤَيّ",
+      "transliteration": "Luʾayy ibn Ghālib",
+      "generation": 9,
+      "role": "paternalAscendant",
+      "parentId": "ghalib"
+    },
+    {
+      "id": "ghalib",
+      "arabic": "غَالِب",
+      "transliteration": "Ghālib ibn Fihr",
+      "generation": 10,
+      "role": "paternalAscendant",
+      "parentId": "fihr"
+    },
+    {
+      "id": "fihr",
+      "arabic": "فِهْر",
+      "transliteration": "Fihr ibn Mālik (Quraysh)",
+      "generation": 11,
+      "role": "paternalAscendant",
+      "bio": "Ancêtre éponyme de Quraysh.",
+      "parentId": "malik"
+    },
+    {
+      "id": "malik",
+      "arabic": "مَالِك",
+      "transliteration": "Mālik ibn al-Naḍr",
+      "generation": 12,
+      "role": "paternalAscendant",
+      "parentId": "nadr"
+    },
+    {
+      "id": "nadr",
+      "arabic": "ٱلنَّضْر",
+      "transliteration": "al-Naḍr ibn Kināna",
+      "generation": 13,
+      "role": "paternalAscendant",
+      "parentId": "kinana"
+    },
+    {
+      "id": "kinana",
+      "arabic": "كِنَانَة",
+      "transliteration": "Kināna ibn Khuzayma",
+      "generation": 14,
+      "role": "paternalAscendant",
+      "parentId": "khuzayma"
+    },
+    {
+      "id": "khuzayma",
+      "arabic": "خُزَيْمَة",
+      "transliteration": "Khuzayma ibn Mudrika",
+      "generation": 15,
+      "role": "paternalAscendant",
+      "parentId": "mudrika"
+    },
+    {
+      "id": "mudrika",
+      "arabic": "مُدْرِكَة",
+      "transliteration": "Mudrika ibn Ilyās",
+      "generation": 16,
+      "role": "paternalAscendant",
+      "parentId": "ilyas"
+    },
+    {
+      "id": "ilyas",
+      "arabic": "إِلْيَاس",
+      "transliteration": "Ilyās ibn Muḍar",
+      "generation": 17,
+      "role": "paternalAscendant",
+      "parentId": "mudar"
+    },
+    {
+      "id": "mudar",
+      "arabic": "مُضَر",
+      "transliteration": "Muḍar ibn Nizār",
+      "generation": 18,
+      "role": "paternalAscendant",
+      "parentId": "nizar"
+    },
+    {
+      "id": "nizar",
+      "arabic": "نِزَار",
+      "transliteration": "Nizār ibn Maʿadd",
+      "generation": 19,
+      "role": "paternalAscendant",
+      "parentId": "maadd"
+    },
+    {
+      "id": "maadd",
+      "arabic": "مَعَدّ",
+      "transliteration": "Maʿadd ibn ʿAdnān",
+      "generation": 20,
+      "role": "paternalAscendant",
+      "parentId": "adnan"
+    },
+    {
+      "id": "adnan",
+      "arabic": "عَدْنَان",
+      "transliteration": "ʿAdnān",
+      "generation": 21,
+      "role": "paternalAscendant",
+      "bio": "Au-delà de ʿAdnān, le Prophète ﷺ a dit : « Les généalogistes mentent. » Lien avec Ismāʿīl établi par tradition mais détails contestés.",
+      "isBoundary": true
+    }
+  ],
+  "paternalAscendantsTraditional": [
+    {
+      "id": "ismail",
+      "arabic": "إِسْمَاعِيل عليه السلام",
+      "transliteration": "Ismāʿīl ʿalayhi-s-salām",
+      "role": "traditionalAncestor",
+      "bio": "Fils d'Ibrāhīm ʿalayhi-s-salām. Bâtisseur de la Kaʿba avec son père. Ancêtre des Arabes du Nord (ʿAdnāniyyūn).",
+      "isTraditional": true,
+      "parentId": "ibrahim"
+    },
+    {
+      "id": "ibrahim",
+      "arabic": "إِبْرَاهِيم عليه السلام",
+      "transliteration": "Ibrāhīm ʿalayhi-s-salām",
+      "role": "traditionalAncestor",
+      "bio": "Khalīl Allāh — Père des prophètes. Bâtit la Kaʿba avec Ismāʿīl.",
+      "isTraditional": true
+    },
+    {
+      "id": "adam",
+      "arabic": "آدَم عليه السلام",
+      "transliteration": "Ādam ʿalayhi-s-salām",
+      "role": "traditionalAncestor",
+      "bio": "Premier homme et premier prophète.",
+      "isTraditional": true
+    }
+  ],
+  "maternalLine": [
+    {
+      "id": "amina",
+      "arabic": "آمِنَة",
+      "transliteration": "Āmina bint Wahb",
+      "role": "mother",
+      "birth": "~549 EC",
+      "death": "~575 EC · al-Abwāʾ",
+      "bio": "Mariée à ʿAbd Allāh, mère du Prophète ﷺ. Décédée alors qu'il avait 6 ans, sur la route de Médine.",
+      "parentId": "wahb"
+    },
+    {
+      "id": "wahb",
+      "arabic": "وَهْب",
+      "transliteration": "Wahb ibn ʿAbd Manāf",
+      "role": "maternalAscendant",
+      "bio": "Chef des Banū Zuhra.",
+      "parentId": "abdmanaf-zuhri"
+    },
+    {
+      "id": "abdmanaf-zuhri",
+      "arabic": "عَبْد مَنَاف الزُهري",
+      "transliteration": "ʿAbd Manāf ibn Zuhra",
+      "role": "maternalAscendant",
+      "parentId": "zuhra"
+    },
+    {
+      "id": "zuhra",
+      "arabic": "زُهْرَة",
+      "transliteration": "Zuhra ibn Kilāb",
+      "role": "maternalAscendant",
+      "bio": "Ancêtre des Banū Zuhra — frère de Quṣayy. Les lignées maternelle et paternelle du Prophète ﷺ convergent ici à Kilāb.",
+      "parentId": "kilab"
+    }
+  ],
+  "paternalUncles": [
+    {
+      "id": "hamza",
+      "arabic": "حَمْزَة",
+      "transliteration": "Ḥamza ibn ʿAbd al-Muṭṭalib",
+      "kunya": "Abū ʿUmāra",
+      "laqab": [
+        "Asad Allāh",
+        "Sayyid al-Shuhadāʾ"
+      ],
+      "death": "3 AH · Uḥud",
+      "role": "uncle",
+      "bio": "Le « Lion d'Allāh ». Embrassa l'islam après une provocation de Abū Jahl. Martyr de Uḥud.",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "abbas",
+      "arabic": "ٱلْعَبَّاس",
+      "transliteration": "al-ʿAbbās ibn ʿAbd al-Muṭṭalib",
+      "kunya": "Abū al-Faḍl",
+      "death": "32 AH",
+      "role": "uncle",
+      "bio": "Ancêtre des califes abbassides. Embrassa l'islam tardivement, joua un rôle clé à la conquête de La Mecque.",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "abutalib",
+      "arabic": "أَبُو طَالِب",
+      "transliteration": "Abū Ṭālib (ʿAbd Manāf)",
+      "death": "~620 EC · Mecque",
+      "role": "uncle",
+      "bio": "Éleva Muḥammad ﷺ. Le protégea pendant les premières années de la prédication. Décédé l'« Année de la tristesse ».",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "abulahab",
+      "arabic": "أَبُو لَهَب",
+      "transliteration": "Abū Lahab (ʿAbd al-ʿUzzā)",
+      "death": "2 AH",
+      "role": "uncle",
+      "bio": "Mentionné dans la sourate al-Masad pour son hostilité au Prophète ﷺ.",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "zubayr-uncle",
+      "arabic": "ٱلزُّبَيْر",
+      "transliteration": "al-Zubayr ibn ʿAbd al-Muṭṭalib",
+      "role": "uncle",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "harith-uncle",
+      "arabic": "ٱلْحَارِث",
+      "transliteration": "al-Ḥārith ibn ʿAbd al-Muṭṭalib",
+      "role": "uncle",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "abugaytham",
+      "arabic": "أَبُو ٱلْغَيْثَم",
+      "transliteration": "Quthm ibn ʿAbd al-Muṭṭalib",
+      "role": "uncle",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "safiyya",
+      "arabic": "صَفِيَّة",
+      "transliteration": "Ṣafiyya bint ʿAbd al-Muṭṭalib",
+      "death": "20 AH",
+      "role": "aunt",
+      "bio": "Tante musulmane, sœur de Ḥamza. Brave combattante.",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "atika",
+      "arabic": "عَاتِكَة",
+      "transliteration": "ʿĀtika bint ʿAbd al-Muṭṭalib",
+      "role": "aunt",
+      "bio": "Connue pour son rêve prémonitoire avant la bataille de Badr.",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "arwa",
+      "arabic": "أَرْوَى",
+      "transliteration": "Arwā bint ʿAbd al-Muṭṭalib",
+      "role": "aunt",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "umaymah",
+      "arabic": "أُمَيْمَة",
+      "transliteration": "Umayma bint ʿAbd al-Muṭṭalib",
+      "role": "aunt",
+      "bio": "Mère de Zaynab bint Jaḥsh.",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "barra",
+      "arabic": "بَرَّة",
+      "transliteration": "Barra bint ʿAbd al-Muṭṭalib",
+      "role": "aunt",
+      "parentId": "abdulmuttalib"
+    },
+    {
+      "id": "umm-hakim",
+      "arabic": "أُمّ حَكِيم ٱلْبَيْضَاء",
+      "transliteration": "Umm Ḥakīm al-Bayḍāʾ",
+      "role": "aunt",
+      "bio": "Jumelle du père du Prophète ﷺ, ʿAbd Allāh.",
+      "parentId": "abdulmuttalib"
+    }
+  ],
+  "wives": [
+    {
+      "id": "khadija",
+      "arabic": "خَدِيجَة",
+      "transliteration": "Khadīja bint Khuwaylid",
+      "laqab": [
+        "al-Ṭāhira",
+        "Umm al-Muʾminīn"
+      ],
+      "birth": "~555 EC",
+      "death": "10ᵉ année prophétique · Mecque",
+      "marriageOrder": 1,
+      "role": "wife",
+      "bio": "Première épouse, mère de tous ses enfants sauf Ibrāhīm. Première à embrasser l'islam. Le Prophète ﷺ ne prit aucune autre épouse de son vivant.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "sawda",
+      "arabic": "سَوْدَة",
+      "transliteration": "Sawda bint Zamʿa",
+      "death": "54 AH",
+      "marriageOrder": 2,
+      "role": "wife",
+      "bio": "Première épouse après Khadīja.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "aisha",
+      "arabic": "عَائِشَة",
+      "transliteration": "ʿĀʾisha bint Abī Bakr",
+      "laqab": [
+        "al-Ṣiddīqa",
+        "Umm al-Muʾminīn"
+      ],
+      "death": "58 AH",
+      "marriageOrder": 3,
+      "role": "wife",
+      "bio": "Grande savante, transmit ~2200 hadiths. Fille du calife Abū Bakr.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "hafsa",
+      "arabic": "حَفْصَة",
+      "transliteration": "Ḥafṣa bint ʿUmar",
+      "death": "45 AH",
+      "marriageOrder": 4,
+      "role": "wife",
+      "bio": "Fille du calife ʿUmar. Conserva le premier muṣḥaf complet du Coran.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "zaynab-khuzayma",
+      "arabic": "زَيْنَب بِنْت خُزَيْمَة",
+      "transliteration": "Zaynab bint Khuzayma",
+      "laqab": [
+        "Umm al-Masākīn"
+      ],
+      "death": "4 AH",
+      "marriageOrder": 5,
+      "role": "wife",
+      "bio": "« Mère des pauvres ». Décédée peu après son mariage.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "umm-salama",
+      "arabic": "أُمّ سَلَمَة",
+      "transliteration": "Umm Salama (Hind bint Abī Umayya)",
+      "death": "62 AH",
+      "marriageOrder": 6,
+      "role": "wife",
+      "bio": "Veuve d'Abū Salama, savante éminente. Conseil clé lors de Ḥudaybiyya.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "zaynab-jahsh",
+      "arabic": "زَيْنَب بِنْت جَحْش",
+      "transliteration": "Zaynab bint Jaḥsh",
+      "death": "20 AH",
+      "marriageOrder": 7,
+      "role": "wife",
+      "bio": "Cousine du Prophète ﷺ. Mariage révélé dans le Coran (33:37).",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "juwayriyya",
+      "arabic": "جُوَيْرِيَّة",
+      "transliteration": "Juwayriyya bint al-Ḥārith",
+      "death": "50 AH",
+      "marriageOrder": 8,
+      "role": "wife",
+      "bio": "Issue des Banū al-Muṣṭaliq. Son mariage entraîna la libération de 100 prisonniers.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "umm-habiba",
+      "arabic": "أُمّ حَبِيبَة",
+      "transliteration": "Umm Ḥabība (Ramla bint Abī Sufyān)",
+      "death": "44 AH",
+      "marriageOrder": 9,
+      "role": "wife",
+      "bio": "Fille d'Abū Sufyān. Émigra en Abyssinie.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "safiyya-wife",
+      "arabic": "صَفِيَّة",
+      "transliteration": "Ṣafiyya bint Ḥuyayy",
+      "death": "50 AH",
+      "marriageOrder": 10,
+      "role": "wife",
+      "bio": "Descendante d'Aaron (Hārūn ʿalayhi-s-salām). Issue des Banū al-Naḍīr.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "maymuna",
+      "arabic": "مَيْمُونَة",
+      "transliteration": "Maymūna bint al-Ḥārith",
+      "death": "51 AH",
+      "marriageOrder": 11,
+      "role": "wife",
+      "bio": "Dernière épouse.",
+      "spouseOf": "muhammad"
+    },
+    {
+      "id": "mariya",
+      "arabic": "مَارِيَة ٱلْقِبْطِيَّة",
+      "transliteration": "Māriya al-Qibṭiyya",
+      "death": "16 AH",
+      "marriageOrder": 12,
+      "role": "wife",
+      "bio": "Concubine offerte par le Muqawqis d'Égypte. Mère d'Ibrāhīm.",
+      "variant": "Statut concubine selon la majorité ; certains la classent parmi les épouses.",
+      "spouseOf": "muhammad"
+    }
+  ],
+  "children": [
+    {
+      "id": "qasim",
+      "arabic": "ٱلْقَاسِم",
+      "transliteration": "al-Qāsim",
+      "parentId": "muhammad",
+      "motherId": "khadija",
+      "role": "child",
+      "bio": "Premier enfant. Décédé en bas âge. Kunya Abū al-Qāsim."
+    },
+    {
+      "id": "zaynab-bint",
+      "arabic": "زَيْنَب",
+      "transliteration": "Zaynab bint Muḥammad",
+      "parentId": "muhammad",
+      "motherId": "khadija",
+      "death": "8 AH",
+      "role": "child",
+      "bio": "Fille aînée. Mariée à Abū al-ʿĀṣ ibn al-Rabīʿ. Mère d'Umāma."
+    },
+    {
+      "id": "ruqayya",
+      "arabic": "رُقَيَّة",
+      "transliteration": "Ruqayya bint Muḥammad",
+      "parentId": "muhammad",
+      "motherId": "khadija",
+      "death": "2 AH",
+      "role": "child",
+      "bio": "Mariée à ʿUthmān ibn ʿAffān. Émigra en Abyssinie puis à Médine."
+    },
+    {
+      "id": "umm-kulthum",
+      "arabic": "أُمّ كُلْثُوم",
+      "transliteration": "Umm Kulthūm bint Muḥammad",
+      "parentId": "muhammad",
+      "motherId": "khadija",
+      "death": "9 AH",
+      "role": "child",
+      "bio": "Mariée à ʿUthmān après le décès de Ruqayya — d'où son surnom Dhū al-Nūrayn."
+    },
+    {
+      "id": "fatima",
+      "arabic": "فَاطِمَة ٱلزَّهْرَاء",
+      "transliteration": "Fāṭima al-Zahrāʾ",
+      "parentId": "muhammad",
+      "motherId": "khadija",
+      "laqab": [
+        "al-Zahrāʾ",
+        "Sayyidat Nisāʾ al-ʿĀlamīn"
+      ],
+      "death": "11 AH",
+      "role": "child",
+      "bio": "Fille préférée. Mariée à ʿAlī ibn Abī Ṭālib. Seule à survivre au Prophète ﷺ — décédée 6 mois après lui. Mère de Ḥasan, Ḥusayn et Zaynab."
+    },
+    {
+      "id": "abdullah-son",
+      "arabic": "عَبْد ٱللَّٰه",
+      "transliteration": "ʿAbd Allāh",
+      "parentId": "muhammad",
+      "motherId": "khadija",
+      "laqab": [
+        "al-Ṭāhir",
+        "al-Ṭayyib"
+      ],
+      "role": "child",
+      "bio": "Décédé en bas âge à La Mecque."
+    },
+    {
+      "id": "ibrahim-son",
+      "arabic": "إِبْرَاهِيم",
+      "transliteration": "Ibrāhīm",
+      "parentId": "muhammad",
+      "motherId": "mariya",
+      "death": "10 AH · Médine",
+      "role": "child",
+      "bio": "Décédé à environ 18 mois. Le jour de son décès survint une éclipse solaire."
+    }
+  ],
+  "grandchildren": [
+    {
+      "id": "hasan",
+      "arabic": "ٱلْحَسَن",
+      "transliteration": "al-Ḥasan ibn ʿAlī",
+      "parentIds": [
+        "fatima",
+        "ali"
+      ],
+      "birth": "3 AH",
+      "death": "50 AH · Médine",
+      "laqab": [
+        "Sayyid Shabāb Ahl al-Janna"
+      ],
+      "role": "grandchild",
+      "bio": "Aîné de Fāṭima. Bref califat avant abdication en faveur de Muʿāwiya pour préserver l'unité."
+    },
+    {
+      "id": "husayn",
+      "arabic": "ٱلْحُسَيْن",
+      "transliteration": "al-Ḥusayn ibn ʿAlī",
+      "parentIds": [
+        "fatima",
+        "ali"
+      ],
+      "birth": "4 AH",
+      "death": "61 AH · Karbalāʾ",
+      "laqab": [
+        "Sayyid al-Shuhadāʾ",
+        "Sayyid Shabāb Ahl al-Janna"
+      ],
+      "role": "grandchild",
+      "bio": "Martyrisé à Karbalāʾ. Lignée des Sādat (descendants honorés)."
+    },
+    {
+      "id": "zaynab-fatima",
+      "arabic": "زَيْنَب",
+      "transliteration": "Zaynab bint ʿAlī",
+      "parentIds": [
+        "fatima",
+        "ali"
+      ],
+      "death": "62 AH",
+      "role": "grandchild",
+      "bio": "Témoin de Karbalāʾ, porteuse du message après le martyre de Ḥusayn."
+    },
+    {
+      "id": "umm-kulthum-fatima",
+      "arabic": "أُمّ كُلْثُوم",
+      "transliteration": "Umm Kulthūm bint ʿAlī",
+      "parentIds": [
+        "fatima",
+        "ali"
+      ],
+      "role": "grandchild",
+      "bio": "Mariée à ʿUmar ibn al-Khaṭṭāb."
+    },
+    {
+      "id": "umama",
+      "arabic": "أُمَامَة",
+      "transliteration": "Umāma bint Zaynab",
+      "parentIds": [
+        "zaynab-bint"
+      ],
+      "role": "grandchild",
+      "bio": "Petite-fille via Zaynab. Le Prophète ﷺ l'aimait beaucoup et priait en la portant."
+    }
+  ],
+  "cousins": [
+    {
+      "id": "ali",
+      "arabic": "عَلِيّ",
+      "transliteration": "ʿAlī ibn Abī Ṭālib",
+      "kunya": "Abū al-Ḥasan, Abū Turāb",
+      "death": "40 AH",
+      "role": "cousin",
+      "bio": "Élevé dans la maison du Prophète ﷺ. Premier enfant musulman. Mari de Fāṭima. Père de Ḥasan et Ḥusayn. 4ᵉ calife.",
+      "parentId": "abutalib",
+      "spouseOf": "fatima"
+    }
+  ]
+}

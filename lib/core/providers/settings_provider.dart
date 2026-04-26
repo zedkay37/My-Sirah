@@ -1,0 +1,69 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sirah_app/core/notifications/notification_service.dart';
+import 'package:sirah_app/core/providers/user_state.dart';
+import 'package:sirah_app/core/storage/hive_source.dart';
+import 'package:sirah_app/core/theme/text_size.dart';
+import 'package:sirah_app/core/theme/theme_key.dart';
+
+class SettingsNotifier extends Notifier<UserState> {
+  @override
+  UserState build() => HiveSource.read();
+
+  Future<void> _save(UserState next) async {
+    state = next;
+    await HiveSource.write(next);
+  }
+
+  Future<void> setTheme(ThemeKey theme) => _save(state.copyWith(theme: theme));
+
+  Future<void> setTextSize(TextSize size) =>
+      _save(state.copyWith(textSize: size));
+
+  Future<void> setOnboardingComplete() => _save(
+        state.copyWith(onboardingCompletedAt: DateTime.now()),
+      );
+
+  Future<void> toggleFavorite(int number) {
+    final favs = Set<int>.from(state.favorites);
+    if (favs.contains(number)) {
+      favs.remove(number);
+    } else {
+      favs.add(number);
+    }
+    return _save(state.copyWith(favorites: favs));
+  }
+
+  Future<void> markViewed(int number) {
+    if (state.viewed.contains(number)) return Future.value();
+    final viewed = Set<int>.from(state.viewed)..add(number);
+    final lastSeen = Map<int, DateTime>.from(state.lastSeen)
+      ..[number] = DateTime.now();
+    return _save(state.copyWith(viewed: viewed, lastSeen: lastSeen));
+  }
+
+  Future<void> markLearned(int number) {
+    if (state.learned.contains(number)) return Future.value();
+    final learned = Set<int>.from(state.learned)..add(number);
+    return _save(state.copyWith(learned: learned));
+  }
+
+  Future<void> setNotifHour(int? hour) async {
+    await _save(state.copyWith(dailyNotifHour: hour));
+    if (hour != null) {
+      await NotificationService.scheduleDailyAt(hour);
+    } else {
+      await NotificationService.cancel();
+    }
+  }
+
+  Future<void> recordQuizResult(int correctAnswers) => _save(
+        state.copyWith(
+          quizzesCompleted: state.quizzesCompleted + 1,
+          totalQuizScore: state.totalQuizScore + correctAnswers,
+        ),
+      );
+}
+
+final settingsProvider = NotifierProvider<SettingsNotifier, UserState>(
+  SettingsNotifier.new,
+);

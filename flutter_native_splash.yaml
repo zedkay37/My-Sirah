@@ -1,0 +1,14 @@
+flutter_native_splash:
+  # Background couleur principale thème light
+  color: "#F5F1E8"
+  color_dark: "#1A1A2E"
+
+  # Ajouter un logo ici quand l'asset sera disponible :
+  # image: assets/images/splash_logo.png
+  # image_dark: assets/images/splash_logo_dark.png
+
+  android_12:
+    color: "#F5F1E8"
+    color_dark: "#1A1A2E"
+
+  web: false

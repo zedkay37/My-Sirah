@@ -1,0 +1,23 @@
+{
+  "@@locale": "ar",
+  "@@last_modified": "2026-04-25",
+  "flashcardFlipHint": "Appuyez sur la carte pour la retourner",
+  "qcmNext": "Suivant",
+
+  "detailShare": "Partager",
+
+  "settingsNotifEnable": "Activer",
+  "settingsNotifDisable": "Désactiver",
+
+  "profileConstellationTitle": "Constellation",
+  "profileLegendLearned": "appris",
+  "profileLegendViewed": "vu",
+  "profileLegendUnknown": "non découvert",
+
+  "detailLearningProgress": "Mémorisation en cours…",
+
+  "favoriteAdd": "Ajouter aux favoris",
+  "favoriteRemove": "Retirer des favoris",
+
+  "discoverNoResults": "Aucun résultat"
+}
