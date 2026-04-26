@@ -311,6 +311,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get treeListView => 'Vue liste';
 
   @override
+  String get treeRiverPaternal => 'Lignée paternelle';
+
+  @override
+  String get treeRiverMaternal => 'Lignée maternelle';
+
+  @override
+  String get treeRiverDescendants => 'Descendants';
+
+  @override
   String get treePersonOpenDetail => 'Voir la fiche →';
 
   @override

@@ -668,6 +668,24 @@ abstract class AppLocalizations {
   /// **'Vue liste'**
   String get treeListView;
 
+  /// No description provided for @treeRiverPaternal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lignée paternelle'**
+  String get treeRiverPaternal;
+
+  /// No description provided for @treeRiverMaternal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lignée maternelle'**
+  String get treeRiverMaternal;
+
+  /// No description provided for @treeRiverDescendants.
+  ///
+  /// In fr, this message translates to:
+  /// **'Descendants'**
+  String get treeRiverDescendants;
+
   /// No description provided for @treePersonOpenDetail.
   ///
   /// In fr, this message translates to:

@@ -150,6 +150,9 @@
   "treeSearchHint": "Rechercher dans la lignée…",
   "treeResetView": "Recentrer",
   "treeListView": "Vue liste",
+  "treeRiverPaternal": "Lignée paternelle",
+  "treeRiverMaternal": "Lignée maternelle",
+  "treeRiverDescendants": "Descendants",
   "treePersonOpenDetail": "Voir la fiche →",
   "treeLoadError": "Erreur de chargement"
 }
