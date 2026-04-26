@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/genealogy_providers.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/genealogy/data/models/family_member.dart';
 import 'package:sirah_app/features/genealogy/presentation/radial/radial_filters.dart';
 import 'package:sirah_app/features/genealogy/presentation/radial/radial_painter.dart';
+import 'package:sirah_app/features/genealogy/presentation/shared/person_chip.dart';
 
 final genealogyFilterProvider = StateProvider<GenealogyFilter>(
   (ref) => GenealogyFilter.all,
@@ -140,7 +140,7 @@ class _RadialViewState extends ConsumerState<RadialView> {
               if (selectedId == null) return const SizedBox.shrink();
 
               final member = members.firstWhere((m) => m.id == selectedId);
-              return _PersonChip(member: member);
+              return PersonChip(member: member);
             },
           ),
         ),
@@ -160,59 +160,3 @@ class _RadialViewState extends ConsumerState<RadialView> {
   }
 }
 
-class _PersonChip extends StatelessWidget {
-  const _PersonChip({required this.member});
-  final FamilyMember member;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: context.colors.bg,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(context.radii.lg),
-        side: BorderSide(color: context.colors.line),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(context.space.md),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    member.arabic,
-                    style: context.typo.arabicBody.copyWith(
-                      color: context.colors.ink,
-                    ),
-                    textDirection: TextDirection.rtl,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    member.transliteration,
-                    style: context.typo.body.copyWith(
-                      color: context.colors.muted,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => context.push('/tree/person/${member.id}'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: context.colors.accent,
-                foregroundColor: context.colors.bg,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(context.radii.md),
-                ),
-              ),
-              child: Text(context.l10n.treePersonOpenDetail),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

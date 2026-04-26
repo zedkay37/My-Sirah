@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
+import 'package:sirah_app/features/genealogy/presentation/constellation/constellation_view.dart';
 import 'package:sirah_app/features/genealogy/presentation/radial/radial_view.dart';
 import 'package:sirah_app/features/genealogy/presentation/shared/mode_selector.dart';
 
@@ -47,10 +48,7 @@ class TreeScreen extends ConsumerWidget {
           icon: Icons.timeline_outlined,
           label: l10n.treeModeRiver,
         ),
-      'constellation' => _ModePlaceholder(
-          icon: Icons.auto_awesome_outlined,
-          label: l10n.treeModeConstellation,
-        ),
+      'constellation' => const ConstellationView(),
       _ => const RadialView(),
     };
   }
