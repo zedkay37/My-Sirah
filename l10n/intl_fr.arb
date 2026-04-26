@@ -162,5 +162,24 @@
   "treeListSectionWives": "Épouses",
   "treeListSectionChildren": "Enfants & petits-enfants",
   "treeListSectionUncles": "Oncles & tantes",
-  "treeListSectionOther": "Autres"
+  "treeListSectionOther": "Autres",
+
+  "tafakkurTitle": "Tafakkur",
+  "tafakkurPause": "En pause",
+  "tafakkurResume": "Reprendre",
+  "tafakkurComplete": "Contemplation terminée",
+  "tafakkurReturn": "Retourner au nom",
+  "tafakkurPaceLabel": "Rythme de lecture",
+  "tafakkurPaceSlow": "Lent — 12 secondes",
+  "tafakkurPaceNormal": "Normal — 9 secondes",
+  "tafakkurPaceFast": "Rapide — 6 secondes",
+  "tafakkurRemaining": "{count} phrase(s) restante(s)",
+  "@tafakkurRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "tafakkurExitConfirm": "Quitter la contemplation ?",
+  "tafakkurExitConfirmYes": "Quitter",
+  "tafakkurExitConfirmNo": "Continuer"
 }

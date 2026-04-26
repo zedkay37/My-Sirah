@@ -348,4 +348,45 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get treeListSectionOther => 'Autres';
+
+  @override
+  String get tafakkurTitle => 'Tafakkur';
+
+  @override
+  String get tafakkurPause => 'En pause';
+
+  @override
+  String get tafakkurResume => 'Reprendre';
+
+  @override
+  String get tafakkurComplete => 'Contemplation terminée';
+
+  @override
+  String get tafakkurReturn => 'Retourner au nom';
+
+  @override
+  String get tafakkurPaceLabel => 'Rythme de lecture';
+
+  @override
+  String get tafakkurPaceSlow => 'Lent — 12 secondes';
+
+  @override
+  String get tafakkurPaceNormal => 'Normal — 9 secondes';
+
+  @override
+  String get tafakkurPaceFast => 'Rapide — 6 secondes';
+
+  @override
+  String tafakkurRemaining(int count) {
+    return '$count phrase(s) restante(s)';
+  }
+
+  @override
+  String get tafakkurExitConfirm => 'Quitter la contemplation ?';
+
+  @override
+  String get tafakkurExitConfirmYes => 'Quitter';
+
+  @override
+  String get tafakkurExitConfirmNo => 'Continuer';
 }
