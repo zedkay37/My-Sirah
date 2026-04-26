@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
+import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/core/utils/hijri_utils.dart';
 import 'package:sirah_app/features/names/presentation/home/category_carousel.dart';
@@ -36,6 +38,60 @@ class HomeScreen extends ConsumerWidget {
                   data: (name) => DailyNameCard(name: name),
                   loading: () => const _NameCardSkeleton(),
                   error: (_, __) => const _NameCardSkeleton(),
+                ),
+              ),
+              SizedBox(height: space.lg),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: space.md),
+                child: Consumer(
+                  builder: (context, ref, _) {
+                    final masteredCount = ref.watch(
+                      settingsProvider.select((s) => s.leitnerBoxes.values.where((v) => v == 2).length),
+                    );
+                    final l10n = context.l10n;
+                    final colors = context.colors;
+                    final radii = context.radii;
+                    final typo = context.typo;
+
+                    return GestureDetector(
+                      onTap: () => context.push('/study/parcours-list'),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: space.md, horizontal: space.md),
+                        decoration: BoxDecoration(
+                          color: masteredCount > 0 
+                              ? colors.success.withValues(alpha: 0.1) 
+                              : colors.accent.withValues(alpha: 0.1),
+                          borderRadius: radii.lgAll,
+                          border: Border.all(
+                            color: masteredCount > 0 ? colors.success : colors.accent,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              masteredCount > 0 ? Icons.workspace_premium : Icons.school_outlined,
+                              color: masteredCount > 0 ? colors.success : colors.accent,
+                            ),
+                            SizedBox(width: space.md),
+                            Expanded(
+                              child: Text(
+                                masteredCount > 0 
+                                    ? l10n.studyMasteredBadge(masteredCount)
+                                    : l10n.studyTitle,
+                                style: typo.bodyLarge.copyWith(
+                                  color: masteredCount > 0 ? colors.success : colors.accent,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.chevron_right,
+                              color: masteredCount > 0 ? colors.success : colors.accent,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               SizedBox(height: space.lg),

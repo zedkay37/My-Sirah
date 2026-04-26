@@ -64,6 +64,9 @@ class HiveSource {
         'favoriteMembers': s.favoriteMembers.toList(),
         'viewedMembers': s.viewedMembers.toList(),
         'preferredTreeView': s.preferredTreeView,
+        'leitnerBoxes': s.leitnerBoxes.map((k, v) => MapEntry(k.toString(), v)),
+        'completedParcours': s.completedParcours.toList(),
+        'studyMode': s.studyMode,
       };
 
   static UserState _fromMap(Map<String, dynamic> m) {
@@ -93,6 +96,11 @@ class HiveSource {
     final favMemberList = m['favoriteMembers'] as List<dynamic>? ?? [];
     final viewedMemberList = m['viewedMembers'] as List<dynamic>? ?? [];
 
+    final leitnerRaw = m['leitnerBoxes'] as Map<String, dynamic>? ?? {};
+    final leitnerBoxes = leitnerRaw.map((k, v) => MapEntry(int.parse(k), v as int));
+    final completedParcoursList = m['completedParcours'] as List<dynamic>? ?? [];
+    final studyMode = m['studyMode'] as String? ?? 'random';
+
     return UserState(
       theme: theme,
       textSize: textSize,
@@ -108,6 +116,9 @@ class HiveSource {
       favoriteMembers: Set<String>.from(favMemberList.map((e) => e as String)),
       viewedMembers: Set<String>.from(viewedMemberList.map((e) => e as String)),
       preferredTreeView: m['preferredTreeView'] as String? ?? 'radial',
+      leitnerBoxes: leitnerBoxes,
+      completedParcours: Set<String>.from(completedParcoursList.map((e) => e as String)),
+      studyMode: studyMode,
     );
   }
 }

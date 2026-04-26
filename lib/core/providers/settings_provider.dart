@@ -83,6 +83,30 @@ class SettingsNotifier extends Notifier<UserState> {
 
   Future<void> setPreferredTreeView(String view) =>
       _save(state.copyWith(preferredTreeView: view));
+
+  // ── Study / Leitner ──────────────────────────────────────────────────────────
+
+  Future<void> levelUp(int nameNumber) {
+    final boxes = Map<int, int>.from(state.leitnerBoxes);
+    final current = boxes[nameNumber] ?? 0;
+    boxes[nameNumber] = (current + 1).clamp(0, 2);
+    return _save(state.copyWith(leitnerBoxes: boxes));
+  }
+
+  Future<void> levelDown(int nameNumber) {
+    final boxes = Map<int, int>.from(state.leitnerBoxes);
+    final current = boxes[nameNumber] ?? 0;
+    boxes[nameNumber] = (current - 1).clamp(0, 2);
+    return _save(state.copyWith(leitnerBoxes: boxes));
+  }
+
+  Future<void> setStudyMode(String mode) =>
+      _save(state.copyWith(studyMode: mode));
+
+  Future<void> markParcoursComplete(String id) {
+    final completed = Set<String>.from(state.completedParcours)..add(id);
+    return _save(state.copyWith(completedParcours: completed));
+  }
 }
 
 final settingsProvider = NotifierProvider<SettingsNotifier, UserState>(

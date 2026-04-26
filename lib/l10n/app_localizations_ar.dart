@@ -392,4 +392,38 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tafakkurExitConfirmNo => 'متابعة';
+
+  @override
+  String get studyTitle => 'وضع الدراسة';
+
+  @override
+  String get studyParcoursTitle => 'المسارات الموضوعية';
+
+  @override
+  String get studyParcoursSubtitle => 'اكتشاف موجه حسب المواضيع';
+
+  @override
+  String get studyReviewTitle => 'مراجعة حرة';
+
+  @override
+  String studyReviewSubtitle(int count) {
+    return '$count أسماء للمراجعة';
+  }
+
+  @override
+  String get studyReviewEmpty => 'لا توجد أسماء للمراجعة حالياً';
+
+  @override
+  String get studyReviewKnow => 'أعرف';
+
+  @override
+  String get studyReviewUnsure => 'غير متأكد';
+
+  @override
+  String get studyParcoursComplete => 'إنهاء';
+
+  @override
+  String studyMasteredBadge(int count) {
+    return '$count أسماء متقنة';
+  }
 }

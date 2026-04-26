@@ -392,4 +392,38 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tafakkurExitConfirmNo => 'Continuer';
+
+  @override
+  String get studyTitle => 'Mode Étude';
+
+  @override
+  String get studyParcoursTitle => 'Parcours Thématiques';
+
+  @override
+  String get studyParcoursSubtitle => 'Découverte guidée par thèmes';
+
+  @override
+  String get studyReviewTitle => 'Révision libre';
+
+  @override
+  String studyReviewSubtitle(int count) {
+    return '$count noms à réviser';
+  }
+
+  @override
+  String get studyReviewEmpty => 'Aucun nom à réviser pour le moment';
+
+  @override
+  String get studyReviewKnow => 'Je connais';
+
+  @override
+  String get studyReviewUnsure => 'Encore flou';
+
+  @override
+  String get studyParcoursComplete => 'Terminer';
+
+  @override
+  String studyMasteredBadge(int count) {
+    return '$count noms maîtrisés';
+  }
 }

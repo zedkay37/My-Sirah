@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
+import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/names/presentation/tafakkur/tafakkur_controller.dart';
 import 'package:sirah_app/features/names/presentation/tafakkur/widgets/phrase_display.dart';
@@ -91,6 +92,12 @@ class _TafakkurContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(tafakkurControllerProvider(commentary), (prev, next) {
+      if (prev?.isComplete != true && next.isComplete) {
+        ref.read(settingsProvider.notifier).levelUp(nameNumber);
+      }
+    });
+
     final state = ref.watch(tafakkurControllerProvider(commentary));
     final controller = ref.read(tafakkurControllerProvider(commentary).notifier);
     final colors = context.colors;

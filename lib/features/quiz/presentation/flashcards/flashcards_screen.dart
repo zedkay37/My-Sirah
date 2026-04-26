@@ -27,6 +27,9 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
     ref
         .read(settingsProvider.notifier)
         .markLearned(_session.names[_index].number);
+    ref
+        .read(settingsProvider.notifier)
+        .levelUp(_session.names[_index].number);
     _knownCount++;
     _advance();
   }

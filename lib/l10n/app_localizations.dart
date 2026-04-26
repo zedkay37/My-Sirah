@@ -829,6 +829,66 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Continuer'**
   String get tafakkurExitConfirmNo;
+
+  /// No description provided for @studyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode Étude'**
+  String get studyTitle;
+
+  /// No description provided for @studyParcoursTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcours Thématiques'**
+  String get studyParcoursTitle;
+
+  /// No description provided for @studyParcoursSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Découverte guidée par thèmes'**
+  String get studyParcoursSubtitle;
+
+  /// No description provided for @studyReviewTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Révision libre'**
+  String get studyReviewTitle;
+
+  /// No description provided for @studyReviewSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} noms à réviser'**
+  String studyReviewSubtitle(int count);
+
+  /// No description provided for @studyReviewEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun nom à réviser pour le moment'**
+  String get studyReviewEmpty;
+
+  /// No description provided for @studyReviewKnow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je connais'**
+  String get studyReviewKnow;
+
+  /// No description provided for @studyReviewUnsure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encore flou'**
+  String get studyReviewUnsure;
+
+  /// No description provided for @studyParcoursComplete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminer'**
+  String get studyParcoursComplete;
+
+  /// No description provided for @studyMasteredBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} noms maîtrisés'**
+  String studyMasteredBadge(int count);
 }
 
 class _AppLocalizationsDelegate

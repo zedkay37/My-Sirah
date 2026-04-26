@@ -182,5 +182,26 @@
   },
   "tafakkurExitConfirm": "Quitter la contemplation ?",
   "tafakkurExitConfirmYes": "Quitter",
-  "tafakkurExitConfirmNo": "Continuer"
+  "tafakkurExitConfirmNo": "Continuer",
+
+  "studyTitle": "Mode Étude",
+  "studyParcoursTitle": "Parcours Thématiques",
+  "studyParcoursSubtitle": "Découverte guidée par thèmes",
+  "studyReviewTitle": "Révision libre",
+  "studyReviewSubtitle": "{count} noms à réviser",
+  "@studyReviewSubtitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "studyReviewEmpty": "Aucun nom à réviser pour le moment",
+  "studyReviewKnow": "Je connais",
+  "studyReviewUnsure": "Encore flou",
+  "studyParcoursComplete": "Terminer",
+  "studyMasteredBadge": "{count} noms maîtrisés",
+  "@studyMasteredBadge": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  }
 }

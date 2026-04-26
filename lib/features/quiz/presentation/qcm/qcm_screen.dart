@@ -36,6 +36,7 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
     if (_isCorrect(index)) {
       _score++;
       ref.read(settingsProvider.notifier).markLearned(_question.name.number);
+      ref.read(settingsProvider.notifier).levelUp(_question.name.number);
     }
     _autoAdvanceTimer = Timer(const Duration(milliseconds: 1200), () {
       if (mounted) _next();
