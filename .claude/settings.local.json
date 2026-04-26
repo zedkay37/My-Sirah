@@ -20,7 +20,12 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "PowerShell(Set-Location \"C:\\\\Users\\\\isabu\\\\Desktop\\\\My-Sirah\"; $env:GIT_TERMINAL_PROMPT = \"0\"; git.exe push origin main 2>&1)"
+      "PowerShell(Set-Location \"C:\\\\Users\\\\isabu\\\\Desktop\\\\My-Sirah\"; $env:GIT_TERMINAL_PROMPT = \"0\"; git.exe push origin main 2>&1)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)",
+      "Bash(python3 -c ' *)",
+      "Bash(git merge feat/genealogy-tree --no-ff -m ' *)",
+      "Bash(git merge feat/experimental --no-ff -m ' *)"
     ]
   }
 }
