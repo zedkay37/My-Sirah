@@ -9,7 +9,7 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appTitle => 'Asmāʾ an-Nabī';
+  String get appTitle => 'Sirah Hub';
 
   @override
   String get navHome => 'Accueil';
@@ -50,6 +50,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get homeGreeting => 'As-salāmu ʿalaykum';
+
+  @override
+  String get homeTagline => 'Connaître, aimer et suivre le Prophète ﷺ';
 
   @override
   String get homeCategorySection => 'Explorer par catégorie';
@@ -182,7 +185,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsThemeDark => 'Sombre';
 
   @override
-  String get settingsThemeFeminine => 'Féminin';
+  String get settingsThemeFeminine => 'Violet';
 
   @override
   String get settingsSectionNotif => 'Notification quotidienne';
@@ -348,4 +351,45 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get treeListSectionOther => 'Autres';
+
+  @override
+  String get tafakkurTitle => 'Tafakkur';
+
+  @override
+  String get tafakkurPause => 'En pause';
+
+  @override
+  String get tafakkurResume => 'Reprendre';
+
+  @override
+  String get tafakkurComplete => 'Contemplation terminée';
+
+  @override
+  String get tafakkurReturn => 'Retourner au nom';
+
+  @override
+  String get tafakkurPaceLabel => 'Rythme de lecture';
+
+  @override
+  String get tafakkurPaceSlow => 'Lent — 12 secondes';
+
+  @override
+  String get tafakkurPaceNormal => 'Normal — 9 secondes';
+
+  @override
+  String get tafakkurPaceFast => 'Rapide — 6 secondes';
+
+  @override
+  String tafakkurRemaining(int count) {
+    return '$count phrase(s) restante(s)';
+  }
+
+  @override
+  String get tafakkurExitConfirm => 'Quitter la contemplation ?';
+
+  @override
+  String get tafakkurExitConfirmYes => 'Quitter';
+
+  @override
+  String get tafakkurExitConfirmNo => 'Continuer';
 }

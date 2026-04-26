@@ -41,5 +41,25 @@
   "treePersonShare": "مشاركة",
   "treeSearchHint": "ابحث في النسب…",
   "treeResetView": "إعادة التمركز",
-  "treeListView": "عرض القائمة"
+  "treeListView": "عرض القائمة",
+
+  "homeTagline": "معرفة النبيّ ﷺ ومحبّته واتّباعه",
+  "tafakkurTitle": "تفكر",
+  "tafakkurPause": "إيقاف مؤقت",
+  "tafakkurResume": "استئناف",
+  "tafakkurComplete": "انتهت التلاوة",
+  "tafakkurReturn": "العودة إلى الاسم",
+  "tafakkurPaceLabel": "وتيرة القراءة",
+  "tafakkurPaceSlow": "بطيء — 12 ثانية",
+  "tafakkurPaceNormal": "عادي — 9 ثواني",
+  "tafakkurPaceFast": "سريع — 6 ثواني",
+  "tafakkurRemaining": "متبقٍ {count}",
+  "@tafakkurRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "tafakkurExitConfirm": "الخروج من التفكر؟",
+  "tafakkurExitConfirmYes": "خروج",
+  "tafakkurExitConfirmNo": "متابعة"
 }

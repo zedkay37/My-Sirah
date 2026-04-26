@@ -1,7 +1,7 @@
 {
   "@@locale": "fr",
 
-  "appTitle": "Asmāʾ an-Nabī",
+  "appTitle": "Sirah Hub",
 
   "navHome": "Accueil",
   "navDiscover": "Découvrir",
@@ -18,6 +18,7 @@
   "onboardingNotifLater": "Plus tard",
 
   "homeGreeting": "As-salāmu ʿalaykum",
+  "homeTagline": "Connaître, aimer et suivre le Prophète ﷺ",
   "homeCategorySection": "Explorer par catégorie",
   "homeDiscoverName": "Découvrir ce nom",
   "homeCategoryLearned": "{learned}/{total} appris",
@@ -96,7 +97,7 @@
   "settingsSectionTheme": "Thème",
   "settingsThemeLight": "Clair",
   "settingsThemeDark": "Sombre",
-  "settingsThemeFeminine": "Féminin",
+  "settingsThemeFeminine": "Violet",
   "settingsSectionNotif": "Notification quotidienne",
   "settingsSectionTextSize": "Taille du texte",
   "settingsTextSmall": "Petit",
@@ -162,5 +163,24 @@
   "treeListSectionWives": "Épouses",
   "treeListSectionChildren": "Enfants & petits-enfants",
   "treeListSectionUncles": "Oncles & tantes",
-  "treeListSectionOther": "Autres"
+  "treeListSectionOther": "Autres",
+
+  "tafakkurTitle": "Tafakkur",
+  "tafakkurPause": "En pause",
+  "tafakkurResume": "Reprendre",
+  "tafakkurComplete": "Contemplation terminée",
+  "tafakkurReturn": "Retourner au nom",
+  "tafakkurPaceLabel": "Rythme de lecture",
+  "tafakkurPaceSlow": "Lent — 12 secondes",
+  "tafakkurPaceNormal": "Normal — 9 secondes",
+  "tafakkurPaceFast": "Rapide — 6 secondes",
+  "tafakkurRemaining": "{count} phrase(s) restante(s)",
+  "@tafakkurRemaining": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "tafakkurExitConfirm": "Quitter la contemplation ?",
+  "tafakkurExitConfirmYes": "Quitter",
+  "tafakkurExitConfirmNo": "Continuer"
 }

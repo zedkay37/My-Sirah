@@ -65,7 +65,7 @@ class ThemePicker extends StatelessWidget {
                       Text(
                         label,
                         style: typo.caption.copyWith(
-                          color: isSelected ? colors.accent : colors.muted,
+                          color: isSelected ? colors.accent : colors.ink,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

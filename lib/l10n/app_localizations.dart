@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Asmāʾ an-Nabī'**
+  /// **'Sirah Hub'**
   String get appTitle;
 
   /// No description provided for @navHome.
@@ -181,6 +181,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'As-salāmu ʿalaykum'**
   String get homeGreeting;
+
+  /// No description provided for @homeTagline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connaître, aimer et suivre le Prophète ﷺ'**
+  String get homeTagline;
 
   /// No description provided for @homeCategorySection.
   ///
@@ -413,7 +419,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsThemeFeminine.
   ///
   /// In fr, this message translates to:
-  /// **'Féminin'**
+  /// **'Violet'**
   String get settingsThemeFeminine;
 
   /// No description provided for @settingsSectionNotif.
@@ -745,6 +751,84 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Autres'**
   String get treeListSectionOther;
+
+  /// No description provided for @tafakkurTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tafakkur'**
+  String get tafakkurTitle;
+
+  /// No description provided for @tafakkurPause.
+  ///
+  /// In fr, this message translates to:
+  /// **'En pause'**
+  String get tafakkurPause;
+
+  /// No description provided for @tafakkurResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reprendre'**
+  String get tafakkurResume;
+
+  /// No description provided for @tafakkurComplete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contemplation terminée'**
+  String get tafakkurComplete;
+
+  /// No description provided for @tafakkurReturn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retourner au nom'**
+  String get tafakkurReturn;
+
+  /// No description provided for @tafakkurPaceLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rythme de lecture'**
+  String get tafakkurPaceLabel;
+
+  /// No description provided for @tafakkurPaceSlow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lent — 12 secondes'**
+  String get tafakkurPaceSlow;
+
+  /// No description provided for @tafakkurPaceNormal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Normal — 9 secondes'**
+  String get tafakkurPaceNormal;
+
+  /// No description provided for @tafakkurPaceFast.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rapide — 6 secondes'**
+  String get tafakkurPaceFast;
+
+  /// No description provided for @tafakkurRemaining.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} phrase(s) restante(s)'**
+  String tafakkurRemaining(int count);
+
+  /// No description provided for @tafakkurExitConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter la contemplation ?'**
+  String get tafakkurExitConfirm;
+
+  /// No description provided for @tafakkurExitConfirmYes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter'**
+  String get tafakkurExitConfirmYes;
+
+  /// No description provided for @tafakkurExitConfirmNo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer'**
+  String get tafakkurExitConfirmNo;
 }
 
 class _AppLocalizationsDelegate
