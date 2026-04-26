@@ -309,4 +309,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get treeListView => 'Vue liste';
+
+  @override
+  String get treePersonOpenDetail => 'Voir la fiche →';
+
+  @override
+  String get treeLoadError => 'Erreur de chargement';
 }

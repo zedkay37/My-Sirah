@@ -56,6 +56,11 @@ class _ShellScaffold extends StatelessWidget {
             selectedIcon: Icon(Icons.person, color: colors.accent),
             label: l10n.navProfile,
           ),
+          NavigationDestination(
+            icon: const Icon(Icons.account_tree_outlined),
+            selectedIcon: Icon(Icons.account_tree, color: colors.accent),
+            label: l10n.navTree,
+          ),
         ],
       ),
     );
@@ -105,6 +110,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/profile',
                 builder: (_, __) => const ProfileScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/tree',
+                builder: (_, __) => const TreeScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'person/:id',
+                    pageBuilder: (_, state) {
+                      final id = state.pathParameters['id']!;
+                      return _fadeSlide(
+                        state,
+                        PersonDetailScreen(memberId: id),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),

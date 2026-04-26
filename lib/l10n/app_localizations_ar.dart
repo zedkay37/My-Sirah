@@ -309,4 +309,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get treeListView => 'عرض القائمة';
+
+  @override
+  String get treePersonOpenDetail => 'Voir la fiche →';
+
+  @override
+  String get treeLoadError => 'Erreur de chargement';
 }

@@ -149,5 +149,7 @@
   "treePersonShare": "Partager",
   "treeSearchHint": "Rechercher dans la lignée…",
   "treeResetView": "Recentrer",
-  "treeListView": "Vue liste"
+  "treeListView": "Vue liste",
+  "treePersonOpenDetail": "Voir la fiche →",
+  "treeLoadError": "Erreur de chargement"
 }

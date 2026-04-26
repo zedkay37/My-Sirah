@@ -667,6 +667,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Vue liste'**
   String get treeListView;
+
+  /// No description provided for @treePersonOpenDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la fiche →'**
+  String get treePersonOpenDetail;
+
+  /// No description provided for @treeLoadError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur de chargement'**
+  String get treeLoadError;
 }
 
 class _AppLocalizationsDelegate
