@@ -21,5 +21,9 @@ abstract class UserState with _$UserState {
     @Default({}) Set<String> favoriteMembers,
     @Default({}) Set<String> viewedMembers,
     @Default('radial') String preferredTreeView,
+    // Study module — V1.3
+    @Default({}) Map<int, int> leitnerBoxes,
+    @Default({}) Set<String> completedParcours,
+    @Default('random') String studyMode,
   }) = _UserState;
 }

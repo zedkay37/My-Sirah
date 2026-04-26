@@ -213,31 +213,34 @@ class _CategoryFilterBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: space.md),
       children: [
         // "Tous" chip
-        Padding(
-          padding: EdgeInsets.only(right: space.xs),
-          child: GestureDetector(
-            onTap: () => onSelect(null),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              padding: EdgeInsets.symmetric(
-                horizontal: space.md,
-                vertical: 3,
-              ),
-              decoration: BoxDecoration(
-                color: selectedSlug == null
-                    ? colors.accent.withValues(alpha: 0.12)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(radii.pill),
-                border: Border.all(
-                  color:
-                      selectedSlug == null ? colors.accent : colors.line,
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.only(right: space.xs),
+            child: GestureDetector(
+              onTap: () => onSelect(null),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                padding: EdgeInsets.symmetric(
+                  horizontal: space.md,
+                  vertical: 3,
                 ),
-              ),
-              child: Text(
-                l10n.discoverFilterAll,
-                style: typo.caption.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: selectedSlug == null ? colors.accent : colors.muted,
+                decoration: BoxDecoration(
+                  color: selectedSlug == null
+                      ? colors.accent.withValues(alpha: 0.12)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(radii.pill),
+                  border: Border.all(
+                    color:
+                        selectedSlug == null ? colors.accent : colors.line,
+                  ),
+                ),
+                child: Text(
+                  l10n.discoverFilterAll,
+                  style: typo.caption.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: selectedSlug == null ? colors.accent : colors.muted,
+                  ),
                 ),
               ),
             ),
@@ -245,15 +248,18 @@ class _CategoryFilterBar extends StatelessWidget {
         ),
         // Category chips
         ...categories.map(
-          (cat) => Padding(
-            padding: EdgeInsets.only(right: space.xs),
-            child: GestureDetector(
-              onTap: () =>
-                  onSelect(selectedSlug == cat.slug ? null : cat.slug),
-              child: _CategoryFilterChip(
-                slug: cat.slug,
-                label: cat.labelFr,
-                isSelected: selectedSlug == cat.slug,
+          (cat) => Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.only(right: space.xs),
+              child: GestureDetector(
+                onTap: () =>
+                    onSelect(selectedSlug == cat.slug ? null : cat.slug),
+                child: _CategoryFilterChip(
+                  slug: cat.slug,
+                  label: cat.labelFr,
+                  isSelected: selectedSlug == cat.slug,
+                ),
               ),
             ),
           ),

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "prophetie",
+    "titleFr": "Noms de la Prophétie",
+    "titleAr": "أسماء النبوة والرسالة",
+    "descriptionFr": "Les noms fondamentaux qui désignent sa mission prophétique et son message universel.",
+    "nameNumbers": [5, 7, 9, 10, 11, 12, 13, 14],
+    "colorHex": "#4A6A8E"
+  },
+  {
+    "id": "lumiere",
+    "titleFr": "Noms de la Lumière",
+    "titleAr": "أسماء النور والجمال",
+    "descriptionFr": "Les noms qui célèbrent sa nature lumineuse et la clarté de sa guidance.",
+    "nameNumbers": [56, 57, 58, 59, 60, 141, 164, 165],
+    "colorHex": "#8E6A4A"
+  },
+  {
+    "id": "intercession",
+    "titleFr": "Noms du Rang Divin",
+    "titleAr": "أسماء المقام والشفاعة",
+    "descriptionFr": "Les noms liés à son statut exceptionnel auprès d'Allah et à son pouvoir d'intercession.",
+    "nameNumbers": [6, 16, 19, 20, 26, 32, 33, 34],
+    "colorHex": "#6A4A8E"
+  },
+  {
+    "id": "eschatologie",
+    "titleFr": "Noms du Jour Dernier",
+    "titleAr": "أسماء يوم القيامة",
+    "descriptionFr": "Les noms du Prophète ﷺ liés à son rôle lors du rassemblement et du Jugement.",
+    "nameNumbers": [8, 37, 38, 39, 119, 120, 121, 124],
+    "colorHex": "#8E4A4A"
+  },
+  {
+    "id": "purete",
+    "titleFr": "Noms de la Pureté",
+    "titleAr": "أسماء الطهارة والتزكية",
+    "descriptionFr": "Les noms qui évoquent son infaillibilité et la purification de son cœur.",
+    "nameNumbers": [18, 63, 64, 65, 66, 67, 91, 93],
+    "colorHex": "#4A7C8E"
+  },
+  {
+    "id": "vertus",
+    "titleFr": "Noms des Vertus",
+    "titleAr": "أسماء الأخلاق والشمائل",
+    "descriptionFr": "Les noms liés à son caractère noble, sa véracité et son honnêteté.",
+    "nameNumbers": [21, 22, 23, 35, 36, 40, 61, 62],
+    "colorHex": "#4A8E6A"
+  },
+  {
+    "id": "louange",
+    "titleFr": "Noms de la Louange",
+    "titleAr": "أسماء الحمد والثناء",
+    "descriptionFr": "Les noms dérivés de la louange (Hamd), qui expriment la reconnaissance infinie envers lui.",
+    "nameNumbers": [1, 2, 3, 4, 94, 95, 153, 176],
+    "colorHex": "#7C6FAB"
+  },
+  {
+    "id": "noblesse",
+    "titleFr": "Noms de la Noblesse",
+    "titleAr": "أسماء الشرف والمكانة",
+    "descriptionFr": "Les noms honorifiques qui désignent sa lignée, sa noblesse et sa préséance.",
+    "nameNumbers": [78, 82, 144, 145, 146, 147, 148, 149],
+    "colorHex": "#B5895A"
+  }
+]

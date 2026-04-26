@@ -25,8 +25,8 @@ class DiscoverScreen extends StatelessWidget {
             indicatorColor: colors.accent,
             labelColor: colors.accent,
             unselectedLabelColor: colors.muted,
-            labelStyle: typo.button,
-            unselectedLabelStyle: typo.button,
+            labelStyle: typo.button.copyWith(height: 1.0),
+            unselectedLabelStyle: typo.button.copyWith(height: 1.0),
             tabs: [
               Tab(text: l10n.discoverAllNames),
               Tab(text: l10n.discoverQuiz),

@@ -61,5 +61,26 @@
   },
   "tafakkurExitConfirm": "الخروج من التفكر؟",
   "tafakkurExitConfirmYes": "خروج",
-  "tafakkurExitConfirmNo": "متابعة"
+  "tafakkurExitConfirmNo": "متابعة",
+
+  "studyTitle": "وضع الدراسة",
+  "studyParcoursTitle": "المسارات الموضوعية",
+  "studyParcoursSubtitle": "اكتشاف موجه حسب المواضيع",
+  "studyReviewTitle": "مراجعة حرة",
+  "studyReviewSubtitle": "{count} أسماء للمراجعة",
+  "@studyReviewSubtitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "studyReviewEmpty": "لا توجد أسماء للمراجعة حالياً",
+  "studyReviewKnow": "أعرف",
+  "studyReviewUnsure": "غير متأكد",
+  "studyParcoursComplete": "إنهاء",
+  "studyMasteredBadge": "{count} أسماء متقنة",
+  "@studyMasteredBadge": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  }
 }

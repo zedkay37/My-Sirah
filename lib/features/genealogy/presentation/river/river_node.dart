@@ -128,89 +128,54 @@ class Tributary extends StatelessWidget {
   Widget build(BuildContext context) {
     if (members.isEmpty) return const SizedBox.shrink();
 
-    final displayMembers = members.take(4).toList();
-    final extraCount = members.length - displayMembers.length;
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+    final radii = context.radii;
+    final count = members.length;
 
-    final cards = <Widget>[];
-    for (final m in displayMembers) {
-      cards.add(
-        GestureDetector(
-          onTap: () => context.push('/tree/person/${m.id}'),
+    return Padding(
+      padding: EdgeInsets.only(bottom: space.md),
+      child: Center(
+        child: GestureDetector(
+          onTap: () => _showSheet(context),
           child: Container(
-            width: 80,
-            margin: EdgeInsets.only(
-              right: isLeft ? 0 : context.space.xs,
-              left: isLeft ? context.space.xs : 0,
+            width: 200,
+            padding: EdgeInsets.symmetric(
+              horizontal: space.md,
+              vertical: space.sm,
             ),
-            padding: EdgeInsets.all(context.space.xs),
             decoration: BoxDecoration(
-              color: context.colors.bg2,
-              borderRadius: BorderRadius.circular(context.radii.sm),
+              color: colors.bg2,
+              borderRadius: BorderRadius.circular(radii.sm),
               border: Border.all(
-                color: context.colors.line.withValues(alpha: 0.5),
+                color: colors.muted.withValues(alpha: 0.4),
+                width: 1,
+                strokeAlign: BorderSide.strokeAlignInside,
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  m.arabic,
-                  style: context.typo.arabicBody.copyWith(
-                    fontSize: 12,
-                    color: context.colors.ink,
+                Icon(
+                  Icons.account_tree_outlined,
+                  size: 14,
+                  color: colors.muted,
+                ),
+                SizedBox(width: space.xs),
+                Flexible(
+                  child: Text(
+                    'Oncles & Tantes · $count',
+                    style: typo.caption.copyWith(color: colors.muted),
+                    textAlign: TextAlign.center,
                   ),
-                  textDirection: TextDirection.rtl,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  m.transliteration,
-                  style: context.typo.caption.copyWith(color: context.colors.muted),
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                SizedBox(width: space.xs),
+                Icon(Icons.chevron_right, size: 14, color: colors.muted),
               ],
             ),
           ),
         ),
-      );
-    }
-
-    if (extraCount > 0) {
-      cards.add(
-        Container(
-          width: 40,
-          margin: EdgeInsets.only(
-            right: isLeft ? 0 : context.space.xs,
-            left: isLeft ? context.space.xs : 0,
-          ),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: context.colors.bg2,
-            borderRadius: BorderRadius.circular(context.radii.sm),
-            border: Border.all(
-              color: context.colors.line.withValues(alpha: 0.5),
-            ),
-          ),
-          child: Text(
-            '+$extraCount',
-            style: context.typo.caption.copyWith(color: context.colors.muted),
-          ),
-        ),
-      );
-    }
-
-    final content = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: isLeft ? cards.reversed.toList() : cards,
-    );
-
-    return Padding(
-      padding: EdgeInsets.only(bottom: context.space.md),
-      child: Row(
-        children: isLeft ? [const Spacer(), content] : [content, const Spacer()],
       ),
     ).animate().fade(
           duration: 300.ms,
@@ -220,5 +185,83 @@ class Tributary extends StatelessWidget {
           duration: 300.ms,
           delay: (index * 40).ms,
         );
+  }
+
+  void _showSheet(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+    final radii = context.radii;
+
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: colors.bg,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(radii.lg),
+        ),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 36,
+                height: 4,
+                margin: EdgeInsets.symmetric(vertical: space.sm),
+                decoration: BoxDecoration(
+                  color: colors.line,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(space.md, 0, space.md, space.sm),
+              child: Text(
+                'Oncles & Tantes du Prophète ﷺ',
+                style: typo.headline.copyWith(color: colors.ink),
+              ),
+            ),
+            const Divider(height: 1),
+            Flexible(
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(vertical: space.sm),
+                shrinkWrap: true,
+                itemCount: members.length,
+                separatorBuilder: (_, __) => const Divider(height: 1, indent: 16, endIndent: 16),
+                itemBuilder: (ctx, i) {
+                  final m = members[i];
+                  return ListTile(
+                    onTap: () {
+                      Navigator.of(ctx).pop();
+                      GoRouter.of(context).push('/tree/person/${m.id}');
+                    },
+                    title: Text(
+                      m.arabic,
+                      style: typo.arabicBody.copyWith(
+                        fontSize: 18,
+                        color: colors.ink,
+                      ),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    subtitle: Text(
+                      m.transliteration,
+                      style: typo.caption.copyWith(color: colors.muted),
+                    ),
+                    trailing: Icon(
+                      Icons.chevron_right,
+                      color: colors.muted,
+                      size: 18,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

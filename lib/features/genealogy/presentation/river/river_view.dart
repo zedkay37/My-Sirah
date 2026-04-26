@@ -81,16 +81,20 @@ class _RiverViewState extends ConsumerState<RiverView> {
     while (current != null) {
       chain.add(current);
       if (current.parentId == null) break;
-      current = repo.getById(current.parentId!);
+      final next = repo.getById(current.parentId!);
+      // Stop when we exit the maternal line (e.g. kilab is a paternalAscendant)
+      if (next == null ||
+          (next.role != FamilyRole.maternalAscendant &&
+              next.role != FamilyRole.mother)) {
+        break;
+      }
+      current = next;
     }
 
-    final reversed = chain.reversed.toList();
-    for (final m in reversed) {
+    for (final m in chain.reversed) {
       entries.add(_NodeEntry(m));
     }
-    
-    final prophet = repo.getProphet();
-    entries.add(_NodeEntry(prophet, isProphet: true));
+    entries.add(_NodeEntry(repo.getProphet(), isProphet: true));
 
     return entries;
   }
@@ -270,13 +274,12 @@ class _RiverLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            // Glow effect
-            Container(
+    return Stack(
+      children: [
+        // Glow effect
+        Positioned.fill(
+          child: Center(
+            child: Container(
               width: 14,
               decoration: BoxDecoration(
                 color: context.colors.accent.withValues(alpha: 0.12),
@@ -289,8 +292,12 @@ class _RiverLine extends StatelessWidget {
                 ],
               ),
             ),
-            // Solid center line
-            Container(
+          ),
+        ),
+        // Solid center line
+        Positioned.fill(
+          child: Center(
+            child: Container(
               width: 2,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -306,9 +313,9 @@ class _RiverLine extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        );
-      },
+          ),
+        ),
+      ],
     );
   }
 }

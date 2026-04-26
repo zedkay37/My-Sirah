@@ -18,6 +18,10 @@ import 'package:sirah_app/features/quiz/data/quiz_generator.dart';
 import 'package:sirah_app/features/quiz/presentation/flashcards/flashcards_screen.dart';
 import 'package:sirah_app/features/quiz/presentation/qcm/qcm_screen.dart';
 import 'package:sirah_app/features/quiz/presentation/result/result_screen.dart';
+import 'package:sirah_app/features/study/presentation/entry/study_entry_screen.dart';
+import 'package:sirah_app/features/study/presentation/parcours/parcours_detail_screen.dart';
+import 'package:sirah_app/features/study/presentation/parcours/parcours_list_screen.dart';
+import 'package:sirah_app/features/study/presentation/review/review_screen.dart';
 
 // ── Shell (tab bar) ───────────────────────────────────────────────────────────
 
@@ -139,6 +143,30 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 ],
               ),
             ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/study',
+        pageBuilder: (_, state) => _fadeSlide(state, const StudyEntryScreen()),
+        routes: [
+          GoRoute(
+            path: 'review',
+            pageBuilder: (_, state) {
+              final queue = state.extra as List<int>? ?? [];
+              return _fadeSlide(state, ReviewScreen(key: ValueKey(queue)));
+            },
+          ),
+          GoRoute(
+            path: 'parcours-list',
+            pageBuilder: (_, state) => _fadeSlide(state, const ParcoursListScreen()),
+          ),
+          GoRoute(
+            path: 'parcours/:id',
+            pageBuilder: (_, state) => _fadeSlide(
+              state,
+              ParcoursDetailScreen(parcoursId: state.pathParameters['id']!),
+            ),
           ),
         ],
       ),
