@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
@@ -306,6 +307,11 @@ class _NameDetailPage extends StatelessWidget {
               primary: name.primarySource,
               secondary: name.secondarySources,
             ),
+
+          if (name.categorySlug == 'nobility') ...[
+            SizedBox(height: space.xl),
+            const _TreeBridgeLink(),
+          ],
         ],
       ),
     );
@@ -369,3 +375,26 @@ class _SourcesSection extends StatelessWidget {
     );
   }
 }
+
+class _TreeBridgeLink extends StatelessWidget {
+  const _TreeBridgeLink();
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => context.go('/tree'),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.account_tree_outlined, size: 16, color: context.colors.muted),
+          SizedBox(width: context.space.xs),
+          Text(
+            context.l10n.treeBridgeToTree,
+            style: context.typo.body.copyWith(color: context.colors.muted),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

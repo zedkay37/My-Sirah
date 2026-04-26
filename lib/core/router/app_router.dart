@@ -5,6 +5,7 @@ import 'package:sirah_app/core/notifications/notification_service.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/genealogy/presentation/detail/person_detail_screen.dart';
+import 'package:sirah_app/features/genealogy/presentation/list/tree_list_screen.dart';
 import 'package:sirah_app/features/genealogy/presentation/tree_screen.dart';
 import 'package:sirah_app/features/names/presentation/detail/detail_screen.dart';
 import 'package:sirah_app/features/names/presentation/home/home_screen.dart';
@@ -128,6 +129,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                         PersonDetailScreen(memberId: id),
                       );
                     },
+                  ),
+                  GoRoute(
+                    path: 'list',
+                    pageBuilder: (_, state) => _fadeSlide(state, const TreeListScreen()),
                   ),
                 ],
               ),

@@ -324,4 +324,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get treeLoadError => 'Erreur de chargement';
+
+  @override
+  String get treeBridgeToTree => 'Explorer la lignée →';
+
+  @override
+  String get treeBridgeRelatedNames => 'Noms du Prophète ﷺ liés';
+
+  @override
+  String get treeListViewTitle => 'Tous les membres';
+
+  @override
+  String get treeListSectionAncestors => 'Ascendants';
+
+  @override
+  String get treeListSectionWives => 'Épouses';
+
+  @override
+  String get treeListSectionChildren => 'Enfants & petits-enfants';
+
+  @override
+  String get treeListSectionUncles => 'Oncles & tantes';
+
+  @override
+  String get treeListSectionOther => 'Autres';
 }

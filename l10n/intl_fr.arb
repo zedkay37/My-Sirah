@@ -154,5 +154,13 @@
   "treeRiverMaternal": "Lignée maternelle",
   "treeRiverDescendants": "Descendants",
   "treePersonOpenDetail": "Voir la fiche →",
-  "treeLoadError": "Erreur de chargement"
+  "treeLoadError": "Erreur de chargement",
+  "treeBridgeToTree": "Explorer la lignée →",
+  "treeBridgeRelatedNames": "Noms du Prophète ﷺ liés",
+  "treeListViewTitle": "Tous les membres",
+  "treeListSectionAncestors": "Ascendants",
+  "treeListSectionWives": "Épouses",
+  "treeListSectionChildren": "Enfants & petits-enfants",
+  "treeListSectionUncles": "Oncles & tantes",
+  "treeListSectionOther": "Autres"
 }

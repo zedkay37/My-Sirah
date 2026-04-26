@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sirah_app/core/providers/genealogy_providers.dart';
+import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/genealogy/data/models/family_member.dart';
@@ -80,6 +81,7 @@ class PersonDetailScreen extends ConsumerWidget {
                       _buildRelationSection(context, member, repo),
                       _buildMarkersSection(context, member),
                       _buildNarrativeSection(context, member),
+                      _buildNamesBridgeSection(context, ref, member),
                       _buildSeeAlsoSection(context, member, repo),
                       SizedBox(height: context.space.xl),
                     ],
@@ -186,6 +188,70 @@ class PersonDetailScreen extends ConsumerWidget {
         Text(
           member.bio!,
           style: context.typo.bodyLarge.copyWith(color: context.colors.ink),
+        ),
+        SizedBox(height: context.space.lg),
+      ],
+    );
+  }
+
+  Widget _buildNamesBridgeSection(BuildContext context, WidgetRef ref, FamilyMember member) {
+    final namesAsync = ref.watch(namesProvider);
+    final names = namesAsync.valueOrNull ?? [];
+    
+    if (names.isEmpty) return const SizedBox.shrink();
+
+    final firstName = member.transliteration.split(' ').first.toLowerCase();
+    final relatedNames = names.where((n) {
+      return n.commentary.toLowerCase().contains(firstName);
+    }).take(5).toList();
+
+    if (relatedNames.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionHeader(title: context.l10n.treeBridgeRelatedNames),
+        SizedBox(height: context.space.sm),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: relatedNames.map((n) => Padding(
+              padding: EdgeInsets.only(right: context.space.sm),
+              child: InkWell(
+                borderRadius: context.radii.smAll,
+                onTap: () => context.push('/name/${n.number}'),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.space.sm,
+                    vertical: context.space.xs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.colors.bg2,
+                    borderRadius: context.radii.smAll,
+                    border: Border.all(color: context.colors.line),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        n.arabic,
+                        style: context.typo.arabicBody.copyWith(
+                          fontSize: 14,
+                          color: context.colors.ink,
+                        ),
+                        textDirection: TextDirection.rtl,
+                      ),
+                      SizedBox(width: context.space.xs),
+                      Text(
+                        n.number.toString().padLeft(3, '0'),
+                        style: context.typo.caption.copyWith(color: context.colors.muted),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )).toList(),
+          ),
         ),
         SizedBox(height: context.space.lg),
       ],

@@ -697,6 +697,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Erreur de chargement'**
   String get treeLoadError;
+
+  /// No description provided for @treeBridgeToTree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorer la lignée →'**
+  String get treeBridgeToTree;
+
+  /// No description provided for @treeBridgeRelatedNames.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noms du Prophète ﷺ liés'**
+  String get treeBridgeRelatedNames;
+
+  /// No description provided for @treeListViewTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les membres'**
+  String get treeListViewTitle;
+
+  /// No description provided for @treeListSectionAncestors.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ascendants'**
+  String get treeListSectionAncestors;
+
+  /// No description provided for @treeListSectionWives.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épouses'**
+  String get treeListSectionWives;
+
+  /// No description provided for @treeListSectionChildren.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enfants & petits-enfants'**
+  String get treeListSectionChildren;
+
+  /// No description provided for @treeListSectionUncles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oncles & tantes'**
+  String get treeListSectionUncles;
+
+  /// No description provided for @treeListSectionOther.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autres'**
+  String get treeListSectionOther;
 }
 
 class _AppLocalizationsDelegate
