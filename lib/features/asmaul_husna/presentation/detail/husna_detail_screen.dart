@@ -166,7 +166,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
                       )
                     else
                       const SizedBox.shrink(),
-                    if (name.id < 99)
+                    if (name.id < repo.getAll().length)
                       TextButton.icon(
                         onPressed: () => context.pushReplacement(
                           '/discover/husna/${name.id + 1}',

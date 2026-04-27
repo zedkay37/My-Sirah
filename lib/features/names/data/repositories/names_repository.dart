@@ -35,9 +35,11 @@ class NamesRepository {
     }
   }
 
+  // Époque fixe — détermine le cycle des noms du jour (même nom pour tous les utilisateurs)
+  static final _epoch = DateTime(2025, 1, 1);
+
   ProphetName getDailyName() {
-    final epoch = DateTime(2025, 1, 1);
-    final days = DateTime.now().difference(epoch).inDays;
+    final days = DateTime.now().difference(_epoch).inDays;
     return _names[days % _names.length];
   }
 }

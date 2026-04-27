@@ -38,7 +38,8 @@ class ProfileScreen extends ConsumerWidget {
     final namesAsync = ref.watch(namesProvider);
 
     final learnedCount = settings.learned.length;
-    final progress = learnedCount / 201;
+    final total = namesAsync.maybeWhen(data: (names) => names.length, orElse: () => 201);
+    final progress = total > 0 ? learnedCount / total : 0.0;
     final streak = _computeStreak(settings.lastSeen);
 
     return Scaffold(
