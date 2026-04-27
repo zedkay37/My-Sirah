@@ -43,9 +43,12 @@ class _HusnaListScreenState extends ConsumerState<HusnaListScreen> {
     final typo = context.typo;
     final space = context.space;
     final radii = context.radii;
+    final l10n = context.l10n;
 
     final husnaAsync = ref.watch(husnaProvider);
-    final husnaLearned = ref.watch(settingsProvider.select((s) => s.husnaLearned));
+    final husnaLearned = ref.watch(
+      settingsProvider.select((s) => s.husnaLearned),
+    );
 
     return Scaffold(
       backgroundColor: colors.bg,
@@ -53,7 +56,7 @@ class _HusnaListScreenState extends ConsumerState<HusnaListScreen> {
         backgroundColor: colors.bg,
         surfaceTintColor: colors.bg,
         elevation: 0,
-        title: Text('Asmāʾ al-Ḥusnā', style: typo.headline),
+        title: Text(l10n.husnaTitle, style: typo.headline),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: colors.ink),
           onPressed: () => context.pop(),
@@ -68,7 +71,7 @@ class _HusnaListScreenState extends ConsumerState<HusnaListScreen> {
               onChanged: (v) => setState(() => _query = v),
               style: typo.body,
               decoration: InputDecoration(
-                hintText: 'Rechercher (arabe, translittération, sens…)',
+                hintText: l10n.husnaSearchHint,
                 hintStyle: typo.body.copyWith(color: colors.muted),
                 prefixIcon: Icon(Icons.search_outlined, color: colors.muted),
                 suffixIcon: _query.isNotEmpty
@@ -108,7 +111,7 @@ class _HusnaListScreenState extends ConsumerState<HusnaListScreen> {
                 if (filtered.isEmpty) {
                   return Center(
                     child: Text(
-                      'Aucun résultat',
+                      l10n.discoverNoResults,
                       style: typo.body.copyWith(color: colors.muted),
                     ),
                   );
@@ -164,10 +167,7 @@ class _HusnaCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: space.md,
-          vertical: space.xs,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: space.md, vertical: space.xs),
         child: Container(
           padding: EdgeInsets.all(space.md),
           decoration: BoxDecoration(

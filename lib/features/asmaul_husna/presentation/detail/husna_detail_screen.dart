@@ -42,6 +42,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
     final typo = context.typo;
     final space = context.space;
     final radii = context.radii;
+    final l10n = context.l10n;
 
     final husnaAsync = ref.watch(husnaRepositoryProvider);
     final isLearned = ref.watch(
@@ -129,7 +130,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
                 if (name.etymology.isNotEmpty) ...[
                   SizedBox(height: space.xl),
                   _Section(
-                    title: 'Étymologie',
+                    title: l10n.husnaEtymology,
                     child: Text(
                       name.etymology,
                       style: typo.body.copyWith(color: colors.ink, height: 1.6),
@@ -140,7 +141,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
                 if (name.reference.isNotEmpty) ...[
                   SizedBox(height: space.md),
                   _Section(
-                    title: 'Référence',
+                    title: l10n.husnaReference,
                     child: Text(
                       name.reference,
                       style: typo.caption.copyWith(color: colors.muted),
@@ -160,7 +161,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
                           '/discover/husna/${name.id - 1}',
                         ),
                         icon: const Icon(Icons.chevron_left, size: 18),
-                        label: const Text('Précédent'),
+                        label: Text(l10n.husnaPrevious),
                         style: TextButton.styleFrom(
                           foregroundColor: colors.muted,
                         ),
@@ -173,7 +174,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
                           '/discover/husna/${name.id + 1}',
                         ),
                         icon: const Icon(Icons.chevron_right, size: 18),
-                        label: const Text('Suivant'),
+                        label: Text(l10n.husnaNext),
                         style: TextButton.styleFrom(
                           foregroundColor: colors.muted,
                         ),
@@ -188,7 +189,10 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
           );
         },
         loading: () => Center(
-          child: CircularProgressIndicator(color: colors.accent, strokeWidth: 2),
+          child: CircularProgressIndicator(
+            color: colors.accent,
+            strokeWidth: 2,
+          ),
         ),
         error: (_, __) => const SizedBox.shrink(),
       ),
@@ -220,10 +224,7 @@ class _Section extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: typo.overline.copyWith(color: colors.muted),
-          ),
+          Text(title, style: typo.overline.copyWith(color: colors.muted)),
           SizedBox(height: space.xs),
           child,
         ],

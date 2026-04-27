@@ -21,7 +21,7 @@ class ProphetsDiscoverScreen extends StatelessWidget {
           backgroundColor: colors.bg,
           surfaceTintColor: colors.bg,
           elevation: 0,
-          title: Text('Noms du Prophète ﷺ', style: typo.headline),
+          title: Text(l10n.discoverProphetsTitle, style: typo.headline),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: colors.ink),
             onPressed: () => context.pop(),
@@ -38,12 +38,7 @@ class ProphetsDiscoverScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
-          children: [
-            ListScreen(),
-            QuizEntryScreen(),
-          ],
-        ),
+        body: const TabBarView(children: [ListScreen(), QuizEntryScreen()]),
       ),
     );
   }

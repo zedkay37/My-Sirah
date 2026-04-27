@@ -147,6 +147,11 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
         ),
         actions: [
           IconButton(
+            icon: Icon(Icons.self_improvement_rounded, color: colors.muted),
+            tooltip: l10n.tafakkurTitle,
+            onPressed: () => context.push('/name/${currentName.number}/tafakkur'),
+          ),
+          IconButton(
             icon: Icon(Icons.share_outlined, color: colors.muted),
             tooltip: l10n.detailShare,
             onPressed: () => ShareNameService.share(

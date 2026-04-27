@@ -1,8 +1,9 @@
 # Architecture Sirah Hub — Document de référence
 
-> Mis à jour : 2026-04-27
-> Branche stable : `main` (tag v1.4 + audit patch)
+> Mis à jour : 2026-04-27 · **v1.5.1**
+> Branche stable : `main` (tag v1.5)
 > Branche dev : `feat/experimental`
+> Doc complète : `docs/CODE_REFERENCE.md` | Historique versions : `CHANGELOG.md`
 
 ---
 
@@ -26,6 +27,7 @@ Package : `sirah_app` · Offline-first · Zéro backend
 | flutter_animate | Animations déclaratives |
 | intl | L10n FR + AR (placeholder) |
 | flutter_local_notifications | Notification quotidienne |
+| timezone | Calcul de l'heure locale des notifications (`Europe/Paris`) |
 
 ---
 
@@ -79,59 +81,65 @@ context.typo.arabicBody    // police Amiri pour texte arabe
 
 ---
 
-## Structure des dossiers (V1.4)
+## Structure des dossiers (V1.5)
 
 ```
 lib/
   main.dart
   app.dart                          # MaterialApp.router + ThemeProvider
   core/
-    theme/
-      app_theme.dart
-      app_colors.dart               # ThemeExtension<AppColors>
-      app_typography.dart
-      app_spacing.dart
-      app_radius.dart
+    theme/                          # tokens : AppColors, AppTypography, AppSpacing, AppRadius
       text_size.dart                # enum TextSize (small/medium/large)
       theme_key.dart                # enum ThemeKey (light/dark/feminine)
-      themes/
-        light_theme.dart · dark_theme.dart · feminine_theme.dart
     router/
       app_router.dart               # go_router + StatefulShellRoute (4 onglets) + errorBuilder 404
     storage/
       hive_source.dart              # 1 box 'settings', JSON manuel sécurisé, pas de TypeAdapter
     providers/
-      user_state.dart               # freezed — état global utilisateur
-      settings_provider.dart        # NotifierProvider<SettingsNotifier, UserState>
+      user_state.dart               # freezed — état global utilisateur (SEUL modèle persisté)
+      settings_provider.dart        # NotifierProvider<SettingsNotifier, UserState> — SEUL écrivain Hive
       names_providers.dart          # FutureProvider<List<ProphetName>>
       genealogy_providers.dart      # FutureProvider<GenealogyRepository>
-      husna_providers.dart          # FutureProvider<List<HusnaName>> (V1.4)
-    models/                         # modèles génériques multi-deck (V1.3)
-      learning_deck.dart
-      learning_item.dart
+      husna_providers.dart          # FutureProvider<HusnaRepository>
     notifications/
       notification_service.dart
     utils/
       build_context_x.dart          # extension BuildContextX — colors, typo, space, radii, l10n
+      color_utils.dart              # hexToColor()
   features/
     names/                          # 201 Noms du Prophète ﷺ
-    quiz/                           # QCM + Flashcards (noms du Prophète)
+      data/
+        names_notifier.dart         # Facade NamesNotifier (V1.5)
+    quiz/                           # QCM + Flashcards
     profile/                        # Profil, favoris, settings
     onboarding/
     genealogy/                      # Arbre généalogique 67 personnes
-    study/                          # Parcours thématiques + Leitner (V1.3)
-    asmaul_husna/                   # 99 Noms d'Allah (V1.4)
+      data/
+        genealogy_notifier.dart     # Facade GenealogyNotifier (V1.5)
+      shared/
+        family_role_labels.dart     # Labels rôles familiaux partagés
+    study/                          # Parcours thématiques + Leitner
+      data/
+        study_notifier.dart         # Facade StudyNotifier (V1.5, ex-LeitnerRepository)
+        models/parcours.dart        # Modèle Parcours (Freezed)
+    asmaul_husna/                   # 99 Noms d'Allah
+      data/
+        asmaa_notifier.dart         # Facade AsmaaNotifier (V1.5)
     shared/                         # Widgets réutilisables
 assets/
   data/
-    names.json                      # 201 noms — NE PAS MODIFIER sans accord
-    categories.json                 # 11 catégories
-    genealogy.json                  # 67 personnes sourcées
-    parcours.json                   # 8 parcours thématiques (V1.3)
-    asmaul_husna.json               # 99 noms d'Allah (V1.4)
+    names.json          # 201 noms — NE PAS MODIFIER sans accord
+    categories.json     # 11 catégories
+    genealogy.json      # 67 personnes sourcées
+    parcours.json       # 8 parcours thématiques
+    asmaul_husna.json   # 99 noms d'Allah
 l10n/
-  intl_fr.arb                       # SOURCE DE VÉRITÉ L10N — toujours éditer ici
+  intl_fr.arb           # SOURCE DE VÉRITÉ L10N — toujours éditer ici
   intl_ar.arb
+docs/
+  ARCHITECTURE.md       # ce fichier — vue d'ensemble
+  CODE_REFERENCE.md     # documentation complète pour développeurs
+CHANGELOG.md            # historique détaillé des versions
 ```
 
 ---
@@ -140,7 +148,7 @@ l10n/
 
 **Pattern** : une seule box `'settings'`, blob JSON encodé manuellement. Pas de TypeAdapter. Tout dans `UserState`.
 
-Parsing sécurisé : `int.tryParse()` + `value is int` — jamais de cast brutal.
+Parsing sécurisé : helper par type (`_intValue`, `_intSet`, `_stringSet`, `_lastSeenMap`, `_stringKeyedMap`) avec `tryParse` et filtres typés. Une entrée corrompue est ignorée champ par champ au lieu de réinitialiser tout `UserState`.
 
 Pour ajouter un champ :
 1. Ajouter dans `user_state.dart` (freezed, avec `@Default`)
@@ -174,7 +182,7 @@ Set<int> husnaLearned       // IDs 1-99 des noms d'Allah appris
 
 ---
 
-## Navigation — app_router.dart (V1.4)
+## Navigation — app_router.dart (V1.5.1)
 
 4 onglets `StatefulShellRoute.indexedStack` :
 1. `/home` — HomeScreen
@@ -196,42 +204,49 @@ Routes hors-onglets :
 - `/study/parcours-list` · `/study/parcours/:id` · `/study/review`
 - `/settings` · `/favorites`
 - `/tree/person/:id` · `/tree/list`
-- Fallback 404 : `errorBuilder` → page "introuvable" + retour `/home`
+- Fallback 404 : `errorBuilder` → page "introuvable" + retour `/home` via clés l10n `errorPageNotFound` / `errorBackHome`
 
 Transition standard : `_fadeSlide()` — à utiliser sur tous les `pageBuilder`.
 
 ---
 
-## Modules — état V1.4
+## Modules — état V1.5
 
 ### `features/names/` — 201 Noms du Prophète ﷺ
-- `data/` : `ProphetName` freezed, `NamesJsonSource`, `NamesRepository` (getDailyName avec époque statique)
+- `data/names_notifier.dart` : **facade** `namesNotifierProvider` → NamesNotifier
+- `data/` : `ProphetName` freezed, `NamesJsonSource` (chargement JSON)
 - `presentation/home/` : HomeScreen, DailyNameCard, CategoryCarousel
-- `presentation/list/` : `DiscoverScreen` (hub), `ProphetsDiscoverScreen` (liste+quiz), `ListScreen`
-- `presentation/detail/` : DetailScreen swipeable, ShareNameService
+- `presentation/list/` : `DiscoverScreen` (hub), `ProphetsDiscoverScreen`, `ListScreen`
+- `presentation/detail/` : DetailScreen swipeable, timer 8s, ShareNameService
 - `presentation/tafakkur/` : TafakkurScreen, TafakkurController, widgets zoom/overlay/progress
 
-### `features/quiz/` — Quiz (noms du Prophète uniquement pour l'instant)
+### `features/quiz/` — Quiz
 - `QuizGenerator` — 10 questions, distracteurs même catégorie
-- QcmScreen, FlashcardsScreen, ResultScreen, QuizEntryScreen
+- QcmScreen (`namesNotifierProvider.markLearned` + `studyNotifierProvider.levelUp`)
+- FlashcardsScreen, ResultScreen
 
-### `features/asmaul_husna/` — 99 Noms d'Allah (V1.4)
+### `features/asmaul_husna/` — 99 Noms d'Allah
+- `data/asmaa_notifier.dart` : **facade** `asmaaNotifierProvider` → AsmaaNotifier
 - `data/` : `HusnaName` freezed, `HusnaJsonSource`, `HusnaRepository`
 - `presentation/list/` : `HusnaListScreen` — searchable, badge appris
-- `presentation/detail/` : `HusnaDetailScreen` — auto-learned 8s, nav prev/next dynamique
+- `presentation/detail/` : `HusnaDetailScreen` — auto-appris 8s, nav prev/next
 
-### `features/study/` — Mode Étude (V1.3)
-- `data/` : `LeitnerRepository`, `ParcoursRepository`
+### `features/study/` — Mode Étude
+- `data/study_notifier.dart` : **facade** `studyNotifierProvider` → StudyNotifier (ex-LeitnerRepository)
+- `data/models/parcours.dart` : modèle Freezed
 - `presentation/parcours/` : `ParcoursListScreen`, `ParcoursDetailScreen`
-- `presentation/review/` : `ReviewScreen`, `ReviewController`
+- `presentation/review/` : `ReviewScreen`, `ReviewController` (StateNotifier Freezed)
 
-### `features/genealogy/` — Arbre généalogique (V1.1)
-- 67 personnes, BFS path-finding, getProphet() avec StateError explicite
-- 5 vues : Radiale, Rivière (3 streams : paternel/maternel/descendants), Constellation, Liste, Fiche détail
+### `features/genealogy/` — Arbre généalogique
+- `data/genealogy_notifier.dart` : **facade** `genealogyNotifierProvider` → GenealogyNotifier
+- 67 personnes, BFS path-finding, `getProphet()` avec StateError explicite
+- `shared/family_role_labels.dart` : `familyRoleLabel(context, role)` partagé
+- 4 vues : Radiale, Rivière (3 flux), Constellation, Liste + Fiche détail (ConsumerStatefulWidget)
 
 ### `features/profile/`
-- ProfileScreen : constellation + stats dynamiques (total depuis repo)
-- SettingsScreen, FavoritesScreen
+- ProfileScreen : constellation + stats dynamiques
+- SettingsScreen : thème + taille texte (via `settingsProvider.notifier` — périmètre global légitime)
+- FavoritesScreen : via `namesNotifierProvider`
 
 ---
 
@@ -239,6 +254,7 @@ Transition standard : `_fadeSlide()` — à utiliser sur tous les `pageBuilder`.
 
 Toutes les clés sont dans `l10n/intl_fr.arb` (source de vérité).
 Clés avec placeholders : `homeCategoryLearned`, `detailProgress`, `quizProgress`, `quizResultScore`, `tafakkurRemaining`, `studyReviewSubtitle`, `studyMasteredBadge`.
+Clés ajoutées en v1.5.1 : `errorPageNotFound`, `errorBackHome`, `discoverProphetsTitle`, `discoverProphetsTitleAr`, `discoverProphetsSubtitle`, `discoverHusnaTitleAr`, `discoverHusnaSubtitle`, `husnaTitle`, `husnaSearchHint`, `husnaPrevious`, `husnaNext`, `husnaEtymology`, `husnaReference`.
 
 ---
 
@@ -249,11 +265,12 @@ Clés avec placeholders : `homeCategoryLearned`, `detailProgress`, `quizProgress
 | V1.0 | 201 noms, quiz, profil, favoris, onboarding, notifs, 3 thèmes | ✅ tag v1.0 |
 | V1.1 | Généalogie (5 vues, 67 personnes) | ✅ tag v1.1 |
 | V1.2 | Tafakkur, rebrand, correctifs thème | ✅ tag v1.2 |
-| V1.3 | SRS Leitner + Parcours Thématiques + architecture multi-deck | ✅ tag v1.3 |
+| V1.3 | SRS Leitner + Parcours Thématiques | ✅ tag v1.3 |
 | V1.4 | Hub Découvrir + Deck Asmāʾ al-Ḥusnā (99 noms) | ✅ tag v1.4 |
-| audit | Robustesse : constants dynamiques, 404, Hive sécurisé | ✅ post-v1.4 |
-| **V1.5** | Quiz Husna + Deck Arkān (pilliers Islam + Foi) | 📋 planifié |
-| V1.6 | 25 Prophètes coraniques | 📋 planifié |
+| **V1.5** | Domain Notifiers + audit arch. (routing, lifecycle, l10n) | ✅ tag v1.5 |
+| **V1.5.1** | Robustesse Hive + notifications locales + l10n UI restante | ✅ patch |
+| V1.6 | Quiz Husna + Deck Arkān (piliers Islam + Foi) | 📋 planifié |
+| V1.7 | 25 Prophètes coraniques | 📋 planifié |
 
 ### Hors scope permanent
 Fiqh, dates historiques disputées, théologie des attributs, tawassul, tariqas soufies, classement Compagnons, backend/auth/audio.

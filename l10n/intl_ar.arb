@@ -3,6 +3,8 @@
   "@@last_modified": "2026-04-25",
   "flashcardFlipHint": "Appuyez sur la carte pour la retourner",
   "qcmNext": "Suivant",
+  "errorPageNotFound": "الصفحة غير موجودة",
+  "errorBackHome": "العودة إلى الرئيسية",
 
   "detailShare": "Partager",
 
@@ -20,6 +22,17 @@
   "favoriteRemove": "Retirer des favoris",
 
   "discoverNoResults": "Aucun résultat",
+  "discoverProphetsTitle": "أسماء النبي ﷺ",
+  "discoverProphetsTitleAr": "أسماء النبي ﷺ",
+  "discoverProphetsSubtitle": "٢٠١ اسمًا للاستكشاف",
+  "discoverHusnaTitleAr": "الأسماء الحسنى",
+  "discoverHusnaSubtitle": "٩٩ اسمًا من أسماء الله",
+  "husnaTitle": "أسماء الله الحسنى",
+  "husnaSearchHint": "ابحث بالعربية أو النقل الصوتي أو المعنى…",
+  "husnaPrevious": "السابق",
+  "husnaNext": "التالي",
+  "husnaEtymology": "الاشتقاق",
+  "husnaReference": "المرجع",
   "discoverHubSubtitle": "اختر مجالاً للاستكشاف",
 
   "navTree": "الشجرة",
