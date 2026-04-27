@@ -40,9 +40,9 @@ class DiscoverScreen extends ConsumerWidget {
           _DeckCard(
             index: 0,
             icon: Icons.auto_awesome_outlined,
-            titleAr: 'أسماء النبي ﷺ',
-            titleFr: 'Noms du Prophète ﷺ',
-            subtitle: '201 noms à découvrir',
+            titleAr: l10n.discoverProphetsTitleAr,
+            titleFr: l10n.discoverProphetsTitle,
+            subtitle: l10n.discoverProphetsSubtitle,
             learned: prophetsLearned,
             total: 201,
             accentColor: colors.accent,
@@ -52,9 +52,9 @@ class DiscoverScreen extends ConsumerWidget {
           _DeckCard(
             index: 1,
             icon: Icons.stars_outlined,
-            titleAr: 'الأسماء الحسنى',
-            titleFr: 'Asmāʾ al-Ḥusnā',
-            subtitle: '99 Noms d\'Allah',
+            titleAr: l10n.discoverHusnaTitleAr,
+            titleFr: l10n.husnaTitle,
+            subtitle: l10n.discoverHusnaSubtitle,
             learned: husnaLearned,
             total: 99,
             accentColor: colors.accent2,
@@ -99,79 +99,79 @@ class _DeckCard extends StatelessWidget {
     final progress = total > 0 ? learned / total : 0.0;
 
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(space.lg),
-        decoration: BoxDecoration(
-          color: colors.bg2,
-          borderRadius: BorderRadius.circular(radii.lg),
-          border: Border.all(color: colors.line),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.all(space.lg),
+            decoration: BoxDecoration(
+              color: colors.bg2,
+              borderRadius: BorderRadius.circular(radii.lg),
+              border: Border.all(color: colors.line),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: accentColor.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(radii.md),
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(icon, color: accentColor, size: 22),
-                ),
-                SizedBox(width: space.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        titleAr,
-                        style: typo.arabicBody.copyWith(
-                          fontSize: 18,
-                          color: colors.ink,
-                        ),
-                        textDirection: TextDirection.rtl,
+                Row(
+                  children: [
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: accentColor.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(radii.md),
                       ),
-                      Text(
-                        titleFr,
-                        style: typo.caption.copyWith(
-                          color: colors.muted,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      alignment: Alignment.center,
+                      child: Icon(icon, color: accentColor, size: 22),
+                    ),
+                    SizedBox(width: space.md),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            titleAr,
+                            style: typo.arabicBody.copyWith(
+                              fontSize: 18,
+                              color: colors.ink,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                          Text(
+                            titleFr,
+                            style: typo.caption.copyWith(
+                              color: colors.muted,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
+                    Icon(Icons.chevron_right, color: colors.muted, size: 20),
+                  ],
+                ),
+                SizedBox(height: space.md),
+                Text(
+                  subtitle,
+                  style: typo.caption.copyWith(color: colors.muted),
+                ),
+                SizedBox(height: space.sm),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(2),
+                  child: LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: accentColor.withValues(alpha: 0.1),
+                    color: accentColor,
+                    minHeight: 4,
                   ),
                 ),
-                Icon(Icons.chevron_right, color: colors.muted, size: 20),
+                SizedBox(height: space.xs),
+                Text(
+                  context.l10n.homeCategoryLearned(learned, total),
+                  style: typo.caption.copyWith(color: colors.muted),
+                ),
               ],
             ),
-            SizedBox(height: space.md),
-            Text(
-              subtitle,
-              style: typo.caption.copyWith(color: colors.muted),
-            ),
-            SizedBox(height: space.sm),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(2),
-              child: LinearProgressIndicator(
-                value: progress,
-                backgroundColor: accentColor.withValues(alpha: 0.1),
-                color: accentColor,
-                minHeight: 4,
-              ),
-            ),
-            SizedBox(height: space.xs),
-            Text(
-              '$learned / $total appris',
-              style: typo.caption.copyWith(color: colors.muted),
-            ),
-          ],
-        ),
-      ),
-    )
+          ),
+        )
         .animate()
         .fade(duration: 300.ms, delay: (index * 80).ms)
         .slideY(begin: 0.05, duration: 300.ms, delay: (index * 80).ms);

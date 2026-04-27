@@ -6,6 +6,9 @@
   "navHome": "Accueil",
   "navDiscover": "Découvrir",
   "navProfile": "Profil",
+  "navTree": "Arbre",
+  "errorPageNotFound": "Page introuvable",
+  "errorBackHome": "Retour à l'accueil",
 
   "onboardingWelcomeTitle": "Les 201 noms du Prophète ﷺ",
   "onboardingWelcomeSubtitle": "Apprenez, méditez, connectez-vous.",
@@ -39,6 +42,11 @@
   "discoverQuiz": "Quiz",
   "discoverFilterAll": "Tous",
   "discoverSearchHint": "Rechercher (arabe, translittération, français)",
+  "discoverProphetsTitle": "Noms du Prophète ﷺ",
+  "discoverProphetsTitleAr": "أسماء النبي ﷺ",
+  "discoverProphetsSubtitle": "201 noms à découvrir",
+  "discoverHusnaTitleAr": "الأسماء الحسنى",
+  "discoverHusnaSubtitle": "99 Noms d'Allah",
 
   "detailSectionEtymology": "Étymologie",
   "detailSectionCommentary": "Commentaires classiques",
@@ -129,9 +137,13 @@
   "favoriteRemove": "Retirer des favoris",
 
   "discoverNoResults": "Aucun résultat",
+  "husnaTitle": "Asmāʾ al-Ḥusnā",
+  "husnaSearchHint": "Rechercher (arabe, translittération, sens…)",
+  "husnaPrevious": "Précédent",
+  "husnaNext": "Suivant",
+  "husnaEtymology": "Étymologie",
+  "husnaReference": "Référence",
   "discoverHubSubtitle": "Choisissez un domaine à explorer",
-
-  "navTree": "Arbre",
 
   "treeTitle": "Lignée prophétique",
   "treeModeRadial": "Orbites",

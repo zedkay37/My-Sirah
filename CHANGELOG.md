@@ -5,6 +5,24 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/).
 
 ---
 
+## [v1.5.1] — 2026-04-27 · Robustesse Hive, notifications et l10n
+
+### Correctifs
+
+- **Notifications quotidiennes** : `NotificationService` initialise maintenant `timezone` sur `Europe/Paris` et programme les rappels avec `tz.local` au lieu d'une conversion UTC explicite.
+- **HiveSource** : parsing défensif champ par champ pour les listes, maps, dates et entiers. Une valeur corrompue n'efface plus tout l'état utilisateur.
+- **L10n** : migration de textes UI restants vers `context.l10n` pour la 404, le hub Découvrir et les écrans Asmāʾ al-Ḥusnā.
+- **Docs** : synchronisation README, architecture et référence développeur avec l'état réel du code.
+
+### Validation
+
+- `flutter gen-l10n` exécuté.
+- `dart format` exécuté.
+- `flutter analyze` : aucune issue.
+- `flutter test` : 18 tests passent.
+
+---
+
 ## [v1.5] — 2026-04-27 · Audit Patch 2 : Domain Notifiers & Correctifs architecturaux
 
 ### Refactoring majeur : Domain Notifiers (Facade Pattern)

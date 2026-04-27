@@ -122,6 +122,24 @@ abstract class AppLocalizations {
   /// **'Profil'**
   String get navProfile;
 
+  /// No description provided for @navTree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arbre'**
+  String get navTree;
+
+  /// No description provided for @errorPageNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Page introuvable'**
+  String get errorPageNotFound;
+
+  /// No description provided for @errorBackHome.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à l\'accueil'**
+  String get errorBackHome;
+
   /// No description provided for @onboardingWelcomeTitle.
   ///
   /// In fr, this message translates to:
@@ -235,6 +253,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Rechercher (arabe, translittération, français)'**
   String get discoverSearchHint;
+
+  /// No description provided for @discoverProphetsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noms du Prophète ﷺ'**
+  String get discoverProphetsTitle;
+
+  /// No description provided for @discoverProphetsTitleAr.
+  ///
+  /// In fr, this message translates to:
+  /// **'أسماء النبي ﷺ'**
+  String get discoverProphetsTitleAr;
+
+  /// No description provided for @discoverProphetsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'201 noms à découvrir'**
+  String get discoverProphetsSubtitle;
+
+  /// No description provided for @discoverHusnaTitleAr.
+  ///
+  /// In fr, this message translates to:
+  /// **'الأسماء الحسنى'**
+  String get discoverHusnaTitleAr;
+
+  /// No description provided for @discoverHusnaSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'99 Noms d\'Allah'**
+  String get discoverHusnaSubtitle;
 
   /// No description provided for @detailSectionEtymology.
   ///
@@ -560,17 +608,47 @@ abstract class AppLocalizations {
   /// **'Aucun résultat'**
   String get discoverNoResults;
 
+  /// No description provided for @husnaTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Asmāʾ al-Ḥusnā'**
+  String get husnaTitle;
+
+  /// No description provided for @husnaSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher (arabe, translittération, sens…)'**
+  String get husnaSearchHint;
+
+  /// No description provided for @husnaPrevious.
+  ///
+  /// In fr, this message translates to:
+  /// **'Précédent'**
+  String get husnaPrevious;
+
+  /// No description provided for @husnaNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivant'**
+  String get husnaNext;
+
+  /// No description provided for @husnaEtymology.
+  ///
+  /// In fr, this message translates to:
+  /// **'Étymologie'**
+  String get husnaEtymology;
+
+  /// No description provided for @husnaReference.
+  ///
+  /// In fr, this message translates to:
+  /// **'Référence'**
+  String get husnaReference;
+
   /// No description provided for @discoverHubSubtitle.
   ///
   /// In fr, this message translates to:
   /// **'Choisissez un domaine à explorer'**
   String get discoverHubSubtitle;
-
-  /// No description provided for @navTree.
-  ///
-  /// In fr, this message translates to:
-  /// **'Arbre'**
-  String get navTree;
 
   /// No description provided for @treeTitle.
   ///

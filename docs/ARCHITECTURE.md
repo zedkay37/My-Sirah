@@ -1,6 +1,6 @@
 # Architecture Sirah Hub — Document de référence
 
-> Mis à jour : 2026-04-27 · **v1.5**
+> Mis à jour : 2026-04-27 · **v1.5.1**
 > Branche stable : `main` (tag v1.5)
 > Branche dev : `feat/experimental`
 > Doc complète : `docs/CODE_REFERENCE.md` | Historique versions : `CHANGELOG.md`
@@ -27,6 +27,7 @@ Package : `sirah_app` · Offline-first · Zéro backend
 | flutter_animate | Animations déclaratives |
 | intl | L10n FR + AR (placeholder) |
 | flutter_local_notifications | Notification quotidienne |
+| timezone | Calcul de l'heure locale des notifications (`Europe/Paris`) |
 
 ---
 
@@ -147,7 +148,7 @@ CHANGELOG.md            # historique détaillé des versions
 
 **Pattern** : une seule box `'settings'`, blob JSON encodé manuellement. Pas de TypeAdapter. Tout dans `UserState`.
 
-Parsing sécurisé : `int.tryParse()` + `value is int` — jamais de cast brutal.
+Parsing sécurisé : helper par type (`_intValue`, `_intSet`, `_stringSet`, `_lastSeenMap`, `_stringKeyedMap`) avec `tryParse` et filtres typés. Une entrée corrompue est ignorée champ par champ au lieu de réinitialiser tout `UserState`.
 
 Pour ajouter un champ :
 1. Ajouter dans `user_state.dart` (freezed, avec `@Default`)
@@ -181,7 +182,7 @@ Set<int> husnaLearned       // IDs 1-99 des noms d'Allah appris
 
 ---
 
-## Navigation — app_router.dart (V1.4)
+## Navigation — app_router.dart (V1.5.1)
 
 4 onglets `StatefulShellRoute.indexedStack` :
 1. `/home` — HomeScreen
@@ -203,7 +204,7 @@ Routes hors-onglets :
 - `/study/parcours-list` · `/study/parcours/:id` · `/study/review`
 - `/settings` · `/favorites`
 - `/tree/person/:id` · `/tree/list`
-- Fallback 404 : `errorBuilder` → page "introuvable" + retour `/home`
+- Fallback 404 : `errorBuilder` → page "introuvable" + retour `/home` via clés l10n `errorPageNotFound` / `errorBackHome`
 
 Transition standard : `_fadeSlide()` — à utiliser sur tous les `pageBuilder`.
 
@@ -253,6 +254,7 @@ Transition standard : `_fadeSlide()` — à utiliser sur tous les `pageBuilder`.
 
 Toutes les clés sont dans `l10n/intl_fr.arb` (source de vérité).
 Clés avec placeholders : `homeCategoryLearned`, `detailProgress`, `quizProgress`, `quizResultScore`, `tafakkurRemaining`, `studyReviewSubtitle`, `studyMasteredBadge`.
+Clés ajoutées en v1.5.1 : `errorPageNotFound`, `errorBackHome`, `discoverProphetsTitle`, `discoverProphetsTitleAr`, `discoverProphetsSubtitle`, `discoverHusnaTitleAr`, `discoverHusnaSubtitle`, `husnaTitle`, `husnaSearchHint`, `husnaPrevious`, `husnaNext`, `husnaEtymology`, `husnaReference`.
 
 ---
 
@@ -266,6 +268,7 @@ Clés avec placeholders : `homeCategoryLearned`, `detailProgress`, `quizProgress
 | V1.3 | SRS Leitner + Parcours Thématiques | ✅ tag v1.3 |
 | V1.4 | Hub Découvrir + Deck Asmāʾ al-Ḥusnā (99 noms) | ✅ tag v1.4 |
 | **V1.5** | Domain Notifiers + audit arch. (routing, lifecycle, l10n) | ✅ tag v1.5 |
+| **V1.5.1** | Robustesse Hive + notifications locales + l10n UI restante | ✅ patch |
 | V1.6 | Quiz Husna + Deck Arkān (piliers Islam + Foi) | 📋 planifié |
 | V1.7 | 25 Prophètes coraniques | 📋 planifié |
 

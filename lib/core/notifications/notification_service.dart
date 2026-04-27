@@ -10,6 +10,7 @@ class NotificationService {
   static const _channelId = 'daily_name';
   static const _channelName = 'Nom du jour';
   static const _channelDesc = 'Rappel quotidien du nom du Prophète ﷺ';
+  static const _defaultTimezone = 'Europe/Paris';
   static const _notifId = 0;
 
   /// Set by app_router after GoRouter is created to enable deep-link navigation.
@@ -17,6 +18,7 @@ class NotificationService {
 
   static Future<void> init() async {
     tz_data.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation(_defaultTimezone));
 
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     const ios = DarwinInitializationSettings(
@@ -58,14 +60,16 @@ class NotificationService {
     if (!kIsWeb && Platform.isIOS) {
       await _plugin
           .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
+            IOSFlutterLocalNotificationsPlugin
+          >()
           ?.requestPermissions(alert: true, badge: true, sound: true);
     }
 
     if (!kIsWeb && Platform.isAndroid) {
       await _plugin
           .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin
+          >()
           ?.requestNotificationsPermission();
     }
 
@@ -75,7 +79,7 @@ class NotificationService {
       target = target.add(const Duration(days: 1));
     }
 
-    final tzTarget = tz.TZDateTime.from(target.toUtc(), tz.UTC);
+    final tzTarget = tz.TZDateTime.from(target, tz.local);
 
     await _plugin.zonedSchedule(
       id: _notifId,

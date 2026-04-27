@@ -1,4 +1,4 @@
-# Code Documentation — Sirah Hub v1.5
+# Code Documentation — Sirah Hub v1.5.1
 
 > Référence complète pour développeurs. Lire en parallèle de `docs/ARCHITECTURE.md`.
 
@@ -48,7 +48,22 @@ await HiveSource.write(nextState);
 2. Ajouter dans `HiveSource._toMap()` et `HiveSource._fromMap()`
 3. `dart run build_runner build --delete-conflicting-outputs`
 
-> ⚠️ Dans `_fromMap`, toujours parser defensivement : `int.tryParse()` + `value is int`. Jamais de cast direct.
+> ⚠️ Dans `_fromMap`, toujours parser défensivement avec les helpers dédiés (`_intValue`, `_intSet`, `_stringSet`, `_lastSeenMap`, `_stringKeyedMap`). Jamais de cast direct sur une valeur persistée.
+
+Le parsing est volontairement tolérant : une valeur invalide est ignorée localement et la valeur par défaut du champ est conservée, sans perdre le reste de `UserState`.
+
+---
+
+### `core/notifications/notification_service.dart`
+
+Initialise `timezone`, fixe la timezone locale sur `Europe/Paris`, puis programme la notification quotidienne via `tz.local`.
+
+```dart
+tz_data.initializeTimeZones();
+tz.setLocalLocation(tz.getLocation('Europe/Paris'));
+```
+
+`SettingsNotifier.setNotifHour(int?)` reste le point d'entrée unique : heure non nulle → `scheduleDailyAt(hour)`, `null` → `cancel()`.
 
 ---
 
@@ -415,6 +430,12 @@ Future<void> setMonNouveauChamp(String v) => _save(state.copyWith(monNouveauCham
 # 3. Régénérer
 flutter gen-l10n
 ```
+
+Clés UI ajoutées en v1.5.1 :
+
+- 404 : `errorPageNotFound`, `errorBackHome`
+- Hub Découvrir : `discoverProphetsTitle`, `discoverProphetsTitleAr`, `discoverProphetsSubtitle`, `discoverHusnaTitleAr`, `discoverHusnaSubtitle`
+- Asmāʾ al-Ḥusnā : `husnaTitle`, `husnaSearchHint`, `husnaPrevious`, `husnaNext`, `husnaEtymology`, `husnaReference`
 
 ### Inspecter une version passée
 

@@ -21,6 +21,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navProfile => 'Profil';
 
   @override
+  String get navTree => 'Arbre';
+
+  @override
+  String get errorPageNotFound => 'Page introuvable';
+
+  @override
+  String get errorBackHome => 'Retour à l\'accueil';
+
+  @override
   String get onboardingWelcomeTitle => 'Les 201 noms du Prophète ﷺ';
 
   @override
@@ -82,6 +91,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get discoverSearchHint =>
       'Rechercher (arabe, translittération, français)';
+
+  @override
+  String get discoverProphetsTitle => 'Noms du Prophète ﷺ';
+
+  @override
+  String get discoverProphetsTitleAr => 'أسماء النبي ﷺ';
+
+  @override
+  String get discoverProphetsSubtitle => '201 noms à découvrir';
+
+  @override
+  String get discoverHusnaTitleAr => 'الأسماء الحسنى';
+
+  @override
+  String get discoverHusnaSubtitle => '99 Noms d\'Allah';
 
   @override
   String get detailSectionEtymology => 'Étymologie';
@@ -257,10 +281,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoverNoResults => 'Aucun résultat';
 
   @override
-  String get discoverHubSubtitle => 'Choisissez un domaine à explorer';
+  String get husnaTitle => 'Asmāʾ al-Ḥusnā';
 
   @override
-  String get navTree => 'Arbre';
+  String get husnaSearchHint => 'Rechercher (arabe, translittération, sens…)';
+
+  @override
+  String get husnaPrevious => 'Précédent';
+
+  @override
+  String get husnaNext => 'Suivant';
+
+  @override
+  String get husnaEtymology => 'Étymologie';
+
+  @override
+  String get husnaReference => 'Référence';
+
+  @override
+  String get discoverHubSubtitle => 'Choisissez un domaine à explorer';
 
   @override
   String get treeTitle => 'Lignée prophétique';

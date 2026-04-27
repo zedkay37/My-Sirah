@@ -71,11 +71,10 @@ L'application est conçue comme un **écosystème de connaissance et d'amour du 
 | Modèles immuables | freezed_annotation + json_annotation | ^2.4.4 / ^4.9.0 |
 | Fonts | google_fonts | ^6.2.1 |
 | Animations | flutter_animate | ^4.5.2 |
+| Notifications | flutter_local_notifications + timezone | ^20.1.0 / ^0.10.1 |
 | Partage | share_plus | ^9.0.0 |
 | i18n + dates | intl + hijri | ^0.20.2 / ^3.0.0 |
 | **Dev** | build_runner, freezed, json_serializable, hive_ce_generator | — |
-
-> **Note :** `flutter_local_notifications` est exclu en V1 (voir §15).
 
 ---
 
@@ -384,6 +383,8 @@ class UserState {
 
 `HiveSource` sérialise `UserState` **en JSON** dans une `Box<String>` nommée `'settings'`. Pas d'adapter Hive généré — le JSON est encodé/décodé manuellement. Cela rend la migration de schéma triviale (ajouter un champ avec valeur par défaut).
 
+La lecture est défensive champ par champ : listes, maps, entiers et dates sont parsés via helpers tolérants. Une valeur corrompue est ignorée localement au lieu de réinitialiser tout l'état utilisateur.
+
 ### Actions de mutation
 
 Toutes les mutations passent par `ref.read(settingsProvider.notifier)` :
@@ -395,7 +396,7 @@ Toutes les mutations passent par `ref.read(settingsProvider.notifier)` :
 | `toggleFavorite(int number)` | Ajoute ou retire des favoris |
 | `markViewed(int number)` | Marque comme vu + horodatage dans `lastSeen` |
 | `markLearned(int number)` | Marque comme appris (idempotent) |
-| `setNotifHour(int?)` | Définit ou supprime l'heure de notification |
+| `setNotifHour(int?)` | Définit ou supprime l'heure de notification et programme/annule le rappel local |
 | `recordQuizResult(int correct)` | Incrémente `quizzesCompleted` et `totalQuizScore` |
 
 ---
@@ -448,16 +449,18 @@ redirect: (context, state) {
 **Config :** `l10n.yaml` — `arb-dir: l10n`, `output-dir: lib/l10n`, `nullable-getter: false`
 **Génération :** `flutter gen-l10n` → produit `lib/l10n/app_localizations*.dart`
 
-L'AR (`intl_ar.arb`) est un placeholder. Les clés sont présentes, les traductions sont à compléter.
+L'AR (`intl_ar.arb`) est partiellement traduit. `flutter gen-l10n` signale actuellement les messages restants non traduits.
 
 ### Clés disponibles
 
 | Préfixe | Clés | Notes |
 |---------|------|-------|
-| `nav` | `navHome`, `navDiscover`, `navProfile` | Tab bar |
+| `nav` | `navHome`, `navDiscover`, `navProfile`, `navTree` | Tab bar |
+| `error` | `errorPageNotFound`, `errorBackHome` | Fallback 404 |
 | `onboarding` | 9 clés (welcome, theme, notif) | Onboarding 3 pages |
 | `home` | `homeGreeting`, `homeCategorySection`, `homeDiscoverName`, `homeCategoryLearned(learned, total)`, `homeNameNumber(number)` | |
-| `discover` | `discoverAllNames`, `discoverQuiz`, `discoverFilterAll`, `discoverSearchHint` | |
+| `discover` | `discoverAllNames`, `discoverQuiz`, `discoverFilterAll`, `discoverSearchHint`, `discoverProphetsTitle`, `discoverProphetsTitleAr`, `discoverProphetsSubtitle`, `discoverHusnaTitleAr`, `discoverHusnaSubtitle`, `discoverNoResults` | Hub + listes |
+| `husna` | `husnaTitle`, `husnaSearchHint`, `husnaPrevious`, `husnaNext`, `husnaEtymology`, `husnaReference` | Deck Asmāʾ al-Ḥusnā |
 | `detail` | `detailSectionEtymology/Commentary/References/Sources`, `detailNameLabel(number)`, `detailProgress(current, total)`, `detailMaskedName` | |
 | `quiz` | 11 clés dont `quizResultScore(score, total)`, `quizProgress(current, total)` | |
 | `profile` | `profileLearnedSubtitle`, `profileFavorites`, `profileSettings` | |
@@ -482,7 +485,7 @@ Text(l10n.homeCategoryLearned(3, 20)); // "3/20 appris"
 
 1. **Bienvenue** — Texte arabe calligraphique + titre + sous-titre + "Commencer"
 2. **Thème** — 3 cartes de prévisualisation côte à côte. Chaque carte rend les couleurs de son thème via `AppTheme.build(key).extension<AppColors>()`. Sélection live (le thème change immédiatement dans l'app).
-3. **Notification** — Sélecteur d'heure `showTimePicker` + boutons "Activer" et "Plus tard". L'heure est sauvegardée dans `UserState.dailyNotifHour` mais la notification n'est pas encore schedulée (voir §15).
+3. **Notification** — Sélecteur d'heure `showTimePicker` + boutons "Activer" et "Plus tard". L'heure est sauvegardée dans `UserState.dailyNotifHour` et programmée via `NotificationService.scheduleDailyAt(hour)`.
 
 Fin : `settingsProvider.setOnboardingComplete()` → `context.go('/home')`
 
@@ -965,19 +968,15 @@ flutter test
 
 ## 16. Problèmes connus et blocages
 
-### Notifications quotidiennes (tâche #18) — BLOQUÉ
+### Traduction arabe partielle
 
-`flutter_local_notifications` ne peut pas être intégré dans cette configuration :
+`intl_ar.arb` existe et contient les clés nécessaires, mais toutes les traductions ne sont pas finalisées. `flutter gen-l10n` signale actuellement 76 messages non traduits.
 
-| Contrainte | Valeur |
-|------------|--------|
-| Dart SDK actuel | 3.9.2 |
-| Dart requis pour `flutter_local_notifications ≥ 21.x` | ≥ 3.10.0 |
-| Dernière version compatible avec Dart 3.9.2 (`17.x`) | Incompatible avec Android Gradle Plugin 8.9.1 (erreur AAR metadata) |
+### Notifications quotidiennes
 
-**Solution :** réintégrer `flutter_local_notifications: ^21.0.0` dès que Flutter embarque Dart ≥ 3.10.0.
+Les notifications locales sont intégrées avec `flutter_local_notifications ^20.1.0`. `NotificationService` initialise `timezone`, fixe la timezone locale sur `Europe/Paris`, et programme le rappel quotidien avec `tz.local`.
 
-**Ce qui est déjà en place :** l'UI de sélection d'heure (onboarding page 3 + paramètres) est fonctionnelle, l'heure est persistée dans `UserState.dailyNotifHour`. Il suffira de brancher l'appel à `flutter_local_notifications` dans `SettingsNotifier.setNotifHour()`.
+Point à surveiller avant publication internationale : remplacer la timezone fixe par une détection de timezone appareil si l'app vise des utilisateurs hors Europe/Paris.
 
 ---
 
@@ -996,7 +995,7 @@ flutter test
 |-------|-------|
 | **Icône app + splash screen** | Derniers blocages avant soumission store |
 | **Tests widget module Arbre (×5)** | Voir §15 — stubs déjà décrits |
-| **Notifications quotidiennes** | Réintégrer `flutter_local_notifications ^21` dès Dart ≥ 3.10 (voir §16) |
+| **Traductions AR** | Compléter les 76 messages AR restants signalés par `flutter gen-l10n` |
 
 ### Prochains modules
 

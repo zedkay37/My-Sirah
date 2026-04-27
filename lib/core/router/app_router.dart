@@ -8,6 +8,7 @@ import 'package:sirah_app/features/genealogy/presentation/detail/person_detail_s
 import 'package:sirah_app/features/genealogy/presentation/list/tree_list_screen.dart';
 import 'package:sirah_app/features/genealogy/presentation/tree_screen.dart';
 import 'package:sirah_app/features/names/presentation/detail/detail_screen.dart';
+import 'package:sirah_app/features/names/presentation/tafakkur/tafakkur_screen.dart';
 import 'package:sirah_app/features/names/presentation/home/home_screen.dart';
 import 'package:sirah_app/features/asmaul_husna/presentation/detail/husna_detail_screen.dart';
 import 'package:sirah_app/features/asmaul_husna/presentation/list/husna_list_screen.dart';
@@ -90,16 +91,20 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.link_off_outlined, size: 48, color: context.colors.muted),
+            Icon(
+              Icons.link_off_outlined,
+              size: 48,
+              color: context.colors.muted,
+            ),
             const SizedBox(height: 16),
             Text(
-              'Page introuvable',
+              context.l10n.errorPageNotFound,
               style: context.typo.headline.copyWith(color: context.colors.ink),
             ),
             const SizedBox(height: 8),
             TextButton(
               onPressed: () => context.go('/home'),
-              child: const Text("Retour à l'accueil"),
+              child: Text(context.l10n.errorBackHome),
             ),
           ],
         ),
@@ -122,10 +127,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         branches: [
           StatefulShellBranch(
             routes: [
-              GoRoute(
-                path: '/home',
-                builder: (_, __) => const HomeScreen(),
-              ),
+              GoRoute(path: '/home', builder: (_, __) => const HomeScreen()),
             ],
           ),
           StatefulShellBranch(
@@ -149,11 +151,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                         pageBuilder: (_, state) {
                           final id =
                               int.tryParse(state.pathParameters['id'] ?? '') ??
-                                  1;
-                          return _fadeSlide(
-                            state,
-                            HusnaDetailScreen(id: id),
-                          );
+                              1;
+                          return _fadeSlide(state, HusnaDetailScreen(id: id));
                         },
                       ),
                     ],
@@ -188,7 +187,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                   ),
                   GoRoute(
                     path: 'list',
-                    pageBuilder: (_, state) => _fadeSlide(state, const TreeListScreen()),
+                    pageBuilder: (_, state) =>
+                        _fadeSlide(state, const TreeListScreen()),
                   ),
                 ],
               ),
@@ -206,7 +206,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: 'parcours-list',
-            pageBuilder: (_, state) => _fadeSlide(state, const ParcoursListScreen()),
+            pageBuilder: (_, state) =>
+                _fadeSlide(state, const ParcoursListScreen()),
           ),
           GoRoute(
             path: 'parcours/:id',
@@ -222,21 +223,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         pageBuilder: (_, state) {
           final number =
               int.tryParse(state.pathParameters['number'] ?? '') ?? 1;
-          return _fadeSlide(
-            state,
-            DetailScreen(initialNumber: number),
-          );
+          return _fadeSlide(state, DetailScreen(initialNumber: number));
         },
+        routes: [
+          GoRoute(
+            path: 'tafakkur',
+            pageBuilder: (_, state) {
+              final number =
+                  int.tryParse(state.pathParameters['number'] ?? '') ?? 1;
+              return _fadeSlide(state, TafakkurScreen(nameNumber: number));
+            },
+          ),
+        ],
       ),
       GoRoute(
         path: '/quiz/qcm',
-        pageBuilder: (_, state) =>
-            _fadeSlide(state, const QcmScreen()),
+        pageBuilder: (_, state) => _fadeSlide(state, const QcmScreen()),
       ),
       GoRoute(
         path: '/quiz/flashcards',
-        pageBuilder: (_, state) =>
-            _fadeSlide(state, const FlashcardsScreen()),
+        pageBuilder: (_, state) => _fadeSlide(state, const FlashcardsScreen()),
       ),
       GoRoute(
         path: '/quiz/result',
@@ -253,13 +259,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/settings',
-        pageBuilder: (_, state) =>
-            _fadeSlide(state, const SettingsScreen()),
+        pageBuilder: (_, state) => _fadeSlide(state, const SettingsScreen()),
       ),
       GoRoute(
         path: '/favorites',
-        pageBuilder: (_, state) =>
-            _fadeSlide(state, const FavoritesScreen()),
+        pageBuilder: (_, state) => _fadeSlide(state, const FavoritesScreen()),
       ),
     ],
   );
@@ -282,9 +286,7 @@ CustomTransitionPage<void> _fadeSlide(GoRouterState state, Widget child) {
           position: Tween<Offset>(
             begin: const Offset(0, 0.04),
             end: Offset.zero,
-          ).animate(
-            CurvedAnimation(parent: animation, curve: Curves.easeOut),
-          ),
+          ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut)),
           child: child,
         ),
       );
