@@ -1,0 +1,794 @@
+[
+  {
+    "id": 1,
+    "arabic": "الرَّحْمَٰنُ",
+    "transliteration": "Ar-Raḥmān",
+    "meaningFr": "Le Tout-Miséricordieux",
+    "etymology": "Du radical r-ḥ-m, évoquant la tendresse utérine. Désigne une miséricorde universelle qui englobe toute la création dans ce bas monde.",
+    "reference": "Cor. 1:1 · 55:1"
+  },
+  {
+    "id": 2,
+    "arabic": "الرَّحِيمُ",
+    "transliteration": "Ar-Raḥīm",
+    "meaningFr": "Le Très-Miséricordieux",
+    "etymology": "Même racine que Raḥmān, mais désigne une miséricorde particulière réservée aux croyants au Jour de la Résurrection.",
+    "reference": "Cor. 1:1 · 2:143"
+  },
+  {
+    "id": 3,
+    "arabic": "الْمَلِكُ",
+    "transliteration": "Al-Malik",
+    "meaningFr": "Le Roi absolu",
+    "etymology": "Du radical m-l-k, la possession et la souveraineté. Désigne Celui qui règne sur toute chose sans avoir besoin de Ses sujets.",
+    "reference": "Cor. 59:23 · 20:114"
+  },
+  {
+    "id": 4,
+    "arabic": "الْقُدُّوسُ",
+    "transliteration": "Al-Quddūs",
+    "meaningFr": "Le Très-Saint",
+    "etymology": "Du radical q-d-s, la pureté absolue. Désigne Celui qui est exempt de tout défaut, de toute imperfection et de tout ce qu'imaginent les ignorants.",
+    "reference": "Cor. 59:23 · 62:1"
+  },
+  {
+    "id": 5,
+    "arabic": "السَّلَامُ",
+    "transliteration": "As-Salām",
+    "meaningFr": "La Paix",
+    "etymology": "Du radical s-l-m, l'intégrité et la sécurité. Désigne Celui dont l'essence est exempte de toute imperfection et qui accorde la paix à Ses serviteurs.",
+    "reference": "Cor. 59:23"
+  },
+  {
+    "id": 6,
+    "arabic": "الْمُؤْمِنُ",
+    "transliteration": "Al-Muʾmin",
+    "meaningFr": "Celui qui accorde la sécurité",
+    "etymology": "Du radical ʾ-m-n, la confiance et la sécurité. Désigne Celui qui atteste Sa propre unicité et accorde la sécurité à Ses serviteurs.",
+    "reference": "Cor. 59:23"
+  },
+  {
+    "id": 7,
+    "arabic": "الْمُهَيْمِنُ",
+    "transliteration": "Al-Muhaymin",
+    "meaningFr": "Le Gardien suprême",
+    "etymology": "Signifie Celui qui veille sur toute chose, qui observe et préserve. Il connaît les actions de Ses serviteurs et les enregistre avec précision.",
+    "reference": "Cor. 59:23"
+  },
+  {
+    "id": 8,
+    "arabic": "الْعَزِيزُ",
+    "transliteration": "Al-ʿAzīz",
+    "meaningFr": "Le Tout-Puissant",
+    "etymology": "Du radical ʿ-z-z, la force et la rareté. Désigne Celui dont la puissance est incomparable et à qui nul ne peut résister.",
+    "reference": "Cor. 59:23 · 3:6"
+  },
+  {
+    "id": 9,
+    "arabic": "الْجَبَّارُ",
+    "transliteration": "Al-Jabbār",
+    "meaningFr": "Le Contraignant",
+    "etymology": "Du radical j-b-r, contraindre et réparer. Désigne Celui qui impose Sa volonté à toute Sa création et qui redresse les cœurs brisés.",
+    "reference": "Cor. 59:23"
+  },
+  {
+    "id": 10,
+    "arabic": "الْمُتَكَبِّرُ",
+    "transliteration": "Al-Mutakabbir",
+    "meaningFr": "Le Très-Grand",
+    "etymology": "Du radical k-b-r, la grandeur. Désigne Celui qui Se manifeste dans Sa grandeur au-dessus de toute Sa création, seul digne de cette majesté.",
+    "reference": "Cor. 59:23"
+  },
+  {
+    "id": 11,
+    "arabic": "الْخَالِقُ",
+    "transliteration": "Al-Khāliq",
+    "meaningFr": "Le Créateur",
+    "etymology": "Du radical kh-l-q, décréter et créer. Désigne Celui qui crée toute chose selon Sa volonté, sans modèle préexistant et sans associé.",
+    "reference": "Cor. 59:24 · 6:102"
+  },
+  {
+    "id": 12,
+    "arabic": "الْبَارِئُ",
+    "transliteration": "Al-Bāriʾ",
+    "meaningFr": "Le Créateur parfait",
+    "etymology": "Du radical b-r-ʾ, créer en séparant et en distinguant. Désigne Celui qui crée les êtres en les distinguant les uns des autres avec précision.",
+    "reference": "Cor. 59:24"
+  },
+  {
+    "id": 13,
+    "arabic": "الْمُصَوِّرُ",
+    "transliteration": "Al-Muṣawwir",
+    "meaningFr": "Le Formateur des formes",
+    "etymology": "Du radical ṣ-w-r, donner une forme. Désigne Celui qui façonne toute créature selon la forme qu'Il a voulue, dans l'utérus et dans l'existence.",
+    "reference": "Cor. 59:24 · 3:6"
+  },
+  {
+    "id": 14,
+    "arabic": "الْغَفَّارُ",
+    "transliteration": "Al-Ghaffār",
+    "meaningFr": "Le Grand Pardonneur",
+    "etymology": "Du radical gh-f-r, couvrir et protéger. Désigne Celui qui recouvre les péchés de Ses serviteurs à répétition, avec une générosité sans limite.",
+    "reference": "Cor. 20:82 · 38:66"
+  },
+  {
+    "id": 15,
+    "arabic": "الْقَهَّارُ",
+    "transliteration": "Al-Qahhār",
+    "meaningFr": "Le Dominateur suprême",
+    "etymology": "Du radical q-h-r, dominer et vaincre. Désigne Celui devant qui toute chose est soumise et qui maîtrise tout avec une puissance absolue.",
+    "reference": "Cor. 13:16 · 14:48"
+  },
+  {
+    "id": 16,
+    "arabic": "الْوَهَّابُ",
+    "transliteration": "Al-Wahhāb",
+    "meaningFr": "Le Grand Donateur",
+    "etymology": "Du radical w-h-b, donner sans contrepartie. Désigne Celui qui accorde Ses dons sans cesse et sans que rien ne vienne jamais les diminuer.",
+    "reference": "Cor. 3:8 · 38:9"
+  },
+  {
+    "id": 17,
+    "arabic": "الرَّزَّاقُ",
+    "transliteration": "Ar-Razzāq",
+    "meaningFr": "Le Pourvoyeur universel",
+    "etymology": "Du radical r-z-q, pourvoir en subsistance. Désigne Celui qui sustente toute créature, du ver de terre à l'astre céleste, sans jamais Se fatiguer.",
+    "reference": "Cor. 51:58"
+  },
+  {
+    "id": 18,
+    "arabic": "الْفَتَّاحُ",
+    "transliteration": "Al-Fattāḥ",
+    "meaningFr": "Le Grand Ouvreur",
+    "etymology": "Du radical f-t-ḥ, ouvrir et trancher. Désigne Celui qui ouvre les portes de Sa miséricorde, du succès et du jugement entre Ses serviteurs.",
+    "reference": "Cor. 34:26"
+  },
+  {
+    "id": 19,
+    "arabic": "الْعَلِيمُ",
+    "transliteration": "Al-ʿAlīm",
+    "meaningFr": "L'Omniscient",
+    "etymology": "Du radical ʿ-l-m, savoir. Désigne Celui dont la connaissance englobe tout ce qui est, ce qui fut et ce qui sera, du visible comme de l'invisible.",
+    "reference": "Cor. 2:29 · 6:101"
+  },
+  {
+    "id": 20,
+    "arabic": "الْقَابِضُ",
+    "transliteration": "Al-Qābiḍ",
+    "meaningFr": "Le Resserreur",
+    "etymology": "Du radical q-b-ḍ, serrer et retenir. Désigne Celui qui resserre les subsistances et les âmes selon Sa sagesse, pour mettre à l'épreuve ou punir.",
+    "reference": "Cor. 2:245"
+  },
+  {
+    "id": 21,
+    "arabic": "الْبَاسِطُ",
+    "transliteration": "Al-Bāsiṭ",
+    "meaningFr": "Le Dispensateur",
+    "etymology": "Du radical b-s-ṭ, étendre et disperser. Désigne Celui qui étend Ses bienfaits et élargit les subsistances selon Sa sagesse et Sa générosité.",
+    "reference": "Cor. 2:245"
+  },
+  {
+    "id": 22,
+    "arabic": "الْخَافِضُ",
+    "transliteration": "Al-Khāfiḍ",
+    "meaningFr": "L'Abaisseur",
+    "etymology": "Du radical kh-f-ḍ, abaisser. Désigne Celui qui abaisse les orgueilleux et les tyrans, abaissement que nul ne peut empêcher.",
+    "reference": "Hadith"
+  },
+  {
+    "id": 23,
+    "arabic": "الرَّافِعُ",
+    "transliteration": "Ar-Rāfiʿ",
+    "meaningFr": "L'Élevateur",
+    "etymology": "Du radical r-f-ʿ, élever. Désigne Celui qui élève les croyants sincères en degrés de connaissance, de piété et de rang dans les deux demeures.",
+    "reference": "Hadith · Cor. 58:11"
+  },
+  {
+    "id": 24,
+    "arabic": "الْمُعِزُّ",
+    "transliteration": "Al-Muʿizz",
+    "meaningFr": "Celui qui honore",
+    "etymology": "Du radical ʿ-z-z, la gloire. Désigne Celui qui confère l'honneur à qui Il veut parmi Ses serviteurs, par l'obéissance et la foi.",
+    "reference": "Cor. 3:26"
+  },
+  {
+    "id": 25,
+    "arabic": "الْمُذِلُّ",
+    "transliteration": "Al-Mudhill",
+    "meaningFr": "Celui qui abaisse",
+    "etymology": "Du radical dh-l-l, l'avilissement. Désigne Celui qui abaisse et humilie qui Il veut, notamment ceux qui s'éloignent de Sa voie.",
+    "reference": "Cor. 3:26"
+  },
+  {
+    "id": 26,
+    "arabic": "السَّمِيعُ",
+    "transliteration": "As-Samīʿ",
+    "meaningFr": "L'Omniaudient",
+    "etymology": "Du radical s-m-ʿ, entendre. Désigne Celui qui perçoit tout son, toute parole et tout murmure du cœur, sans limite ni obstacle.",
+    "reference": "Cor. 2:127 · 3:34"
+  },
+  {
+    "id": 27,
+    "arabic": "الْبَصِيرُ",
+    "transliteration": "Al-Baṣīr",
+    "meaningFr": "L'Omnivoyant",
+    "etymology": "Du radical b-ṣ-r, voir. Désigne Celui dont la vision englobe tout ce qui est visible, de l'atome à l'univers, dans l'obscurité comme dans la lumière.",
+    "reference": "Cor. 4:58 · 17:1"
+  },
+  {
+    "id": 28,
+    "arabic": "الْحَكَمُ",
+    "transliteration": "Al-Ḥakam",
+    "meaningFr": "L'Arbitre suprême",
+    "etymology": "Du radical ḥ-k-m, juger et gouverner. Désigne Celui dont le jugement est définitif, sans appel possible, et dont nulle sentence ne peut être rejetée.",
+    "reference": "Hadith · Cor. 6:114"
+  },
+  {
+    "id": 29,
+    "arabic": "الْعَدْلُ",
+    "transliteration": "Al-ʿAdl",
+    "meaningFr": "Le Parfaitement Juste",
+    "etymology": "Du radical ʿ-d-l, l'équité. Désigne Celui dont la justice est absolue : Il ne lèse personne et rend à chacun ce qui lui revient exactement.",
+    "reference": "Cor. 6:115"
+  },
+  {
+    "id": 30,
+    "arabic": "اللَّطِيفُ",
+    "transliteration": "Al-Laṭīf",
+    "meaningFr": "Le Subtil et Bienveillant",
+    "etymology": "Du radical l-ṭ-f, la finesse et la douceur. Désigne Celui qui pénètre les détails les plus subtils de Sa création et prend soin de Ses serviteurs avec délicatesse.",
+    "reference": "Cor. 6:103 · 22:63"
+  },
+  {
+    "id": 31,
+    "arabic": "الْخَبِيرُ",
+    "transliteration": "Al-Khabīr",
+    "meaningFr": "Le Parfaitement Informé",
+    "etymology": "Du radical kh-b-r, être informé avec exactitude. Désigne Celui qui connaît les réalités cachées de toute chose, les intentions et les secrets des cœurs.",
+    "reference": "Cor. 6:18 · 31:34"
+  },
+  {
+    "id": 32,
+    "arabic": "الْحَلِيمُ",
+    "transliteration": "Al-Ḥalīm",
+    "meaningFr": "Le Très Clément",
+    "etymology": "Du radical ḥ-l-m, la mansuétude. Désigne Celui qui diffère le châtiment des pécheurs par grâce, leur accordant un délai pour se repentir.",
+    "reference": "Cor. 2:225 · 17:44"
+  },
+  {
+    "id": 33,
+    "arabic": "الْعَظِيمُ",
+    "transliteration": "Al-ʿAẓīm",
+    "meaningFr": "L'Immense",
+    "etymology": "Du radical ʿ-ẓ-m, la grandeur et la magnificence. Désigne Celui dont la grandeur dépasse toute compréhension humaine et toute comparaison possible.",
+    "reference": "Cor. 2:255 · 42:4"
+  },
+  {
+    "id": 34,
+    "arabic": "الْغَفُورُ",
+    "transliteration": "Al-Ghafūr",
+    "meaningFr": "Le Très Pardonneur",
+    "etymology": "Du radical gh-f-r, couvrir. Désigne Celui qui pardonne les péchés de Ses serviteurs repentants, les couvrant d'un voile de miséricorde.",
+    "reference": "Cor. 2:173 · 35:28"
+  },
+  {
+    "id": 35,
+    "arabic": "الشَّكُورُ",
+    "transliteration": "Ash-Shakūr",
+    "meaningFr": "Le Très Reconnaissant",
+    "etymology": "Du radical sh-k-r, la reconnaissance. Désigne Celui qui récompense généreusement les bonnes actions, même les moindres, en les multipliant à l'infini.",
+    "reference": "Cor. 35:30 · 64:17"
+  },
+  {
+    "id": 36,
+    "arabic": "الْعَلِيُّ",
+    "transliteration": "Al-ʿAlī",
+    "meaningFr": "Le Très-Haut",
+    "etymology": "Du radical ʿ-l-w, l'élévation. Désigne Celui qui est au-dessus de toute Sa création, tant par Son essence que par Ses attributs et Ses actions.",
+    "reference": "Cor. 2:255 · 4:34"
+  },
+  {
+    "id": 37,
+    "arabic": "الْكَبِيرُ",
+    "transliteration": "Al-Kabīr",
+    "meaningFr": "Le Très-Grand",
+    "etymology": "Du radical k-b-r, la grandeur. Désigne Celui dont la grandeur est absolue et éternelle, à qui rien de comparable ne peut être associé.",
+    "reference": "Cor. 13:9 · 22:62"
+  },
+  {
+    "id": 38,
+    "arabic": "الْحَفِيظُ",
+    "transliteration": "Al-Ḥafīẓ",
+    "meaningFr": "Le Gardien parfait",
+    "etymology": "Du radical ḥ-f-ẓ, garder et protéger. Désigne Celui qui préserve toute chose de la perte, comptabilise tous les actes et protège Ses serviteurs fidèles.",
+    "reference": "Cor. 11:57 · 34:21"
+  },
+  {
+    "id": 39,
+    "arabic": "الْمُقِيتُ",
+    "transliteration": "Al-Muqīt",
+    "meaningFr": "Le Nourricier",
+    "etymology": "Du radical q-w-t, la nourriture et la subsistance. Désigne Celui qui pourvoit à la subsistance de toute créature et veille sur elle avec un soin parfait.",
+    "reference": "Cor. 4:85"
+  },
+  {
+    "id": 40,
+    "arabic": "الْحَسِيبُ",
+    "transliteration": "Al-Ḥasīb",
+    "meaningFr": "Le Suffisant",
+    "etymology": "Du radical ḥ-s-b, compter et suffire. Désigne Celui qui suffit à Ses serviteurs qui s'en remettent à Lui, et qui tient le compte de toutes choses.",
+    "reference": "Cor. 4:6 · 33:39"
+  },
+  {
+    "id": 41,
+    "arabic": "الْجَلِيلُ",
+    "transliteration": "Al-Jalīl",
+    "meaningFr": "Le Majestueux",
+    "etymology": "Du radical j-l-l, la noblesse et la majesté. Désigne Celui qui est vénérable et glorieux par Ses attributs de perfection et de sublimité.",
+    "reference": "Cor. 55:27 (allusion)"
+  },
+  {
+    "id": 42,
+    "arabic": "الْكَرِيمُ",
+    "transliteration": "Al-Karīm",
+    "meaningFr": "Le Très-Généreux",
+    "etymology": "Du radical k-r-m, la générosité et la noblesse. Désigne Celui dont la générosité n'a pas de limite et qui honore Ses serviteurs au-delà de tout mérite.",
+    "reference": "Cor. 27:40 · 82:6"
+  },
+  {
+    "id": 43,
+    "arabic": "الرَّقِيبُ",
+    "transliteration": "Ar-Raqīb",
+    "meaningFr": "Le Surveillant attentif",
+    "etymology": "Du radical r-q-b, surveiller et observer. Désigne Celui qui observe en permanence toutes les actions et les pensées de Ses créatures.",
+    "reference": "Cor. 4:1 · 5:117"
+  },
+  {
+    "id": 44,
+    "arabic": "الْمُجِيبُ",
+    "transliteration": "Al-Mujīb",
+    "meaningFr": "Celui qui répond aux prières",
+    "etymology": "Du radical j-w-b, répondre. Désigne Celui qui répond aux invocations de Ses serviteurs, nulle prière sincère n'étant perdue devant Lui.",
+    "reference": "Cor. 11:61"
+  },
+  {
+    "id": 45,
+    "arabic": "الْوَاسِعُ",
+    "transliteration": "Al-Wāsiʿ",
+    "meaningFr": "L'Immensément Vaste",
+    "etymology": "Du radical w-s-ʿ, l'étendue et la vastitude. Désigne Celui dont la miséricorde, la connaissance et la générosité dépassent tout ce qu'on peut concevoir.",
+    "reference": "Cor. 2:115 · 2:268"
+  },
+  {
+    "id": 46,
+    "arabic": "الْحَكِيمُ",
+    "transliteration": "Al-Ḥakīm",
+    "meaningFr": "Le Parfaitement Sage",
+    "etymology": "Du radical ḥ-k-m, la sagesse et la précision. Désigne Celui qui place chaque chose à la juste place selon une sagesse que la raison humaine ne peut toujours saisir.",
+    "reference": "Cor. 2:129 · 31:27"
+  },
+  {
+    "id": 47,
+    "arabic": "الْوَدُودُ",
+    "transliteration": "Al-Wadūd",
+    "meaningFr": "Le Très-Aimant",
+    "etymology": "Du radical w-d-d, l'amour profond et affectueux. Désigne Celui qui aime Ses serviteurs croyants d'un amour parfait et Se fait aimer d'eux.",
+    "reference": "Cor. 11:90 · 85:14"
+  },
+  {
+    "id": 48,
+    "arabic": "الْمَجِيدُ",
+    "transliteration": "Al-Majīd",
+    "meaningFr": "Le Glorieux",
+    "etymology": "Du radical m-j-d, la gloire et la noblesse. Désigne Celui dont la gloire est parfaite, associant beauté des attributs, ampleur de la miséricorde et dignité absolue.",
+    "reference": "Cor. 11:73 · 85:15"
+  },
+  {
+    "id": 49,
+    "arabic": "الْبَاعِثُ",
+    "transliteration": "Al-Bāʿith",
+    "meaningFr": "Celui qui ressuscite",
+    "etymology": "Du radical b-ʿ-th, envoyer et ressusciter. Désigne Celui qui ressuscitera tous les morts au Jour de la Résurrection pour le Jugement dernier.",
+    "reference": "Cor. 22:7"
+  },
+  {
+    "id": 50,
+    "arabic": "الشَّهِيدُ",
+    "transliteration": "Ash-Shahīd",
+    "meaningFr": "Le Témoin omniscient",
+    "etymology": "Du radical sh-h-d, être présent et témoigner. Désigne Celui qui est témoin de tout ce qui se passe dans Sa création, dans le secret comme en public.",
+    "reference": "Cor. 4:79 · 5:117"
+  },
+  {
+    "id": 51,
+    "arabic": "الْحَقُّ",
+    "transliteration": "Al-Ḥaqq",
+    "meaningFr": "La Vérité absolue",
+    "etymology": "Du radical ḥ-q-q, la réalité immuable. Désigne Celui dont l'existence est nécessaire, dont les promesses sont vraies et dont le Jugement est certain.",
+    "reference": "Cor. 6:62 · 22:6"
+  },
+  {
+    "id": 52,
+    "arabic": "الْوَكِيلُ",
+    "transliteration": "Al-Wakīl",
+    "meaningFr": "Le Garant parfait",
+    "etymology": "Du radical w-k-l, déléguer et se confier. Désigne Celui à qui l'on peut confier toutes ses affaires avec une confiance absolue, car Il suffit à tout.",
+    "reference": "Cor. 3:173 · 6:102"
+  },
+  {
+    "id": 53,
+    "arabic": "الْقَوِيُّ",
+    "transliteration": "Al-Qawī",
+    "meaningFr": "Le Très-Fort",
+    "etymology": "Du radical q-w-y, la force et la puissance. Désigne Celui dont la force est parfaite et sans limite, aucune puissance ne pouvant Lui résister.",
+    "reference": "Cor. 8:52 · 22:40"
+  },
+  {
+    "id": 54,
+    "arabic": "الْمَتِينُ",
+    "transliteration": "Al-Matīn",
+    "meaningFr": "Le Solide",
+    "etymology": "Du radical m-t-n, la solidité et la robustesse. Désigne Celui dont la puissance est inébranlable, dont la force ne s'affaiblit jamais.",
+    "reference": "Cor. 51:58"
+  },
+  {
+    "id": 55,
+    "arabic": "الْوَلِيُّ",
+    "transliteration": "Al-Walī",
+    "meaningFr": "Le Protecteur fidèle",
+    "etymology": "Du radical w-l-y, la proximité et la protection. Désigne Celui qui prend en charge les affaires des croyants, les guidant et les protégeant.",
+    "reference": "Cor. 3:68 · 42:28"
+  },
+  {
+    "id": 56,
+    "arabic": "الْحَمِيدُ",
+    "transliteration": "Al-Ḥamīd",
+    "meaningFr": "Le Digne de louange",
+    "etymology": "Du radical ḥ-m-d, la louange. Désigne Celui qui mérite toute louange par essence, quelle que soit la quantité de louanges que Ses serviteurs Lui adressent.",
+    "reference": "Cor. 14:1 · 31:26"
+  },
+  {
+    "id": 57,
+    "arabic": "الْمُحْصِي",
+    "transliteration": "Al-Muḥṣī",
+    "meaningFr": "L'Infaillible Recenseur",
+    "etymology": "Du radical ḥ-ṣ-y, compter et dénombrer avec exactitude. Désigne Celui qui dénombre toute chose sans en oublier la moindre, des feuilles aux pensées.",
+    "reference": "Cor. 72:28"
+  },
+  {
+    "id": 58,
+    "arabic": "الْمُبْدِئُ",
+    "transliteration": "Al-Mubdiʾ",
+    "meaningFr": "L'Initiateur",
+    "etymology": "Du radical b-d-ʾ, commencer. Désigne Celui qui a créé toute chose à partir du néant, sans modèle ni précédent.",
+    "reference": "Cor. 10:34 · 27:64"
+  },
+  {
+    "id": 59,
+    "arabic": "الْمُعِيدُ",
+    "transliteration": "Al-Muʿīd",
+    "meaningFr": "Le Restaurateur",
+    "etymology": "Du radical ʿ-w-d, revenir. Désigne Celui qui renouvelle et restaure la création après sa mort, comme Il l'a initiée sans modèle.",
+    "reference": "Cor. 10:34 · 27:64"
+  },
+  {
+    "id": 60,
+    "arabic": "الْمُحْيِي",
+    "transliteration": "Al-Muḥyī",
+    "meaningFr": "Celui qui donne la vie",
+    "etymology": "Du radical ḥ-y-y, la vie. Désigne Celui qui insuffle la vie aux êtres et qui vivifiera les morts au Jour de la Résurrection.",
+    "reference": "Cor. 30:50 · 41:39"
+  },
+  {
+    "id": 61,
+    "arabic": "الْمُمِيتُ",
+    "transliteration": "Al-Mumīt",
+    "meaningFr": "Celui qui donne la mort",
+    "etymology": "Du radical m-w-t, la mort. Désigne Celui qui fait passer toute âme vivante par la mort selon Son décret souverain.",
+    "reference": "Cor. 3:156 · 7:158"
+  },
+  {
+    "id": 62,
+    "arabic": "الْحَيُّ",
+    "transliteration": "Al-Ḥayy",
+    "meaningFr": "Le Vivant éternel",
+    "etymology": "Du radical ḥ-y-y, la vie. Désigne Celui dont la vie est parfaite, sans commencement ni fin, sans fatigue ni sommeil.",
+    "reference": "Cor. 2:255 · 3:2"
+  },
+  {
+    "id": 63,
+    "arabic": "الْقَيُّومُ",
+    "transliteration": "Al-Qayyūm",
+    "meaningFr": "Le Subsistant par Lui-même",
+    "etymology": "Du radical q-w-m, se tenir et subsister. Désigne Celui qui existe par Lui-même sans aucun besoin, et dont dépend l'existence de toute chose.",
+    "reference": "Cor. 2:255 · 3:2"
+  },
+  {
+    "id": 64,
+    "arabic": "الْوَاجِدُ",
+    "transliteration": "Al-Wājid",
+    "meaningFr": "Le Trouveur",
+    "etymology": "Du radical w-j-d, trouver et ressentir. Désigne Celui qui trouve tout ce qu'Il cherche et à qui rien ne manque, étant Lui-même la source de tout.",
+    "reference": "Hadith (Ibn Mājah)"
+  },
+  {
+    "id": 65,
+    "arabic": "الْمَاجِدُ",
+    "transliteration": "Al-Mājid",
+    "meaningFr": "Le Noble et Glorieux",
+    "etymology": "Du radical m-j-d, la noblesse et la gloire. Désigne Celui dont la noblesse est parfaite par l'étendue de Ses bienfaits et la beauté de Ses attributs.",
+    "reference": "Hadith (Ibn Mājah)"
+  },
+  {
+    "id": 66,
+    "arabic": "الْوَاحِدُ",
+    "transliteration": "Al-Wāḥid",
+    "meaningFr": "L'Un et Unique",
+    "etymology": "Du radical w-ḥ-d, l'unicité. Désigne Celui qui est seul dans Sa domination et qui n'a pas d'équivalent, de rival ni d'associé.",
+    "reference": "Cor. 2:163 · 13:16"
+  },
+  {
+    "id": 67,
+    "arabic": "الْأَحَدُ",
+    "transliteration": "Al-Aḥad",
+    "meaningFr": "L'Absolument Un",
+    "etymology": "Forme superlative de Wāḥid. Désigne l'unicité absolue d'Allah dans Son essence, Ses attributs et Ses actes, sans aucune division ni multiplicité possible.",
+    "reference": "Cor. 112:1"
+  },
+  {
+    "id": 68,
+    "arabic": "الصَّمَدُ",
+    "transliteration": "Aṣ-Ṣamad",
+    "meaningFr": "L'Éternel Absolu",
+    "etymology": "Du radical ṣ-m-d, être massif et solide. Désigne Celui vers qui toute créature se tourne dans le besoin, et qui n'a Lui-même aucun besoin.",
+    "reference": "Cor. 112:2"
+  },
+  {
+    "id": 69,
+    "arabic": "الْقَادِرُ",
+    "transliteration": "Al-Qādir",
+    "meaningFr": "Le Tout-Puissant",
+    "etymology": "Du radical q-d-r, la puissance et la capacité. Désigne Celui qui a le pouvoir absolu de faire ce qu'Il veut, quand Il veut et comme Il veut.",
+    "reference": "Cor. 6:65 · 36:81"
+  },
+  {
+    "id": 70,
+    "arabic": "الْمُقْتَدِرُ",
+    "transliteration": "Al-Muqtadir",
+    "meaningFr": "Le Souverainement Puissant",
+    "etymology": "Intensif de Qādir. Désigne Celui dont la toute-puissance s'exerce sur toute chose sans exception, aucune force ne pouvant Lui résister.",
+    "reference": "Cor. 18:45 · 54:42"
+  },
+  {
+    "id": 71,
+    "arabic": "الْمُقَدِّمُ",
+    "transliteration": "Al-Muqaddim",
+    "meaningFr": "Celui qui fait avancer",
+    "etymology": "Du radical q-d-m, avancer et précéder. Désigne Celui qui fait avancer qui Il veut en rang, en connaissance ou en proximité selon Sa sagesse.",
+    "reference": "Hadith"
+  },
+  {
+    "id": 72,
+    "arabic": "الْمُؤَخِّرُ",
+    "transliteration": "Al-Muʾakhkhir",
+    "meaningFr": "Celui qui reporte",
+    "etymology": "Du radical ʾ-kh-r, retarder. Désigne Celui qui reporte le châtiment ou abaisse en rang selon Sa sagesse et Sa volonté souveraine.",
+    "reference": "Hadith"
+  },
+  {
+    "id": 73,
+    "arabic": "الْأَوَّلُ",
+    "transliteration": "Al-Awwal",
+    "meaningFr": "Le Premier",
+    "etymology": "Désigne Celui avant qui il n'y avait rien et qui existait avant toute chose créée, de toute éternité.",
+    "reference": "Cor. 57:3"
+  },
+  {
+    "id": 74,
+    "arabic": "الْآخِرُ",
+    "transliteration": "Al-Ākhir",
+    "meaningFr": "Le Dernier",
+    "etymology": "Désigne Celui après qui il n'y aura rien : lorsque toute chose périra, Lui demeurera éternellement.",
+    "reference": "Cor. 57:3"
+  },
+  {
+    "id": 75,
+    "arabic": "الظَّاهِرُ",
+    "transliteration": "Aẓ-Ẓāhir",
+    "meaningFr": "L'Apparent",
+    "etymology": "Du radical ẓ-h-r, apparaître et dominer. Désigne Celui dont l'existence est manifeste à travers les signes de Sa création qui L'attestent.",
+    "reference": "Cor. 57:3"
+  },
+  {
+    "id": 76,
+    "arabic": "الْبَاطِنُ",
+    "transliteration": "Al-Bāṭin",
+    "meaningFr": "Le Caché",
+    "etymology": "Du radical b-ṭ-n, être intérieur et caché. Désigne Celui dont l'essence est cachée aux regards et dont la connaissance des mystères est parfaite.",
+    "reference": "Cor. 57:3"
+  },
+  {
+    "id": 77,
+    "arabic": "الْوَالِي",
+    "transliteration": "Al-Wālī",
+    "meaningFr": "Le Maître souverain",
+    "etymology": "Du radical w-l-y, gouverner et administrer. Désigne Celui qui administre et dirige toute Sa création selon Sa volonté et Sa sagesse.",
+    "reference": "Cor. 13:11"
+  },
+  {
+    "id": 78,
+    "arabic": "الْمُتَعَالِي",
+    "transliteration": "Al-Mutaʿālī",
+    "meaningFr": "Le Très-Élevé",
+    "etymology": "Du radical ʿ-l-w, l'élévation suprême. Désigne Celui qui est au-dessus de tout ce que Ses serviteurs peuvent imaginer ou décrire de Lui.",
+    "reference": "Cor. 13:9"
+  },
+  {
+    "id": 79,
+    "arabic": "الْبَرُّ",
+    "transliteration": "Al-Barr",
+    "meaningFr": "Le Bienfaisant",
+    "etymology": "Du radical b-r-r, la bonté et la droiture. Désigne Celui dont la bonté envers Ses serviteurs est parfaite, les traitant avec une bienveillance infinie.",
+    "reference": "Cor. 52:28"
+  },
+  {
+    "id": 80,
+    "arabic": "التَّوَّابُ",
+    "transliteration": "At-Tawwāb",
+    "meaningFr": "Celui qui accepte le repentir",
+    "etymology": "Du radical t-w-b, revenir et se repentir. Désigne Celui qui se tourne vers Ses serviteurs avec miséricorde et accepte leur repentir à répétition.",
+    "reference": "Cor. 2:37 · 9:118"
+  },
+  {
+    "id": 81,
+    "arabic": "الْمُنْتَقِمُ",
+    "transliteration": "Al-Muntaqim",
+    "meaningFr": "Le Vengeur",
+    "etymology": "Du radical n-q-m, la vengeance et la punition. Désigne Celui qui inflige un châtiment juste aux oppresseurs et aux ennemis de Sa religion.",
+    "reference": "Cor. 32:22 · 44:16"
+  },
+  {
+    "id": 82,
+    "arabic": "الْعَفُوُّ",
+    "transliteration": "Al-ʿAfuww",
+    "meaningFr": "Celui qui efface les péchés",
+    "etymology": "Du radical ʿ-f-w, effacer et s'abstenir de punir. Désigne Celui qui efface totalement les fautes de Ses serviteurs repentants comme si elles n'avaient jamais existé.",
+    "reference": "Cor. 4:43 · 22:60"
+  },
+  {
+    "id": 83,
+    "arabic": "الرَّءُوفُ",
+    "transliteration": "Ar-Raʾūf",
+    "meaningFr": "Le Très-Compatissant",
+    "etymology": "Du radical r-ʾ-f, la compassion profonde. Désigne Celui dont la compassion dépasse celle de toute mère, évitant à Ses créatures les épreuves qu'Il pourrait leur infliger.",
+    "reference": "Cor. 2:207 · 3:30"
+  },
+  {
+    "id": 84,
+    "arabic": "مَالِكُ الْمُلْكِ",
+    "transliteration": "Mālik al-Mulk",
+    "meaningFr": "Le Maître du royaume",
+    "etymology": "Alliance de mālik (possesseur) et mulk (le royaume). Désigne Celui qui détient la souveraineté absolue sur tout ce qui existe, y accordant et retirant selon Sa volonté.",
+    "reference": "Cor. 3:26"
+  },
+  {
+    "id": 85,
+    "arabic": "ذُو الْجَلَالِ وَالْإِكْرَامِ",
+    "transliteration": "Dhū l-Jalāl wa l-Ikrām",
+    "meaningFr": "Seigneur de majesté et de générosité",
+    "etymology": "Alliance de jalāl (majesté) et ikrām (générosité). Désigne Celui qui réunit en Lui la majesté absolue et la générosité parfaite, seul méritant d'être invoqué par ce titre.",
+    "reference": "Cor. 55:27 · 55:78"
+  },
+  {
+    "id": 86,
+    "arabic": "الْمُقْسِطُ",
+    "transliteration": "Al-Muqsiṭ",
+    "meaningFr": "L'Équitable",
+    "etymology": "Du radical q-s-ṭ, l'équité et la justice. Désigne Celui dont l'équité est parfaite dans toutes Ses décisions, n'opprimant jamais personne.",
+    "reference": "Cor. 60:8"
+  },
+  {
+    "id": 87,
+    "arabic": "الْجَامِعُ",
+    "transliteration": "Al-Jāmiʿ",
+    "meaningFr": "Le Rassembleur",
+    "etymology": "Du radical j-m-ʿ, rassembler. Désigne Celui qui rassemblera toutes les créatures au Jour du Jugement et qui réunit en Lui les attributs de perfection.",
+    "reference": "Cor. 3:9"
+  },
+  {
+    "id": 88,
+    "arabic": "الْغَنِيُّ",
+    "transliteration": "Al-Ghanī",
+    "meaningFr": "Le Riche absolu",
+    "etymology": "Du radical gh-n-y, la richesse et l'autosuffisance. Désigne Celui qui n'a besoin de rien ni de personne, alors que toute créature a besoin de Lui.",
+    "reference": "Cor. 2:263 · 47:38"
+  },
+  {
+    "id": 89,
+    "arabic": "الْمُغْنِي",
+    "transliteration": "Al-Mughnī",
+    "meaningFr": "Celui qui enrichit",
+    "etymology": "Du radical gh-n-y, enrichir. Désigne Celui qui comble Ses serviteurs de richesses matérielles et spirituelles selon Sa sagesse.",
+    "reference": "Cor. 9:28"
+  },
+  {
+    "id": 90,
+    "arabic": "الْمَانِعُ",
+    "transliteration": "Al-Māniʿ",
+    "meaningFr": "Celui qui préserve",
+    "etymology": "Du radical m-n-ʿ, empêcher et protéger. Désigne Celui qui protège Ses serviteurs des maux en refusant ce qui leur nuirait, par sagesse et amour.",
+    "reference": "Hadith"
+  },
+  {
+    "id": 91,
+    "arabic": "الضَّارُّ",
+    "transliteration": "Aḍ-Ḍārr",
+    "meaningFr": "Celui qui afflige",
+    "etymology": "Du radical ḍ-r-r, le préjudice. Désigne Celui qui peut infliger l'épreuve et la souffrance, non par injustice, mais comme décret divin et purification.",
+    "reference": "Hadith"
+  },
+  {
+    "id": 92,
+    "arabic": "النَّافِعُ",
+    "transliteration": "An-Nāfiʿ",
+    "meaningFr": "Celui qui bénéficie",
+    "etymology": "Du radical n-f-ʿ, le bénéfice. Désigne Celui qui accorde le bien et l'utilité à qui Il veut, tout bénéfice venant ultimement de Lui.",
+    "reference": "Hadith"
+  },
+  {
+    "id": 93,
+    "arabic": "النُّورُ",
+    "transliteration": "An-Nūr",
+    "meaningFr": "La Lumière",
+    "etymology": "Du radical n-w-r, la lumière. Désigne Celui qui est la Lumière des cieux et de la terre, éclairant les cœurs par la foi et guidant par Sa révélation.",
+    "reference": "Cor. 24:35"
+  },
+  {
+    "id": 94,
+    "arabic": "الْهَادِي",
+    "transliteration": "Al-Hādī",
+    "meaningFr": "Le Guide",
+    "etymology": "Du radical h-d-y, guider. Désigne Celui qui guide Sa création vers la connaissance de la vérité, vers la droiture et vers le Paradis.",
+    "reference": "Cor. 22:54 · 25:31"
+  },
+  {
+    "id": 95,
+    "arabic": "الْبَدِيعُ",
+    "transliteration": "Al-Badīʿ",
+    "meaningFr": "Le Créateur incomparable",
+    "etymology": "Du radical b-d-ʿ, innover et créer sans précédent. Désigne Celui qui crée toute chose de manière absolument originale, sans modèle ni instrument.",
+    "reference": "Cor. 2:117 · 6:101"
+  },
+  {
+    "id": 96,
+    "arabic": "الْبَاقِي",
+    "transliteration": "Al-Bāqī",
+    "meaningFr": "Le Permanent",
+    "etymology": "Du radical b-q-y, demeurer. Désigne Celui dont l'existence n'a pas de fin, immuable lorsque toute chose périra et retournera à Lui.",
+    "reference": "Cor. 28:88"
+  },
+  {
+    "id": 97,
+    "arabic": "الْوَارِثُ",
+    "transliteration": "Al-Wārith",
+    "meaningFr": "L'Héritier universel",
+    "etymology": "Du radical w-r-th, hériter. Désigne Celui qui subsiste après toute Sa création et hérite de tout ce qui existait, tout retournant à Lui à la fin.",
+    "reference": "Cor. 15:23 · 21:89"
+  },
+  {
+    "id": 98,
+    "arabic": "الرَّشِيدُ",
+    "transliteration": "Ar-Rashīd",
+    "meaningFr": "Le Guide vers le droit chemin",
+    "etymology": "Du radical r-sh-d, la droiture et la rectitude. Désigne Celui dont les ordres et décrets mènent toujours vers le bien et la vérité, même lorsque Sa sagesse est cachée.",
+    "reference": "Hadith"
+  },
+  {
+    "id": 99,
+    "arabic": "الصَّبُورُ",
+    "transliteration": "Aṣ-Ṣabūr",
+    "meaningFr": "Le Très-Patient",
+    "etymology": "Du radical ṣ-b-r, la patience et l'endurance. Désigne Celui qui ne se hâte pas de punir les pécheurs, leur accordant un délai par miséricorde et sagesse.",
+    "reference": "Hadith"
+  }
+]

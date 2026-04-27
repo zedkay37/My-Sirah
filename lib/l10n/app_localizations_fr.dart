@@ -257,6 +257,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoverNoResults => 'Aucun résultat';
 
   @override
+  String get discoverHubSubtitle => 'Choisissez un domaine à explorer';
+
+  @override
   String get navTree => 'Arbre';
 
   @override

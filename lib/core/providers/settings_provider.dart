@@ -107,6 +107,14 @@ class SettingsNotifier extends Notifier<UserState> {
     final completed = Set<String>.from(state.completedParcours)..add(id);
     return _save(state.copyWith(completedParcours: completed));
   }
+
+  // ── Asmāʾ al-Ḥusnā — V1.4 ───────────────────────────────────────────────
+
+  Future<void> markHusnaLearned(int id) {
+    if (state.husnaLearned.contains(id)) return Future.value();
+    final learned = Set<int>.from(state.husnaLearned)..add(id);
+    return _save(state.copyWith(husnaLearned: learned));
+  }
 }
 
 final settingsProvider = NotifierProvider<SettingsNotifier, UserState>(

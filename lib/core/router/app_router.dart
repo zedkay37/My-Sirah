@@ -9,7 +9,10 @@ import 'package:sirah_app/features/genealogy/presentation/list/tree_list_screen.
 import 'package:sirah_app/features/genealogy/presentation/tree_screen.dart';
 import 'package:sirah_app/features/names/presentation/detail/detail_screen.dart';
 import 'package:sirah_app/features/names/presentation/home/home_screen.dart';
+import 'package:sirah_app/features/asmaul_husna/presentation/detail/husna_detail_screen.dart';
+import 'package:sirah_app/features/asmaul_husna/presentation/list/husna_list_screen.dart';
 import 'package:sirah_app/features/names/presentation/list/discover_screen.dart';
+import 'package:sirah_app/features/names/presentation/list/prophets_discover_screen.dart';
 import 'package:sirah_app/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:sirah_app/features/profile/presentation/favorites/favorites_screen.dart';
 import 'package:sirah_app/features/profile/presentation/profile/profile_screen.dart';
@@ -109,6 +112,32 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/discover',
                 builder: (_, __) => const DiscoverScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'prophets',
+                    pageBuilder: (_, state) =>
+                        _fadeSlide(state, const ProphetsDiscoverScreen()),
+                  ),
+                  GoRoute(
+                    path: 'husna',
+                    pageBuilder: (_, state) =>
+                        _fadeSlide(state, const HusnaListScreen()),
+                    routes: [
+                      GoRoute(
+                        path: ':id',
+                        pageBuilder: (_, state) {
+                          final id =
+                              int.tryParse(state.pathParameters['id'] ?? '') ??
+                                  1;
+                          return _fadeSlide(
+                            state,
+                            HusnaDetailScreen(id: id),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

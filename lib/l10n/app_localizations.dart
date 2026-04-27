@@ -560,6 +560,12 @@ abstract class AppLocalizations {
   /// **'Aucun résultat'**
   String get discoverNoResults;
 
+  /// No description provided for @discoverHubSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez un domaine à explorer'**
+  String get discoverHubSubtitle;
+
   /// No description provided for @navTree.
   ///
   /// In fr, this message translates to:

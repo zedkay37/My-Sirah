@@ -67,6 +67,7 @@ class HiveSource {
         'leitnerBoxes': s.leitnerBoxes.map((k, v) => MapEntry(k.toString(), v)),
         'completedParcours': s.completedParcours.toList(),
         'studyMode': s.studyMode,
+        'husnaLearned': s.husnaLearned.toList(),
       };
 
   static UserState _fromMap(Map<String, dynamic> m) {
@@ -119,6 +120,7 @@ class HiveSource {
       leitnerBoxes: leitnerBoxes,
       completedParcours: Set<String>.from(completedParcoursList.map((e) => e as String)),
       studyMode: studyMode,
+      husnaLearned: Set<int>.from((m['husnaLearned'] as List<dynamic>? ?? []).map((e) => e as int)),
     );
   }
 }
