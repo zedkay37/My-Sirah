@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/names/data/names_notifier.dart';
+import 'package:sirah_app/features/study/data/study_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/quiz/data/quiz_generator.dart';
 import 'package:sirah_app/features/quiz/data/quiz_provider.dart';
@@ -25,10 +26,10 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
 
   void _know() {
     ref
-        .read(settingsProvider.notifier)
+        .read(namesNotifierProvider)
         .markLearned(_session.names[_index].number);
     ref
-        .read(settingsProvider.notifier)
+        .read(studyNotifierProvider)
         .levelUp(_session.names[_index].number);
     _knownCount++;
     _advance();

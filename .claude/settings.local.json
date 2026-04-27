@@ -25,7 +25,8 @@
       "Bash(git commit *)",
       "Bash(python3 -c ' *)",
       "Bash(git merge feat/genealogy-tree --no-ff -m ' *)",
-      "Bash(git merge feat/experimental --no-ff -m ' *)"
+      "Bash(git merge feat/experimental --no-ff -m ' *)",
+      "Bash(git tag *)"
     ]
   }
 }

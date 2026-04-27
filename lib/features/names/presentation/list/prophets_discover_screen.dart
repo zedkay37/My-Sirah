@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/names/presentation/list/list_screen.dart';
 import 'package:sirah_app/features/quiz/presentation/entry/quiz_entry_screen.dart';
@@ -23,7 +24,7 @@ class ProphetsDiscoverScreen extends StatelessWidget {
           title: Text('Noms du Prophète ﷺ', style: typo.headline),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: colors.ink),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
           ),
           bottom: TabBar(
             indicatorColor: colors.accent,

@@ -84,6 +84,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   final router = GoRouter(
     initialLocation: '/home',
+    errorBuilder: (context, state) => Scaffold(
+      backgroundColor: context.colors.bg,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.link_off_outlined, size: 48, color: context.colors.muted),
+            const SizedBox(height: 16),
+            Text(
+              'Page introuvable',
+              style: context.typo.headline.copyWith(color: context.colors.ink),
+            ),
+            const SizedBox(height: 8),
+            TextButton(
+              onPressed: () => context.go('/home'),
+              child: const Text("Retour à l'accueil"),
+            ),
+          ],
+        ),
+      ),
+    ),
     redirect: (context, state) {
       final onboarded = onboardingCompletedAt != null;
       final onOnboarding = state.matchedLocation.startsWith('/onboarding');
@@ -181,10 +202,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: 'review',
-            pageBuilder: (_, state) {
-              final queue = state.extra as List<int>? ?? [];
-              return _fadeSlide(state, ReviewScreen(key: ValueKey(queue)));
-            },
+            pageBuilder: (_, state) => _fadeSlide(state, const ReviewScreen()),
           ),
           GoRoute(
             path: 'parcours-list',

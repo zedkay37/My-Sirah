@@ -98,7 +98,12 @@ class HiveSource {
     final viewedMemberList = m['viewedMembers'] as List<dynamic>? ?? [];
 
     final leitnerRaw = m['leitnerBoxes'] as Map<String, dynamic>? ?? {};
-    final leitnerBoxes = leitnerRaw.map((k, v) => MapEntry(int.parse(k), v as int));
+    final leitnerBoxes = <int, int>{};
+    for (final entry in leitnerRaw.entries) {
+      final key = int.tryParse(entry.key);
+      final value = entry.value;
+      if (key != null && value is int) leitnerBoxes[key] = value;
+    }
     final completedParcoursList = m['completedParcours'] as List<dynamic>? ?? [];
     final studyMode = m['studyMode'] as String? ?? 'random';
 

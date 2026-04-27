@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sirah_app/features/study/data/leitner_repository.dart';
+import 'package:sirah_app/features/study/data/study_notifier.dart';
 
 part 'review_controller.freezed.dart';
 
@@ -23,7 +23,7 @@ class ReviewController extends StateNotifier<ReviewState> {
   ReviewController(this._leitner, List<int> queue)
       : super(ReviewState(queue: queue, isDone: queue.isEmpty));
 
-  final LeitnerRepository _leitner;
+  final StudyNotifier _leitner;
 
   void flip() => state = state.copyWith(isFlipped: !state.isFlipped);
 
@@ -55,7 +55,7 @@ class ReviewController extends StateNotifier<ReviewState> {
 final reviewControllerProvider = StateNotifierProvider.autoDispose
     .family<ReviewController, ReviewState, List<int>>(
   (ref, queue) => ReviewController(
-    ref.read(leitnerRepositoryProvider),
+    ref.read(studyNotifierProvider),
     queue,
   ),
 );

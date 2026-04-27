@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
-import 'package:sirah_app/features/study/data/leitner_repository.dart';
+import 'package:sirah_app/features/study/data/study_notifier.dart';
 
 class StudyEntryScreen extends ConsumerWidget {
   const StudyEntryScreen({super.key});
@@ -43,7 +43,7 @@ class StudyEntryScreen extends ConsumerWidget {
                   data: (names) {
                     final allNumbers = names.map((n) => n.number).toList();
                     final queue = ref
-                        .read(leitnerRepositoryProvider)
+                        .read(studyNotifierProvider)
                         .getItemsForReview(allNumbers);
                     
                     return _ModeCard(

@@ -20,7 +20,13 @@ class GenealogyRepository {
 
   List<FamilyMember> getAll() => _members;
 
-  FamilyMember getProphet() => _byId['muhammad']!;
+  FamilyMember getProphet() {
+    final prophet = _byId['muhammad'];
+    if (prophet == null) {
+      throw StateError('genealogy.json is missing the required "muhammad" entry');
+    }
+    return prophet;
+  }
 
   FamilyMember? getById(String id) => _byId[id];
 

@@ -54,7 +54,7 @@ class HomeScreen extends ConsumerWidget {
                     final typo = context.typo;
 
                     return GestureDetector(
-                      onTap: () => context.push('/study/parcours-list'),
+                      onTap: () => context.push('/study'),
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: space.md, horizontal: space.md),
                         decoration: BoxDecoration(
