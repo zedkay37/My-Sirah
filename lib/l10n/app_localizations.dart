@@ -758,6 +758,90 @@ abstract class AppLocalizations {
   /// **'Autres'**
   String get treeListSectionOther;
 
+  /// No description provided for @treeRoleProphet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Prophète ﷺ'**
+  String get treeRoleProphet;
+
+  /// No description provided for @treeRoleFather.
+  ///
+  /// In fr, this message translates to:
+  /// **'Père du Prophète ﷺ'**
+  String get treeRoleFather;
+
+  /// No description provided for @treeRoleMother.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mère du Prophète ﷺ'**
+  String get treeRoleMother;
+
+  /// No description provided for @treeRolePaternalAncestor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ancêtre paternel'**
+  String get treeRolePaternalAncestor;
+
+  /// No description provided for @treeRoleMaternalAncestor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ancêtre maternel'**
+  String get treeRoleMaternalAncestor;
+
+  /// No description provided for @treeRoleUncle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oncle du Prophète ﷺ'**
+  String get treeRoleUncle;
+
+  /// No description provided for @treeRoleAunt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tante du Prophète ﷺ'**
+  String get treeRoleAunt;
+
+  /// No description provided for @treeRoleWife.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épouse du Prophète ﷺ'**
+  String get treeRoleWife;
+
+  /// No description provided for @treeRoleChild.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enfant du Prophète ﷺ'**
+  String get treeRoleChild;
+
+  /// No description provided for @treeRoleGrandchild.
+  ///
+  /// In fr, this message translates to:
+  /// **'Petit-enfant du Prophète ﷺ'**
+  String get treeRoleGrandchild;
+
+  /// No description provided for @treeRoleCousin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cousin(e) du Prophète ﷺ'**
+  String get treeRoleCousin;
+
+  /// No description provided for @treeRoleTraditionalAncestor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ancêtre (tradition)'**
+  String get treeRoleTraditionalAncestor;
+
+  /// No description provided for @treeRoleUnclesAunts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oncles & Tantes du Prophète ﷺ'**
+  String get treeRoleUnclesAunts;
+
+  /// No description provided for @treeRoleUnclesAuntsCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oncles & Tantes · {count}'**
+  String treeRoleUnclesAuntsCount(int count);
+
   /// No description provided for @tafakkurTitle.
   ///
   /// In fr, this message translates to:
@@ -895,6 +979,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{count} noms maîtrisés'**
   String studyMasteredBadge(int count);
+
+  /// No description provided for @treeFilterAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get treeFilterAll;
+
+  /// No description provided for @treeFilterWivesAndChildren.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épouses & enfants'**
+  String get treeFilterWivesAndChildren;
+
+  /// No description provided for @treeFilterAncestors.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ascendants'**
+  String get treeFilterAncestors;
+
+  /// No description provided for @treeFilterUnclesAndAunts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oncles & tantes'**
+  String get treeFilterUnclesAndAunts;
+
+  /// No description provided for @treeFilterAhlAlBayt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ahl al-Bayt'**
+  String get treeFilterAhlAlBayt;
 }
 
 class _AppLocalizationsDelegate

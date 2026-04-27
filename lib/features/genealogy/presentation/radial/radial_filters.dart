@@ -26,15 +26,15 @@ class RadialFilters extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: context.space.md),
       child: Row(
         children: [
-          _buildChip(context, GenealogyFilter.all, 'Tous'),
+          _buildChip(context, GenealogyFilter.all, context.l10n.treeFilterAll),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.wivesAndChildren, 'Épouses & enfants'),
+          _buildChip(context, GenealogyFilter.wivesAndChildren, context.l10n.treeFilterWivesAndChildren),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.ancestors, 'Ascendants'),
+          _buildChip(context, GenealogyFilter.ancestors, context.l10n.treeFilterAncestors),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.unclesAndAunts, 'Oncles & tantes'),
+          _buildChip(context, GenealogyFilter.unclesAndAunts, context.l10n.treeFilterUnclesAndAunts),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.ahlAlBayt, 'Ahl al-Bayt'),
+          _buildChip(context, GenealogyFilter.ahlAlBayt, context.l10n.treeFilterAhlAlBayt),
         ],
       ),
     );

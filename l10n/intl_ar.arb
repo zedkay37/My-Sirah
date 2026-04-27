@@ -83,5 +83,31 @@
     "placeholders": {
       "count": { "type": "int" }
     }
-  }
+  },
+
+  "treeRoleProphet": "النبي ﷺ",
+  "treeRoleFather": "والد النبي ﷺ",
+  "treeRoleMother": "والدة النبي ﷺ",
+  "treeRolePaternalAncestor": "جد أبوي",
+  "treeRoleMaternalAncestor": "جد أمومي",
+  "treeRoleUncle": "عم النبي ﷺ",
+  "treeRoleAunt": "عمة النبي ﷺ",
+  "treeRoleWife": "زوجة النبي ﷺ",
+  "treeRoleChild": "ابن/ابنة النبي ﷺ",
+  "treeRoleGrandchild": "حفيد(ة) النبي ﷺ",
+  "treeRoleCousin": "ابن عم النبي ﷺ",
+  "treeRoleTraditionalAncestor": "جد (رواية)",
+  "treeRoleUnclesAunts": "الأعمام والعمات",
+  "treeRoleUnclesAuntsCount": "الأعمام والعمات · {count}",
+  "@treeRoleUnclesAuntsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "treeFilterAll": "الكل",
+  "treeFilterWivesAndChildren": "الزوجات والأبناء",
+  "treeFilterAncestors": "الأجداد",
+  "treeFilterUnclesAndAunts": "الأعمام والعمات",
+  "treeFilterAhlAlBayt": "أهل البيت"
 }

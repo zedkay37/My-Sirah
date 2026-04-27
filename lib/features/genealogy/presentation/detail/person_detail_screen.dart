@@ -5,24 +5,49 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sirah_app/core/providers/genealogy_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/genealogy/data/genealogy_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/genealogy/data/models/family_member.dart';
 import 'package:sirah_app/features/genealogy/data/repositories/genealogy_repository.dart';
 import 'package:sirah_app/features/genealogy/presentation/detail/path_chip.dart';
+import 'package:sirah_app/features/genealogy/shared/family_role_labels.dart';
 
-class PersonDetailScreen extends ConsumerWidget {
+class PersonDetailScreen extends ConsumerStatefulWidget {
   const PersonDetailScreen({super.key, required this.memberId});
   final String memberId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PersonDetailScreen> createState() => _PersonDetailScreenState();
+}
+
+class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(genealogyNotifierProvider).markMemberViewed(widget.memberId);
+    });
+  }
+
+  @override
+  void didUpdateWidget(PersonDetailScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.memberId != widget.memberId) {
+      Future.microtask(() {
+        ref.read(genealogyNotifierProvider).markMemberViewed(widget.memberId);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final repoAsync = ref.watch(genealogyRepositoryProvider);
 
     return Scaffold(
       backgroundColor: context.colors.bg,
       body: repoAsync.when(
         data: (repo) {
-          final member = repo.getById(memberId);
+          final member = repo.getById(widget.memberId);
           
           if (member == null) {
             return Center(
@@ -40,12 +65,8 @@ class PersonDetailScreen extends ConsumerWidget {
             );
           }
 
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            ref.read(settingsProvider.notifier).markMemberViewed(memberId);
-          });
-
           final userState = ref.watch(settingsProvider);
-          final isFavorite = userState.favoriteMembers.contains(memberId);
+          final isFavorite = userState.favoriteMembers.contains(widget.memberId);
 
           return CustomScrollView(
             slivers: [
@@ -65,7 +86,7 @@ class PersonDetailScreen extends ConsumerWidget {
                       color: isFavorite ? context.colors.accent2 : context.colors.muted,
                     ),
                     onPressed: () {
-                      ref.read(settingsProvider.notifier).toggleFavoriteMember(memberId);
+                      ref.read(genealogyNotifierProvider).toggleFavoriteMember(widget.memberId);
                     },
                   ),
                 ],
@@ -144,7 +165,7 @@ class PersonDetailScreen extends ConsumerWidget {
         _SectionHeader(title: context.l10n.treePersonRelation),
         SizedBox(height: context.space.sm),
         Text(
-          _roleLabel(member.role),
+          familyRoleLabel(context, member.role),
           style: context.typo.bodyLarge.copyWith(color: context.colors.ink),
         ),
         SizedBox(height: context.space.sm),
@@ -328,22 +349,6 @@ class PersonDetailScreen extends ConsumerWidget {
         .toList();
   }
 
-  String _roleLabel(FamilyRole role) {
-    switch (role) {
-      case FamilyRole.prophet: return 'Le Prophète ﷺ';
-      case FamilyRole.father: return 'Père du Prophète ﷺ';
-      case FamilyRole.mother: return 'Mère du Prophète ﷺ';
-      case FamilyRole.paternalAscendant: return 'Ancêtre paternel';
-      case FamilyRole.maternalAscendant: return 'Ancêtre maternel';
-      case FamilyRole.uncle: return 'Oncle du Prophète ﷺ';
-      case FamilyRole.aunt: return 'Tante du Prophète ﷺ';
-      case FamilyRole.wife: return 'Épouse du Prophète ﷺ';
-      case FamilyRole.child: return 'Enfant du Prophète ﷺ';
-      case FamilyRole.grandchild: return 'Petit-enfant du Prophète ﷺ';
-      case FamilyRole.cousin: return 'Cousin(e) du Prophète ﷺ';
-      case FamilyRole.traditionalAncestor: return 'Ancêtre (tradition)';
-    }
-  }
 }
 
 class _SectionHeader extends StatelessWidget {

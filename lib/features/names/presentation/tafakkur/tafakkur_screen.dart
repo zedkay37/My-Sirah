@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
-import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/study/data/study_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/names/presentation/tafakkur/tafakkur_controller.dart';
 import 'package:sirah_app/features/names/presentation/tafakkur/widgets/phrase_display.dart';
@@ -94,7 +94,7 @@ class _TafakkurContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(tafakkurControllerProvider(commentary), (prev, next) {
       if (prev?.isComplete != true && next.isComplete) {
-        ref.read(settingsProvider.notifier).levelUp(nameNumber);
+        ref.read(studyNotifierProvider).levelUp(nameNumber);
       }
     });
 
@@ -181,13 +181,15 @@ class _CompleteView extends StatelessWidget {
     final colors = context.colors;
     final l10n = context.l10n;
 
+    final space = context.space;
+
     return Column(
       children: [
         Expanded(
           child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 48.0),
+            padding: EdgeInsets.symmetric(horizontal: space.xl, vertical: space.xxl),
             itemCount: phrases.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 24),
+            separatorBuilder: (_, __) => SizedBox(height: space.lg),
             itemBuilder: (ctx, i) => Text(
               phrases[i],
               textAlign: TextAlign.center,
@@ -199,14 +201,14 @@ class _CompleteView extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: EdgeInsets.all(space.xl),
           child: Column(
             children: [
               Text(
                 l10n.tafakkurComplete,
                 style: typo.body.copyWith(color: colors.muted),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: space.md),
               ElevatedButton(
                 onPressed: () => context.pop(),
                 style: ElevatedButton.styleFrom(
@@ -242,8 +244,10 @@ class _BottomControls extends StatelessWidget {
     final typo = context.typo;
     final l10n = context.l10n;
 
+    final space = context.space;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+      padding: EdgeInsets.symmetric(horizontal: space.md, vertical: space.lg),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

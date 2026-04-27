@@ -4,7 +4,7 @@ import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/shared/arabic_text.dart';
-import 'package:sirah_app/features/study/data/leitner_repository.dart';
+import 'package:sirah_app/features/study/data/study_notifier.dart';
 import 'package:sirah_app/features/study/presentation/review/review_controller.dart';
 
 class ReviewScreen extends ConsumerWidget {
@@ -26,7 +26,7 @@ class ReviewScreen extends ConsumerWidget {
       data: (names) {
         final allNumbers = names.map((n) => n.number).toList();
         final queue = ref
-            .read(leitnerRepositoryProvider)
+            .read(studyNotifierProvider)
             .getItemsForReview(allNumbers);
 
         return _ReviewContent(names: names, queue: queue);

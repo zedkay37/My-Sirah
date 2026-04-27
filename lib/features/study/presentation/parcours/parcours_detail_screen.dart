@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
-import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/study/data/study_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/shared/arabic_text.dart';
@@ -59,10 +59,10 @@ class _ParcoursDetailScreenState extends ConsumerState<ParcoursDetailScreen> {
                   setState(() => _currentIndex++);
                 } else {
                   ref
-                      .read(settingsProvider.notifier)
+                      .read(studyNotifierProvider)
                       .markParcoursComplete(parcours.id);
                   for (final name in parcoursNames) {
-                    ref.read(settingsProvider.notifier).levelUp(name.number);
+                    ref.read(studyNotifierProvider).levelUp(name.number);
                   }
                   context.pop();
                 }

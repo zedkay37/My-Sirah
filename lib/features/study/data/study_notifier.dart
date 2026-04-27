@@ -1,15 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 
-class LeitnerRepository {
-  const LeitnerRepository(this._ref);
+class StudyNotifier {
+  const StudyNotifier(this._ref);
   final Ref _ref;
 
-  Map<int, int> get boxes =>
+  Map<int, int> get leitnerBoxes =>
       _ref.read(settingsProvider).leitnerBoxes;
 
+  String get studyMode =>
+      _ref.read(settingsProvider).studyMode;
+
+  Set<String> get completedParcours =>
+      _ref.read(settingsProvider).completedParcours;
+
   List<int> getItemsForReview(List<int> allNumbers) {
-    final boxes = this.boxes;
+    final boxes = leitnerBoxes;
     final level0 = allNumbers
         .where((n) => (boxes[n] ?? 0) == 0)
         .toList();
@@ -24,8 +30,14 @@ class LeitnerRepository {
 
   Future<void> levelDown(int nameNumber) =>
       _ref.read(settingsProvider.notifier).levelDown(nameNumber);
+
+  Future<void> setStudyMode(String mode) =>
+      _ref.read(settingsProvider.notifier).setStudyMode(mode);
+
+  Future<void> markParcoursComplete(String id) =>
+      _ref.read(settingsProvider.notifier).markParcoursComplete(id);
 }
 
-final leitnerRepositoryProvider = Provider<LeitnerRepository>(
-  (ref) => LeitnerRepository(ref),
+final studyNotifierProvider = Provider<StudyNotifier>(
+  (ref) => StudyNotifier(ref),
 );

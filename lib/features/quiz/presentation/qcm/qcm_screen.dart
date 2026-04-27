@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/names/data/names_notifier.dart';
+import 'package:sirah_app/features/study/data/study_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/quiz/data/quiz_generator.dart';
@@ -35,8 +36,8 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
     setState(() => _selectedIndex = index);
     if (_isCorrect(index)) {
       _score++;
-      ref.read(settingsProvider.notifier).markLearned(_question.name.number);
-      ref.read(settingsProvider.notifier).levelUp(_question.name.number);
+      ref.read(namesNotifierProvider).markLearned(_question.name.number);
+      ref.read(studyNotifierProvider).levelUp(_question.name.number);
     }
     _autoAdvanceTimer = Timer(const Duration(milliseconds: 1200), () {
       if (mounted) _next();

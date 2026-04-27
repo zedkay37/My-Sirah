@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/husna_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/asmaul_husna/data/asmaa_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 
 class HusnaDetailScreen extends ConsumerStatefulWidget {
@@ -24,7 +25,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
     super.initState();
     _learnTimer = Timer(const Duration(seconds: 8), () {
       if (mounted) {
-        ref.read(settingsProvider.notifier).markHusnaLearned(widget.id);
+        ref.read(asmaaNotifierProvider).markHusnaLearned(widget.id);
       }
     });
   }

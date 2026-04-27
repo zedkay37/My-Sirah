@@ -166,6 +166,26 @@
   "treeListSectionUncles": "Oncles & tantes",
   "treeListSectionOther": "Autres",
 
+  "treeRoleProphet": "Le Prophète ﷺ",
+  "treeRoleFather": "Père du Prophète ﷺ",
+  "treeRoleMother": "Mère du Prophète ﷺ",
+  "treeRolePaternalAncestor": "Ancêtre paternel",
+  "treeRoleMaternalAncestor": "Ancêtre maternel",
+  "treeRoleUncle": "Oncle du Prophète ﷺ",
+  "treeRoleAunt": "Tante du Prophète ﷺ",
+  "treeRoleWife": "Épouse du Prophète ﷺ",
+  "treeRoleChild": "Enfant du Prophète ﷺ",
+  "treeRoleGrandchild": "Petit-enfant du Prophète ﷺ",
+  "treeRoleCousin": "Cousin(e) du Prophète ﷺ",
+  "treeRoleTraditionalAncestor": "Ancêtre (tradition)",
+  "treeRoleUnclesAunts": "Oncles & Tantes du Prophète ﷺ",
+  "treeRoleUnclesAuntsCount": "Oncles & Tantes · {count}",
+  "@treeRoleUnclesAuntsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
   "tafakkurTitle": "Tafakkur",
   "tafakkurPause": "En pause",
   "tafakkurResume": "Reprendre",
@@ -204,5 +224,11 @@
     "placeholders": {
       "count": { "type": "int" }
     }
-  }
+  },
+
+  "treeFilterAll": "Tous",
+  "treeFilterWivesAndChildren": "Épouses & enfants",
+  "treeFilterAncestors": "Ascendants",
+  "treeFilterUnclesAndAunts": "Oncles & tantes",
+  "treeFilterAhlAlBayt": "Ahl al-Bayt"
 }

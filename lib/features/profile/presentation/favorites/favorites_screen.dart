@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/names/data/names_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/shared/name_card.dart';
 
@@ -19,7 +20,7 @@ class FavoritesScreen extends ConsumerWidget {
     final namesAsync = ref.watch(namesProvider);
     final favorites = ref.watch(settingsProvider.select((s) => s.favorites));
     final learned = ref.watch(settingsProvider.select((s) => s.learned));
-    final notifier = ref.read(settingsProvider.notifier);
+    final notifier = ref.read(namesNotifierProvider);
 
     return Scaffold(
       backgroundColor: colors.bg,

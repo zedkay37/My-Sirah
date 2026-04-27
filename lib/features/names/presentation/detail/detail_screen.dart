@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/names/data/names_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/names/presentation/detail/share_name_service.dart';
@@ -86,7 +87,7 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
 
   void _onPageFocused(int index) {
     final number = widget.names[index].number;
-    ref.read(settingsProvider.notifier).markViewed(number);
+    ref.read(namesNotifierProvider).markViewed(number);
     _restartLearnedTimer(number);
   }
 
@@ -99,7 +100,7 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
     if (alreadyLearned) return;
     _learningAnim.forward();
     _learnedTimer = Timer(const Duration(seconds: 8), () {
-      if (mounted) ref.read(settingsProvider.notifier).markLearned(number);
+      if (mounted) ref.read(namesNotifierProvider).markLearned(number);
     });
   }
 
@@ -163,7 +164,7 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
                 color: isFavorite ? colors.error : colors.muted,
               ),
               onPressed: () => ref
-                  .read(settingsProvider.notifier)
+                  .read(namesNotifierProvider)
                   .toggleFavorite(currentName.number),
             ),
           ),

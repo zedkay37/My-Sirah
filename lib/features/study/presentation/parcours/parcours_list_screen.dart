@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
+import 'package:sirah_app/core/utils/color_utils.dart';
 import 'package:sirah_app/features/study/data/parcours_repository.dart';
 
 class ParcoursListScreen extends ConsumerWidget {
@@ -42,7 +43,7 @@ class ParcoursListScreen extends ConsumerWidget {
           itemBuilder: (context, index) {
             final parcours = list[index];
             final isCompleted = completedParcours.contains(parcours.id);
-            final color = _hexToColor(parcours.colorHex);
+            final color = hexToColor(parcours.colorHex);
 
             return _ParcoursCard(
               parcours: parcours,
@@ -56,10 +57,6 @@ class ParcoursListScreen extends ConsumerWidget {
     );
   }
 
-  Color _hexToColor(String hex) {
-    final h = hex.replaceFirst('#', '');
-    return Color(int.parse('FF$h', radix: 16));
-  }
 }
 
 class _ParcoursCard extends StatelessWidget {

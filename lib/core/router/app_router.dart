@@ -202,10 +202,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: 'review',
-            pageBuilder: (_, state) {
-              final queue = state.extra as List<int>? ?? [];
-              return _fadeSlide(state, ReviewScreen(key: ValueKey(queue)));
-            },
+            pageBuilder: (_, state) => _fadeSlide(state, const ReviewScreen()),
           ),
           GoRoute(
             path: 'parcours-list',

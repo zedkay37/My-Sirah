@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/genealogy/data/models/family_member.dart';
+import 'package:sirah_app/features/genealogy/shared/family_role_labels.dart';
 
 class RiverNode extends StatelessWidget {
   const RiverNode({
@@ -46,7 +47,7 @@ class RiverNode extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              _roleLabel(member.role).toUpperCase(),
+              familyRoleLabel(context, member.role).toUpperCase(),
               style: context.typo.overline.copyWith(color: context.colors.muted),
               textAlign: TextAlign.center,
             ),
@@ -94,22 +95,6 @@ class RiverNode extends StatelessWidget {
         );
   }
 
-  String _roleLabel(FamilyRole role) {
-    switch (role) {
-      case FamilyRole.prophet: return 'Le Prophète ﷺ';
-      case FamilyRole.father: return 'Père du Prophète ﷺ';
-      case FamilyRole.mother: return 'Mère du Prophète ﷺ';
-      case FamilyRole.paternalAscendant: return 'Ancêtre paternel';
-      case FamilyRole.maternalAscendant: return 'Ancêtre maternel';
-      case FamilyRole.uncle: return 'Oncle du Prophète ﷺ';
-      case FamilyRole.aunt: return 'Tante du Prophète ﷺ';
-      case FamilyRole.wife: return 'Épouse du Prophète ﷺ';
-      case FamilyRole.child: return 'Enfant du Prophète ﷺ';
-      case FamilyRole.grandchild: return 'Petit-enfant du Prophète ﷺ';
-      case FamilyRole.cousin: return 'Cousin(e) du Prophète ﷺ';
-      case FamilyRole.traditionalAncestor: return 'Ancêtre (tradition)';
-    }
-  }
 }
 
 class Tributary extends StatelessWidget {
@@ -165,7 +150,7 @@ class Tributary extends StatelessWidget {
                 SizedBox(width: space.xs),
                 Flexible(
                   child: Text(
-                    'Oncles & Tantes · $count',
+                    context.l10n.treeRoleUnclesAuntsCount(count),
                     style: typo.caption.copyWith(color: colors.muted),
                     textAlign: TextAlign.center,
                   ),
@@ -220,7 +205,7 @@ class Tributary extends StatelessWidget {
             Padding(
               padding: EdgeInsets.fromLTRB(space.md, 0, space.md, space.sm),
               child: Text(
-                'Oncles & Tantes du Prophète ﷺ',
+                context.l10n.treeRoleUnclesAunts,
                 style: typo.headline.copyWith(color: colors.ink),
               ),
             ),

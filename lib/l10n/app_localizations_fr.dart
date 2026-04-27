@@ -356,6 +356,50 @@ class AppLocalizationsFr extends AppLocalizations {
   String get treeListSectionOther => 'Autres';
 
   @override
+  String get treeRoleProphet => 'Le Prophète ﷺ';
+
+  @override
+  String get treeRoleFather => 'Père du Prophète ﷺ';
+
+  @override
+  String get treeRoleMother => 'Mère du Prophète ﷺ';
+
+  @override
+  String get treeRolePaternalAncestor => 'Ancêtre paternel';
+
+  @override
+  String get treeRoleMaternalAncestor => 'Ancêtre maternel';
+
+  @override
+  String get treeRoleUncle => 'Oncle du Prophète ﷺ';
+
+  @override
+  String get treeRoleAunt => 'Tante du Prophète ﷺ';
+
+  @override
+  String get treeRoleWife => 'Épouse du Prophète ﷺ';
+
+  @override
+  String get treeRoleChild => 'Enfant du Prophète ﷺ';
+
+  @override
+  String get treeRoleGrandchild => 'Petit-enfant du Prophète ﷺ';
+
+  @override
+  String get treeRoleCousin => 'Cousin(e) du Prophète ﷺ';
+
+  @override
+  String get treeRoleTraditionalAncestor => 'Ancêtre (tradition)';
+
+  @override
+  String get treeRoleUnclesAunts => 'Oncles & Tantes du Prophète ﷺ';
+
+  @override
+  String treeRoleUnclesAuntsCount(int count) {
+    return 'Oncles & Tantes · $count';
+  }
+
+  @override
   String get tafakkurTitle => 'Tafakkur';
 
   @override
@@ -429,4 +473,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String studyMasteredBadge(int count) {
     return '$count noms maîtrisés';
   }
+
+  @override
+  String get treeFilterAll => 'Tous';
+
+  @override
+  String get treeFilterWivesAndChildren => 'Épouses & enfants';
+
+  @override
+  String get treeFilterAncestors => 'Ascendants';
+
+  @override
+  String get treeFilterUnclesAndAunts => 'Oncles & tantes';
+
+  @override
+  String get treeFilterAhlAlBayt => 'Ahl al-Bayt';
 }

@@ -1,35 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sirah_app/features/study/data/models/parcours.dart';
 
-class Parcours {
-  const Parcours({
-    required this.id,
-    required this.titleFr,
-    required this.titleAr,
-    required this.descriptionFr,
-    required this.nameNumbers,
-    required this.colorHex,
-  });
-
-  final String id;
-  final String titleFr;
-  final String titleAr;
-  final String descriptionFr;
-  final List<int> nameNumbers;
-  final String colorHex;
-
-  factory Parcours.fromJson(Map<String, dynamic> json) => Parcours(
-        id: json['id'] as String,
-        titleFr: json['titleFr'] as String,
-        titleAr: json['titleAr'] as String,
-        descriptionFr: json['descriptionFr'] as String,
-        nameNumbers: (json['nameNumbers'] as List<dynamic>)
-            .map((e) => e as int)
-            .toList(),
-        colorHex: json['colorHex'] as String,
-      );
-}
+export 'package:sirah_app/features/study/data/models/parcours.dart' show Parcours;
 
 final parcoursProvider = FutureProvider<List<Parcours>>((ref) async {
   final raw = await rootBundle.loadString('assets/data/parcours.json');

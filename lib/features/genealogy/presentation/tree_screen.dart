@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/features/genealogy/data/genealogy_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/genealogy/presentation/constellation/constellation_view.dart';
 import 'package:sirah_app/features/genealogy/presentation/radial/radial_view.dart';
@@ -24,7 +25,7 @@ class TreeScreen extends ConsumerWidget {
             _Header(
               mode: mode,
               onModeChange: (m) =>
-                  ref.read(settingsProvider.notifier).setPreferredTreeView(m),
+                  ref.read(genealogyNotifierProvider).setPreferredTreeView(m),
             ),
             Expanded(
               child: AnimatedSwitcher(
