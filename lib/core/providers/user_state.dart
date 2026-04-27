@@ -25,5 +25,7 @@ abstract class UserState with _$UserState {
     @Default({}) Map<int, int> leitnerBoxes,
     @Default({}) Set<String> completedParcours,
     @Default('random') String studyMode,
+    // Asmāʾ al-Ḥusnā — V1.4
+    @Default({}) Set<int> husnaLearned,
   }) = _UserState;
 }

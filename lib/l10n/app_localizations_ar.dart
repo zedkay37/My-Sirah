@@ -257,6 +257,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get discoverNoResults => 'Aucun résultat';
 
   @override
+  String get discoverHubSubtitle => 'اختر مجالاً للاستكشاف';
+
+  @override
   String get navTree => 'الشجرة';
 
   @override
