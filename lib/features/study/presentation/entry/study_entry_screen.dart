@@ -12,7 +12,6 @@ class StudyEntryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.colors;
     final typo = context.typo;
-    final space = context.space;
     final l10n = context.l10n;
 
     return Scaffold(
@@ -23,55 +22,68 @@ class StudyEntryScreen extends ConsumerWidget {
         elevation: 0,
         title: Text(l10n.studyTitle, style: typo.headline),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(space.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: space.sm),
-            _ModeCard(
-              title: l10n.studyParcoursTitle,
-              subtitle: l10n.studyParcoursSubtitle,
-              icon: Icons.map_outlined,
-              onTap: () => context.push('/study/parcours-list'),
-            ),
-            SizedBox(height: space.md),
-            Consumer(
-              builder: (context, ref, _) {
-                final namesAsync = ref.watch(namesProvider);
-                return namesAsync.when(
-                  data: (names) {
-                    final allNumbers = names.map((n) => n.number).toList();
-                    final queue = ref
-                        .read(studyNotifierProvider)
-                        .getItemsForReview(allNumbers);
-                    
-                    return _ModeCard(
-                      title: l10n.studyReviewTitle,
-                      subtitle: l10n.studyReviewSubtitle(queue.length),
-                      icon: Icons.style_outlined,
-                      onTap: () {
-                        if (queue.isNotEmpty) {
-                          context.push('/study/review', extra: queue);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(l10n.studyReviewEmpty),
-                              backgroundColor: colors.accent,
-                            ),
-                          );
-                        }
-                      },
-                    );
-                  },
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, __) => const SizedBox.shrink(),
-                );
-              },
-            ),
-            SizedBox(height: space.xl),
-          ],
-        ),
+      body: const StudyEntryContent(),
+    );
+  }
+}
+
+class StudyEntryContent extends ConsumerWidget {
+  const StudyEntryContent({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final colors = context.colors;
+    final space = context.space;
+    final l10n = context.l10n;
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(space.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: space.sm),
+          _ModeCard(
+            title: l10n.studyParcoursTitle,
+            subtitle: l10n.studyParcoursSubtitle,
+            icon: Icons.map_outlined,
+            onTap: () => context.push('/study/parcours-list'),
+          ),
+          SizedBox(height: space.md),
+          Consumer(
+            builder: (context, ref, _) {
+              final namesAsync = ref.watch(namesProvider);
+              return namesAsync.when(
+                data: (names) {
+                  final allNumbers = names.map((n) => n.number).toList();
+                  final queue = ref
+                      .read(studyNotifierProvider)
+                      .getItemsForReview(allNumbers);
+
+                  return _ModeCard(
+                    title: l10n.studyReviewTitle,
+                    subtitle: l10n.studyReviewSubtitle(queue.length),
+                    icon: Icons.style_outlined,
+                    onTap: () {
+                      if (queue.isNotEmpty) {
+                        context.push('/study/review', extra: queue);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(l10n.studyReviewEmpty),
+                            backgroundColor: colors.accent,
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
+                loading: () => const SizedBox.shrink(),
+                error: (_, __) => const SizedBox.shrink(),
+              );
+            },
+          ),
+          SizedBox(height: space.xl),
+        ],
       ),
     );
   }
@@ -121,7 +133,10 @@ class _ModeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: typo.bodyLarge.copyWith(color: colors.ink)),
+                  Text(
+                    title,
+                    style: typo.bodyLarge.copyWith(color: colors.ink),
+                  ),
                   SizedBox(height: space.xs / 2),
                   Text(
                     subtitle,

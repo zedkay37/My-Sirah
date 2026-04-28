@@ -37,6 +37,7 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
     if (_isCorrect(index)) {
       _score++;
       ref.read(namesNotifierProvider).markLearned(_question.name.number);
+      ref.read(namesNotifierProvider).markNameRecognized(_question.name.number);
       ref.read(studyNotifierProvider).levelUp(_question.name.number);
     }
     _autoAdvanceTimer = Timer(const Duration(milliseconds: 1200), () {
@@ -72,6 +73,10 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
     final typo = context.typo;
     final space = context.space;
     final l10n = context.l10n;
+    final session = ref.watch(quizSessionProvider);
+    if (session == null) {
+      return const _MissingQuizSessionScreen();
+    }
     final total = _session.questions.length;
 
     return Scaffold(
@@ -109,10 +114,7 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
                 borderRadius: context.radii.lgAll,
                 border: Border.all(color: colors.line),
               ),
-              child: Text(
-                _question.maskedCommentary,
-                style: typo.bodyLarge,
-              ),
+              child: Text(_question.maskedCommentary, style: typo.bodyLarge),
             ),
             SizedBox(height: space.xl),
             // Choix
@@ -135,7 +137,9 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
                 child: FilledButton(
                   onPressed: _next,
                   child: Text(
-                    _currentQ < total - 1 ? l10n.qcmNext : l10n.quizExploreNamesCta,
+                    _currentQ < total - 1
+                        ? l10n.qcmNext
+                        : l10n.quizExploreNamesCta,
                   ),
                 ),
               ),
@@ -151,6 +155,52 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
     if (_isCorrect(index)) return _ChoiceState.correct;
     if (_selectedIndex == index) return _ChoiceState.wrong;
     return _ChoiceState.disabled;
+  }
+}
+
+class _MissingQuizSessionScreen extends StatelessWidget {
+  const _MissingQuizSessionScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+
+    return Scaffold(
+      backgroundColor: colors.bg,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(space.lg),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.quiz_outlined, color: colors.muted, size: 44),
+                SizedBox(height: space.md),
+                Text(
+                  context.l10n.quizTitle,
+                  style: typo.headline.copyWith(color: colors.ink),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.sm),
+                Text(
+                  context.l10n.quizSubtitle,
+                  style: typo.body.copyWith(color: colors.muted),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.lg),
+                FilledButton.icon(
+                  onPressed: () => context.go('/library/deck/prophet_names'),
+                  icon: const Icon(Icons.local_library_outlined),
+                  label: Text(context.l10n.navLibrary),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -176,25 +226,17 @@ class _ChoiceButton extends StatelessWidget {
 
     final (bg, border, labelColor) = switch (state) {
       _ChoiceState.correct => (
-          colors.success.withValues(alpha: 0.12),
-          colors.success,
-          colors.success,
-        ),
+        colors.success.withValues(alpha: 0.12),
+        colors.success,
+        colors.success,
+      ),
       _ChoiceState.wrong => (
-          colors.error.withValues(alpha: 0.12),
-          colors.error,
-          colors.error,
-        ),
-      _ChoiceState.disabled => (
-          Colors.transparent,
-          colors.line,
-          colors.muted,
-        ),
-      _ChoiceState.idle => (
-          colors.bg2,
-          colors.line,
-          colors.ink,
-        ),
+        colors.error.withValues(alpha: 0.12),
+        colors.error,
+        colors.error,
+      ),
+      _ChoiceState.disabled => (Colors.transparent, colors.line, colors.muted),
+      _ChoiceState.idle => (colors.bg2, colors.line, colors.ink),
     };
 
     return Semantics(
@@ -233,8 +275,11 @@ class _ChoiceButton extends StatelessWidget {
                   ),
                 ),
                 if (state == _ChoiceState.correct)
-                  Icon(Icons.check_circle_outline,
-                      color: colors.success, size: 20)
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: colors.success,
+                    size: 20,
+                  )
                 else if (state == _ChoiceState.wrong)
                   Icon(Icons.cancel_outlined, color: colors.error, size: 20),
               ],

@@ -32,12 +32,16 @@ class FavoritesScreen extends ConsumerWidget {
       ),
       body: namesAsync.when(
         loading: () => Center(
-          child: CircularProgressIndicator(color: colors.accent, strokeWidth: 2),
+          child: CircularProgressIndicator(
+            color: colors.accent,
+            strokeWidth: 2,
+          ),
         ),
         error: (_, __) => const SizedBox.shrink(),
         data: (names) {
-          final favNames =
-              names.where((n) => favorites.contains(n.number)).toList();
+          final favNames = names
+              .where((n) => favorites.contains(n.number))
+              .toList();
 
           if (favNames.isEmpty) {
             return Center(
@@ -52,7 +56,7 @@ class FavoritesScreen extends ConsumerWidget {
                   ),
                   SizedBox(height: space.sm),
                   TextButton(
-                    onPressed: () => context.go('/discover'),
+                    onPressed: () => context.go('/library/deck/prophet_names'),
                     child: Text(
                       l10n.favoritesEmptyCta,
                       style: typo.button.copyWith(color: colors.accent),

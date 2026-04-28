@@ -19,9 +19,8 @@ class SettingsNotifier extends Notifier<UserState> {
   Future<void> setTextSize(TextSize size) =>
       _save(state.copyWith(textSize: size));
 
-  Future<void> setOnboardingComplete() => _save(
-        state.copyWith(onboardingCompletedAt: DateTime.now()),
-      );
+  Future<void> setOnboardingComplete() =>
+      _save(state.copyWith(onboardingCompletedAt: DateTime.now()));
 
   Future<void> toggleFavorite(int number) {
     final favs = Set<int>.from(state.favorites);
@@ -34,7 +33,6 @@ class SettingsNotifier extends Notifier<UserState> {
   }
 
   Future<void> markViewed(int number) {
-    if (state.viewed.contains(number)) return Future.value();
     final viewed = Set<int>.from(state.viewed)..add(number);
     final lastSeen = Map<int, DateTime>.from(state.lastSeen)
       ..[number] = DateTime.now();
@@ -47,6 +45,24 @@ class SettingsNotifier extends Notifier<UserState> {
     return _save(state.copyWith(learned: learned));
   }
 
+  Future<void> markNameMeditated(int number) {
+    if (state.meditatedNames.contains(number)) return Future.value();
+    final meditated = Set<int>.from(state.meditatedNames)..add(number);
+    return _save(state.copyWith(meditatedNames: meditated));
+  }
+
+  Future<void> markNamePracticed(int number) {
+    if (state.practicedNames.contains(number)) return Future.value();
+    final practiced = Set<int>.from(state.practicedNames)..add(number);
+    return _save(state.copyWith(practicedNames: practiced));
+  }
+
+  Future<void> markNameRecognized(int number) {
+    if (state.recognizedNames.contains(number)) return Future.value();
+    final recognized = Set<int>.from(state.recognizedNames)..add(number);
+    return _save(state.copyWith(recognizedNames: recognized));
+  }
+
   Future<void> setNotifHour(int? hour) async {
     await _save(state.copyWith(dailyNotifHour: hour));
     if (hour != null) {
@@ -57,11 +73,11 @@ class SettingsNotifier extends Notifier<UserState> {
   }
 
   Future<void> recordQuizResult(int correctAnswers) => _save(
-        state.copyWith(
-          quizzesCompleted: state.quizzesCompleted + 1,
-          totalQuizScore: state.totalQuizScore + correctAnswers,
-        ),
-      );
+    state.copyWith(
+      quizzesCompleted: state.quizzesCompleted + 1,
+      totalQuizScore: state.totalQuizScore + correctAnswers,
+    ),
+  );
 
   // ── Genealogy ─────────────────────────────────────────────────────────────
 

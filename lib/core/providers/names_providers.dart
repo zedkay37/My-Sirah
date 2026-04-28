@@ -29,16 +29,16 @@ final categoriesProvider = FutureProvider<List<NameCategory>>(
 // Filtre actif dans la liste (slug de catégorie, null = tous)
 final categoryFilterProvider = StateProvider<String?>((_) => null);
 
-// Map<categorySlug, learnedCount> — recalculé quand learned ou names changent
-final learnedCountsProvider = Provider<Map<String, int>>((ref) {
+// Map<categorySlug, viewedCount> for V2 journey discovery.
+final viewedCountsProvider = Provider<Map<String, int>>((ref) {
   final namesAsync = ref.watch(namesProvider);
-  final learned = ref.watch(settingsProvider.select((s) => s.learned));
+  final viewed = ref.watch(settingsProvider.select((s) => s.viewed));
 
   return namesAsync.when(
     data: (names) {
       final counts = <String, int>{};
       for (final name in names) {
-        if (learned.contains(name.number)) {
+        if (viewed.contains(name.number)) {
           counts[name.categorySlug] = (counts[name.categorySlug] ?? 0) + 1;
         }
       }

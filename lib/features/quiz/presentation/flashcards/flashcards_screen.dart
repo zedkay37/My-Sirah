@@ -25,12 +25,10 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
   void _flip() => setState(() => _isFlipped = !_isFlipped);
 
   void _know() {
-    ref
-        .read(namesNotifierProvider)
-        .markLearned(_session.names[_index].number);
-    ref
-        .read(studyNotifierProvider)
-        .levelUp(_session.names[_index].number);
+    final number = _session.names[_index].number;
+    ref.read(namesNotifierProvider).markLearned(number);
+    ref.read(namesNotifierProvider).markNameRecognized(number);
+    ref.read(studyNotifierProvider).levelUp(number);
     _knownCount++;
     _advance();
   }
@@ -58,6 +56,10 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
     final typo = context.typo;
     final space = context.space;
     final l10n = context.l10n;
+    final session = ref.watch(quizSessionProvider);
+    if (session == null) {
+      return const _MissingQuizSessionScreen();
+    }
     final total = _session.names.length;
     final name = _session.names[_index];
 
@@ -88,11 +90,7 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
             SizedBox(height: space.md),
             // Carte retournable
             Expanded(
-              child: QuizCard(
-                name: name,
-                isFlipped: _isFlipped,
-                onFlip: _flip,
-              ),
+              child: QuizCard(name: name, isFlipped: _isFlipped, onFlip: _flip),
             ),
             SizedBox(height: space.lg),
             // Boutons (visibles uniquement après retournement)
@@ -139,6 +137,52 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
             ),
             SizedBox(height: space.xl),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MissingQuizSessionScreen extends StatelessWidget {
+  const _MissingQuizSessionScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+
+    return Scaffold(
+      backgroundColor: colors.bg,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(space.lg),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.style_outlined, color: colors.muted, size: 44),
+                SizedBox(height: space.md),
+                Text(
+                  context.l10n.quizTypeFlashcards,
+                  style: typo.headline.copyWith(color: colors.ink),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.sm),
+                Text(
+                  context.l10n.quizTypeFlashcardsDesc,
+                  style: typo.body.copyWith(color: colors.muted),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.lg),
+                FilledButton.icon(
+                  onPressed: () => context.go('/library/deck/prophet_names'),
+                  icon: const Icon(Icons.local_library_outlined),
+                  label: Text(context.l10n.navLibrary),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

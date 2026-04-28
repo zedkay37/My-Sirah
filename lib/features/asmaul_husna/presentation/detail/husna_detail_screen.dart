@@ -158,7 +158,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
                     if (name.id > 1)
                       TextButton.icon(
                         onPressed: () => context.pushReplacement(
-                          '/discover/husna/${name.id - 1}',
+                          '/library/deck/asmaul_husna/${name.id - 1}',
                         ),
                         icon: const Icon(Icons.chevron_left, size: 18),
                         label: Text(l10n.husnaPrevious),
@@ -171,7 +171,7 @@ class _HusnaDetailScreenState extends ConsumerState<HusnaDetailScreen> {
                     if (name.id < repo.getAll().length)
                       TextButton.icon(
                         onPressed: () => context.pushReplacement(
-                          '/discover/husna/${name.id + 1}',
+                          '/library/deck/asmaul_husna/${name.id + 1}',
                         ),
                         icon: const Icon(Icons.chevron_right, size: 18),
                         label: Text(l10n.husnaNext),

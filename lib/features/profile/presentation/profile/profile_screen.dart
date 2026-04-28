@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijri/hijri_calendar.dart';
+import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/core/utils/hijri_utils.dart';
+import 'package:sirah_app/features/journey/domain/name_progress_resolver.dart';
 import 'package:sirah_app/features/shared/progress_ring.dart';
 import 'package:sirah_app/features/shared/section_header.dart';
 import 'package:sirah_app/features/shared/streak_badge.dart';
@@ -36,10 +38,14 @@ class ProfileScreen extends ConsumerWidget {
 
     final settings = ref.watch(settingsProvider);
     final namesAsync = ref.watch(namesProvider);
-
-    final learnedCount = settings.learned.length;
-    final total = namesAsync.maybeWhen(data: (names) => names.length, orElse: () => 201);
-    final progress = total > 0 ? learnedCount / total : 0.0;
+    final progressResolver = ref.watch(journeyProgressResolverProvider);
+    final journeySummary =
+        ref.watch(journeyProgressSummaryProvider).valueOrNull ??
+        progressResolver.summarize(
+          List<int>.generate(201, (index) => index + 1),
+        );
+    final total = journeySummary.total;
+    final progress = journeySummary.weightedProgress;
     final streak = _computeStreak(settings.lastSeen);
 
     return Scaffold(
@@ -89,7 +95,7 @@ class ProfileScreen extends ConsumerWidget {
                           strokeWidth: 6,
                           color: colors.accent,
                         ),
-                        Text('$learnedCount', style: typo.headline),
+                        Text('${journeySummary.viewed}', style: typo.headline),
                       ],
                     ),
                     SizedBox(width: space.lg),
@@ -98,7 +104,10 @@ class ProfileScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            l10n.profileLearnedSubtitle,
+                            l10n.profileJourneySubtitle(
+                              journeySummary.viewed,
+                              total,
+                            ),
                             style: typo.body.copyWith(color: colors.muted),
                           ),
                           SizedBox(height: space.xs),
@@ -114,6 +123,11 @@ class ProfileScreen extends ConsumerWidget {
               // ── Constellation ─────────────────────────────────────────────
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: space.md),
+                child: _JourneySummaryGrid(summary: journeySummary),
+              ),
+              SizedBox(height: space.xl),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: space.md),
                 child: SectionHeader(title: l10n.profileConstellationTitle),
               ),
               SizedBox(height: space.sm),
@@ -122,9 +136,9 @@ class ProfileScreen extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(horizontal: space.md),
                   child: _ConstellationView(
                     totalNames: names.length,
-                    learnedNumbers: settings.learned,
-                    viewedNumbers: settings.viewed,
-                    onStarTap: (number) => context.push('/name/$number'),
+                    progress: progressResolver,
+                    onStarTap: (number) =>
+                        context.push('/name/$number/experience'),
                   ),
                 ),
                 loading: () => const SizedBox(height: 300),
@@ -203,17 +217,104 @@ class ProfileScreen extends ConsumerWidget {
 
 // ── Constellation — 201 étoiles ───────────────────────────────────────────────
 
+class _JourneySummaryGrid extends StatelessWidget {
+  const _JourneySummaryGrid({required this.summary});
+
+  final NameProgressSummary summary;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final space = context.space;
+
+    return Wrap(
+      spacing: space.sm,
+      runSpacing: space.sm,
+      children: [
+        _JourneyMetric(
+          icon: Icons.star_rounded,
+          label: l10n.profileJourneyViewed,
+          value: summary.viewed,
+        ),
+        _JourneyMetric(
+          icon: Icons.self_improvement_rounded,
+          label: l10n.profileJourneyMeditated,
+          value: summary.meditated,
+        ),
+        _JourneyMetric(
+          icon: Icons.check_circle_rounded,
+          label: l10n.profileJourneyPracticed,
+          value: summary.practiced,
+        ),
+        _JourneyMetric(
+          icon: Icons.workspace_premium_rounded,
+          label: l10n.profileJourneyRecognized,
+          value: summary.recognized,
+        ),
+      ],
+    );
+  }
+}
+
+class _JourneyMetric extends StatelessWidget {
+  const _JourneyMetric({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String label;
+  final int value;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+    final radii = context.radii;
+
+    return SizedBox(
+      width: 156,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colors.bg2,
+          borderRadius: radii.mdAll,
+          border: Border.all(color: colors.line),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(space.sm),
+          child: Row(
+            children: [
+              Icon(icon, color: colors.accent, size: 18),
+              SizedBox(width: space.xs),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: typo.caption.copyWith(color: colors.muted),
+                ),
+              ),
+              SizedBox(width: space.xs),
+              Text('$value', style: typo.body),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _ConstellationView extends StatelessWidget {
   const _ConstellationView({
     required this.totalNames,
-    required this.learnedNumbers,
-    required this.viewedNumbers,
+    required this.progress,
     required this.onStarTap,
   });
 
   final int totalNames;
-  final Set<int> learnedNumbers;
-  final Set<int> viewedNumbers;
+  final NameProgressResolver progress;
   final void Function(int number) onStarTap;
 
   int? _hitTest(Offset localPos, Size size) {
@@ -242,10 +343,12 @@ class _ConstellationView extends StatelessWidget {
             child: CustomPaint(
               painter: _ConstellationPainter(
                 totalNames: totalNames,
-                learnedNumbers: learnedNumbers,
-                viewedNumbers: viewedNumbers,
+                progress: progress,
                 accentColor: colors.accent,
                 viewedColor: colors.muted.withValues(alpha: 0.45),
+                meditatedColor: colors.accent.withValues(alpha: 0.7),
+                practicedColor: Colors.teal.shade500,
+                recognizedColor: Colors.amber.shade600,
                 unknownColor: colors.muted.withValues(alpha: 0.18),
               ),
               child: const SizedBox.expand(),
@@ -260,18 +363,22 @@ class _ConstellationView extends StatelessWidget {
 class _ConstellationPainter extends CustomPainter {
   const _ConstellationPainter({
     required this.totalNames,
-    required this.learnedNumbers,
-    required this.viewedNumbers,
+    required this.progress,
     required this.accentColor,
     required this.viewedColor,
+    required this.meditatedColor,
+    required this.practicedColor,
+    required this.recognizedColor,
     required this.unknownColor,
   });
 
   final int totalNames;
-  final Set<int> learnedNumbers;
-  final Set<int> viewedNumbers;
+  final NameProgressResolver progress;
   final Color accentColor;
   final Color viewedColor;
+  final Color meditatedColor;
+  final Color practicedColor;
+  final Color recognizedColor;
   final Color unknownColor;
 
   @override
@@ -279,34 +386,36 @@ class _ConstellationPainter extends CustomPainter {
     for (int i = 0; i < totalNames; i++) {
       final number = i + 1;
       final pos = _starPosition(i, totalNames, size);
-      final isLearned = learnedNumbers.contains(number);
-      final isViewed = viewedNumbers.contains(number);
+      final stage = progress.stageFor(number);
 
-      if (isLearned) {
-        // Halo
+      if (stage != JourneyNameStage.unknown) {
+        final color = switch (stage) {
+          JourneyNameStage.recognized => recognizedColor,
+          JourneyNameStage.practiced => practicedColor,
+          JourneyNameStage.meditated => meditatedColor,
+          JourneyNameStage.viewed => viewedColor,
+          JourneyNameStage.unknown => unknownColor,
+        };
+        final radius = switch (stage) {
+          JourneyNameStage.recognized => 4.2,
+          JourneyNameStage.practiced => 3.6,
+          JourneyNameStage.meditated => 3.0,
+          JourneyNameStage.viewed => 2.5,
+          JourneyNameStage.unknown => 1.2,
+        };
         canvas.drawCircle(
           pos,
-          6.5,
+          radius + 3,
           Paint()
-            ..color = accentColor.withValues(alpha: 0.15)
+            ..color = color.withValues(alpha: 0.14)
             ..style = PaintingStyle.fill,
         );
-        // Point lumineux
-        canvas.drawCircle(pos, 3.5, Paint()..color = accentColor);
-      } else if (isViewed) {
-        // Point semi-brillant
+        canvas.drawCircle(pos, radius, Paint()..color = color);
         canvas.drawCircle(
           pos,
-          2.5,
+          radius,
           Paint()
-            ..color = viewedColor
-            ..style = PaintingStyle.fill,
-        );
-        canvas.drawCircle(
-          pos,
-          2.5,
-          Paint()
-            ..color = viewedColor
+            ..color = color.withValues(alpha: 0.65)
             ..style = PaintingStyle.stroke
             ..strokeWidth = 0.5,
         );
@@ -319,9 +428,13 @@ class _ConstellationPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ConstellationPainter old) =>
-      old.learnedNumbers != learnedNumbers ||
-      old.viewedNumbers != viewedNumbers ||
-      old.accentColor != accentColor;
+      old.progress != progress ||
+      old.accentColor != accentColor ||
+      old.viewedColor != viewedColor ||
+      old.meditatedColor != meditatedColor ||
+      old.practicedColor != practicedColor ||
+      old.recognizedColor != recognizedColor ||
+      old.unknownColor != unknownColor;
 }
 
 // ── Légende constellation ──────────────────────────────────────────────────────
@@ -333,21 +446,31 @@ class _ConstellationLegend extends StatelessWidget {
     final space = context.space;
 
     final l10n = context.l10n;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: space.md,
+      runSpacing: space.xs,
       children: [
-        _LegendItem(
-          color: colors.accent,
-          radius: 4,
-          label: l10n.profileLegendLearned,
-        ),
-        SizedBox(width: space.md),
         _LegendItem(
           color: colors.muted.withValues(alpha: 0.5),
           radius: 3,
           label: l10n.profileLegendViewed,
         ),
-        SizedBox(width: space.md),
+        _LegendItem(
+          color: colors.accent.withValues(alpha: 0.7),
+          radius: 3,
+          label: l10n.profileLegendMeditated,
+        ),
+        _LegendItem(
+          color: Colors.teal.shade500,
+          radius: 4,
+          label: l10n.profileLegendPracticed,
+        ),
+        _LegendItem(
+          color: Colors.amber.shade600,
+          radius: 4,
+          label: l10n.profileLegendRecognized,
+        ),
         _LegendItem(
           color: colors.muted.withValues(alpha: 0.25),
           radius: 2,
@@ -438,11 +561,7 @@ class _ProfileTile extends StatelessWidget {
                   style: typo.caption.copyWith(color: colors.muted),
                 ),
               SizedBox(width: space.xs),
-              Icon(
-                Icons.chevron_right,
-                color: colors.muted,
-                size: 20,
-              ),
+              Icon(Icons.chevron_right, color: colors.muted, size: 20),
             ],
           ),
         ),

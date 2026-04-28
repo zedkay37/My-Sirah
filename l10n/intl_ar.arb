@@ -12,9 +12,22 @@
   "settingsNotifDisable": "Désactiver",
 
   "profileConstellationTitle": "Constellation",
-  "profileLegendLearned": "appris",
   "profileLegendViewed": "vu",
+  "profileLegendMeditated": "تم تأملها",
+  "profileLegendPracticed": "عيشت",
+  "profileLegendRecognized": "عرفت",
   "profileLegendUnknown": "non découvert",
+  "profileJourneySubtitle": "{viewed}/{total} نجوم تم اكتشافها",
+  "@profileJourneySubtitle": {
+    "placeholders": {
+      "viewed": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "profileJourneyViewed": "مكتشفة",
+  "profileJourneyMeditated": "متأملة",
+  "profileJourneyPracticed": "معاشة",
+  "profileJourneyRecognized": "معروفة",
 
   "detailLearningProgress": "Mémorisation en cours…",
 
@@ -34,6 +47,35 @@
   "husnaEtymology": "الاشتقاق",
   "husnaReference": "المرجع",
   "discoverHubSubtitle": "اختر مجالاً للاستكشاف",
+  "journeyTitle": "الرحلة",
+  "journeyTitleAr": "رحلة الأسماء",
+  "journeySubtitle": "تقدم عبر مجموعات الأسماء، نجمة بعد نجمة.",
+  "journeyGalaxyHint": "المس المجرة النشطة للدخول في الرحلة.",
+  "journeyDeckMapHint": "المس مجموعة لرؤية نجومها.",
+  "journeyLoadError": "تعذر تحميل الرحلة",
+  "journeyNotFound": "المجموعة غير موجودة",
+  "journeyProgress": "{viewed}/{total} نجوم تمت رؤيتها",
+  "@journeyProgress": {
+    "placeholders": {
+      "viewed": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "journeyProgressDetailed": "{viewed} شوهدت · {meditated} تم تأملها · {practiced} عيشت · {recognized} عرفت / {total}",
+  "@journeyProgressDetailed": {
+    "placeholders": {
+      "viewed": { "type": "int" },
+      "meditated": { "type": "int" },
+      "practiced": { "type": "int" },
+      "recognized": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "journeyStarViewed": "شوهدت",
+  "journeyStarMeditated": "تم تأملها",
+  "journeyStarPracticed": "عيشت",
+  "journeyStarRecognized": "عرفت",
+  "journeyStarUnknown": "للاكتشاف",
 
   "navTree": "الشجرة",
 
@@ -58,6 +100,33 @@
   "treeListView": "عرض القائمة",
 
   "homeTagline": "معرفة النبيّ ﷺ ومحبّته واتّباعه",
+  "homeDailyActionTitle": "عمل اليوم",
+  "homeExploreTodayName": "استكشف هذا الاسم",
+  "homeClassicNameTooltip": "البطاقة الكلاسيكية",
+  "homeContinueJourneyTitle": "متابعة الرحلة",
+  "homeContinueJourneyFallback": "المتابعة من اسم اليوم",
+  "homeContinueJourneySubtitle": "النجم التالي في {constellation}",
+  "@homeContinueJourneySubtitle": {
+    "placeholders": {
+      "constellation": { "type": "String" }
+    }
+  },
+  "homeJourneyShortcutSubtitle": "الدخول إلى الخريطة النجمية",
+  "homeLibraryShortcutSubtitle": "القوائم والبطاقات والمراجعة",
+  "navJourney": "الرحلة",
+  "navLibrary": "المكتبة",
+  "libraryTitle": "المكتبة",
+  "librarySubtitle": "القوائم والبطاقات والمراجعة والاختبارات في مكان واحد.",
+  "libraryProphetNamesSubtitle": "قائمة وبطاقات وتفكر واختبار ومراجعة.",
+  "libraryToolsTitle": "أدوات التعلم",
+  "libraryLearnTab": "تعلم",
+  "libraryDeckProgress": "{current}/{total} معروفة",
+  "@libraryDeckProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
   "tafakkurTitle": "تفكر",
   "tafakkurPause": "إيقاف مؤقت",
   "tafakkurResume": "استئناف",
@@ -76,6 +145,26 @@
   "tafakkurExitConfirm": "الخروج من التفكر؟",
   "tafakkurExitConfirmYes": "خروج",
   "tafakkurExitConfirmNo": "متابعة",
+  "tafakkurPrevious": "الصفحة السابقة",
+  "tafakkurNext": "الصفحة التالية",
+  "tafakkurSettingsTooltip": "ضبط الوتيرة",
+  "tafakkurEstimatedDuration": "نحو {minutes} د",
+  "@tafakkurEstimatedDuration": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "tafakkurPaceSummary": "{seconds} ث لكل صفحة",
+  "@tafakkurPaceSummary": {
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  },
+  "tafakkurPageName": "الاسم",
+  "tafakkurPageStory": "القصة",
+  "tafakkurPageMeditation": "تأمل",
+  "tafakkurPageIntention": "نية",
+  "tafakkurSwipeHint": "اسحب للتقدم أو الرجوع",
 
   "studyTitle": "وضع الدراسة",
   "studyParcoursTitle": "المسارات الموضوعية",
@@ -122,5 +211,21 @@
   "treeFilterWivesAndChildren": "الزوجات والأبناء",
   "treeFilterAncestors": "الأجداد",
   "treeFilterUnclesAndAunts": "الأعمام والعمات",
-  "treeFilterAhlAlBayt": "أهل البيت"
+  "treeFilterAhlAlBayt": "أهل البيت",
+
+  "nameExperienceTitle": "اسم حي",
+  "nameExperienceOpen": "فتح الاسم الحي",
+  "nameExperienceStory": "قصة",
+  "nameExperienceUnderstand": "فهم هذا الاسم",
+  "nameExperienceTafakkur": "تفكر",
+  "nameExperienceActionOfDay": "عمل اليوم",
+  "nameExperienceMarkActionPracticed": "عشتها",
+  "nameExperienceActionPracticed": "تم العمل بها",
+  "nameExperienceNoStory": "لا توجد بعد قصة مخصصة لهذا الاسم. تبقى البطاقة الكلاسيكية متاحة أثناء الإثراء التحريري.",
+  "nameExperienceFallbackPrompt": "ماذا يعلمني هذا الاسم اليوم عن معرفة النبي ﷺ ومحبته والاقتداء به؟",
+  "nameExperienceFallbackAction": "خذ لحظة قصيرة لتعيش هذا الاسم بصدق.",
+  "nameExperienceEnterTafakkur": "الدخول في التفكر",
+  "nameExperienceClassicTooltip": "البطاقة الكلاسيكية",
+  "nameExperienceOpenClassic": "فتح البطاقة الكلاسيكية",
+  "nameExperienceNotFound": "الاسم غير موجود"
 }

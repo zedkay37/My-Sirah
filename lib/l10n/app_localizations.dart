@@ -116,6 +116,18 @@ abstract class AppLocalizations {
   /// **'Découvrir'**
   String get navDiscover;
 
+  /// No description provided for @navJourney.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voyage'**
+  String get navJourney;
+
+  /// No description provided for @navLibrary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bibliothèque'**
+  String get navLibrary;
+
   /// No description provided for @navProfile.
   ///
   /// In fr, this message translates to:
@@ -218,11 +230,59 @@ abstract class AppLocalizations {
   /// **'Découvrir ce nom'**
   String get homeDiscoverName;
 
-  /// No description provided for @homeCategoryLearned.
+  /// No description provided for @homeDailyActionTitle.
   ///
   /// In fr, this message translates to:
-  /// **'{learned}/{total} appris'**
-  String homeCategoryLearned(int learned, int total);
+  /// **'Action du jour'**
+  String get homeDailyActionTitle;
+
+  /// No description provided for @homeExploreTodayName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorer ce nom'**
+  String get homeExploreTodayName;
+
+  /// No description provided for @homeClassicNameTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche classique'**
+  String get homeClassicNameTooltip;
+
+  /// No description provided for @homeContinueJourneyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer mon voyage'**
+  String get homeContinueJourneyTitle;
+
+  /// No description provided for @homeContinueJourneyFallback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reprendre depuis le nom du jour'**
+  String get homeContinueJourneyFallback;
+
+  /// No description provided for @homeContinueJourneySubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochaine étoile dans {constellation}'**
+  String homeContinueJourneySubtitle(String constellation);
+
+  /// No description provided for @homeJourneyShortcutSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrer dans la carte stellaire'**
+  String get homeJourneyShortcutSubtitle;
+
+  /// No description provided for @homeLibraryShortcutSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Listes, fiches et révisions'**
+  String get homeLibraryShortcutSubtitle;
+
+  /// No description provided for @homeCategoryViewed.
+  ///
+  /// In fr, this message translates to:
+  /// **'{viewed}/{total} découverts'**
+  String homeCategoryViewed(int viewed, int total);
 
   /// No description provided for @homeNameNumber.
   ///
@@ -422,11 +482,35 @@ abstract class AppLocalizations {
   /// **'Explorer les noms'**
   String get quizExploreNamesCta;
 
-  /// No description provided for @profileLearnedSubtitle.
+  /// No description provided for @profileJourneySubtitle.
   ///
   /// In fr, this message translates to:
-  /// **'sur 201 noms du Prophète ﷺ'**
-  String get profileLearnedSubtitle;
+  /// **'{viewed}/{total} étoiles découvertes'**
+  String profileJourneySubtitle(int viewed, int total);
+
+  /// No description provided for @profileJourneyViewed.
+  ///
+  /// In fr, this message translates to:
+  /// **'découvertes'**
+  String get profileJourneyViewed;
+
+  /// No description provided for @profileJourneyMeditated.
+  ///
+  /// In fr, this message translates to:
+  /// **'contemplées'**
+  String get profileJourneyMeditated;
+
+  /// No description provided for @profileJourneyPracticed.
+  ///
+  /// In fr, this message translates to:
+  /// **'vécues'**
+  String get profileJourneyPracticed;
+
+  /// No description provided for @profileJourneyRecognized.
+  ///
+  /// In fr, this message translates to:
+  /// **'reconnues'**
+  String get profileJourneyRecognized;
 
   /// No description provided for @profileFavorites.
   ///
@@ -566,17 +650,29 @@ abstract class AppLocalizations {
   /// **'Constellation'**
   String get profileConstellationTitle;
 
-  /// No description provided for @profileLegendLearned.
-  ///
-  /// In fr, this message translates to:
-  /// **'appris'**
-  String get profileLegendLearned;
-
   /// No description provided for @profileLegendViewed.
   ///
   /// In fr, this message translates to:
   /// **'vu'**
   String get profileLegendViewed;
+
+  /// No description provided for @profileLegendMeditated.
+  ///
+  /// In fr, this message translates to:
+  /// **'contemplé'**
+  String get profileLegendMeditated;
+
+  /// No description provided for @profileLegendPracticed.
+  ///
+  /// In fr, this message translates to:
+  /// **'vécu'**
+  String get profileLegendPracticed;
+
+  /// No description provided for @profileLegendRecognized.
+  ///
+  /// In fr, this message translates to:
+  /// **'reconnu'**
+  String get profileLegendRecognized;
 
   /// No description provided for @profileLegendUnknown.
   ///
@@ -649,6 +745,132 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Choisissez un domaine à explorer'**
   String get discoverHubSubtitle;
+
+  /// No description provided for @libraryTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bibliothèque'**
+  String get libraryTitle;
+
+  /// No description provided for @librarySubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retrouvez les listes, fiches, révisions et quiz.'**
+  String get librarySubtitle;
+
+  /// No description provided for @libraryProphetNamesSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste, fiches, tafakkur, QCM et révision.'**
+  String get libraryProphetNamesSubtitle;
+
+  /// No description provided for @libraryToolsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Outils d’apprentissage'**
+  String get libraryToolsTitle;
+
+  /// No description provided for @libraryLearnTab.
+  ///
+  /// In fr, this message translates to:
+  /// **'Apprendre'**
+  String get libraryLearnTab;
+
+  /// No description provided for @libraryDeckProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'{current}/{total} reconnus'**
+  String libraryDeckProgress(int current, int total);
+
+  /// No description provided for @journeyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voyage'**
+  String get journeyTitle;
+
+  /// No description provided for @journeyTitleAr.
+  ///
+  /// In fr, this message translates to:
+  /// **'رحلة الأسماء'**
+  String get journeyTitleAr;
+
+  /// No description provided for @journeySubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avancez par constellations de noms, une étoile après l’autre.'**
+  String get journeySubtitle;
+
+  /// No description provided for @journeyGalaxyHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touchez la galaxie active pour entrer dans le voyage.'**
+  String get journeyGalaxyHint;
+
+  /// No description provided for @journeyDeckMapHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touchez une constellation pour voir ses étoiles.'**
+  String get journeyDeckMapHint;
+
+  /// No description provided for @journeyLoadError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de charger le voyage'**
+  String get journeyLoadError;
+
+  /// No description provided for @journeyNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Constellation introuvable'**
+  String get journeyNotFound;
+
+  /// No description provided for @journeyProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'{viewed}/{total} étoiles vues'**
+  String journeyProgress(int viewed, int total);
+
+  /// No description provided for @journeyProgressDetailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'{viewed} vues · {meditated} méditées · {practiced} vécues · {recognized} reconnues / {total}'**
+  String journeyProgressDetailed(
+    int viewed,
+    int meditated,
+    int practiced,
+    int recognized,
+    int total,
+  );
+
+  /// No description provided for @journeyStarViewed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vue'**
+  String get journeyStarViewed;
+
+  /// No description provided for @journeyStarMeditated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Méditée'**
+  String get journeyStarMeditated;
+
+  /// No description provided for @journeyStarPracticed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vécue'**
+  String get journeyStarPracticed;
+
+  /// No description provided for @journeyStarRecognized.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reconnue'**
+  String get journeyStarRecognized;
+
+  /// No description provided for @journeyStarUnknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'À découvrir'**
+  String get journeyStarUnknown;
 
   /// No description provided for @treeTitle.
   ///
@@ -998,6 +1220,66 @@ abstract class AppLocalizations {
   /// **'Continuer'**
   String get tafakkurExitConfirmNo;
 
+  /// No description provided for @tafakkurPrevious.
+  ///
+  /// In fr, this message translates to:
+  /// **'Page précédente'**
+  String get tafakkurPrevious;
+
+  /// No description provided for @tafakkurNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Page suivante'**
+  String get tafakkurNext;
+
+  /// No description provided for @tafakkurSettingsTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Régler le rythme'**
+  String get tafakkurSettingsTooltip;
+
+  /// No description provided for @tafakkurEstimatedDuration.
+  ///
+  /// In fr, this message translates to:
+  /// **'~{minutes} min'**
+  String tafakkurEstimatedDuration(int minutes);
+
+  /// No description provided for @tafakkurPaceSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'{seconds} s par page'**
+  String tafakkurPaceSummary(int seconds);
+
+  /// No description provided for @tafakkurPageName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nom'**
+  String get tafakkurPageName;
+
+  /// No description provided for @tafakkurPageStory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le récit'**
+  String get tafakkurPageStory;
+
+  /// No description provided for @tafakkurPageMeditation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Méditer'**
+  String get tafakkurPageMeditation;
+
+  /// No description provided for @tafakkurPageIntention.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intention'**
+  String get tafakkurPageIntention;
+
+  /// No description provided for @tafakkurSwipeHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Glissez pour avancer ou revenir'**
+  String get tafakkurSwipeHint;
+
   /// No description provided for @studyTitle.
   ///
   /// In fr, this message translates to:
@@ -1087,6 +1369,96 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ahl al-Bayt'**
   String get treeFilterAhlAlBayt;
+
+  /// No description provided for @nameExperienceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom vivant'**
+  String get nameExperienceTitle;
+
+  /// No description provided for @nameExperienceOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir le nom vivant'**
+  String get nameExperienceOpen;
+
+  /// No description provided for @nameExperienceStory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récit'**
+  String get nameExperienceStory;
+
+  /// No description provided for @nameExperienceUnderstand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Comprendre ce nom'**
+  String get nameExperienceUnderstand;
+
+  /// No description provided for @nameExperienceTafakkur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tafakkur'**
+  String get nameExperienceTafakkur;
+
+  /// No description provided for @nameExperienceActionOfDay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action du jour'**
+  String get nameExperienceActionOfDay;
+
+  /// No description provided for @nameExperienceMarkActionPracticed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je l’ai vécue'**
+  String get nameExperienceMarkActionPracticed;
+
+  /// No description provided for @nameExperienceActionPracticed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action vécue'**
+  String get nameExperienceActionPracticed;
+
+  /// No description provided for @nameExperienceNoStory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun récit dédié n’est encore relié à ce nom. La fiche classique reste disponible pendant l’enrichissement éditorial.'**
+  String get nameExperienceNoStory;
+
+  /// No description provided for @nameExperienceFallbackPrompt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Que ce nom m’apprend-il aujourd’hui sur la connaissance, l’amour et l’imitation du Prophète ﷺ ?'**
+  String get nameExperienceFallbackPrompt;
+
+  /// No description provided for @nameExperienceFallbackAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prends un moment court pour vivre ce nom avec sincérité.'**
+  String get nameExperienceFallbackAction;
+
+  /// No description provided for @nameExperienceEnterTafakkur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrer en tafakkur'**
+  String get nameExperienceEnterTafakkur;
+
+  /// No description provided for @nameExperienceClassicTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche classique'**
+  String get nameExperienceClassicTooltip;
+
+  /// No description provided for @nameExperienceOpenClassic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir la fiche classique'**
+  String get nameExperienceOpenClassic;
+
+  /// No description provided for @nameExperienceNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom introuvable'**
+  String get nameExperienceNotFound;
 }
 
 class _AppLocalizationsDelegate

@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sirah_app/core/providers/husna_providers.dart';
-import 'package:sirah_app/core/providers/settings_provider.dart';
+import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 
 class DiscoverScreen extends ConsumerWidget {
@@ -16,9 +16,9 @@ class DiscoverScreen extends ConsumerWidget {
     final space = context.space;
     final l10n = context.l10n;
 
-    final prophetsLearned = ref.watch(
-      settingsProvider.select((s) => s.learned.length),
-    );
+    final progress = ref.watch(journeyProgressResolverProvider);
+    final prophetsRecognized = progress.recognized.length;
+    final journeyViewed = progress.viewed.length;
     final husnaLearned = ref.watch(husnaLearnedCountProvider);
 
     return Scaffold(
@@ -43,22 +43,37 @@ class DiscoverScreen extends ConsumerWidget {
             titleAr: l10n.discoverProphetsTitleAr,
             titleFr: l10n.discoverProphetsTitle,
             subtitle: l10n.discoverProphetsSubtitle,
-            learned: prophetsLearned,
+            progress: prophetsRecognized,
+            progressLabel: l10n.libraryDeckProgress(prophetsRecognized, 201),
             total: 201,
             accentColor: colors.accent,
-            onTap: () => context.push('/discover/prophets'),
+            onTap: () => context.push('/library/deck/prophet_names'),
           ),
           SizedBox(height: space.md),
           _DeckCard(
             index: 1,
+            icon: Icons.travel_explore_outlined,
+            titleAr: l10n.journeyTitleAr,
+            titleFr: l10n.journeyTitle,
+            subtitle: l10n.journeySubtitle,
+            progress: journeyViewed,
+            progressLabel: l10n.journeyProgress(journeyViewed, 201),
+            total: 201,
+            accentColor: colors.success,
+            onTap: () => context.push('/journey'),
+          ),
+          SizedBox(height: space.md),
+          _DeckCard(
+            index: 2,
             icon: Icons.stars_outlined,
             titleAr: l10n.discoverHusnaTitleAr,
             titleFr: l10n.husnaTitle,
             subtitle: l10n.discoverHusnaSubtitle,
-            learned: husnaLearned,
+            progress: husnaLearned,
+            progressLabel: l10n.libraryDeckProgress(husnaLearned, 99),
             total: 99,
             accentColor: colors.accent2,
-            onTap: () => context.push('/discover/husna'),
+            onTap: () => context.push('/library/deck/asmaul_husna'),
           ),
         ],
       ),
@@ -73,7 +88,8 @@ class _DeckCard extends StatelessWidget {
     required this.titleAr,
     required this.titleFr,
     required this.subtitle,
-    required this.learned,
+    required this.progress,
+    required this.progressLabel,
     required this.total,
     required this.accentColor,
     required this.onTap,
@@ -84,7 +100,8 @@ class _DeckCard extends StatelessWidget {
   final String titleAr;
   final String titleFr;
   final String subtitle;
-  final int learned;
+  final int progress;
+  final String progressLabel;
   final int total;
   final Color accentColor;
   final VoidCallback onTap;
@@ -96,7 +113,7 @@ class _DeckCard extends StatelessWidget {
     final space = context.space;
     final radii = context.radii;
 
-    final progress = total > 0 ? learned / total : 0.0;
+    final progressValue = total > 0 ? progress / total : 0.0;
 
     return GestureDetector(
           onTap: onTap,
@@ -157,7 +174,7 @@ class _DeckCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: LinearProgressIndicator(
-                    value: progress,
+                    value: progressValue,
                     backgroundColor: accentColor.withValues(alpha: 0.1),
                     color: accentColor,
                     minHeight: 4,
@@ -165,7 +182,7 @@ class _DeckCard extends StatelessWidget {
                 ),
                 SizedBox(height: space.xs),
                 Text(
-                  context.l10n.homeCategoryLearned(learned, total),
+                  progressLabel,
                   style: typo.caption.copyWith(color: colors.muted),
                 ),
               ],

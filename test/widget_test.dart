@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/providers/user_state.dart';
 import 'package:sirah_app/core/theme/app_theme.dart';
 import 'package:sirah_app/core/theme/theme_key.dart';
+import 'package:sirah_app/features/journey/data/repositories/journey_repository.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/names/data/sources/categories_json_source.dart';
 import 'package:sirah_app/features/names/presentation/detail/detail_screen.dart';
@@ -13,6 +15,7 @@ import 'package:sirah_app/features/names/presentation/home/home_screen.dart';
 import 'package:sirah_app/features/names/presentation/list/list_screen.dart';
 import 'package:sirah_app/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:sirah_app/features/profile/presentation/favorites/favorites_screen.dart';
+import 'package:sirah_app/features/profile/presentation/profile/profile_screen.dart';
 import 'package:sirah_app/l10n/app_localizations.dart';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -36,6 +39,35 @@ const _testCategory = NameCategory(
   count: 20,
 );
 
+const _testConstellation = NameConstellation(
+  id: 'praise',
+  titleFr: 'Constellation de la Louange',
+  titleAr: 'الحمد',
+  descriptionFr: 'Louange',
+  nameNumbers: [1, 2],
+  colorHex: '#7C6FAB',
+);
+
+const _testExperience = NameExperience(
+  nameNumber: 1,
+  tafakkurPromptFr: 'Prompt',
+  practiceTheme: 'praise',
+);
+
+const _testActionBank = NameActionBank(
+  theme: 'praise',
+  actions: ['Remercie quelqu’un aujourd’hui.'],
+);
+
+final _testJourney = JourneyRepository(
+  constellations: const [_testConstellation],
+  experiences: const [_testExperience],
+  actionBanks: const [
+    NameActionBank(theme: 'general', actions: ['Agis avec sincérité.']),
+    _testActionBank,
+  ],
+);
+
 Widget _wrap(Widget child, {List<Override> overrides = const []}) {
   return ProviderScope(
     overrides: [
@@ -43,7 +75,8 @@ Widget _wrap(Widget child, {List<Override> overrides = const []}) {
       namesProvider.overrideWith((_) async => [_testName]),
       categoriesProvider.overrideWith((_) async => [_testCategory]),
       dailyNameProvider.overrideWith((_) async => _testName),
-      learnedCountsProvider.overrideWithValue({}),
+      journeyRepositoryProvider.overrideWith((_) async => _testJourney),
+      viewedCountsProvider.overrideWithValue({}),
       ...overrides,
     ],
     child: MaterialApp(
@@ -57,8 +90,14 @@ Widget _wrap(Widget child, {List<Override> overrides = const []}) {
 }
 
 class _StubSettingsNotifier extends SettingsNotifier {
+  _StubSettingsNotifier([
+    this.initial = const UserState(onboardingCompletedAt: null),
+  ]);
+
+  final UserState initial;
+
   @override
-  UserState build() => const UserState(onboardingCompletedAt: null);
+  UserState build() => initial;
 
   @override
   Future<void> markViewed(int number) async {
@@ -70,6 +109,18 @@ class _StubSettingsNotifier extends SettingsNotifier {
   Future<void> markLearned(int number) async {
     final learned = Set<int>.from(state.learned)..add(number);
     state = state.copyWith(learned: learned);
+  }
+
+  @override
+  Future<void> markNameMeditated(int number) async {
+    final meditated = Set<int>.from(state.meditatedNames)..add(number);
+    state = state.copyWith(meditatedNames: meditated);
+  }
+
+  @override
+  Future<void> markNamePracticed(int number) async {
+    final practiced = Set<int>.from(state.practicedNames)..add(number);
+    state = state.copyWith(practicedNames: practiced);
   }
 
   @override
@@ -87,6 +138,28 @@ class _StubSettingsNotifier extends SettingsNotifier {
 // ── Tests ─────────────────────────────────────────────────────────────────────
 
 void main() {
+  group('Progress providers', () {
+    test(
+      'viewedCountsProvider compte les noms découverts par catégorie',
+      () async {
+        final container = ProviderContainer(
+          overrides: [
+            settingsProvider.overrideWith(
+              () => _StubSettingsNotifier(const UserState(viewed: {1})),
+            ),
+            namesProvider.overrideWith((_) async => [_testName]),
+          ],
+        );
+        addTearDown(container.dispose);
+
+        await container.read(namesProvider.future);
+        final counts = container.read(viewedCountsProvider);
+
+        expect(counts, {'praise': 1});
+      },
+    );
+  });
+
   group('OnboardingScreen', () {
     testWidgets('affiche la page de bienvenue', (tester) async {
       await tester.pumpWidget(
@@ -112,8 +185,17 @@ void main() {
     testWidgets('affiche le chargement puis le nom du jour', (tester) async {
       await tester.pumpWidget(_wrap(const HomeScreen()));
       await tester.pump(); // résolution des futures
-      await tester.pump(const Duration(milliseconds: 500)); // fin des animations
+      await tester.pump(
+        const Duration(milliseconds: 500),
+      ); // fin des animations
       expect(find.byType(HomeScreen), findsOneWidget);
+      expect(find.text('Explorer ce nom'), findsOneWidget);
+      expect(find.text('Remercie quelqu’un aujourd’hui.'), findsOneWidget);
+      expect(find.text('Je l’ai vécue'), findsOneWidget);
+      expect(find.text('Continuer mon voyage'), findsOneWidget);
+      expect(find.text('Voyage'), findsOneWidget);
+      expect(find.text('Bibliothèque'), findsOneWidget);
+      expect(find.text('Explorer par catégorie'), findsNothing);
     });
   });
 
@@ -136,11 +218,64 @@ void main() {
 
   group('DetailScreen', () {
     testWidgets('affiche le texte arabe du nom', (tester) async {
-      await tester.pumpWidget(_wrap(
-        DetailScreen(initialNumber: _testName.number),
-      ));
+      await tester.pumpWidget(
+        _wrap(DetailScreen(initialNumber: _testName.number)),
+      );
       await tester.pumpAndSettle();
       expect(find.text(_testName.arabic), findsWidgets);
+    });
+
+    testWidgets('marque le nom vu sans apprentissage automatique', (
+      tester,
+    ) async {
+      late _StubSettingsNotifier notifier;
+
+      await tester.pumpWidget(
+        _wrap(
+          DetailScreen(initialNumber: _testName.number),
+          overrides: [
+            settingsProvider.overrideWith(() {
+              notifier = _StubSettingsNotifier();
+              return notifier;
+            }),
+          ],
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 9));
+
+      expect(notifier.state.viewed, contains(_testName.number));
+      expect(notifier.state.learned, isNot(contains(_testName.number)));
+    });
+  });
+
+  group('ProfileScreen', () {
+    testWidgets('affiche une synthese Journey V2', (tester) async {
+      await tester.pumpWidget(
+        _wrap(
+          const ProfileScreen(),
+          overrides: [
+            settingsProvider.overrideWith(
+              () => _StubSettingsNotifier(
+                const UserState(
+                  viewed: {1},
+                  meditatedNames: {1},
+                  practicedNames: {1},
+                  recognizedNames: {1},
+                  learned: {1},
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('1/1 étoiles découvertes'), findsOneWidget);
+      expect(find.text('découvertes'), findsOneWidget);
+      expect(find.text('contemplées'), findsOneWidget);
+      expect(find.text('vécues'), findsOneWidget);
+      expect(find.text('reconnues'), findsOneWidget);
     });
   });
 

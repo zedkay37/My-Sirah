@@ -126,7 +126,8 @@ class _HusnaListScreenState extends ConsumerState<HusnaListScreen> {
                     return _HusnaCard(
                       name: name,
                       isLearned: isLearned,
-                      onTap: () => context.push('/discover/husna/${name.id}'),
+                      onTap: () =>
+                          context.push('/library/deck/asmaul_husna/${name.id}'),
                     );
                   },
                 );

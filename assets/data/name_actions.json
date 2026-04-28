@@ -1,0 +1,42 @@
+[
+  {
+    "theme": "general",
+    "actions": [
+      "Commence une action simple avec une intention claire.",
+      "Adresse une parole utile et douce à quelqu'un.",
+      "Prends un moment court pour remercier Allah avec présence."
+    ]
+  },
+  {
+    "theme": "praise",
+    "actions": [
+      "Remercie explicitement quelqu'un pour un bien reçu.",
+      "Transforme une plainte en une parole de gratitude.",
+      "Mentionne une bénédiction précise dans ta journée."
+    ]
+  },
+  {
+    "theme": "mission",
+    "actions": [
+      "Applique aujourd'hui un enseignement prophétique concret.",
+      "Partage une parole bénéfique sans débat ni dureté.",
+      "Choisis une action qui clarifie ton intention."
+    ]
+  },
+  {
+    "theme": "trust",
+    "actions": [
+      "Tiens une promesse, même petite.",
+      "Évite une exagération dans ta parole aujourd'hui.",
+      "Rends quelque chose confié avec soin."
+    ]
+  },
+  {
+    "theme": "nobility",
+    "actions": [
+      "Honore un lien familial par un message simple.",
+      "Réponds avec dignité là où tu pourrais réagir trop vite.",
+      "Fais une petite action discrète pour préserver l'honneur de quelqu'un."
+    ]
+  }
+]

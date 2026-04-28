@@ -1,0 +1,66 @@
+[
+  {
+    "id": "mission",
+    "titleFr": "Constellation de la Mission",
+    "titleAr": "رسالة النبوة",
+    "descriptionFr": "Les noms qui désignent sa mission prophétique, son message et sa guidance universelle.",
+    "nameNumbers": [5, 7, 9, 10, 11, 12, 13, 14],
+    "colorHex": "#4A6A8E"
+  },
+  {
+    "id": "light",
+    "titleFr": "Constellation de la Lumière",
+    "titleAr": "نور الهداية",
+    "descriptionFr": "Les noms qui évoquent la clarté, la beauté et la lumière de sa guidance.",
+    "nameNumbers": [56, 57, 58, 59, 60, 141, 164, 165],
+    "colorHex": "#8E6A4A"
+  },
+  {
+    "id": "rank",
+    "titleFr": "Constellation du Rang",
+    "titleAr": "المقام والشفاعة",
+    "descriptionFr": "Les noms liés à son rang auprès d'Allah et à son intercession.",
+    "nameNumbers": [6, 16, 19, 20, 26, 32, 33, 34],
+    "colorHex": "#6A4A8E"
+  },
+  {
+    "id": "last_day",
+    "titleFr": "Constellation du Jour Dernier",
+    "titleAr": "يوم القيامة",
+    "descriptionFr": "Les noms liés à son rôle lors du rassemblement et du Jugement.",
+    "nameNumbers": [8, 37, 38, 39, 119, 120, 121, 124],
+    "colorHex": "#8E4A4A"
+  },
+  {
+    "id": "purity",
+    "titleFr": "Constellation de la Pureté",
+    "titleAr": "الطهارة والتزكية",
+    "descriptionFr": "Les noms qui évoquent la pureté, la préservation et la purification.",
+    "nameNumbers": [18, 63, 64, 65, 66, 67, 91, 93],
+    "colorHex": "#4A7C8E"
+  },
+  {
+    "id": "virtues",
+    "titleFr": "Constellation des Nobles Caractères",
+    "titleAr": "الأخلاق والشمائل",
+    "descriptionFr": "Les noms qui révèlent sa véracité, sa fidélité, sa douceur et ses vertus.",
+    "nameNumbers": [21, 22, 23, 35, 36, 40, 61, 62],
+    "colorHex": "#4A8E6A"
+  },
+  {
+    "id": "praise",
+    "titleFr": "Constellation de la Louange",
+    "titleAr": "الحمد والثناء",
+    "descriptionFr": "Les noms liés à la louange et à la reconnaissance de sa station bénie.",
+    "nameNumbers": [1, 2, 3, 4, 94, 95, 153, 176],
+    "colorHex": "#7C6FAB"
+  },
+  {
+    "id": "nobility",
+    "titleFr": "Constellation de la Noblesse",
+    "titleAr": "الشرف والمكانة",
+    "descriptionFr": "Les noms qui désignent sa lignée, sa noblesse et sa préséance.",
+    "nameNumbers": [78, 82, 144, 145, 146, 147, 148, 149],
+    "colorHex": "#B5895A"
+  }
+]

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +28,10 @@ class DetailScreen extends ConsumerWidget {
       loading: () => Scaffold(
         backgroundColor: colors.bg,
         body: Center(
-          child: CircularProgressIndicator(color: colors.accent, strokeWidth: 2),
+          child: CircularProgressIndicator(
+            color: colors.accent,
+            strokeWidth: 2,
+          ),
         ),
       ),
       error: (_, __) => Scaffold(
@@ -39,10 +40,7 @@ class DetailScreen extends ConsumerWidget {
       ),
       data: (names) {
         final idx = names.indexWhere((n) => n.number == initialNumber);
-        return _DetailPageView(
-          names: names,
-          startIndex: idx < 0 ? 0 : idx,
-        );
+        return _DetailPageView(names: names, startIndex: idx < 0 ? 0 : idx);
       },
     );
   }
@@ -51,10 +49,7 @@ class DetailScreen extends ConsumerWidget {
 // ── PageView avec état ─────────────────────────────────────────────────────────
 
 class _DetailPageView extends ConsumerStatefulWidget {
-  const _DetailPageView({
-    required this.names,
-    required this.startIndex,
-  });
+  const _DetailPageView({required this.names, required this.startIndex});
 
   final List<ProphetName> names;
   final int startIndex;
@@ -63,22 +58,15 @@ class _DetailPageView extends ConsumerStatefulWidget {
   ConsumerState<_DetailPageView> createState() => _DetailPageViewState();
 }
 
-class _DetailPageViewState extends ConsumerState<_DetailPageView>
-    with SingleTickerProviderStateMixin {
+class _DetailPageViewState extends ConsumerState<_DetailPageView> {
   late final PageController _pageCtrl;
   late int _currentIndex;
-  late final AnimationController _learningAnim;
-  Timer? _learnedTimer;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.startIndex;
     _pageCtrl = PageController(initialPage: widget.startIndex);
-    _learningAnim = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 8),
-    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _onPageFocused(_currentIndex);
@@ -88,20 +76,6 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
   void _onPageFocused(int index) {
     final number = widget.names[index].number;
     ref.read(namesNotifierProvider).markViewed(number);
-    _restartLearnedTimer(number);
-  }
-
-  void _restartLearnedTimer(int number) {
-    _learnedTimer?.cancel();
-    _learningAnim
-      ..stop()
-      ..reset();
-    final alreadyLearned = ref.read(settingsProvider).learned.contains(number);
-    if (alreadyLearned) return;
-    _learningAnim.forward();
-    _learnedTimer = Timer(const Duration(seconds: 8), () {
-      if (mounted) ref.read(namesNotifierProvider).markLearned(number);
-    });
   }
 
   void _onPageChanged(int index) {
@@ -111,8 +85,6 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
 
   @override
   void dispose() {
-    _learnedTimer?.cancel();
-    _learningAnim.dispose();
     _pageCtrl.dispose();
     super.dispose();
   }
@@ -128,9 +100,6 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
     final isFavorite = ref.watch(
       settingsProvider.select((s) => s.favorites.contains(currentName.number)),
     );
-    final isLearned = ref.watch(
-      settingsProvider.select((s) => s.learned.contains(currentName.number)),
-    );
 
     return Scaffold(
       backgroundColor: colors.bg,
@@ -140,16 +109,15 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
         elevation: 0,
         titleSpacing: 0,
         title: Text(
-          l10n.detailNameLabel(
-            currentName.number.toString().padLeft(3, '0'),
-          ),
+          l10n.detailNameLabel(currentName.number.toString().padLeft(3, '0')),
           style: typo.caption.copyWith(color: colors.muted),
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.self_improvement_rounded, color: colors.muted),
             tooltip: l10n.tafakkurTitle,
-            onPressed: () => context.push('/name/${currentName.number}/tafakkur'),
+            onPressed: () =>
+                context.push('/name/${currentName.number}/tafakkur'),
           ),
           IconButton(
             icon: Icon(Icons.share_outlined, color: colors.muted),
@@ -188,20 +156,6 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
                 ),
                 minHeight: 2,
               ),
-              // Progression de mémorisation (8s)
-              AnimatedOpacity(
-                opacity: isLearned ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 600),
-                child: AnimatedBuilder(
-                  animation: _learningAnim,
-                  builder: (_, __) => LinearProgressIndicator(
-                    value: _learningAnim.value,
-                    backgroundColor: Colors.transparent,
-                    valueColor: AlwaysStoppedAnimation<Color>(colors.accent),
-                    minHeight: 2,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -210,11 +164,8 @@ class _DetailPageViewState extends ConsumerState<_DetailPageView>
         controller: _pageCtrl,
         onPageChanged: _onPageChanged,
         itemCount: names.length,
-        itemBuilder: (ctx, i) => _NameDetailPage(
-          name: names[i],
-          index: i,
-          total: names.length,
-        ),
+        itemBuilder: (ctx, i) =>
+            _NameDetailPage(name: names[i], index: i, total: names.length),
       ),
     );
   }
@@ -254,11 +205,11 @@ class _NameDetailPage extends StatelessWidget {
 
           // Texte arabe hero — rejoue à chaque changement de nom
           ArabicText(
-            key: ValueKey(name.number),
-            text: name.arabic,
-            size: ArabicSize.hero,
-            withShadow: true,
-          )
+                key: ValueKey(name.number),
+                text: name.arabic,
+                size: ArabicSize.hero,
+                withShadow: true,
+              )
               .animate()
               .fadeIn(duration: 300.ms)
               .scale(
@@ -280,6 +231,12 @@ class _NameDetailPage extends StatelessWidget {
             slug: name.categorySlug,
             label: name.categoryLabel,
             variant: CategoryChipVariant.filled,
+          ),
+          SizedBox(height: space.lg),
+          OutlinedButton.icon(
+            onPressed: () => context.push('/name/${name.number}/experience'),
+            icon: const Icon(Icons.auto_awesome_outlined),
+            label: Text(context.l10n.nameExperienceOpen),
           ),
           SizedBox(height: space.xxl),
 
@@ -368,15 +325,11 @@ class _SourcesSection extends StatelessWidget {
       children: [
         SectionHeader(title: l10n.detailSectionSources),
         SizedBox(height: space.md),
-        if (primary.isNotEmpty)
-          Text(primary, style: typo.bodyLarge),
+        if (primary.isNotEmpty) Text(primary, style: typo.bodyLarge),
         if (primary.isNotEmpty && secondary.isNotEmpty)
           SizedBox(height: space.sm),
         if (secondary.isNotEmpty)
-          Text(
-            secondary,
-            style: typo.body.copyWith(color: colors.muted),
-          ),
+          Text(secondary, style: typo.body.copyWith(color: colors.muted)),
       ],
     );
   }
@@ -392,7 +345,11 @@ class _TreeBridgeLink extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.account_tree_outlined, size: 16, color: context.colors.muted),
+          Icon(
+            Icons.account_tree_outlined,
+            size: 16,
+            color: context.colors.muted,
+          ),
           SizedBox(width: context.space.xs),
           Text(
             context.l10n.treeBridgeToTree,
@@ -403,4 +360,3 @@ class _TreeBridgeLink extends StatelessWidget {
     );
   }
 }
-
