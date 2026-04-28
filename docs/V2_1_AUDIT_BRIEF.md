@@ -31,6 +31,7 @@ V2.1 restructure l'app autour de deux surfaces principales :
    - `SettingsNotifier` reste le seul writer de `UserState`
    - nouveaux champs : `meditatedNames`, `practicedNames`, `recognizedNames`
    - `NameProgressResolver` centralise les statuts Journey
+   - `learned` reste un etat legacy Study/V1, pas une metrique produit Journey
 
 4. UI produit
    - Home recentre sur le rituel quotidien
@@ -46,9 +47,16 @@ V2.1 restructure l'app autour de deux surfaces principales :
 ## Validations Locales
 
 - `flutter gen-l10n` : OK
-- `ar` : 76 messages non traduits, etat connu avant release
+- `ar` : 75 messages non traduits, etat connu avant release
 - `flutter analyze` : OK
-- `flutter test` : OK, derniere baseline attendue 89 tests
+- `flutter test` : OK, derniere baseline attendue 102 tests
+
+## Garde-Fous Ajoutes Avant Audit
+
+- Voir `docs/JOURNEY_GUARDRAILS.md`.
+- Les taps primaires depuis liste des noms et favoris ouvrent le Nom vivant.
+- Les cartes de noms prophetiques utilisent `JourneyNameStage`, plus `learned`.
+- `learned` est documente comme compatibilite legacy Study/V1.
 
 ## Sprint H Integre Apres Audit
 

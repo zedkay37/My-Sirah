@@ -40,6 +40,9 @@ class SettingsNotifier extends Notifier<UserState> {
   }
 
   Future<void> markLearned(int number) {
+    // Legacy Study/V1 compatibility only. Do not use this as a Journey V2
+    // product signal; use markViewed/markNameMeditated/markNamePracticed/
+    // markNameRecognized and NameProgressResolver instead.
     if (state.learned.contains(number)) return Future.value();
     final learned = Set<int>.from(state.learned)..add(number);
     return _save(state.copyWith(learned: learned));

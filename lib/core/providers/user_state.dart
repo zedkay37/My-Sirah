@@ -10,6 +10,8 @@ abstract class UserState with _$UserState {
     @Default(ThemeKey.light) ThemeKey theme,
     @Default(TextSize.medium) TextSize textSize,
     @Default({}) Set<int> favorites,
+    // Legacy Study/V1 compatibility only. Journey V2 product progression uses
+    // viewed, meditatedNames, practicedNames, and recognizedNames.
     @Default({}) Set<int> learned,
     @Default({}) Set<int> viewed,
     @Default({}) Set<int> meditatedNames,
