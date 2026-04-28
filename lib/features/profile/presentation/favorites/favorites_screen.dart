@@ -75,7 +75,7 @@ class FavoritesScreen extends ConsumerWidget {
                 name: name,
                 isFavorite: true,
                 isLearned: learned.contains(name.number),
-                onTap: () => context.push('/name/${name.number}'),
+                onTap: () => context.push('/name/${name.number}/experience'),
                 onFavoriteTap: () => notifier.toggleFavorite(name.number),
               );
             },

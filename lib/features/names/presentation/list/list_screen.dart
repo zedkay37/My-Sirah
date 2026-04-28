@@ -168,7 +168,8 @@ class _ListScreenState extends ConsumerState<ListScreen> {
                     name: name,
                     isFavorite: favorites.contains(name.number),
                     isLearned: learned.contains(name.number),
-                    onTap: () => context.push('/name/${name.number}'),
+                    onTap: () =>
+                        context.push('/name/${name.number}/experience'),
                     onFavoriteTap: () => notifier.toggleFavorite(name.number),
                   );
                 },
