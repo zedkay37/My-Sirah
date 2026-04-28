@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/features/names/data/names_notifier.dart';
@@ -61,7 +62,7 @@ class _ListScreenState extends ConsumerState<ListScreen> {
     final namesAsync = ref.watch(namesProvider);
     final categories = ref.watch(categoriesProvider);
     final favorites = ref.watch(settingsProvider.select((s) => s.favorites));
-    final learned = ref.watch(settingsProvider.select((s) => s.learned));
+    final progress = ref.watch(journeyProgressResolverProvider);
     final notifier = ref.read(namesNotifierProvider);
 
     // Sync avec le filtre posé depuis CategoryCarousel
@@ -167,7 +168,7 @@ class _ListScreenState extends ConsumerState<ListScreen> {
                   return NameCard(
                     name: name,
                     isFavorite: favorites.contains(name.number),
-                    isLearned: learned.contains(name.number),
+                    stage: progress.stageFor(name.number),
                     onTap: () =>
                         context.push('/name/${name.number}/experience'),
                     onFavoriteTap: () => notifier.toggleFavorite(name.number),
