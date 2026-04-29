@@ -45,7 +45,7 @@ class ProfileScreen extends ConsumerWidget {
           List<int>.generate(201, (index) => index + 1),
         );
     final total = journeySummary.total;
-    final progress = journeySummary.weightedProgress;
+    final progress = total == 0 ? 0.0 : journeySummary.viewed / total;
     final streak = _computeStreak(settings.lastSeen);
 
     return Scaffold(

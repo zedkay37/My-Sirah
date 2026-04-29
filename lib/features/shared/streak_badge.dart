@@ -26,11 +26,10 @@ class StreakBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.local_fire_department,
-              color: colors.warning, size: 16),
+          Icon(Icons.calendar_today_outlined, color: colors.warning, size: 16),
           SizedBox(width: space.xs),
           Text(
-            '$days',
+            context.l10n.profileRitualStreak(days),
             style: typo.button.copyWith(color: colors.warning),
           ),
         ],
@@ -47,6 +46,9 @@ class StreakBadge extends StatelessWidget {
               duration: 150.ms);
     }
 
-    return Semantics(label: '$days jours de suite', child: badge);
+    return Semantics(
+      label: context.l10n.profileRitualStreak(days),
+      child: badge,
+    );
   }
 }

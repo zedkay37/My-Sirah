@@ -123,6 +123,12 @@
   "profileJourneyMeditated": "contemplées",
   "profileJourneyPracticed": "vécues",
   "profileJourneyRecognized": "reconnues",
+  "profileRitualStreak": "Rituel quotidien · {days} j",
+  "@profileRitualStreak": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
   "profileFavorites": "Mes favoris",
   "profileSettings": "Paramètres",
 

@@ -29,6 +29,14 @@
   "profileJourneyMeditated": "متأملة",
   "profileJourneyPracticed": "معاشة",
   "profileJourneyRecognized": "معروفة",
+  "profileRitualStreak": "طقس يومي · {days} يوم",
+  "@profileRitualStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "detailLearningProgress": "Mémorisation en cours…",
   "favoriteAdd": "Ajouter aux favoris",
   "favoriteRemove": "Retirer des favoris",

@@ -237,6 +237,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileJourneyRecognized => 'reconnues';
 
   @override
+  String profileRitualStreak(int days) {
+    return 'Rituel quotidien · $days j';
+  }
+
+  @override
   String get profileFavorites => 'Mes favoris';
 
   @override

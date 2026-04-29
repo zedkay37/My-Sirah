@@ -237,6 +237,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileJourneyRecognized => 'معروفة';
 
   @override
+  String profileRitualStreak(int days) {
+    return 'طقس يومي · $days يوم';
+  }
+
+  @override
   String get profileFavorites => 'Mes favoris';
 
   @override

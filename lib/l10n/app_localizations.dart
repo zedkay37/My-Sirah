@@ -512,6 +512,12 @@ abstract class AppLocalizations {
   /// **'reconnues'**
   String get profileJourneyRecognized;
 
+  /// No description provided for @profileRitualStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rituel quotidien · {days} j'**
+  String profileRitualStreak(int days);
+
   /// No description provided for @profileFavorites.
   ///
   /// In fr, this message translates to:

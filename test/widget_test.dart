@@ -257,12 +257,13 @@ void main() {
           overrides: [
             settingsProvider.overrideWith(
               () => _StubSettingsNotifier(
-                const UserState(
+                UserState(
                   viewed: {1},
                   meditatedNames: {1},
                   practicedNames: {1},
                   recognizedNames: {1},
                   learned: {1},
+                  lastSeen: {1: DateTime.now()},
                 ),
               ),
             ),
@@ -276,6 +277,7 @@ void main() {
       expect(find.text('contemplées'), findsOneWidget);
       expect(find.text('vécues'), findsOneWidget);
       expect(find.text('reconnues'), findsOneWidget);
+      expect(find.textContaining('Rituel quotidien'), findsOneWidget);
     });
   });
 
