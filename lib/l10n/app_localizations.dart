@@ -827,13 +827,13 @@ abstract class AppLocalizations {
   /// No description provided for @journeyConstellationPrompt.
   ///
   /// In fr, this message translates to:
-  /// **'Choisis une étoile de « {title} » et ouvre son nom vivant.'**
+  /// **'Choisis une étoile de « {title} » pour ouvrir sa fiche.'**
   String journeyConstellationPrompt(String title);
 
   /// No description provided for @journeyOpenNameCta.
   ///
   /// In fr, this message translates to:
-  /// **'Explorer'**
+  /// **'Voir la fiche'**
   String get journeyOpenNameCta;
 
   /// No description provided for @journeyMapZoomInTooltip.
@@ -1211,7 +1211,7 @@ abstract class AppLocalizations {
   /// No description provided for @tafakkurReturn.
   ///
   /// In fr, this message translates to:
-  /// **'Retourner au nom vivant'**
+  /// **'Retourner à la fiche'**
   String get tafakkurReturn;
 
   /// No description provided for @tafakkurPaceLabel.
@@ -1415,13 +1415,13 @@ abstract class AppLocalizations {
   /// No description provided for @nameExperienceTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Nom vivant'**
+  /// **'Fiche du nom'**
   String get nameExperienceTitle;
 
   /// No description provided for @nameExperienceOpen.
   ///
   /// In fr, this message translates to:
-  /// **'Ouvrir le nom vivant'**
+  /// **'Ouvrir la fiche'**
   String get nameExperienceOpen;
 
   /// No description provided for @nameExperienceStory.

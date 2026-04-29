@@ -134,7 +134,7 @@ void main() {
     expect(settings.state.viewed, contains(1));
     expect(settings.state.recognizedNames, isNot(contains(1)));
 
-    expect(find.text('Nom vivant'), findsOneWidget);
+    expect(find.text('Fiche du nom'), findsOneWidget);
     expect(find.text('Muḥammad'), findsOneWidget);
     expect(find.text('Constellation de la Louange'), findsOneWidget);
     expect(find.text('RÉCIT'), findsOneWidget);

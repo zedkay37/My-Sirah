@@ -31,7 +31,7 @@ La V1 reste focalisee sur les 201 noms du Prophete Muhammad ﷺ, mais l'architec
 Le produit n'est pas une simple encyclopedie de fiches. La direction retenue est :
 
 ```text
-Accueil -> Voyage -> Nom vivant -> Tafakkur -> Action -> Profil
+Accueil -> Voyage -> Fiche du nom -> Tafakkur -> Action -> Profil
 ```
 
 Boucle produit a respecter :
@@ -92,7 +92,7 @@ Changements actues :
 
 Risque restant : verifier a l'oeil sur plusieurs tailles mobile que le panneau, l'app bar et les controles ne se chevauchent pas.
 
-### Nom vivant
+### Fiche du nom
 
 Decision : `/name/:number/experience` est la destination principale des noms.
 La fiche classique `/name/:number` reste accessible en secondaire.
@@ -152,7 +152,7 @@ Regles actuelles :
 
 - L'app ne tire que dans les actions `validated`.
 - Les actions existantes ont ete conservees mais marquees `needs_review`.
-- Pas de fallback generique en Nom vivant si le nom n'a pas d'experience specifique.
+- Pas de fallback generique en Fiche du nom si le nom n'a pas d'experience specifique.
 - La validation detecte :
   - theme vide,
   - theme duplique,
@@ -198,7 +198,7 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Navigation | Lire defensivement les `extra` de `/quiz/result`. | Les deep links ou appels incomplets ne doivent pas crasher l'ecran resultat. |
 | 2026-04-29 | Offline | Desactiver le runtime fetching de `GoogleFonts`. | Respecter l'objectif offline; les assets de polices restent a bundler pour un rendu parfait. |
 | 2026-04-29 | QA visuelle | Reserver des zones lisibles dans les cartes spatiales pour titres, controles et panneaux. | Eviter les chevauchements sur mobiles compacts sans changer la metaphore Journey. |
-| 2026-04-29 | QA visuelle | Rendre le panneau d'etoile, les actions du Nom vivant, les controles Tafakkur et les metriques Profil adaptatifs. | Garder une experience sobre premium sur petits ecrans et avec textes plus longs. |
+| 2026-04-29 | QA visuelle | Rendre le panneau d'etoile, les actions de la Fiche du nom, les controles Tafakkur et les metriques Profil adaptatifs. | Garder une experience sobre premium sur petits ecrans et avec textes plus longs. |
 | 2026-04-29 | Offline | Bundler Amiri, Amiri Quran, Crimson Pro, Inter et Playfair Display en assets locaux. | Stabiliser le rendu typographique et supprimer les appels `GoogleFonts.*` au runtime. |
 | 2026-04-29 | QA visuelle | Recentrer automatiquement les cartes spatiales au dezoom minimum. | Eviter l'effet de carte "collee" en haut apres un fort dezoom. |
 | 2026-04-29 | Typographie | Augmenter la hauteur reservee aux grands titres arabes. | Eviter que la translitteration chevauche la calligraphie avec les polices locales. |
@@ -208,6 +208,8 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Voyage | Retirer le recentrage automatique au zoom minimum des cartes spatiales. | Eviter la sensation d'aimantation en haut et rendre le pan/dezoom plus libre. |
 | 2026-04-29 | Voyage | Compactage du header constellation et remplacement du texte brut de categorie par une invitation contextualisee. | Donner plus d'espace a la carte et eviter les libelles techniques non pertinents pour l'utilisateur. |
 | 2026-04-29 | Arbre | Les labels des vues constellation/radiale apparaissent seulement au zoom fort ou lors d'une selection. | Eviter l'impression de noms affiches aleatoirement et garder la vue globale comme carte exploratoire. |
+| 2026-04-29 | UX wording | Remplacer le libelle public `Nom vivant` par `Fiche du nom` / `Voir la fiche`. | Le concept etait interne et peu explicite pour l'utilisateur. |
+| 2026-04-29 | Voyage | Compacter le panneau d'etoile selectionnee avec CTA `Voir la fiche`, statut sur la ligne du nom et arabe contenu. | Rendre le lien vers la fiche lisible sans grosse boite vide ni bouton fleche ambigu. |
 
 ## Validation technique recente
 
@@ -239,7 +241,7 @@ flutter test
 Resultat :
 
 - `flutter analyze` : OK
-- Tests cibles Journey/Nom vivant/Tafakkur/Profil : OK, 13 tests passes
+- Tests cibles Journey/Fiche du nom/Tafakkur/Profil : OK, 13 tests passes
 - Suite complete : OK, 116 tests passes
 
 Derniere validation apres sprint typo offline :
@@ -272,7 +274,7 @@ flutter build apk --debug
 
 Resultat :
 
-- Tests cibles cartes/Nom vivant/home/detail : OK, 17 tests passes
+- Tests cibles cartes/Fiche du nom/home/detail : OK, 17 tests passes
 - `flutter analyze` : OK
 - `flutter test` : OK, 116 tests passes
 - `flutter build apk --debug` : OK
@@ -307,7 +309,7 @@ flutter build apk --debug
 Resultat :
 
 - `flutter analyze --no-pub` : OK
-- Tests cibles Journey/Nom vivant/Tafakkur/Home/Detail : OK, 22 tests passes
+- Tests cibles Journey/Fiche du nom/Tafakkur/Home/Detail : OK, 22 tests passes
 - `flutter test` : OK, 116 tests passes
 - `flutter build apk --debug` : OK
 
@@ -328,6 +330,26 @@ Resultat :
 - Tests cibles Journey/Genealogie/Profil : OK, 18 tests passes
 - `flutter test` : OK, 116 tests passes
 - `flutter build apk --debug` : OK
+
+Derniere validation apres clarification Fiche du nom / panneau constellation :
+
+```text
+flutter gen-l10n
+dart format <fichiers modifies>
+flutter analyze --no-pub
+flutter test test/features/journey/space_map_screen_test.dart test/features/journey/name_experience_screen_test.dart test/widget_test.dart
+flutter test
+flutter build apk --debug
+git diff --check
+```
+
+Resultat :
+
+- `flutter analyze --no-pub` : OK
+- Tests cibles Journey/Fiche du nom/Home : OK, 16 tests passes
+- `flutter test` : OK, 116 tests passes
+- `flutter build apk --debug` : OK
+- `git diff --check` : OK
 
 ## Dette et risques ouverts
 
@@ -379,11 +401,11 @@ Objectif : produire un petit lot de contenu valide, pas encore "enorme".
 - Choisir 1 ou 2 constellations pilotes.
 - Rediger les actions hors IA ou avec revue humaine explicite.
 - Passer certaines actions en `validated`.
-- Verifier rendu Accueil, Nom vivant, Tafakkur.
+- Verifier rendu Accueil, Fiche du nom, Tafakkur.
 
 ### Sprint D - Tafakkur / recits
 
-Objectif : donner de la profondeur au Nom vivant sans perdre la rigueur.
+Objectif : donner de la profondeur a la Fiche du nom sans perdre la rigueur.
 
 - Valider sourceRefs, reviewedBy, validatedAt.
 - Promouvoir seulement quelques recits en `validated`.

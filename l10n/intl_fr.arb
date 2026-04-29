@@ -215,13 +215,13 @@
   "journeySubtitle": "Avancez par constellations de noms, une étoile après l’autre.",
   "journeyGalaxyHint": "Touchez la galaxie active pour entrer dans le voyage.",
   "journeyDeckMapHint": "Touchez une constellation pour voir ses étoiles.",
-  "journeyConstellationPrompt": "Choisis une étoile de « {title} » et ouvre son nom vivant.",
+  "journeyConstellationPrompt": "Choisis une étoile de « {title} » pour ouvrir sa fiche.",
   "@journeyConstellationPrompt": {
     "placeholders": {
       "title": { "type": "String" }
     }
   },
-  "journeyOpenNameCta": "Explorer",
+  "journeyOpenNameCta": "Voir la fiche",
   "journeyMapZoomInTooltip": "Zoomer",
   "journeyMapZoomOutTooltip": "Dézoomer",
   "journeyMapResetTooltip": "Recentrer la carte",
@@ -307,7 +307,7 @@
   "tafakkurPause": "En pause",
   "tafakkurResume": "Reprendre",
   "tafakkurComplete": "Contemplation terminée",
-  "tafakkurReturn": "Retourner au nom vivant",
+  "tafakkurReturn": "Retourner à la fiche",
   "tafakkurPaceLabel": "Rythme de lecture",
   "tafakkurPaceSlow": "Lent — 12 secondes",
   "tafakkurPaceNormal": "Normal — 9 secondes",
@@ -369,8 +369,8 @@
   "treeFilterUnclesAndAunts": "Oncles & tantes",
   "treeFilterAhlAlBayt": "Ahl al-Bayt",
 
-  "nameExperienceTitle": "Nom vivant",
-  "nameExperienceOpen": "Ouvrir le nom vivant",
+  "nameExperienceTitle": "Fiche du nom",
+  "nameExperienceOpen": "Ouvrir la fiche",
   "nameExperienceStory": "Récit",
   "nameExperienceUnderstand": "Comprendre ce nom",
   "nameExperienceTafakkur": "Tafakkur",

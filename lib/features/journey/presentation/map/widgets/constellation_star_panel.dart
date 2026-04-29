@@ -35,10 +35,10 @@ class ConstellationStarPanel extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final isCompact = constraints.maxWidth < 330;
+            final isCompact = constraints.maxWidth < 340;
 
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +52,11 @@ class ConstellationStarPanel extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                _OpenNameButton(isCompact: isCompact, onOpen: onOpen),
+                _OpenNameButton(
+                  color: color,
+                  isCompact: isCompact,
+                  onOpen: onOpen,
+                ),
               ],
             );
           },
@@ -94,30 +98,47 @@ class _PanelHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          name.arabic,
-          textDirection: TextDirection.rtl,
-          style: context.typo.arabicLarge.copyWith(
-            color: color,
-            fontSize: isCompact ? 42 : null,
-            height: 1.1,
+        SizedBox(
+          height: isCompact ? 58 : 66,
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerStart,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 7, bottom: 2),
+                child: Text(
+                  name.arabic,
+                  textDirection: TextDirection.rtl,
+                  maxLines: 1,
+                  style: context.typo.arabicLarge.copyWith(
+                    color: color,
+                    fontSize: isCompact ? 40 : 46,
+                    height: 1.12,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: 2),
-        Text(
-          name.transliteration,
-          textDirection: TextDirection.ltr,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.typo.bodyLarge.copyWith(
-            color: colors.ink,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: _StageChip(label: stageLabel, color: color),
+        const SizedBox(height: 4),
+        Row(
+          children: [
+            Flexible(
+              child: Text(
+                name.transliteration,
+                textDirection: TextDirection.ltr,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: context.typo.bodyLarge.copyWith(
+                  color: colors.ink,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            _StageChip(label: stageLabel, color: color),
+          ],
         ),
       ],
     );
@@ -125,25 +146,39 @@ class _PanelHeader extends StatelessWidget {
 }
 
 class _OpenNameButton extends StatelessWidget {
-  const _OpenNameButton({required this.isCompact, required this.onOpen});
+  const _OpenNameButton({
+    required this.color,
+    required this.isCompact,
+    required this.onOpen,
+  });
 
+  final Color color;
   final bool isCompact;
   final VoidCallback onOpen;
 
   @override
   Widget build(BuildContext context) {
-    if (isCompact) {
-      return IconButton.filled(
-        tooltip: context.l10n.homeExploreTodayName,
-        onPressed: onOpen,
-        icon: const Icon(Icons.arrow_forward_rounded),
-      );
-    }
+    final colors = context.colors;
 
-    return FilledButton.icon(
-      onPressed: onOpen,
-      icon: const Icon(Icons.arrow_forward_rounded),
-      label: Text(context.l10n.journeyOpenNameCta),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: isCompact ? 132 : 154),
+      child: FilledButton.icon(
+        onPressed: onOpen,
+        icon: const Icon(Icons.article_outlined),
+        label: Text(
+          context.l10n.journeyOpenNameCta,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        style: FilledButton.styleFrom(
+          backgroundColor: color.withValues(alpha: 0.18),
+          foregroundColor: colors.ink,
+          side: BorderSide(color: color.withValues(alpha: 0.42)),
+          minimumSize: Size(0, isCompact ? 42 : 46),
+          padding: EdgeInsets.symmetric(horizontal: isCompact ? 10 : 14),
+          visualDensity: VisualDensity.compact,
+        ),
+      ),
     );
   }
 }

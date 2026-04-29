@@ -138,7 +138,7 @@ class _DetailContent extends StatelessWidget {
               size: ArabicSize.hero,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: space.sm),
+            SizedBox(height: space.xl),
             Text(
               name.transliteration,
               style: typo.headline.copyWith(

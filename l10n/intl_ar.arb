@@ -58,7 +58,7 @@
   "journeySubtitle": "تقدم عبر مجموعات الأسماء، نجمة بعد نجمة.",
   "journeyGalaxyHint": "المس المجرة النشطة للدخول في الرحلة.",
   "journeyDeckMapHint": "المس مجموعة لرؤية نجومها.",
-  "journeyConstellationPrompt": "اختر نجمة من «{title}» وافتح اسمها الحي.",
+  "journeyConstellationPrompt": "اختر نجمة من «{title}» وافتح بطاقتها.",
   "@journeyConstellationPrompt": {
     "placeholders": {
       "title": {
@@ -66,7 +66,7 @@
       }
     }
   },
-  "journeyOpenNameCta": "استكشاف",
+  "journeyOpenNameCta": "عرض البطاقة",
   "journeyMapZoomInTooltip": "تكبير",
   "journeyMapZoomOutTooltip": "تصغير",
   "journeyMapResetTooltip": "إعادة تمركز الخريطة",
@@ -188,7 +188,7 @@
   "tafakkurPause": "إيقاف مؤقت",
   "tafakkurResume": "استئناف",
   "tafakkurComplete": "انتهت التلاوة",
-  "tafakkurReturn": "العودة إلى الاسم الحي",
+  "tafakkurReturn": "العودة إلى البطاقة",
   "tafakkurPaceLabel": "وتيرة القراءة",
   "tafakkurPaceSlow": "بطيء — 12 ثانية",
   "tafakkurPaceNormal": "عادي — 9 ثواني",
@@ -278,8 +278,8 @@
   "treeFilterAncestors": "الأجداد",
   "treeFilterUnclesAndAunts": "الأعمام والعمات",
   "treeFilterAhlAlBayt": "أهل البيت",
-  "nameExperienceTitle": "اسم حي",
-  "nameExperienceOpen": "فتح الاسم الحي",
+  "nameExperienceTitle": "بطاقة الاسم",
+  "nameExperienceOpen": "فتح البطاقة",
   "nameExperienceStory": "قصة",
   "nameExperienceUnderstand": "فهم هذا الاسم",
   "nameExperienceTafakkur": "تفكر",

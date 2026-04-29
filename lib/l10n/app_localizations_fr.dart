@@ -407,11 +407,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String journeyConstellationPrompt(String title) {
-    return 'Choisis une étoile de « $title » et ouvre son nom vivant.';
+    return 'Choisis une étoile de « $title » pour ouvrir sa fiche.';
   }
 
   @override
-  String get journeyOpenNameCta => 'Explorer';
+  String get journeyOpenNameCta => 'Voir la fiche';
 
   @override
   String get journeyMapZoomInTooltip => 'Zoomer';
@@ -609,7 +609,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tafakkurComplete => 'Contemplation terminée';
 
   @override
-  String get tafakkurReturn => 'Retourner au nom vivant';
+  String get tafakkurReturn => 'Retourner à la fiche';
 
   @override
   String get tafakkurPaceLabel => 'Rythme de lecture';
@@ -721,10 +721,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get treeFilterAhlAlBayt => 'Ahl al-Bayt';
 
   @override
-  String get nameExperienceTitle => 'Nom vivant';
+  String get nameExperienceTitle => 'Fiche du nom';
 
   @override
-  String get nameExperienceOpen => 'Ouvrir le nom vivant';
+  String get nameExperienceOpen => 'Ouvrir la fiche';
 
   @override
   String get nameExperienceStory => 'Récit';

@@ -67,7 +67,7 @@ class DailyNameCard extends ConsumerWidget {
                     size: ArabicSize.hero,
                     withShadow: true,
                   ),
-                  SizedBox(height: space.md),
+                  SizedBox(height: space.xl),
                   Text(
                     name.transliteration,
                     textDirection: TextDirection.ltr,

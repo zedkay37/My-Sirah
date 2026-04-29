@@ -129,7 +129,7 @@ class _ExperienceContent extends StatelessWidget {
             size: ArabicSize.hero,
             withShadow: true,
           ),
-          SizedBox(height: space.md),
+          SizedBox(height: space.xxl),
           Text(
             name.transliteration,
             textAlign: TextAlign.center,

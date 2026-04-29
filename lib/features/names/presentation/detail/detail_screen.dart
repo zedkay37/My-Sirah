@@ -216,7 +216,7 @@ class _NameDetailPage extends StatelessWidget {
                 begin: const Offset(0.88, 0.88),
                 curve: Curves.easeOutBack,
               ),
-          SizedBox(height: space.lg),
+          SizedBox(height: space.xxl),
 
           // Translittération
           Text(

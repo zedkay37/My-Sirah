@@ -173,7 +173,7 @@ void main() {
     expect(find.text('Ahmad'), findsOneWidget);
     expect(find.text('À explorer'), findsOneWidget);
 
-    await tester.tap(find.text('Explorer'));
+    await tester.tap(find.text('Voir la fiche'));
     await tester.pumpAndSettle();
 
     expect(find.text('name:2'), findsOneWidget);

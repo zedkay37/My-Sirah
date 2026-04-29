@@ -404,11 +404,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String journeyConstellationPrompt(String title) {
-    return 'اختر نجمة من «$title» وافتح اسمها الحي.';
+    return 'اختر نجمة من «$title» وافتح بطاقتها.';
   }
 
   @override
-  String get journeyOpenNameCta => 'استكشاف';
+  String get journeyOpenNameCta => 'عرض البطاقة';
 
   @override
   String get journeyMapZoomInTooltip => 'تكبير';
@@ -606,7 +606,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tafakkurComplete => 'انتهت التلاوة';
 
   @override
-  String get tafakkurReturn => 'العودة إلى الاسم الحي';
+  String get tafakkurReturn => 'العودة إلى البطاقة';
 
   @override
   String get tafakkurPaceLabel => 'وتيرة القراءة';
@@ -718,10 +718,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get treeFilterAhlAlBayt => 'أهل البيت';
 
   @override
-  String get nameExperienceTitle => 'اسم حي';
+  String get nameExperienceTitle => 'بطاقة الاسم';
 
   @override
-  String get nameExperienceOpen => 'فتح الاسم الحي';
+  String get nameExperienceOpen => 'فتح البطاقة';
 
   @override
   String get nameExperienceStory => 'قصة';
