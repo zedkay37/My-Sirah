@@ -79,6 +79,7 @@ class JourneyRepository {
   }) {
     final issues = <String>[];
     final constellationIds = <String>{};
+    final constellationNameOwners = <int, List<String>>{};
 
     for (final constellation in _constellations) {
       if (!constellationIds.add(constellation.id)) {
@@ -95,6 +96,24 @@ class JourneyRepository {
         if (!validNameNumbers.contains(number)) {
           issues.add('Constellation ${constellation.id} references $number');
         }
+        constellationNameOwners
+            .putIfAbsent(number, () => <String>[])
+            .add(constellation.id);
+      }
+    }
+
+    for (final number in validNameNumbers) {
+      if (!constellationNameOwners.containsKey(number)) {
+        issues.add('Missing Journey constellation for name $number');
+      }
+    }
+    for (final entry in constellationNameOwners.entries) {
+      final owners = entry.value.toSet();
+      if (owners.length > 1) {
+        issues.add(
+          'Name ${entry.key} appears in multiple constellations: '
+          '${owners.join(', ')}',
+        );
       }
     }
 

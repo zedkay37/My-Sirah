@@ -19,6 +19,17 @@ _NameStory _$NameStoryFromJson(Map<String, dynamic> json) => _NameStory(
           ?.map((e) => e as String)
           .toList() ??
       const [],
+  sourceRefs:
+      (json['sourceRefs'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
+  editorialStatus: json['editorialStatus'] as String? ?? 'needs_review',
+  reviewedBy: json['reviewedBy'] as String?,
+  reviewNotes: json['reviewNotes'] as String?,
+  validatedAt: json['validatedAt'] == null
+      ? null
+      : DateTime.parse(json['validatedAt'] as String),
 );
 
 Map<String, dynamic> _$NameStoryToJson(_NameStory instance) =>
@@ -29,6 +40,11 @@ Map<String, dynamic> _$NameStoryToJson(_NameStory instance) =>
       'tags': instance.tags,
       'sourceNote': instance.sourceNote,
       'relatedPeople': instance.relatedPeople,
+      'sourceRefs': instance.sourceRefs,
+      'editorialStatus': instance.editorialStatus,
+      'reviewedBy': instance.reviewedBy,
+      'reviewNotes': instance.reviewNotes,
+      'validatedAt': instance.validatedAt?.toIso8601String(),
     };
 
 _NameExperience _$NameExperienceFromJson(Map<String, dynamic> json) =>

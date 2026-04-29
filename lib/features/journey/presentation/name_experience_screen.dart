@@ -106,6 +106,7 @@ class _ExperienceContent extends StatelessWidget {
     final typo = context.typo;
     final stories = experience?.stories ?? const <NameStory>[];
     final primaryStory = stories.isEmpty ? null : stories.first;
+    final canShowPrimaryStory = primaryStory?.editorialStatus == 'validated';
 
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(space.md, space.lg, space.md, space.xxl),
@@ -154,22 +155,45 @@ class _ExperienceContent extends StatelessWidget {
           _PrimaryActions(nameNumber: name.number),
           SizedBox(height: space.xl),
           SectionHeader(
-            title: primaryStory == null
+            title: !canShowPrimaryStory
                 ? context.l10n.nameExperienceUnderstand
                 : context.l10n.nameExperienceStory,
           ),
           SizedBox(height: space.md),
-          if (primaryStory == null)
+          if (!canShowPrimaryStory)
             _MutedPanel(
-              child: Text(
-                name.commentary.isNotEmpty
-                    ? name.commentary
-                    : context.l10n.nameExperienceFallbackPrompt,
-                style: typo.bodyLarge.copyWith(color: colors.ink, height: 1.5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name.commentary.isNotEmpty
+                        ? name.commentary
+                        : context.l10n.nameExperienceFallbackPrompt,
+                    style: typo.bodyLarge.copyWith(
+                      color: colors.ink,
+                      height: 1.5,
+                    ),
+                  ),
+                  if (name.references.isNotEmpty) ...[
+                    SizedBox(height: space.md),
+                    Text(
+                      context.l10n.detailSectionReferences,
+                      style: typo.caption.copyWith(color: colors.muted),
+                    ),
+                    SizedBox(height: space.xs),
+                    Text(
+                      name.references,
+                      style: typo.caption.copyWith(
+                        color: colors.muted,
+                        height: 1.35,
+                      ),
+                    ),
+                  ],
+                ],
               ),
             )
           else
-            _StoryPanel(story: primaryStory),
+            _StoryPanel(story: primaryStory!),
           SizedBox(height: space.xl),
           SectionHeader(title: context.l10n.nameExperienceTafakkur),
           SizedBox(height: space.md),
@@ -285,6 +309,25 @@ class _StoryPanel extends StatelessWidget {
               story.sourceNote,
               style: typo.caption.copyWith(color: colors.muted, height: 1.35),
             ),
+          ],
+          if (story.sourceRefs.isNotEmpty) ...[
+            SizedBox(height: space.md),
+            Text(
+              context.l10n.detailSectionReferences,
+              style: typo.caption.copyWith(color: colors.muted),
+            ),
+            SizedBox(height: space.xs),
+            for (final sourceRef in story.sourceRefs)
+              Padding(
+                padding: EdgeInsets.only(bottom: space.xs / 2),
+                child: Text(
+                  sourceRef,
+                  style: typo.caption.copyWith(
+                    color: colors.muted,
+                    height: 1.35,
+                  ),
+                ),
+              ),
           ],
         ],
       ),

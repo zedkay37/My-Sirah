@@ -5,12 +5,9 @@
   "qcmNext": "Suivant",
   "errorPageNotFound": "الصفحة غير موجودة",
   "errorBackHome": "العودة إلى الرئيسية",
-
   "detailShare": "Partager",
-
   "settingsNotifEnable": "Activer",
   "settingsNotifDisable": "Désactiver",
-
   "profileConstellationTitle": "Constellation",
   "profileLegendViewed": "vu",
   "profileLegendMeditated": "تم تأملها",
@@ -20,20 +17,21 @@
   "profileJourneySubtitle": "{viewed}/{total} نجوم تم اكتشافها",
   "@profileJourneySubtitle": {
     "placeholders": {
-      "viewed": { "type": "int" },
-      "total": { "type": "int" }
+      "viewed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "profileJourneyViewed": "مكتشفة",
   "profileJourneyMeditated": "متأملة",
   "profileJourneyPracticed": "معاشة",
   "profileJourneyRecognized": "معروفة",
-
   "detailLearningProgress": "Mémorisation en cours…",
-
   "favoriteAdd": "Ajouter aux favoris",
   "favoriteRemove": "Retirer des favoris",
-
   "discoverNoResults": "Aucun résultat",
   "discoverProphetsTitle": "أسماء النبي ﷺ",
   "discoverProphetsTitleAr": "أسماء النبي ﷺ",
@@ -57,18 +55,32 @@
   "journeyProgress": "{viewed}/{total} نجوم تمت رؤيتها",
   "@journeyProgress": {
     "placeholders": {
-      "viewed": { "type": "int" },
-      "total": { "type": "int" }
+      "viewed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "journeyProgressDetailed": "{viewed} شوهدت · {meditated} تم تأملها · {practiced} عيشت · {recognized} عرفت / {total}",
   "@journeyProgressDetailed": {
     "placeholders": {
-      "viewed": { "type": "int" },
-      "meditated": { "type": "int" },
-      "practiced": { "type": "int" },
-      "recognized": { "type": "int" },
-      "total": { "type": "int" }
+      "viewed": {
+        "type": "int"
+      },
+      "meditated": {
+        "type": "int"
+      },
+      "practiced": {
+        "type": "int"
+      },
+      "recognized": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "journeyStarViewed": "شوهدت",
@@ -76,14 +88,11 @@
   "journeyStarPracticed": "عيشت",
   "journeyStarRecognized": "عرفت",
   "journeyStarUnknown": "للاكتشاف",
-
   "navTree": "الشجرة",
-
   "treeTitle": "النسب النبوي الشريف",
   "treeModeRadial": "المدارات",
   "treeModeRiver": "نهر النور",
   "treeModeConstellation": "النجوم",
-
   "treePersonBack": "العودة",
   "treePersonRelation": "الصلة بالنبي ﷺ",
   "treePersonPath": "سلسلة النسب",
@@ -98,7 +107,6 @@
   "treeSearchHint": "ابحث في النسب…",
   "treeResetView": "إعادة التمركز",
   "treeListView": "عرض القائمة",
-
   "homeTagline": "معرفة النبيّ ﷺ ومحبّته واتّباعه",
   "homeDailyActionTitle": "عمل اليوم",
   "homeExploreTodayName": "استكشف هذا الاسم",
@@ -108,7 +116,9 @@
   "homeContinueJourneySubtitle": "النجم التالي في {constellation}",
   "@homeContinueJourneySubtitle": {
     "placeholders": {
-      "constellation": { "type": "String" }
+      "constellation": {
+        "type": "String"
+      }
     }
   },
   "homeJourneyShortcutSubtitle": "الدخول إلى الخريطة النجمية",
@@ -123,8 +133,12 @@
   "libraryDeckProgress": "{current}/{total} معروفة",
   "@libraryDeckProgress": {
     "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "tafakkurTitle": "تفكر",
@@ -139,7 +153,9 @@
   "tafakkurRemaining": "متبقٍ {count}",
   "@tafakkurRemaining": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "tafakkurExitConfirm": "الخروج من التفكر؟",
@@ -151,13 +167,17 @@
   "tafakkurEstimatedDuration": "نحو {minutes} د",
   "@tafakkurEstimatedDuration": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "tafakkurPaceSummary": "{seconds} ث لكل صفحة",
   "@tafakkurPaceSummary": {
     "placeholders": {
-      "seconds": { "type": "int" }
+      "seconds": {
+        "type": "int"
+      }
     }
   },
   "tafakkurPageName": "الاسم",
@@ -165,7 +185,6 @@
   "tafakkurPageMeditation": "تأمل",
   "tafakkurPageIntention": "نية",
   "tafakkurSwipeHint": "اسحب للتقدم أو الرجوع",
-
   "studyTitle": "وضع الدراسة",
   "studyParcoursTitle": "المسارات الموضوعية",
   "studyParcoursSubtitle": "اكتشاف موجه حسب المواضيع",
@@ -173,7 +192,9 @@
   "studyReviewSubtitle": "{count} أسماء للمراجعة",
   "@studyReviewSubtitle": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "studyReviewEmpty": "لا توجد أسماء للمراجعة حالياً",
@@ -183,10 +204,11 @@
   "studyMasteredBadge": "{count} أسماء متقنة",
   "@studyMasteredBadge": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "treeRoleProphet": "النبي ﷺ",
   "treeRoleFather": "والد النبي ﷺ",
   "treeRoleMother": "والدة النبي ﷺ",
@@ -203,16 +225,16 @@
   "treeRoleUnclesAuntsCount": "الأعمام والعمات · {count}",
   "@treeRoleUnclesAuntsCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "treeFilterAll": "الكل",
   "treeFilterWivesAndChildren": "الزوجات والأبناء",
   "treeFilterAncestors": "الأجداد",
   "treeFilterUnclesAndAunts": "الأعمام والعمات",
   "treeFilterAhlAlBayt": "أهل البيت",
-
   "nameExperienceTitle": "اسم حي",
   "nameExperienceOpen": "فتح الاسم الحي",
   "nameExperienceStory": "قصة",
@@ -227,5 +249,134 @@
   "nameExperienceEnterTafakkur": "الدخول في التفكر",
   "nameExperienceClassicTooltip": "البطاقة الكلاسيكية",
   "nameExperienceOpenClassic": "فتح البطاقة الكلاسيكية",
-  "nameExperienceNotFound": "الاسم غير موجود"
+  "nameExperienceNotFound": "الاسم غير موجود",
+  "appTitle": "Sirah Hub",
+  "navHome": "Accueil",
+  "navDiscover": "Découvrir",
+  "navProfile": "Profil",
+  "onboardingWelcomeTitle": "Les 201 noms du Prophète ﷺ",
+  "onboardingWelcomeSubtitle": "Apprenez, méditez, connectez-vous.",
+  "onboardingWelcomeCta": "Commencer",
+  "onboardingThemeTitle": "Choisissez votre ambiance",
+  "onboardingThemeCta": "Continuer",
+  "onboardingNotifTitle": "Un nom chaque jour",
+  "onboardingNotifSubtitle": "Recevez le nom du jour à l'heure qui vous convient",
+  "onboardingNotifActivate": "Activer les notifications",
+  "onboardingNotifLater": "Plus tard",
+  "homeGreeting": "As-salāmu ʿalaykum",
+  "homeCategorySection": "Explorer par catégorie",
+  "homeDiscoverName": "Découvrir ce nom",
+  "homeCategoryViewed": "{viewed}/{total} découverts",
+  "@homeCategoryViewed": {
+    "placeholders": {
+      "viewed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNameNumber": "#{number}",
+  "@homeNameNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "discoverAllNames": "Tous les noms",
+  "discoverQuiz": "Quiz",
+  "discoverFilterAll": "Tous",
+  "discoverSearchHint": "Rechercher (arabe, translittération, français)",
+  "detailSectionEtymology": "Étymologie",
+  "detailSectionCommentary": "Commentaires classiques",
+  "detailSectionReferences": "Références",
+  "detailSectionSources": "Sources",
+  "detailNameLabel": "Nom #{number}",
+  "@detailNameLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "detailProgress": "{current} / {total}",
+  "@detailProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "detailMaskedName": "[ce nom]",
+  "quizTitle": "Quiz rapide",
+  "quizSubtitle": "5 questions · ~1 minute",
+  "quizTypeMCQ": "QCM",
+  "quizTypeMCQDesc": "Trouvez le nom à partir de sa description",
+  "quizTypeFlashcards": "Flashcards",
+  "quizTypeFlashcardsDesc": "Retournez les cartes pour réviser",
+  "quizStartCta": "Démarrer",
+  "quizCardKnow": "Je connais",
+  "quizCardReview": "À revoir",
+  "quizProgress": "{current}/{total}",
+  "@quizProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "quizResultExcellent": "MāshāʾAllāh. Chaque nom est une porte vers Sa lumière. Continuez à explorer.",
+  "quizResultGood": "Chaque nom mérite qu'on s'y attarde. Revenez demain, ils deviendront familiers.",
+  "quizResultKeepGoing": "La connaissance commence par la patience. Explorez la fiche des noms pour les apprivoiser.",
+  "quizResultScore": "Vous avez répondu correctement à {score}/{total}",
+  "@quizResultScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "quizReplayCta": "Rejouer",
+  "quizExploreNamesCta": "Explorer les noms",
+  "profileFavorites": "Mes favoris",
+  "profileSettings": "Paramètres",
+  "settingsTitle": "Paramètres",
+  "settingsSectionTheme": "Thème",
+  "settingsThemeLight": "Clair",
+  "settingsThemeDark": "Sombre",
+  "settingsThemeFeminine": "Violet",
+  "settingsSectionNotif": "Notification quotidienne",
+  "settingsSectionTextSize": "Taille du texte",
+  "settingsTextSmall": "Petit",
+  "settingsTextMedium": "Moyen",
+  "settingsTextLarge": "Grand",
+  "settingsSectionAbout": "À propos",
+  "settingsReportError": "Signaler une erreur",
+  "favoritesTitle": "Mes favoris",
+  "favoritesEmpty": "Aucun favori pour l'instant",
+  "favoritesEmptyCta": "Explorer les noms",
+  "treeRiverPaternal": "Lignée paternelle",
+  "treeRiverMaternal": "Lignée maternelle",
+  "treeRiverDescendants": "Descendants",
+  "treePersonOpenDetail": "Voir la fiche →",
+  "treeLoadError": "Erreur de chargement",
+  "treeBridgeToTree": "Explorer la lignée →",
+  "treeBridgeRelatedNames": "Noms du Prophète ﷺ liés",
+  "treeListViewTitle": "Tous les membres",
+  "treeListSectionAncestors": "Ascendants",
+  "treeListSectionWives": "Épouses",
+  "treeListSectionChildren": "Enfants & petits-enfants",
+  "treeListSectionUncles": "Oncles & tantes",
+  "treeListSectionOther": "Autres"
 }

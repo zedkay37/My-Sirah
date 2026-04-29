@@ -12,6 +12,11 @@ abstract class NameStory with _$NameStory {
     @Default([]) List<String> tags,
     required String sourceNote,
     @Default([]) List<String> relatedPeople,
+    @Default([]) List<String> sourceRefs,
+    @Default('needs_review') String editorialStatus,
+    String? reviewedBy,
+    String? reviewNotes,
+    DateTime? validatedAt,
   }) = _NameStory;
 
   factory NameStory.fromJson(Map<String, dynamic> json) =>

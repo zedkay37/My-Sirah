@@ -158,6 +158,40 @@ void main() {
       expect(issues.any((i) => i.contains('missing theme missing')), isTrue);
     });
 
+    test('validate exposes names missing from Journey constellations', () {
+      final repo = _repo(constellations: const [_mission]);
+
+      final issues = repo.validate(validNameNumbers: {1, 2, 3});
+
+      expect(issues, contains('Missing Journey constellation for name 3'));
+    });
+
+    test('validate exposes names duplicated across constellations', () {
+      final repo = _repo(
+        constellations: const [
+          _mission,
+          NameConstellation(
+            id: 'duplicate',
+            titleFr: 'Duplicate',
+            titleAr: 'Duplicate',
+            descriptionFr: 'Duplicate',
+            nameNumbers: [2, 3],
+            colorHex: '#000000',
+          ),
+        ],
+      );
+
+      final issues = repo.validate(validNameNumbers: {1, 2, 3});
+
+      expect(
+        issues.any(
+          (issue) =>
+              issue.contains('Name 2 appears in multiple constellations'),
+        ),
+        isTrue,
+      );
+    });
+
     test('load reads real assets and validates name references', () async {
       final repo = await JourneyRepository.load();
       final names = await NamesJsonSource.load();
@@ -211,6 +245,71 @@ void main() {
             expect(star.y, inInclusiveRange(0, 1));
           }
         }
+      },
+    );
+
+    test('all prophet names are represented exactly once in Journey', () async {
+      final repo = await JourneyRepository.load();
+      final names = await NamesJsonSource.load();
+      final validNameNumbers = names.map((name) => name.number).toSet();
+      final journeyNumbers = repo
+          .getConstellations()
+          .expand((constellation) => constellation.nameNumbers)
+          .toList();
+
+      expect(names.length, 201);
+      expect(journeyNumbers.length, 201);
+      expect(journeyNumbers.toSet(), validNameNumbers);
+    });
+
+    test(
+      'journey map layout and constellation data cover same names',
+      () async {
+        final repo = await JourneyRepository.load();
+        final layout = await JourneyMapLayoutJsonSource.load();
+        final journeyNumbers = repo
+            .getConstellations()
+            .expand((constellation) => constellation.nameNumbers)
+            .toSet();
+        final starNumbers = layout.stars.values
+            .expand((stars) => stars)
+            .map((star) => star.number)
+            .toList();
+
+        expect(starNumbers.length, 201);
+        expect(starNumbers.toSet(), journeyNumbers);
+        expect(starNumbers.toSet().length, starNumbers.length);
+
+        for (final constellation in repo.getConstellations()) {
+          final stars = layout.starsFor(constellation.id);
+          expect(
+            stars.map((star) => star.number).toSet(),
+            constellation.nameNumbers.toSet(),
+            reason: 'Layout stars must match ${constellation.id}.',
+          );
+        }
+      },
+    );
+
+    test(
+      'active prophet names deck is valid and library-only decks stay out',
+      () async {
+        final decks = await JourneyDecksJsonSource.load();
+        final activeDecks = decks.where((deck) => deck.isActive).toList();
+        final prophetDeck = activeDecks.singleWhere(
+          (deck) => deck.id == 'prophet_names',
+        );
+
+        expect(prophetDeck.itemType, 'prophet_name');
+        expect(prophetDeck.totalItems, 201);
+        expect(
+          activeDecks.map((deck) => deck.id),
+          isNot(contains('asmaul_husna')),
+        );
+        expect(
+          decks.where((deck) => deck.status == 'library_only').map((d) => d.id),
+          contains('asmaul_husna'),
+        );
       },
     );
   });

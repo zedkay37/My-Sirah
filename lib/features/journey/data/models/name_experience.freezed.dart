@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NameStory {
 
- String get id; String get titleFr; String get bodyFr; List<String> get tags; String get sourceNote; List<String> get relatedPeople;
+ String get id; String get titleFr; String get bodyFr; List<String> get tags; String get sourceNote; List<String> get relatedPeople; List<String> get sourceRefs; String get editorialStatus; String? get reviewedBy; String? get reviewNotes; DateTime? get validatedAt;
 /// Create a copy of NameStory
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $NameStoryCopyWith<NameStory> get copyWith => _$NameStoryCopyWithImpl<NameStory>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NameStory&&(identical(other.id, id) || other.id == id)&&(identical(other.titleFr, titleFr) || other.titleFr == titleFr)&&(identical(other.bodyFr, bodyFr) || other.bodyFr == bodyFr)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote)&&const DeepCollectionEquality().equals(other.relatedPeople, relatedPeople));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NameStory&&(identical(other.id, id) || other.id == id)&&(identical(other.titleFr, titleFr) || other.titleFr == titleFr)&&(identical(other.bodyFr, bodyFr) || other.bodyFr == bodyFr)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote)&&const DeepCollectionEquality().equals(other.relatedPeople, relatedPeople)&&const DeepCollectionEquality().equals(other.sourceRefs, sourceRefs)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.reviewedBy, reviewedBy) || other.reviewedBy == reviewedBy)&&(identical(other.reviewNotes, reviewNotes) || other.reviewNotes == reviewNotes)&&(identical(other.validatedAt, validatedAt) || other.validatedAt == validatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,titleFr,bodyFr,const DeepCollectionEquality().hash(tags),sourceNote,const DeepCollectionEquality().hash(relatedPeople));
+int get hashCode => Object.hash(runtimeType,id,titleFr,bodyFr,const DeepCollectionEquality().hash(tags),sourceNote,const DeepCollectionEquality().hash(relatedPeople),const DeepCollectionEquality().hash(sourceRefs),editorialStatus,reviewedBy,reviewNotes,validatedAt);
 
 @override
 String toString() {
-  return 'NameStory(id: $id, titleFr: $titleFr, bodyFr: $bodyFr, tags: $tags, sourceNote: $sourceNote, relatedPeople: $relatedPeople)';
+  return 'NameStory(id: $id, titleFr: $titleFr, bodyFr: $bodyFr, tags: $tags, sourceNote: $sourceNote, relatedPeople: $relatedPeople, sourceRefs: $sourceRefs, editorialStatus: $editorialStatus, reviewedBy: $reviewedBy, reviewNotes: $reviewNotes, validatedAt: $validatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $NameStoryCopyWith<$Res>  {
   factory $NameStoryCopyWith(NameStory value, $Res Function(NameStory) _then) = _$NameStoryCopyWithImpl;
 @useResult
 $Res call({
- String id, String titleFr, String bodyFr, List<String> tags, String sourceNote, List<String> relatedPeople
+ String id, String titleFr, String bodyFr, List<String> tags, String sourceNote, List<String> relatedPeople, List<String> sourceRefs, String editorialStatus, String? reviewedBy, String? reviewNotes, DateTime? validatedAt
 });
 
 
@@ -65,7 +65,7 @@ class _$NameStoryCopyWithImpl<$Res>
 
 /// Create a copy of NameStory
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? titleFr = null,Object? bodyFr = null,Object? tags = null,Object? sourceNote = null,Object? relatedPeople = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? titleFr = null,Object? bodyFr = null,Object? tags = null,Object? sourceNote = null,Object? relatedPeople = null,Object? sourceRefs = null,Object? editorialStatus = null,Object? reviewedBy = freezed,Object? reviewNotes = freezed,Object? validatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,titleFr: null == titleFr ? _self.titleFr : titleFr // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,12 @@ as String,bodyFr: null == bodyFr ? _self.bodyFr : bodyFr // ignore: cast_nullabl
 as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,sourceNote: null == sourceNote ? _self.sourceNote : sourceNote // ignore: cast_nullable_to_non_nullable
 as String,relatedPeople: null == relatedPeople ? _self.relatedPeople : relatedPeople // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<String>,sourceRefs: null == sourceRefs ? _self.sourceRefs : sourceRefs // ignore: cast_nullable_to_non_nullable
+as List<String>,editorialStatus: null == editorialStatus ? _self.editorialStatus : editorialStatus // ignore: cast_nullable_to_non_nullable
+as String,reviewedBy: freezed == reviewedBy ? _self.reviewedBy : reviewedBy // ignore: cast_nullable_to_non_nullable
+as String?,reviewNotes: freezed == reviewNotes ? _self.reviewNotes : reviewNotes // ignore: cast_nullable_to_non_nullable
+as String?,validatedAt: freezed == validatedAt ? _self.validatedAt : validatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -158,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String titleFr,  String bodyFr,  List<String> tags,  String sourceNote,  List<String> relatedPeople)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String titleFr,  String bodyFr,  List<String> tags,  String sourceNote,  List<String> relatedPeople,  List<String> sourceRefs,  String editorialStatus,  String? reviewedBy,  String? reviewNotes,  DateTime? validatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NameStory() when $default != null:
-return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,_that.relatedPeople);case _:
+return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,_that.relatedPeople,_that.sourceRefs,_that.editorialStatus,_that.reviewedBy,_that.reviewNotes,_that.validatedAt);case _:
   return orElse();
 
 }
@@ -179,10 +184,10 @@ return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String titleFr,  String bodyFr,  List<String> tags,  String sourceNote,  List<String> relatedPeople)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String titleFr,  String bodyFr,  List<String> tags,  String sourceNote,  List<String> relatedPeople,  List<String> sourceRefs,  String editorialStatus,  String? reviewedBy,  String? reviewNotes,  DateTime? validatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _NameStory():
-return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,_that.relatedPeople);case _:
+return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,_that.relatedPeople,_that.sourceRefs,_that.editorialStatus,_that.reviewedBy,_that.reviewNotes,_that.validatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +204,10 @@ return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String titleFr,  String bodyFr,  List<String> tags,  String sourceNote,  List<String> relatedPeople)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String titleFr,  String bodyFr,  List<String> tags,  String sourceNote,  List<String> relatedPeople,  List<String> sourceRefs,  String editorialStatus,  String? reviewedBy,  String? reviewNotes,  DateTime? validatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _NameStory() when $default != null:
-return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,_that.relatedPeople);case _:
+return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,_that.relatedPeople,_that.sourceRefs,_that.editorialStatus,_that.reviewedBy,_that.reviewNotes,_that.validatedAt);case _:
   return null;
 
 }
@@ -214,7 +219,7 @@ return $default(_that.id,_that.titleFr,_that.bodyFr,_that.tags,_that.sourceNote,
 @JsonSerializable()
 
 class _NameStory implements NameStory {
-  const _NameStory({required this.id, required this.titleFr, required this.bodyFr, final  List<String> tags = const [], required this.sourceNote, final  List<String> relatedPeople = const []}): _tags = tags,_relatedPeople = relatedPeople;
+  const _NameStory({required this.id, required this.titleFr, required this.bodyFr, final  List<String> tags = const [], required this.sourceNote, final  List<String> relatedPeople = const [], final  List<String> sourceRefs = const [], this.editorialStatus = 'needs_review', this.reviewedBy, this.reviewNotes, this.validatedAt}): _tags = tags,_relatedPeople = relatedPeople,_sourceRefs = sourceRefs;
   factory _NameStory.fromJson(Map<String, dynamic> json) => _$NameStoryFromJson(json);
 
 @override final  String id;
@@ -235,6 +240,17 @@ class _NameStory implements NameStory {
   return EqualUnmodifiableListView(_relatedPeople);
 }
 
+ final  List<String> _sourceRefs;
+@override@JsonKey() List<String> get sourceRefs {
+  if (_sourceRefs is EqualUnmodifiableListView) return _sourceRefs;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_sourceRefs);
+}
+
+@override@JsonKey() final  String editorialStatus;
+@override final  String? reviewedBy;
+@override final  String? reviewNotes;
+@override final  DateTime? validatedAt;
 
 /// Create a copy of NameStory
 /// with the given fields replaced by the non-null parameter values.
@@ -249,16 +265,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NameStory&&(identical(other.id, id) || other.id == id)&&(identical(other.titleFr, titleFr) || other.titleFr == titleFr)&&(identical(other.bodyFr, bodyFr) || other.bodyFr == bodyFr)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote)&&const DeepCollectionEquality().equals(other._relatedPeople, _relatedPeople));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NameStory&&(identical(other.id, id) || other.id == id)&&(identical(other.titleFr, titleFr) || other.titleFr == titleFr)&&(identical(other.bodyFr, bodyFr) || other.bodyFr == bodyFr)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote)&&const DeepCollectionEquality().equals(other._relatedPeople, _relatedPeople)&&const DeepCollectionEquality().equals(other._sourceRefs, _sourceRefs)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.reviewedBy, reviewedBy) || other.reviewedBy == reviewedBy)&&(identical(other.reviewNotes, reviewNotes) || other.reviewNotes == reviewNotes)&&(identical(other.validatedAt, validatedAt) || other.validatedAt == validatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,titleFr,bodyFr,const DeepCollectionEquality().hash(_tags),sourceNote,const DeepCollectionEquality().hash(_relatedPeople));
+int get hashCode => Object.hash(runtimeType,id,titleFr,bodyFr,const DeepCollectionEquality().hash(_tags),sourceNote,const DeepCollectionEquality().hash(_relatedPeople),const DeepCollectionEquality().hash(_sourceRefs),editorialStatus,reviewedBy,reviewNotes,validatedAt);
 
 @override
 String toString() {
-  return 'NameStory(id: $id, titleFr: $titleFr, bodyFr: $bodyFr, tags: $tags, sourceNote: $sourceNote, relatedPeople: $relatedPeople)';
+  return 'NameStory(id: $id, titleFr: $titleFr, bodyFr: $bodyFr, tags: $tags, sourceNote: $sourceNote, relatedPeople: $relatedPeople, sourceRefs: $sourceRefs, editorialStatus: $editorialStatus, reviewedBy: $reviewedBy, reviewNotes: $reviewNotes, validatedAt: $validatedAt)';
 }
 
 
@@ -269,7 +285,7 @@ abstract mixin class _$NameStoryCopyWith<$Res> implements $NameStoryCopyWith<$Re
   factory _$NameStoryCopyWith(_NameStory value, $Res Function(_NameStory) _then) = __$NameStoryCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String titleFr, String bodyFr, List<String> tags, String sourceNote, List<String> relatedPeople
+ String id, String titleFr, String bodyFr, List<String> tags, String sourceNote, List<String> relatedPeople, List<String> sourceRefs, String editorialStatus, String? reviewedBy, String? reviewNotes, DateTime? validatedAt
 });
 
 
@@ -286,7 +302,7 @@ class __$NameStoryCopyWithImpl<$Res>
 
 /// Create a copy of NameStory
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? titleFr = null,Object? bodyFr = null,Object? tags = null,Object? sourceNote = null,Object? relatedPeople = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? titleFr = null,Object? bodyFr = null,Object? tags = null,Object? sourceNote = null,Object? relatedPeople = null,Object? sourceRefs = null,Object? editorialStatus = null,Object? reviewedBy = freezed,Object? reviewNotes = freezed,Object? validatedAt = freezed,}) {
   return _then(_NameStory(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,titleFr: null == titleFr ? _self.titleFr : titleFr // ignore: cast_nullable_to_non_nullable
@@ -294,7 +310,12 @@ as String,bodyFr: null == bodyFr ? _self.bodyFr : bodyFr // ignore: cast_nullabl
 as String,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,sourceNote: null == sourceNote ? _self.sourceNote : sourceNote // ignore: cast_nullable_to_non_nullable
 as String,relatedPeople: null == relatedPeople ? _self._relatedPeople : relatedPeople // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<String>,sourceRefs: null == sourceRefs ? _self._sourceRefs : sourceRefs // ignore: cast_nullable_to_non_nullable
+as List<String>,editorialStatus: null == editorialStatus ? _self.editorialStatus : editorialStatus // ignore: cast_nullable_to_non_nullable
+as String,reviewedBy: freezed == reviewedBy ? _self.reviewedBy : reviewedBy // ignore: cast_nullable_to_non_nullable
+as String?,reviewNotes: freezed == reviewNotes ? _self.reviewNotes : reviewNotes // ignore: cast_nullable_to_non_nullable
+as String?,validatedAt: freezed == validatedAt ? _self.validatedAt : validatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

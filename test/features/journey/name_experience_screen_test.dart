@@ -43,6 +43,9 @@ const _experience = NameExperience(
       titleFr: 'Un nom porté par la louange',
       bodyFr: 'Un récit court.',
       sourceNote: 'Source éditoriale.',
+      sourceRefs: ['Coran 3:144'],
+      editorialStatus: 'validated',
+      reviewedBy: 'editor',
     ),
   ],
   tafakkurPromptFr: 'Quelle louange sincère puis-je vivre ?',
@@ -128,7 +131,9 @@ void main() {
     expect(find.text('Nom vivant'), findsOneWidget);
     expect(find.text('Muḥammad'), findsOneWidget);
     expect(find.text('Constellation de la Louange'), findsOneWidget);
+    expect(find.text('RÉCIT'), findsOneWidget);
     expect(find.text('Un nom porté par la louange'), findsOneWidget);
+    expect(find.text('Coran 3:144'), findsWidgets);
     expect(find.text('Quelle louange sincère puis-je vivre ?'), findsOneWidget);
     expect(find.text('Remercie quelqu’un aujourd’hui.'), findsOneWidget);
     expect(find.text('Je l’ai vécue'), findsOneWidget);
@@ -166,7 +171,50 @@ void main() {
 
     expect(find.text('Muḥammad'), findsOneWidget);
     expect(find.text('COMPRENDRE CE NOM'), findsOneWidget);
-    expect(find.textContaining('des noms.'), findsOneWidget);
+    expect(find.text('Le plus célèbre des noms.'), findsOneWidget);
+    expect(find.text('Coran 3:144'), findsOneWidget);
     expect(find.text('Agis.'), findsOneWidget);
+    expect(find.text('Aucun récit dédié'), findsNothing);
+    expect(find.textContaining('placeholder'), findsNothing);
+    expect(find.text('Entrer en tafakkur'), findsOneWidget);
   });
+
+  testWidgets(
+    'NameExperienceScreen does not present unvalidated story as story',
+    (tester) async {
+      const unvalidatedExperience = NameExperience(
+        nameNumber: 1,
+        stories: [
+          NameStory(
+            id: 'draft-story',
+            titleFr: 'Titre brouillon',
+            bodyFr: 'Texte brouillon.',
+            sourceNote: 'Synthèse éditoriale à revoir.',
+          ),
+        ],
+        tafakkurPromptFr: 'Quelle louange sincère puis-je vivre ?',
+        practiceTheme: 'praise',
+      );
+      final journey = JourneyRepository(
+        constellations: const [_constellation],
+        experiences: const [unvalidatedExperience],
+        actionBanks: const [_actions],
+      );
+      final settings = _StubSettingsNotifier();
+
+      await tester.pumpWidget(
+        _wrap(
+          const NameExperienceScreen(nameNumber: 1),
+          journey: journey,
+          settings: settings,
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('COMPRENDRE CE NOM'), findsOneWidget);
+      expect(find.text('Titre brouillon'), findsNothing);
+      expect(find.text('Texte brouillon.'), findsNothing);
+      expect(find.text('Le plus célèbre des noms.'), findsOneWidget);
+    },
+  );
 }
