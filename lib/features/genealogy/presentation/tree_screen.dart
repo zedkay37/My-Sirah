@@ -60,32 +60,42 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        context.space.md,
-        context.space.md,
-        context.space.md,
-        context.space.sm,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              context.l10n.treeTitle,
-              style: context.typo.displayMedium.copyWith(
-                color: context.colors.ink,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final compact = constraints.maxWidth < 420;
+
+        return Padding(
+          padding: EdgeInsets.fromLTRB(
+            context.space.md,
+            context.space.md,
+            context.space.md,
+            context.space.sm,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  context.l10n.treeTitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style:
+                      (compact
+                              ? context.typo.headline
+                              : context.typo.displayMedium)
+                          .copyWith(color: context.colors.ink),
+                ),
               ),
-            ),
+              ModeSelector(active: mode, onSelect: onModeChange),
+              SizedBox(width: context.space.xs),
+              IconButton(
+                icon: Icon(Icons.list_outlined, color: context.colors.muted),
+                tooltip: context.l10n.treeListView,
+                onPressed: () => context.push('/tree/list'),
+              ),
+            ],
           ),
-          ModeSelector(active: mode, onSelect: onModeChange),
-          SizedBox(width: context.space.sm),
-          IconButton(
-            icon: Icon(Icons.list_outlined, color: context.colors.muted),
-            tooltip: context.l10n.treeListView,
-            onPressed: () => context.push('/tree/list'),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

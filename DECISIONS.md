@@ -202,6 +202,8 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Offline | Bundler Amiri, Amiri Quran, Crimson Pro, Inter et Playfair Display en assets locaux. | Stabiliser le rendu typographique et supprimer les appels `GoogleFonts.*` au runtime. |
 | 2026-04-29 | QA visuelle | Recentrer automatiquement les cartes spatiales au dezoom minimum. | Eviter l'effet de carte "collee" en haut apres un fort dezoom. |
 | 2026-04-29 | Typographie | Augmenter la hauteur reservee aux grands titres arabes. | Eviter que la translitteration chevauche la calligraphie avec les polices locales. |
+| 2026-04-29 | Arbre | Reduire la densite de labels visibles dans les vues constellation/radiale. | Garder l'arbre exploratoire lisible sur mobile sans retirer les points interactifs. |
+| 2026-04-29 | Arbre | Rendre le header et les overlays plus compacts. | Eviter que la navigation et la legende masquent trop le graphe. |
 
 ## Validation technique recente
 
@@ -268,6 +270,23 @@ Resultat :
 
 - Tests cibles cartes/Nom vivant/home/detail : OK, 17 tests passes
 - `flutter analyze` : OK
+- `flutter test` : OK, 116 tests passes
+- `flutter build apk --debug` : OK
+
+Derniere validation apres polish Arbre :
+
+```text
+dart format <fichiers arbre modifies>
+flutter analyze --no-pub
+flutter test test/features/genealogy/genealogy_repository_test.dart test/features/profile/profile_navigation_test.dart
+flutter test
+flutter build apk --debug
+```
+
+Resultat :
+
+- `flutter analyze --no-pub` : OK
+- Tests cibles genealogie/profil : OK, 13 tests passes
 - `flutter test` : OK, 116 tests passes
 - `flutter build apk --debug` : OK
 

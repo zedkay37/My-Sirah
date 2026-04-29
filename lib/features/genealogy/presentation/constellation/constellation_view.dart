@@ -338,14 +338,14 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
 
             // Légende
             Positioned(
-              bottom: context.space.md,
+              bottom: context.space.lg,
               left: context.space.md,
               child: _Legend(),
             ),
 
             // Bouton recentrer
             Positioned(
-              bottom: context.space.md,
+              bottom: context.space.lg,
               right: context.space.md,
               child: FloatingActionButton.small(
                 onPressed: _recenter,
@@ -420,11 +420,14 @@ class _Legend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(context.space.sm),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.space.sm,
+        vertical: context.space.xs,
+      ),
       decoration: BoxDecoration(
-        color: context.colors.bg.withValues(alpha: 0.75),
+        color: context.colors.bg.withValues(alpha: 0.62),
         borderRadius: BorderRadius.circular(context.radii.sm),
-        border: Border.all(color: context.colors.line),
+        border: Border.all(color: context.colors.line.withValues(alpha: 0.55)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

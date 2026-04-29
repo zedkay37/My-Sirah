@@ -156,7 +156,7 @@ class _RadialViewState extends ConsumerState<RadialView> {
 
         // Bouton recentrer
         Positioned(
-          bottom: context.space.md,
+          bottom: context.space.lg,
           right: context.space.md,
           child: FloatingActionButton.small(
             onPressed: _recenter,

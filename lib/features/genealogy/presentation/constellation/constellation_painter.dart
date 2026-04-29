@@ -179,11 +179,39 @@ class ConstellationPainter extends CustomPainter {
         showLabel = false;
       }
 
+      showLabel =
+          showLabel &&
+          _shouldShowLabel(
+            m,
+            isSelected: isSelected,
+            isPathStart: isPathStart,
+            isHighlighted: isHighlighted,
+            isConnectedToSelected: isConnectedToSelected,
+          );
+
       if (showLabel && opacity > 0.1) {
         // Ne pas dessiner le texte si trop transparent
         _drawLabels(canvas, m, pos, r, opacity);
       }
     }
+  }
+
+  bool _shouldShowLabel(
+    FamilyMember member, {
+    required bool isSelected,
+    required bool isPathStart,
+    required bool isHighlighted,
+    required bool isConnectedToSelected,
+  }) {
+    if (isSelected || isPathStart || isHighlighted) return true;
+    if (selectedId != null) return isConnectedToSelected;
+
+    return switch (member.role) {
+      FamilyRole.prophet || FamilyRole.father || FamilyRole.mother => true,
+      FamilyRole.wife => member.marriageOrder == 1,
+      FamilyRole.child => member.id == 'fatima',
+      _ => false,
+    };
   }
 
   void _drawLabels(
@@ -203,7 +231,9 @@ class ConstellationPainter extends CustomPainter {
         ),
       ),
       textDirection: TextDirection.rtl,
-    )..layout();
+      maxLines: 1,
+      ellipsis: '...',
+    )..layout(maxWidth: 88);
 
     final transPainter = TextPainter(
       text: TextSpan(
@@ -214,7 +244,9 @@ class ConstellationPainter extends CustomPainter {
         ),
       ),
       textDirection: TextDirection.ltr,
-    )..layout();
+      maxLines: 1,
+      ellipsis: '...',
+    )..layout(maxWidth: 104);
 
     final textY = pos.dy + r + 4;
 

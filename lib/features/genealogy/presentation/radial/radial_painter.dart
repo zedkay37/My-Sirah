@@ -169,10 +169,27 @@ class RadialPainter extends CustomPainter {
 
       canvas.drawCircle(pos, radius, dotPaint);
 
-      if (!m.isBoundary) {
+      if (!m.isBoundary &&
+          _shouldShowLabel(m, isSelected: isSelected, inFilter: inFilter)) {
         _drawLabels(canvas, m, pos, opacity);
       }
     }
+  }
+
+  bool _shouldShowLabel(
+    FamilyMember member, {
+    required bool isSelected,
+    required bool inFilter,
+  }) {
+    if (!inFilter) return false;
+    if (isSelected) return true;
+
+    return switch (member.role) {
+      FamilyRole.prophet || FamilyRole.father || FamilyRole.mother => true,
+      FamilyRole.wife => member.marriageOrder == 1,
+      FamilyRole.child => member.id == 'fatima',
+      _ => false,
+    };
   }
 
   void _drawLabels(Canvas canvas, FamilyMember m, Offset pos, double opacity) {
@@ -186,7 +203,9 @@ class RadialPainter extends CustomPainter {
         ),
       ),
       textDirection: TextDirection.rtl,
-    )..layout();
+      maxLines: 1,
+      ellipsis: '...',
+    )..layout(maxWidth: 88);
 
     final transPainter = TextPainter(
       text: TextSpan(
@@ -197,7 +216,9 @@ class RadialPainter extends CustomPainter {
         ),
       ),
       textDirection: TextDirection.ltr,
-    )..layout();
+      maxLines: 1,
+      ellipsis: '...',
+    )..layout(maxWidth: 104);
 
     arabicPainter.paint(
       canvas,
