@@ -312,5 +312,23 @@ void main() {
         );
       },
     );
+
+    test('real story assets carry explicit editorial status', () async {
+      final repo = await JourneyRepository.load();
+      final stories = repo
+          .getExperiences()
+          .expand((experience) => experience.stories)
+          .toList();
+
+      expect(stories, isNotEmpty);
+      expect(
+        stories.every((story) => story.editorialStatus.isNotEmpty),
+        isTrue,
+      );
+      expect(
+        stories.where((story) => story.editorialStatus == 'needs_review'),
+        isNotEmpty,
+      );
+    });
   });
 }

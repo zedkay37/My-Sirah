@@ -37,6 +37,8 @@ class JourneyRepository {
 
   List<NameConstellation> getConstellations() => _constellations;
 
+  List<NameExperience> getExperiences() => _experiences;
+
   NameConstellation? getConstellationById(String id) {
     try {
       return _constellations.firstWhere((c) => c.id == id);

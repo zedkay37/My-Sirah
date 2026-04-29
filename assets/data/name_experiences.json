@@ -8,6 +8,9 @@
         "bodyFr": "Le nom Muhammad rappelle que sa vie entière devient un lieu de louange : louange d'Allah, et reconnaissance des croyants pour la miséricorde transmise par lui.",
         "tags": ["louange", "gratitude", "nom"],
         "sourceNote": "Synthèse éditoriale à partir du sens linguistique du nom et des références du corpus des noms.",
+        "sourceRefs": [],
+        "editorialStatus": "needs_review",
+        "reviewNotes": "Synthèse éditoriale existante. À relier à des sources validées avant affichage comme récit.",
         "relatedPeople": []
       }
     ],
@@ -23,6 +26,9 @@
         "bodyFr": "Les noms de la mission rappellent que le Prophète ﷺ ne transmet pas une idée isolée, mais une guidance destinée à éclairer les vies, les choix et les caractères.",
         "tags": ["mission", "guidance", "message"],
         "sourceNote": "Synthèse éditoriale à partir du thème de la prophétie et de la mission.",
+        "sourceRefs": [],
+        "editorialStatus": "needs_review",
+        "reviewNotes": "Synthèse éditoriale existante. À relier à des sources validées avant affichage comme récit.",
         "relatedPeople": []
       }
     ],
@@ -38,6 +44,9 @@
         "bodyFr": "Les noms liés aux vertus invitent à regarder la véracité non comme une simple parole exacte, mais comme une droiture qui traverse l'intention, la promesse et la relation.",
         "tags": ["vérité", "confiance", "caractère"],
         "sourceNote": "Synthèse éditoriale à relier aux sources détaillées du nom dans names.json.",
+        "sourceRefs": [],
+        "editorialStatus": "needs_review",
+        "reviewNotes": "Synthèse éditoriale existante. À relier à des sources validées avant affichage comme récit.",
         "relatedPeople": []
       }
     ],
@@ -53,6 +62,9 @@
         "bodyFr": "La noblesse prophétique n'est pas une distance avec les gens : elle se manifeste par l'élévation du caractère, le respect des liens et la miséricorde dans la proximité.",
         "tags": ["noblesse", "famille", "caractère"],
         "sourceNote": "Synthèse éditoriale à enrichir avec les récits familiaux validés.",
+        "sourceRefs": [],
+        "editorialStatus": "needs_review",
+        "reviewNotes": "Synthèse éditoriale existante. À relier à des sources validées avant affichage comme récit.",
         "relatedPeople": ["muhammad"]
       }
     ],
