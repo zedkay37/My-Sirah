@@ -84,6 +84,7 @@ class _DeckMapContent extends StatelessWidget {
               maxScale: 2.2,
               viewPadding: const EdgeInsets.only(bottom: 72),
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Positioned.fill(
                     child: CustomPaint(

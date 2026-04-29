@@ -37,6 +37,14 @@ _NameActionItem _$NameActionItemFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const [],
       sourceNote: json['sourceNote'] as String? ?? '',
+      sourceRefs:
+          (json['sourceRefs'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      reviewedBy: json['reviewedBy'] as String? ?? '',
+      validatedAt: json['validatedAt'] as String? ?? '',
+      reviewNotes: json['reviewNotes'] as String? ?? '',
     );
 
 Map<String, dynamic> _$NameActionItemToJson(_NameActionItem instance) =>
@@ -49,4 +57,8 @@ Map<String, dynamic> _$NameActionItemToJson(_NameActionItem instance) =>
       'contexts': instance.contexts,
       'nameNumbers': instance.nameNumbers,
       'sourceNote': instance.sourceNote,
+      'sourceRefs': instance.sourceRefs,
+      'reviewedBy': instance.reviewedBy,
+      'validatedAt': instance.validatedAt,
+      'reviewNotes': instance.reviewNotes,
     };

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class StarfieldBackground extends StatelessWidget {
   const StarfieldBackground({super.key, required this.child});
 
+  static const edgeColor = Color(0xFF080A12);
+
   final Widget child;
 
   @override
@@ -23,7 +25,11 @@ class _StarfieldPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [Color(0xFF080A12), Color(0xFF111827), Color(0xFF070A10)],
+        colors: [
+          StarfieldBackground.edgeColor,
+          Color(0xFF111827),
+          Color(0xFF070A10),
+        ],
       ).createShader(rect);
     canvas.drawRect(rect, bgPaint);
 

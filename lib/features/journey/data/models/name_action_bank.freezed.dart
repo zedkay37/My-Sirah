@@ -287,7 +287,7 @@ as List<NameActionItem>,
 /// @nodoc
 mixin _$NameActionItem {
 
- String get id; String get textFr; String get editorialStatus; String get duration; String get difficulty; List<String> get contexts; List<int> get nameNumbers; String get sourceNote;
+ String get id; String get textFr; String get editorialStatus; String get duration; String get difficulty; List<String> get contexts; List<int> get nameNumbers; String get sourceNote; List<String> get sourceRefs; String get reviewedBy; String get validatedAt; String get reviewNotes;
 /// Create a copy of NameActionItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -300,16 +300,16 @@ $NameActionItemCopyWith<NameActionItem> get copyWith => _$NameActionItemCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NameActionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.textFr, textFr) || other.textFr == textFr)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other.contexts, contexts)&&const DeepCollectionEquality().equals(other.nameNumbers, nameNumbers)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NameActionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.textFr, textFr) || other.textFr == textFr)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other.contexts, contexts)&&const DeepCollectionEquality().equals(other.nameNumbers, nameNumbers)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote)&&const DeepCollectionEquality().equals(other.sourceRefs, sourceRefs)&&(identical(other.reviewedBy, reviewedBy) || other.reviewedBy == reviewedBy)&&(identical(other.validatedAt, validatedAt) || other.validatedAt == validatedAt)&&(identical(other.reviewNotes, reviewNotes) || other.reviewNotes == reviewNotes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,textFr,editorialStatus,duration,difficulty,const DeepCollectionEquality().hash(contexts),const DeepCollectionEquality().hash(nameNumbers),sourceNote);
+int get hashCode => Object.hash(runtimeType,id,textFr,editorialStatus,duration,difficulty,const DeepCollectionEquality().hash(contexts),const DeepCollectionEquality().hash(nameNumbers),sourceNote,const DeepCollectionEquality().hash(sourceRefs),reviewedBy,validatedAt,reviewNotes);
 
 @override
 String toString() {
-  return 'NameActionItem(id: $id, textFr: $textFr, editorialStatus: $editorialStatus, duration: $duration, difficulty: $difficulty, contexts: $contexts, nameNumbers: $nameNumbers, sourceNote: $sourceNote)';
+  return 'NameActionItem(id: $id, textFr: $textFr, editorialStatus: $editorialStatus, duration: $duration, difficulty: $difficulty, contexts: $contexts, nameNumbers: $nameNumbers, sourceNote: $sourceNote, sourceRefs: $sourceRefs, reviewedBy: $reviewedBy, validatedAt: $validatedAt, reviewNotes: $reviewNotes)';
 }
 
 
@@ -320,7 +320,7 @@ abstract mixin class $NameActionItemCopyWith<$Res>  {
   factory $NameActionItemCopyWith(NameActionItem value, $Res Function(NameActionItem) _then) = _$NameActionItemCopyWithImpl;
 @useResult
 $Res call({
- String id, String textFr, String editorialStatus, String duration, String difficulty, List<String> contexts, List<int> nameNumbers, String sourceNote
+ String id, String textFr, String editorialStatus, String duration, String difficulty, List<String> contexts, List<int> nameNumbers, String sourceNote, List<String> sourceRefs, String reviewedBy, String validatedAt, String reviewNotes
 });
 
 
@@ -337,7 +337,7 @@ class _$NameActionItemCopyWithImpl<$Res>
 
 /// Create a copy of NameActionItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? textFr = null,Object? editorialStatus = null,Object? duration = null,Object? difficulty = null,Object? contexts = null,Object? nameNumbers = null,Object? sourceNote = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? textFr = null,Object? editorialStatus = null,Object? duration = null,Object? difficulty = null,Object? contexts = null,Object? nameNumbers = null,Object? sourceNote = null,Object? sourceRefs = null,Object? reviewedBy = null,Object? validatedAt = null,Object? reviewNotes = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,textFr: null == textFr ? _self.textFr : textFr // ignore: cast_nullable_to_non_nullable
@@ -347,6 +347,10 @@ as String,difficulty: null == difficulty ? _self.difficulty : difficulty // igno
 as String,contexts: null == contexts ? _self.contexts : contexts // ignore: cast_nullable_to_non_nullable
 as List<String>,nameNumbers: null == nameNumbers ? _self.nameNumbers : nameNumbers // ignore: cast_nullable_to_non_nullable
 as List<int>,sourceNote: null == sourceNote ? _self.sourceNote : sourceNote // ignore: cast_nullable_to_non_nullable
+as String,sourceRefs: null == sourceRefs ? _self.sourceRefs : sourceRefs // ignore: cast_nullable_to_non_nullable
+as List<String>,reviewedBy: null == reviewedBy ? _self.reviewedBy : reviewedBy // ignore: cast_nullable_to_non_nullable
+as String,validatedAt: null == validatedAt ? _self.validatedAt : validatedAt // ignore: cast_nullable_to_non_nullable
+as String,reviewNotes: null == reviewNotes ? _self.reviewNotes : reviewNotes // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -432,10 +436,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote,  List<String> sourceRefs,  String reviewedBy,  String validatedAt,  String reviewNotes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NameActionItem() when $default != null:
-return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote);case _:
+return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote,_that.sourceRefs,_that.reviewedBy,_that.validatedAt,_that.reviewNotes);case _:
   return orElse();
 
 }
@@ -453,10 +457,10 @@ return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote,  List<String> sourceRefs,  String reviewedBy,  String validatedAt,  String reviewNotes)  $default,) {final _that = this;
 switch (_that) {
 case _NameActionItem():
-return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote);case _:
+return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote,_that.sourceRefs,_that.reviewedBy,_that.validatedAt,_that.reviewNotes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -473,10 +477,10 @@ return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote,  List<String> sourceRefs,  String reviewedBy,  String validatedAt,  String reviewNotes)?  $default,) {final _that = this;
 switch (_that) {
 case _NameActionItem() when $default != null:
-return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote);case _:
+return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote,_that.sourceRefs,_that.reviewedBy,_that.validatedAt,_that.reviewNotes);case _:
   return null;
 
 }
@@ -488,7 +492,7 @@ return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that
 @JsonSerializable()
 
 class _NameActionItem implements NameActionItem {
-  const _NameActionItem({required this.id, required this.textFr, this.editorialStatus = 'needs_review', this.duration = 'short', this.difficulty = 'simple', final  List<String> contexts = const [], final  List<int> nameNumbers = const [], this.sourceNote = ''}): _contexts = contexts,_nameNumbers = nameNumbers;
+  const _NameActionItem({required this.id, required this.textFr, this.editorialStatus = 'needs_review', this.duration = 'short', this.difficulty = 'simple', final  List<String> contexts = const [], final  List<int> nameNumbers = const [], this.sourceNote = '', final  List<String> sourceRefs = const [], this.reviewedBy = '', this.validatedAt = '', this.reviewNotes = ''}): _contexts = contexts,_nameNumbers = nameNumbers,_sourceRefs = sourceRefs;
   factory _NameActionItem.fromJson(Map<String, dynamic> json) => _$NameActionItemFromJson(json);
 
 @override final  String id;
@@ -511,6 +515,16 @@ class _NameActionItem implements NameActionItem {
 }
 
 @override@JsonKey() final  String sourceNote;
+ final  List<String> _sourceRefs;
+@override@JsonKey() List<String> get sourceRefs {
+  if (_sourceRefs is EqualUnmodifiableListView) return _sourceRefs;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_sourceRefs);
+}
+
+@override@JsonKey() final  String reviewedBy;
+@override@JsonKey() final  String validatedAt;
+@override@JsonKey() final  String reviewNotes;
 
 /// Create a copy of NameActionItem
 /// with the given fields replaced by the non-null parameter values.
@@ -525,16 +539,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NameActionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.textFr, textFr) || other.textFr == textFr)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other._contexts, _contexts)&&const DeepCollectionEquality().equals(other._nameNumbers, _nameNumbers)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NameActionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.textFr, textFr) || other.textFr == textFr)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other._contexts, _contexts)&&const DeepCollectionEquality().equals(other._nameNumbers, _nameNumbers)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote)&&const DeepCollectionEquality().equals(other._sourceRefs, _sourceRefs)&&(identical(other.reviewedBy, reviewedBy) || other.reviewedBy == reviewedBy)&&(identical(other.validatedAt, validatedAt) || other.validatedAt == validatedAt)&&(identical(other.reviewNotes, reviewNotes) || other.reviewNotes == reviewNotes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,textFr,editorialStatus,duration,difficulty,const DeepCollectionEquality().hash(_contexts),const DeepCollectionEquality().hash(_nameNumbers),sourceNote);
+int get hashCode => Object.hash(runtimeType,id,textFr,editorialStatus,duration,difficulty,const DeepCollectionEquality().hash(_contexts),const DeepCollectionEquality().hash(_nameNumbers),sourceNote,const DeepCollectionEquality().hash(_sourceRefs),reviewedBy,validatedAt,reviewNotes);
 
 @override
 String toString() {
-  return 'NameActionItem(id: $id, textFr: $textFr, editorialStatus: $editorialStatus, duration: $duration, difficulty: $difficulty, contexts: $contexts, nameNumbers: $nameNumbers, sourceNote: $sourceNote)';
+  return 'NameActionItem(id: $id, textFr: $textFr, editorialStatus: $editorialStatus, duration: $duration, difficulty: $difficulty, contexts: $contexts, nameNumbers: $nameNumbers, sourceNote: $sourceNote, sourceRefs: $sourceRefs, reviewedBy: $reviewedBy, validatedAt: $validatedAt, reviewNotes: $reviewNotes)';
 }
 
 
@@ -545,7 +559,7 @@ abstract mixin class _$NameActionItemCopyWith<$Res> implements $NameActionItemCo
   factory _$NameActionItemCopyWith(_NameActionItem value, $Res Function(_NameActionItem) _then) = __$NameActionItemCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String textFr, String editorialStatus, String duration, String difficulty, List<String> contexts, List<int> nameNumbers, String sourceNote
+ String id, String textFr, String editorialStatus, String duration, String difficulty, List<String> contexts, List<int> nameNumbers, String sourceNote, List<String> sourceRefs, String reviewedBy, String validatedAt, String reviewNotes
 });
 
 
@@ -562,7 +576,7 @@ class __$NameActionItemCopyWithImpl<$Res>
 
 /// Create a copy of NameActionItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? textFr = null,Object? editorialStatus = null,Object? duration = null,Object? difficulty = null,Object? contexts = null,Object? nameNumbers = null,Object? sourceNote = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? textFr = null,Object? editorialStatus = null,Object? duration = null,Object? difficulty = null,Object? contexts = null,Object? nameNumbers = null,Object? sourceNote = null,Object? sourceRefs = null,Object? reviewedBy = null,Object? validatedAt = null,Object? reviewNotes = null,}) {
   return _then(_NameActionItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,textFr: null == textFr ? _self.textFr : textFr // ignore: cast_nullable_to_non_nullable
@@ -572,6 +586,10 @@ as String,difficulty: null == difficulty ? _self.difficulty : difficulty // igno
 as String,contexts: null == contexts ? _self._contexts : contexts // ignore: cast_nullable_to_non_nullable
 as List<String>,nameNumbers: null == nameNumbers ? _self._nameNumbers : nameNumbers // ignore: cast_nullable_to_non_nullable
 as List<int>,sourceNote: null == sourceNote ? _self.sourceNote : sourceNote // ignore: cast_nullable_to_non_nullable
+as String,sourceRefs: null == sourceRefs ? _self._sourceRefs : sourceRefs // ignore: cast_nullable_to_non_nullable
+as List<String>,reviewedBy: null == reviewedBy ? _self.reviewedBy : reviewedBy // ignore: cast_nullable_to_non_nullable
+as String,validatedAt: null == validatedAt ? _self.validatedAt : validatedAt // ignore: cast_nullable_to_non_nullable
+as String,reviewNotes: null == reviewNotes ? _self.reviewNotes : reviewNotes // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

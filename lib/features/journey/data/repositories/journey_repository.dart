@@ -24,6 +24,20 @@ class JourneyRepository {
   final List<NameExperience> _experiences;
   final List<NameActionBank> _actionBanks;
 
+  static const Map<String, String> _constellationActionThemes = {
+    'praise': 'praise',
+    'prophethood': 'mission',
+    'intercession': 'intercession',
+    'eschatology': 'eschatology',
+    'purity': 'purity',
+    'virtues': 'virtues',
+    'miraj': 'miraj',
+    'guidance': 'guidance',
+    'light': 'light',
+    'nobility': 'nobility',
+    'devotion': 'devotion',
+  };
+
   static Future<JourneyRepository> load() async {
     final constellations = await NameConstellationsJsonSource.load();
     final experiences = await NameExperiencesJsonSource.load();
@@ -67,18 +81,34 @@ class JourneyRepository {
   }) {
     final actions = _actionBankForTheme(theme)?.actions ?? const [];
     if (includeDrafts) return actions;
-    return actions
-        .where((action) => action.editorialStatus == 'validated')
-        .toList();
+    return actions.where(_canDisplayAction).toList();
   }
 
   NameActionItem? getDailyActionForName(int number, DateTime date) {
-    final theme = getExperienceForName(number)?.practiceTheme;
-    if (theme == null || theme == 'general') return null;
-    final actions = getActionsForTheme(theme);
-    if (actions.isEmpty) return null;
-    final seed = _stableSeed('$number-${_dateKey(date)}-$theme');
-    return actions[seed % actions.length];
+    final nameActions = _validatedActionsForName(number);
+    if (nameActions.isNotEmpty) {
+      return _dailyActionFrom(
+        actions: nameActions,
+        number: number,
+        date: date,
+        scope: 'name',
+      );
+    }
+
+    for (final constellation in getConstellationsForName(number)) {
+      final theme = _constellationActionThemes[constellation.id];
+      if (theme == null) continue;
+      final actions = _validatedConstellationActionsForTheme(theme);
+      if (actions.isEmpty) continue;
+      return _dailyActionFrom(
+        actions: actions,
+        number: number,
+        date: date,
+        scope: 'constellation-$theme',
+      );
+    }
+
+    return null;
   }
 
   List<String> validate({
@@ -88,8 +118,22 @@ class JourneyRepository {
     final issues = <String>[];
     final constellationIds = <String>{};
     final constellationNameOwners = <int, List<String>>{};
+    final availableActionThemes = _actionBanks
+        .map((bank) => bank.theme)
+        .toSet();
 
     for (final constellation in _constellations) {
+      final actionTheme = _constellationActionThemes[constellation.id];
+      if (actionTheme == null) {
+        issues.add(
+          'Constellation ${constellation.id} has no action theme mapping',
+        );
+      } else if (!availableActionThemes.contains(actionTheme)) {
+        issues.add(
+          'Constellation ${constellation.id} references missing action theme '
+          '$actionTheme',
+        );
+      }
       if (!constellationIds.add(constellation.id)) {
         issues.add('Duplicate constellation id: ${constellation.id}');
       }
@@ -192,6 +236,32 @@ class JourneyRepository {
     }
   }
 
+  List<NameActionItem> _validatedActionsForName(int number) {
+    return _actionBanks
+        .expand((bank) => bank.actions)
+        .where(
+          (action) =>
+              _canDisplayAction(action) && action.nameNumbers.contains(number),
+        )
+        .toList();
+  }
+
+  List<NameActionItem> _validatedConstellationActionsForTheme(String theme) {
+    return getActionsForTheme(
+      theme,
+    ).where((action) => action.nameNumbers.isEmpty).toList();
+  }
+
+  static NameActionItem _dailyActionFrom({
+    required List<NameActionItem> actions,
+    required int number,
+    required DateTime date,
+    required String scope,
+  }) {
+    final seed = _stableSeed('$number-${_dateKey(date)}-$scope');
+    return actions[seed % actions.length];
+  }
+
   static String _dateKey(DateTime date) {
     final month = date.month.toString().padLeft(2, '0');
     final day = date.day.toString().padLeft(2, '0');
@@ -239,11 +309,47 @@ class JourneyRepository {
         'Action ${action.id} has invalid difficulty ${action.difficulty}',
       );
     }
+    for (final sourceRef in action.sourceRefs) {
+      if (sourceRef.trim().isEmpty) {
+        issues.add('Action ${action.id} has an empty sourceRef');
+      }
+    }
+    if (action.validatedAt.isNotEmpty &&
+        DateTime.tryParse(action.validatedAt) == null) {
+      issues.add(
+        'Action ${action.id} has invalid validatedAt ${action.validatedAt}',
+      );
+    }
+    if (action.editorialStatus == 'validated') {
+      if (action.reviewedBy.trim().isEmpty) {
+        issues.add('Action ${action.id} is validated without reviewedBy');
+      }
+      if (action.validatedAt.trim().isEmpty) {
+        issues.add('Action ${action.id} is validated without validatedAt');
+      }
+      if (!_hasReviewSource(action)) {
+        issues.add(
+          'Action ${action.id} is validated without sourceNote or sourceRefs',
+        );
+      }
+    }
     for (final number in action.nameNumbers) {
       if (!validNameNumbers.contains(number)) {
         issues.add('Action ${action.id} references $number');
       }
     }
+  }
+
+  static bool _canDisplayAction(NameActionItem action) {
+    return action.editorialStatus == 'validated' &&
+        action.reviewedBy.trim().isNotEmpty &&
+        DateTime.tryParse(action.validatedAt) != null &&
+        _hasReviewSource(action);
+  }
+
+  static bool _hasReviewSource(NameActionItem action) {
+    return action.sourceNote.trim().isNotEmpty ||
+        action.sourceRefs.any((sourceRef) => sourceRef.trim().isNotEmpty);
   }
 
   static bool _containsArabicScript(String value) {

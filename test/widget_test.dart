@@ -61,6 +61,9 @@ const _testActionBank = NameActionBank(
       id: 'praise_widget_action',
       textFr: 'Remercie quelqu’un aujourd’hui.',
       editorialStatus: 'validated',
+      sourceNote: 'Fixture reviewed.',
+      reviewedBy: 'test-reviewer',
+      validatedAt: '2026-04-30',
     ),
   ],
 );

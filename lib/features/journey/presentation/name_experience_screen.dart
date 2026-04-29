@@ -66,20 +66,15 @@ class _NameExperienceScreenState extends ConsumerState<NameExperienceScreen> {
               name: name,
               constellations: journey.getConstellationsForName(name.number),
               experience: journey.getExperienceForName(name.number),
-              action: _specificActionFor(journey, name.number),
+              action: journey.getDailyActionForName(
+                name.number,
+                DateTime.now(),
+              ),
             ),
           );
         },
       ),
     );
-  }
-
-  NameActionItem? _specificActionFor(JourneyRepository journey, int number) {
-    final experience = journey.getExperienceForName(number);
-    if (experience == null || experience.practiceTheme == 'general') {
-      return null;
-    }
-    return journey.getDailyActionForName(number, DateTime.now());
   }
 
   ProphetName? _findName(List<ProphetName> names, int number) {

@@ -22,6 +22,7 @@ Role du document : conserver les decisions produit/techniques importantes, les r
 | `docs/JOURNEY_RESTRUCTURE_PLAN.md` | Plan de refonte Journey V2 et decisions initiales. |
 | `docs/JOURNEY_GUARDRAILS.md` | Regles a ne pas casser pendant la consolidation V2. |
 | `docs/content_backlog_journey.md` | Backlog editorial des recits/actions a valider humainement. |
+| `docs/ACTION_REVIEW_V2.md` | Support de revue des 43 actions, groupees par theme/constellation. |
 | `docs/RELEASE_AUDIT_V2.md` et `docs/V2_1_AUDIT_BRIEF.md` | Audits precedents et risques identifies. |
 
 ## Vision actuelle
@@ -142,7 +143,11 @@ Nouveau modele :
       "difficulty": "simple",
       "contexts": ["gratitude", "relationship"],
       "nameNumbers": [],
-      "sourceNote": ""
+      "sourceNote": "",
+      "sourceRefs": [],
+      "reviewedBy": "",
+      "validatedAt": "",
+      "reviewNotes": ""
     }
   ]
 }
@@ -150,21 +155,31 @@ Nouveau modele :
 
 Regles actuelles :
 
-- L'app ne tire que dans les actions `validated`.
-- Les actions existantes ont ete conservees mais marquees `needs_review`.
-- Pas de fallback generique en Fiche du nom si le nom n'a pas d'experience specifique.
+- L'app ne tire que dans les actions `validated` qui ont aussi une revue complete (`reviewedBy`, `validatedAt`, et `sourceNote` ou `sourceRefs`).
+- Les actions non relues restent marquees `needs_review`; tous les themes de constellation sont maintenant `validated` avec metadata de revue. Le theme `general` reste volontairement en `needs_review` comme garde-fou non affiche.
+- Selection Action Engine V2 : action validee liee directement au nom > action validee du theme de constellation > `null`.
+- Les 11 constellations sont mappees vers des themes d'action ; `prophethood` utilise le theme `mission`.
+- Pas de fallback generique affiche comme si l'action etait specifique.
+- Chaque theme de constellation a au moins 3 actions brouillonnes pour permettre une rotation future.
 - La validation detecte :
   - theme vide,
   - theme duplique,
+  - constellation sans mapping vers un theme d'action,
+  - mapping de constellation vers un theme d'action absent,
   - action sans id,
   - id duplique,
   - texte vide,
   - `editorialStatus` invalide,
   - `duration` invalide,
   - `difficulty` invalide,
+  - `sourceRefs` vides,
+  - `validatedAt` invalide,
+  - action `validated` sans `reviewedBy`,
+  - action `validated` sans `validatedAt`,
+  - action `validated` sans `sourceNote` ni `sourceRefs`,
   - references vers un numero de nom inexistant.
 
-Decision a prendre plus tard : definir la matrice editoriale complete avant de remplir massivement.
+Decision a prendre plus tard : choisir quelles actions passer en `validated` apres revue humaine.
 
 ## Etat des donnees
 
@@ -174,7 +189,7 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | `assets/data/name_constellations.json` | 11 constellations, 201 noms couverts exactement une fois. |
 | `assets/data/journey_map_layout.json` | 201 etoiles, layout stable. |
 | `assets/data/name_experiences.json` | 4 experiences seulement, recits en `needs_review` dans les donnees reelles. |
-| `assets/data/name_actions.json` | Structure editoriale migree, actions existantes en `needs_review`. |
+| `assets/data/name_actions.json` | 13 themes, 43 actions, 4 actions liees a des noms, 40 `validated`, 3 `needs_review` (`general` uniquement); chaque theme de constellation a au moins 3 actions validees. |
 | `assets/data/journey_decks.json` | `prophet_names` actif, `asmaul_husna` library-only. |
 
 ## Decisions chronologiques recentes
@@ -192,6 +207,14 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Contenu | Ne pas afficher les recits `needs_review`. | Eviter de presenter du contenu non valide comme source. |
 | 2026-04-29 | Actions | Migrer les actions vers un modele editorial structure. | Preparer une grande banque precise et validable. |
 | 2026-04-29 | Actions | Ne servir que les actions `validated`. | Eviter les actions generiques/non relues. |
+| 2026-04-29 | Actions | Implementer Action Engine V2 : nom > constellation > null. | Le nom du jour et la Fiche du nom peuvent recevoir une action pertinente sans fallback generique. |
+| 2026-04-29 | Actions | Ajouter les themes manquants et un premier lot de 36 actions en `needs_review`. | Couvrir les 11 constellations sans exposer de brouillon non relu. |
+| 2026-04-30 | Actions | Ajouter la barriere de revue : `validated` ne suffit plus sans metadata humaine. | Eviter qu'une action marquee par erreur comme validee soit affichee sans trace editoriale. |
+| 2026-04-30 | Actions | Porter chaque theme de constellation a au moins 3 actions en `needs_review`. | Preparer toutes les constellations sans rendre les brouillons visibles. |
+| 2026-04-30 | Editorial | Ajouter `docs/ACTION_REVIEW_V2.md` et mettre a jour le backlog contenu. | Permettre une revue humaine action par action sans manipuler directement le JSON. |
+| 2026-04-30 | Actions | Promouvoir le lot pilote `praise`, `mission`, `light` en `validated`. | Rendre l'Accueil, la Fiche du nom et Tafakkur vivants sur un perimetre relu et limite. |
+| 2026-04-30 | Actions | Promouvoir la deuxieme vague `trust`, `nobility`, `virtues` en `validated`. | Couvrir les actions de caractere, parole, dignite et veracite sans toucher aux themes plus sensibles. |
+| 2026-04-30 | Actions | Promouvoir la troisieme vague `intercession`, `eschatology`, `purity`, `miraj`, `guidance`, `devotion` en `validated`. | Couvrir tous les themes de constellation avec des actions relues, en laissant `general` eteint. |
 | 2026-04-29 | Stabilite | Garder un `user_state_last_good` et sauvegarder le JSON corrompu. | Eviter la perte silencieuse de progression locale en cas de corruption Hive. |
 | 2026-04-29 | Stabilite | Rendre les notifications non bloquantes au demarrage. | Une erreur plugin/permission ne doit pas empecher l'app de s'ouvrir. |
 | 2026-04-29 | Notifications | Planifier avant de persister l'heure et refuser les heures invalides. | Eviter que l'UI annonce une notification active qui n'existe pas cote OS. |
@@ -352,13 +375,115 @@ Resultat :
 - `flutter build apk --debug` : OK
 - `git diff --check` : OK
 
+Derniere validation apres sprint Action Engine V2 :
+
+```text
+dart format lib/features/journey/data/repositories/journey_repository.dart lib/features/journey/presentation/name_experience_screen.dart test/features/journey/journey_repository_test.dart
+flutter test test/features/journey/journey_repository_test.dart
+flutter test test/features/journey/name_experience_screen_test.dart test/features/journey/tafakkur_screen_test.dart test/widget_test.dart
+flutter analyze --no-pub
+flutter test
+flutter build apk --debug
+git diff --check
+```
+
+Resultat :
+
+- `assets/data/name_actions.json` : 13 themes, 43 actions, 4 actions liees a des noms, 0 `validated`
+- Tests cibles repository/Fiche du nom/Tafakkur/Home : OK
+- `flutter analyze --no-pub` : OK
+- `flutter test` : OK, 119 tests passes
+- `flutter build apk --debug` : OK
+- `git diff --check` : OK
+
+Derniere validation apres barriere de revue Action Engine :
+
+```text
+dart run build_runner build --delete-conflicting-outputs
+dart format lib/features/journey/data/models/name_action_bank.dart lib/features/journey/data/repositories/journey_repository.dart test/features/journey/journey_repository_test.dart test/features/journey/name_experience_screen_test.dart test/features/journey/tafakkur_screen_test.dart test/widget_test.dart
+flutter test test/features/journey/journey_repository_test.dart
+flutter test test/features/journey/name_experience_screen_test.dart test/features/journey/tafakkur_screen_test.dart test/widget_test.dart
+flutter analyze --no-pub
+flutter test
+flutter build apk --debug
+git diff --check
+```
+
+Resultat :
+
+- `assets/data/name_actions.json` : 13 themes, 43 actions, 4 actions liees a des noms, 0 `validated`, minimum 3 actions par theme de constellation
+- `flutter analyze --no-pub` : OK
+- `flutter test` : OK, 121 tests passes
+- `flutter build apk --debug` : OK
+- `git diff --check` : OK
+- `git diff --check` : OK
+
+Derniere validation apres promotion du lot pilote Actions :
+
+```text
+dart format test/features/journey/journey_repository_test.dart
+flutter test test/features/journey/journey_repository_test.dart
+flutter test test/features/journey/name_experience_screen_test.dart test/features/journey/tafakkur_screen_test.dart test/widget_test.dart
+flutter analyze --no-pub
+flutter test
+flutter build apk --debug
+git diff --check
+```
+
+Resultat :
+
+- `assets/data/name_actions.json` : 13 themes, 43 actions, 11 `validated`, 32 `needs_review`
+- Themes pilotes visibles : `praise`, `mission`, `light`
+- `flutter analyze --no-pub` : OK
+- `flutter test` : OK, 121 tests passes
+- `flutter build apk --debug` : OK
+- `git diff --check` : OK
+
+Derniere validation apres deuxieme vague Actions :
+
+```text
+dart format test/features/journey/journey_repository_test.dart
+flutter test test/features/journey/journey_repository_test.dart
+flutter analyze --no-pub
+flutter test
+flutter build apk --debug
+git diff --check
+```
+
+Resultat :
+
+- `assets/data/name_actions.json` : 13 themes, 43 actions, 22 `validated`, 21 `needs_review`
+- Themes visibles / prets : `praise`, `mission`, `trust`, `nobility`, `virtues`, `light`
+- `flutter analyze --no-pub` : OK
+- `flutter test` : OK, 121 tests passes
+- `flutter build apk --debug` : OK
+
+Derniere validation apres couverture complete des themes d'actions :
+
+```text
+dart format test/features/journey/journey_repository_test.dart
+flutter test test/features/journey/journey_repository_test.dart
+flutter analyze --no-pub
+flutter test
+flutter build apk --debug
+git diff --check
+```
+
+Resultat :
+
+- `assets/data/name_actions.json` : 13 themes, 43 actions, 40 `validated`, 3 `needs_review` (`general` uniquement)
+- Tous les themes de constellation ont au moins 3 actions validees
+- `flutter analyze --no-pub` : OK
+- `flutter test` : OK, 121 tests passes
+- `flutter build apk --debug` : OK
+
 ## Dette et risques ouverts
 
 ### Priorite haute
 
 - Valider sur emulateur ou telephone reel les retouches QA Journey deja passees en tests widget.
-- Definir une matrice editoriale d'actions avant de remplir massivement.
-- Completer `docs/content_backlog_journey.md` avec le nouveau modele `NameActionItem`.
+- Garder `general` non affiche tant qu'aucune decision produit explicite ne transforme ce theme en vrai contenu utilisateur.
+- Faire une revue partenaire des 40 actions de constellation validees avant une release publique.
 - Valider les 4 experiences existantes ou les garder masquees.
 
 ### Priorite moyenne

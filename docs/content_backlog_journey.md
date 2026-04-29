@@ -18,7 +18,9 @@ This file tracks religious/content work that must be handled by a human editor. 
 - Stories marked `validated`: 0.
 - Stories marked `needs_review`: 4.
 - Names without a dedicated validated story: 201.
-- Action banks present: 5 themes, all generic or theme-level.
+- Action banks present: 13 themes, 43 actions, 4 linked directly to names.
+- Actions marked `validated`: 40.
+- Actions marked `needs_review`: 3.
 
 ## Stories Needing Review
 
@@ -39,13 +41,31 @@ This file tracks religious/content work that must be handled by a human editor. 
 
 | Theme | Status | Note |
 | --- | --- | --- |
-| `general` | needs editorial review | Generic actions are available as fallback. |
-| `praise` | needs editorial review | Theme-level actions exist. |
-| `mission` | needs editorial review | Theme-level actions exist. |
-| `trust` | needs editorial review | Theme-level actions exist. |
-| `nobility` | needs editorial review | Theme-level actions exist. |
+| `general` | needs editorial review | Guardrail bank, not a user-facing generic fallback. |
+| `praise` | pilot validated | 3 theme-level actions and name #1 action validated. |
+| `mission` | pilot validated | 3 theme-level actions and name #5 action validated. |
+| `trust` | second wave validated | 3 theme-level actions and name #21 action validated. |
+| `nobility` | second wave validated | 3 theme-level actions and name #78 action validated. |
+| `intercession` | third wave validated | 3 theme-level actions validated. |
+| `eschatology` | third wave validated | 3 theme-level actions validated. |
+| `purity` | third wave validated | 3 theme-level actions validated. |
+| `virtues` | second wave validated | 3 theme-level actions validated. |
+| `miraj` | third wave validated | 3 theme-level actions validated. |
+| `guidance` | third wave validated | 3 theme-level actions validated. |
+| `light` | pilot validated | 3 theme-level actions validated. |
+| `devotion` | third wave validated | 3 theme-level actions validated. |
 
-Future action model work may add status fields per action. Until then, actions should remain simple, non-performative, and contextualized as intentions.
+Review support lives in `docs/ACTION_REVIEW_V2.md`. Actions should remain simple, non-performative, and contextualized as invitations.
+
+## Validation Checklist For An Action
+
+- `editorialStatus`: `validated`
+- `reviewedBy`: filled
+- `validatedAt`: ISO date
+- `sourceNote` or `sourceRefs`: filled
+- No invented doctrinal interpretation
+- No generic fallback presented as specific to a name
+- UI tested for Accueil, Fiche du nom, and Tafakkur when the action becomes visible
 
 ## Validation Checklist For A Story
 
@@ -55,4 +75,3 @@ Future action model work may add status fields per action. Until then, actions s
 - `validatedAt`: ISO date
 - No invented doctrinal interpretation
 - UI tested for both validated-story and fallback-commentary paths
-

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:sirah_app/features/journey/presentation/map/widgets/space_map_controls.dart';
+import 'package:sirah_app/features/journey/presentation/map/widgets/starfield_background.dart';
 
 class SpaceMapViewport extends StatefulWidget {
   const SpaceMapViewport({
@@ -11,6 +12,8 @@ class SpaceMapViewport extends StatefulWidget {
     this.initialScale,
     this.minScale = 0.4,
     this.maxScale = 2.4,
+    this.mapEdgeFade = 72,
+    this.viewportEdgeFade = 40,
     this.viewPadding = EdgeInsets.zero,
     this.controlsPadding = const EdgeInsets.only(top: 12, right: 12),
   });
@@ -20,6 +23,8 @@ class SpaceMapViewport extends StatefulWidget {
   final double? initialScale;
   final double minScale;
   final double maxScale;
+  final double mapEdgeFade;
+  final double viewportEdgeFade;
   final EdgeInsets viewPadding;
   final EdgeInsets controlsPadding;
 
@@ -32,6 +37,7 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
   Size? _lastViewport;
   EdgeInsets? _lastViewPadding;
   double? _lastInitialScale;
+  double? _lastMapEdgeFade;
 
   @override
   void dispose() {
@@ -44,6 +50,8 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final viewport = Size(constraints.maxWidth, constraints.maxHeight);
+        final mapBleed = _mapBleed;
+        final interactiveMapSize = _interactiveMapSize;
         _setInitialTransform(viewport);
 
         return Stack(
@@ -57,9 +65,29 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
                 boundaryMargin: const EdgeInsets.all(360),
                 child: RepaintBoundary(
                   child: SizedBox(
-                    width: widget.mapSize.width,
-                    height: widget.mapSize.height,
-                    child: widget.child,
+                    width: interactiveMapSize.width,
+                    height: interactiveMapSize.height,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          left: mapBleed,
+                          top: mapBleed,
+                          width: widget.mapSize.width,
+                          height: widget.mapSize.height,
+                          child: widget.child,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: IgnorePointer(
+                child: CustomPaint(
+                  painter: _SpaceMapEdgeFadePainter(
+                    fade: widget.viewportEdgeFade,
                   ),
                 ),
               ),
@@ -78,16 +106,31 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
     );
   }
 
+  double get _mapBleed => math.max(0, widget.mapEdgeFade);
+
+  Size get _interactiveMapSize {
+    final bleed = _mapBleed * 2;
+    return Size(widget.mapSize.width + bleed, widget.mapSize.height + bleed);
+  }
+
   void _setInitialTransform(Size viewport) {
-    if (_lastViewport == viewport &&
+    if (_sameViewport(_lastViewport, viewport) &&
         _lastViewPadding == widget.viewPadding &&
-        _lastInitialScale == widget.initialScale) {
+        _lastInitialScale == widget.initialScale &&
+        _lastMapEdgeFade == widget.mapEdgeFade) {
       return;
     }
     _lastViewport = viewport;
     _lastViewPadding = widget.viewPadding;
     _lastInitialScale = widget.initialScale;
+    _lastMapEdgeFade = widget.mapEdgeFade;
     _controller.value = _initialTransformFor(viewport);
+  }
+
+  bool _sameViewport(Size? previous, Size next) {
+    if (previous == null) return false;
+    return (previous.width - next.width).abs() < 0.5 &&
+        (previous.height - next.height).abs() < 0.5;
   }
 
   void _resetTransform() {
@@ -141,9 +184,10 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
       math.max(1, visibleWidth),
       math.max(1, visibleHeight),
     );
+    final mapSize = _interactiveMapSize;
     final fittedScale = math.min(
-      visibleSize.width / widget.mapSize.width,
-      visibleSize.height / widget.mapSize.height,
+      visibleSize.width / mapSize.width,
+      visibleSize.height / mapSize.height,
     );
     final preferredScale = widget.initialScale == null
         ? fittedScale
@@ -162,16 +206,92 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
       math.max(1, visibleWidth),
       math.max(1, visibleHeight),
     );
+    final mapSize = _interactiveMapSize;
     final dx =
         widget.viewPadding.left +
-        (visibleSize.width - widget.mapSize.width * scale) / 2;
+        (visibleSize.width - mapSize.width * scale) / 2;
     final dy =
         widget.viewPadding.top +
-        (visibleSize.height - widget.mapSize.height * scale) / 2;
+        (visibleSize.height - mapSize.height * scale) / 2;
 
     return Matrix4.identity()
       ..translateByDouble(dx, dy, 0, 1)
       ..scaleByDouble(scale, scale, 1, 1);
+  }
+}
+
+class _SpaceMapEdgeFadePainter extends CustomPainter {
+  const _SpaceMapEdgeFadePainter({required this.fade});
+
+  static const _edgeColor = StarfieldBackground.edgeColor;
+
+  final double fade;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (fade <= 0 || size.isEmpty) return;
+
+    final horizontalFade = math.min(fade, size.width / 2);
+    final verticalFade = math.min(fade, size.height / 2);
+    _drawFade(
+      canvas,
+      Rect.fromLTWH(0, 0, size.width, verticalFade),
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      alpha: 0.92,
+    );
+    _drawFade(
+      canvas,
+      Rect.fromLTWH(0, size.height - verticalFade, size.width, verticalFade),
+      begin: Alignment.bottomCenter,
+      end: Alignment.topCenter,
+      alpha: 0.92,
+    );
+    _drawFade(
+      canvas,
+      Rect.fromLTWH(0, 0, horizontalFade, size.height),
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      alpha: 0.80,
+    );
+    _drawFade(
+      canvas,
+      Rect.fromLTWH(
+        size.width - horizontalFade,
+        0,
+        horizontalFade,
+        size.height,
+      ),
+      begin: Alignment.centerRight,
+      end: Alignment.centerLeft,
+      alpha: 0.80,
+    );
+  }
+
+  void _drawFade(
+    Canvas canvas,
+    Rect rect, {
+    required Alignment begin,
+    required Alignment end,
+    required double alpha,
+  }) {
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = LinearGradient(
+          begin: begin,
+          end: end,
+          colors: [
+            _edgeColor.withValues(alpha: alpha),
+            _edgeColor.withValues(alpha: 0),
+          ],
+        ).createShader(rect),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _SpaceMapEdgeFadePainter oldDelegate) {
+    return oldDelegate.fade != fade;
   }
 }
 

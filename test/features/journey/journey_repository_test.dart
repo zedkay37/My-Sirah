@@ -2,10 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sirah_app/features/journey/data/repositories/journey_repository.dart';
 import 'package:sirah_app/features/journey/data/sources/journey_decks_json_source.dart';
 import 'package:sirah_app/features/journey/data/sources/journey_map_layout_json_source.dart';
+import 'package:sirah_app/features/journey/data/sources/name_actions_json_source.dart';
 import 'package:sirah_app/features/names/data/sources/names_json_source.dart';
 
 const _mission = NameConstellation(
-  id: 'mission',
+  id: 'prophethood',
   titleFr: 'Mission',
   titleAr: 'الرسالة',
   descriptionFr: 'Mission prophétique',
@@ -50,6 +51,9 @@ const _generalActions = NameActionBank(
       id: 'general_b',
       textFr: 'Action générale B',
       editorialStatus: 'validated',
+      sourceNote: 'Fixture reviewed.',
+      reviewedBy: 'test-reviewer',
+      validatedAt: '2026-04-30',
     ),
   ],
 );
@@ -61,20 +65,44 @@ const _missionActions = NameActionBank(
       id: 'mission_a',
       textFr: 'Action mission A',
       editorialStatus: 'validated',
+      sourceNote: 'Fixture reviewed.',
+      reviewedBy: 'test-reviewer',
+      validatedAt: '2026-04-30',
     ),
     NameActionItem(
       id: 'mission_b',
       textFr: 'Action mission B',
       editorialStatus: 'validated',
+      sourceNote: 'Fixture reviewed.',
+      reviewedBy: 'test-reviewer',
+      validatedAt: '2026-04-30',
     ),
     NameActionItem(id: 'mission_c', textFr: 'Action mission C'),
+  ],
+);
+
+const _virtuesActions = NameActionBank(
+  theme: 'virtues',
+  actions: [
+    NameActionItem(
+      id: 'virtues_a',
+      textFr: 'Action vertus A',
+      editorialStatus: 'validated',
+      sourceNote: 'Fixture reviewed.',
+      reviewedBy: 'test-reviewer',
+      validatedAt: '2026-04-30',
+    ),
   ],
 );
 
 JourneyRepository _repo({
   List<NameConstellation> constellations = const [_mission, _virtues],
   List<NameExperience> experiences = const [_experience],
-  List<NameActionBank> actionBanks = const [_generalActions, _missionActions],
+  List<NameActionBank> actionBanks = const [
+    _generalActions,
+    _missionActions,
+    _virtuesActions,
+  ],
 }) {
   return JourneyRepository(
     constellations: constellations,
@@ -96,7 +124,7 @@ void main() {
     test('getConstellationById returns matching constellation or null', () {
       final repo = _repo();
 
-      expect(repo.getConstellationById('mission'), _mission);
+      expect(repo.getConstellationById('prophethood'), _mission);
       expect(repo.getConstellationById('unknown'), isNull);
     });
 
@@ -131,6 +159,36 @@ void main() {
       expect(repo.getActionsForTheme('unknown'), isEmpty);
     });
 
+    test(
+      'getActionsForTheme hides validated actions without review metadata',
+      () {
+        final repo = _repo(
+          actionBanks: const [
+            _generalActions,
+            _virtuesActions,
+            NameActionBank(
+              theme: 'mission',
+              actions: [
+                NameActionItem(
+                  id: 'mission_unreviewed',
+                  textFr: 'Action non relue',
+                  editorialStatus: 'validated',
+                ),
+              ],
+            ),
+          ],
+        );
+
+        expect(repo.getActionsForTheme('mission'), isEmpty);
+        expect(
+          repo
+              .getActionsForTheme('mission', includeDrafts: true)
+              .map((action) => action.id),
+          ['mission_unreviewed'],
+        );
+      },
+    );
+
     test('getDailyActionForName is deterministic for same name and date', () {
       final repo = _repo();
       final date = DateTime(2026, 4, 28);
@@ -148,8 +206,61 @@ void main() {
       );
     });
 
-    test('getDailyActionForName stays empty without specific experience', () {
+    test('getDailyActionForName falls back to constellation theme', () {
       final repo = _repo();
+      final action = repo.getDailyActionForName(2, DateTime(2026, 4, 28));
+
+      expect(action, isNotNull);
+      expect(
+        _missionActions.actions.where(
+          (item) => item.editorialStatus == 'validated',
+        ),
+        contains(action),
+      );
+    });
+
+    test('getDailyActionForName prefers direct name actions', () {
+      const directAction = NameActionItem(
+        id: 'direct_name_2',
+        textFr: 'Action directe',
+        editorialStatus: 'validated',
+        sourceNote: 'Fixture reviewed.',
+        reviewedBy: 'test-reviewer',
+        validatedAt: '2026-04-30',
+        nameNumbers: [2],
+      );
+      final repo = _repo(
+        actionBanks: const [
+          _generalActions,
+          _missionActions,
+          _virtuesActions,
+          NameActionBank(theme: 'trust', actions: [directAction]),
+        ],
+      );
+
+      final action = repo.getDailyActionForName(2, DateTime(2026, 4, 28));
+
+      expect(action, directAction);
+    });
+
+    test('getDailyActionForName does not fall back to general actions', () {
+      final repo = _repo(
+        actionBanks: const [
+          _generalActions,
+          NameActionBank(
+            theme: 'mission',
+            actions: [
+              NameActionItem(
+                id: 'mission_draft',
+                textFr: 'Brouillon mission',
+                editorialStatus: 'needs_review',
+              ),
+            ],
+          ),
+          _virtuesActions,
+        ],
+      );
+
       final action = repo.getDailyActionForName(2, DateTime(2026, 4, 28));
 
       expect(action, isNull);
@@ -263,6 +374,45 @@ void main() {
         isTrue,
       );
       expect(issues, contains('Action general_a references 999'));
+    });
+
+    test('validate requires review metadata for validated actions', () {
+      final repo = _repo(
+        actionBanks: const [
+          _generalActions,
+          _virtuesActions,
+          NameActionBank(
+            theme: 'mission',
+            actions: [
+              NameActionItem(
+                id: 'mission_unreviewed',
+                textFr: 'Action mission',
+                editorialStatus: 'validated',
+                validatedAt: 'not-a-date',
+              ),
+            ],
+          ),
+        ],
+      );
+
+      final issues = repo.validate(validNameNumbers: {1, 2, 3});
+
+      expect(
+        issues,
+        contains('Action mission_unreviewed is validated without reviewedBy'),
+      );
+      expect(
+        issues,
+        contains(
+          'Action mission_unreviewed has invalid validatedAt not-a-date',
+        ),
+      );
+      expect(
+        issues,
+        contains(
+          'Action mission_unreviewed is validated without sourceNote or sourceRefs',
+        ),
+      );
     });
 
     test('load reads real assets and validates name references', () async {
@@ -405,6 +555,200 @@ void main() {
         stories.where((story) => story.editorialStatus == 'needs_review'),
         isNotEmpty,
       );
+    });
+
+    test('real action assets expose only reviewed actions', () async {
+      final repo = await JourneyRepository.load();
+      final banks = await NameActionsJsonSource.load();
+      final actions = banks.expand((bank) => bank.actions).toList();
+      final validated = actions
+          .where((action) => action.editorialStatus == 'validated')
+          .toList();
+      final needsReview = actions
+          .where((action) => action.editorialStatus == 'needs_review')
+          .toList();
+
+      expect(
+        banks.map((bank) => bank.theme).toSet(),
+        containsAll({
+          'general',
+          'praise',
+          'mission',
+          'trust',
+          'nobility',
+          'intercession',
+          'eschatology',
+          'purity',
+          'virtues',
+          'miraj',
+          'guidance',
+          'light',
+          'devotion',
+        }),
+      );
+      expect(actions, isNotEmpty);
+      expect(actions.length, 43);
+      expect(validated.length, 40);
+      expect(needsReview.length, 3);
+      expect(
+        needsReview.every(
+          (action) =>
+              action.id == 'general_intention_001' ||
+              action.id == 'general_speech_001' ||
+              action.id == 'general_gratitude_001',
+        ),
+        isTrue,
+      );
+      expect(actions.every((action) => action.nameNumbers.isEmpty), isFalse);
+      expect(
+        validated.every(
+          (action) =>
+              action.reviewedBy == 'project_owner' &&
+              action.validatedAt == '2026-04-30' &&
+              action.sourceNote.isNotEmpty,
+        ),
+        isTrue,
+      );
+      expect(
+        banks
+            .where((bank) => bank.theme == 'praise')
+            .single
+            .actions
+            .where((action) => action.editorialStatus == 'validated')
+            .length,
+        4,
+      );
+      expect(
+        banks
+            .where((bank) => bank.theme == 'mission')
+            .single
+            .actions
+            .where((action) => action.editorialStatus == 'validated')
+            .length,
+        4,
+      );
+      expect(
+        banks
+            .where((bank) => bank.theme == 'light')
+            .single
+            .actions
+            .where((action) => action.editorialStatus == 'validated')
+            .length,
+        3,
+      );
+      expect(
+        banks
+            .where((bank) => bank.theme == 'trust')
+            .single
+            .actions
+            .where((action) => action.editorialStatus == 'validated')
+            .length,
+        4,
+      );
+      expect(
+        banks
+            .where((bank) => bank.theme == 'nobility')
+            .single
+            .actions
+            .where((action) => action.editorialStatus == 'validated')
+            .length,
+        4,
+      );
+      expect(
+        banks
+            .where((bank) => bank.theme == 'virtues')
+            .single
+            .actions
+            .where((action) => action.editorialStatus == 'validated')
+            .length,
+        3,
+      );
+      expect(repo.getActionsForTheme('trust'), hasLength(4));
+      for (final theme in const {
+        'intercession',
+        'eschatology',
+        'purity',
+        'miraj',
+        'guidance',
+        'devotion',
+      }) {
+        expect(repo.getActionsForTheme(theme), hasLength(3));
+      }
+      expect(repo.getActionsForTheme('general'), isEmpty);
+      expect(repo.getActionsForTheme('praise'), hasLength(4));
+      expect(
+        repo.getDailyActionForName(1, DateTime(2026, 4, 30))?.id,
+        'praise_name_001',
+      );
+      expect(
+        repo.getDailyActionForName(21, DateTime(2026, 4, 30))?.id,
+        'trust_name_021',
+      );
+      expect(
+        repo.getDailyActionForName(78, DateTime(2026, 4, 30))?.id,
+        'nobility_name_078',
+      );
+      final virtuesAction = repo.getDailyActionForName(
+        22,
+        DateTime(2026, 4, 30),
+      );
+      expect(virtuesAction, isNotNull);
+      expect(virtuesAction!.id.startsWith('virtues_'), isTrue);
+      final lightAction = repo.getDailyActionForName(56, DateTime(2026, 4, 30));
+      expect(lightAction, isNotNull);
+      expect(lightAction!.id.startsWith('light_'), isTrue);
+      final intercessionAction = repo.getDailyActionForName(
+        6,
+        DateTime(2026, 4, 30),
+      );
+      expect(intercessionAction, isNotNull);
+      expect(intercessionAction!.id.startsWith('intercession_'), isTrue);
+      final eschatologyAction = repo.getDailyActionForName(
+        8,
+        DateTime(2026, 4, 30),
+      );
+      expect(eschatologyAction, isNotNull);
+      expect(eschatologyAction!.id.startsWith('eschatology_'), isTrue);
+      final purityAction = repo.getDailyActionForName(
+        18,
+        DateTime(2026, 4, 30),
+      );
+      expect(purityAction, isNotNull);
+      expect(purityAction!.id.startsWith('purity_'), isTrue);
+      final mirajAction = repo.getDailyActionForName(42, DateTime(2026, 4, 30));
+      expect(mirajAction, isNotNull);
+      expect(mirajAction!.id.startsWith('miraj_'), isTrue);
+      final guidanceAction = repo.getDailyActionForName(
+        54,
+        DateTime(2026, 4, 30),
+      );
+      expect(guidanceAction, isNotNull);
+      expect(guidanceAction!.id.startsWith('guidance_'), isTrue);
+      final devotionAction = repo.getDailyActionForName(
+        88,
+        DateTime(2026, 4, 30),
+      );
+      expect(devotionAction, isNotNull);
+      expect(devotionAction!.id.startsWith('devotion_'), isTrue);
+      for (final theme in const {
+        'praise',
+        'mission',
+        'intercession',
+        'eschatology',
+        'purity',
+        'virtues',
+        'miraj',
+        'guidance',
+        'light',
+        'nobility',
+        'devotion',
+      }) {
+        expect(
+          banks.where((bank) => bank.theme == theme).single.actions.length,
+          greaterThanOrEqualTo(3),
+          reason: 'Each constellation theme needs several reviewable actions.',
+        );
+      }
     });
   });
 }

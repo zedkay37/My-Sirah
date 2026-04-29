@@ -25,6 +25,10 @@ abstract class NameActionItem with _$NameActionItem {
     @Default([]) List<String> contexts,
     @Default([]) List<int> nameNumbers,
     @Default('') String sourceNote,
+    @Default([]) List<String> sourceRefs,
+    @Default('') String reviewedBy,
+    @Default('') String validatedAt,
+    @Default('') String reviewNotes,
   }) = _NameActionItem;
 
   factory NameActionItem.fromJson(Map<String, dynamic> json) =>

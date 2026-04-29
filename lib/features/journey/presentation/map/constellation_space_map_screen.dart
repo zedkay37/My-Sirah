@@ -114,8 +114,8 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
     final screenHeight = MediaQuery.sizeOf(context).height;
     final isCompact = screenHeight < 720;
     final titleTop = isCompact ? 4.0 : 8.0;
-    final mapTop = isCompact ? 142.0 : 188.0;
-    final panelReserve = isCompact ? 168.0 : 188.0;
+    final mapTop = isCompact ? 124.0 : 160.0;
+    final panelReserve = isCompact ? 148.0 : 164.0;
 
     return StarfieldBackground(
       child: Stack(
@@ -132,6 +132,7 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
               maxScale: 2.35,
               controlsPadding: const EdgeInsets.only(top: 12, right: 12),
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Positioned.fill(
                     child: CustomPaint(

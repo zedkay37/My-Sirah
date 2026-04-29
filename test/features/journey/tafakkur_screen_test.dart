@@ -47,6 +47,9 @@ const _actions = NameActionBank(
       id: 'trust_tafakkur_action',
       textFr: 'Tiens une promesse simple.',
       editorialStatus: 'validated',
+      sourceNote: 'Fixture reviewed.',
+      reviewedBy: 'test-reviewer',
+      validatedAt: '2026-04-30',
     ),
   ],
 );
