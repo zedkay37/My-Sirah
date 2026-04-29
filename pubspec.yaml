@@ -75,3 +75,68 @@ flutter:
 
   assets:
     - assets/data/
+
+  fonts:
+    - family: Amiri
+      fonts:
+        - asset: assets/fonts/amiri/Amiri-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/amiri/Amiri-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/amiri/Amiri-Bold.ttf
+          weight: 700
+    - family: Amiri Quran
+      fonts:
+        - asset: assets/fonts/amiri_quran/AmiriQuran-Regular.ttf
+          weight: 400
+    - family: Crimson Pro
+      fonts:
+        - asset: assets/fonts/crimson_pro/CrimsonPro-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/crimson_pro/CrimsonPro-Variable.ttf
+          weight: 600
+        - asset: assets/fonts/crimson_pro/CrimsonPro-Variable.ttf
+          weight: 700
+        - asset: assets/fonts/crimson_pro/CrimsonPro-Italic-Variable.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/crimson_pro/CrimsonPro-Italic-Variable.ttf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/crimson_pro/CrimsonPro-Italic-Variable.ttf
+          style: italic
+          weight: 700
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/inter/Inter-Variable.ttf
+          weight: 600
+        - asset: assets/fonts/inter/Inter-Variable.ttf
+          weight: 700
+        - asset: assets/fonts/inter/Inter-Italic-Variable.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/inter/Inter-Italic-Variable.ttf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/inter/Inter-Italic-Variable.ttf
+          style: italic
+          weight: 700
+    - family: Playfair Display
+      fonts:
+        - asset: assets/fonts/playfair_display/PlayfairDisplay-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/playfair_display/PlayfairDisplay-Variable.ttf
+          weight: 600
+        - asset: assets/fonts/playfair_display/PlayfairDisplay-Variable.ttf
+          weight: 700
+        - asset: assets/fonts/playfair_display/PlayfairDisplay-Italic-Variable.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/playfair_display/PlayfairDisplay-Italic-Variable.ttf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/playfair_display/PlayfairDisplay-Italic-Variable.ttf
+          style: italic
+          weight: 700

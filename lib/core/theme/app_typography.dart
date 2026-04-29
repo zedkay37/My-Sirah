@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+class AppFontFamilies {
+  const AppFontFamilies._();
+
+  static const amiri = 'Amiri';
+  static const amiriQuran = 'Amiri Quran';
+  static const crimsonPro = 'Crimson Pro';
+  static const inter = 'Inter';
+  static const playfairDisplay = 'Playfair Display';
+}
 
 class AppTypography extends ThemeExtension<AppTypography> {
   const AppTypography({
@@ -40,14 +49,23 @@ class AppTypography extends ThemeExtension<AppTypography> {
     required TextStyle Function(TextStyle) applySerifDisplay,
     required Color inkColor,
   }) {
-    GoogleFonts.config.allowRuntimeFetching = false;
-    final arabicBase = GoogleFonts.amiri(color: inkColor);
-    final uiBase = GoogleFonts.inter(color: inkColor);
+    final arabicQuranBase = TextStyle(
+      fontFamily: AppFontFamilies.amiriQuran,
+      color: inkColor,
+    );
+    final arabicBase = TextStyle(
+      fontFamily: AppFontFamilies.amiri,
+      color: inkColor,
+    );
+    final uiBase = TextStyle(
+      fontFamily: AppFontFamilies.inter,
+      color: inkColor,
+    );
 
     return AppTypography(
-      arabicHero: arabicBase.copyWith(
+      arabicHero: arabicQuranBase.copyWith(
         fontSize: 88,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w400,
         height: 1.1,
       ),
       arabicLarge: arabicBase.copyWith(

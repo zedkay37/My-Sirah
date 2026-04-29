@@ -199,6 +199,7 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Offline | Desactiver le runtime fetching de `GoogleFonts`. | Respecter l'objectif offline; les assets de polices restent a bundler pour un rendu parfait. |
 | 2026-04-29 | QA visuelle | Reserver des zones lisibles dans les cartes spatiales pour titres, controles et panneaux. | Eviter les chevauchements sur mobiles compacts sans changer la metaphore Journey. |
 | 2026-04-29 | QA visuelle | Rendre le panneau d'etoile, les actions du Nom vivant, les controles Tafakkur et les metriques Profil adaptatifs. | Garder une experience sobre premium sur petits ecrans et avec textes plus longs. |
+| 2026-04-29 | Offline | Bundler Amiri, Amiri Quran, Crimson Pro, Inter et Playfair Display en assets locaux. | Stabiliser le rendu typographique et supprimer les appels `GoogleFonts.*` au runtime. |
 
 ## Validation technique recente
 
@@ -233,6 +234,24 @@ Resultat :
 - Tests cibles Journey/Nom vivant/Tafakkur/Profil : OK, 13 tests passes
 - Suite complete : OK, 116 tests passes
 
+Derniere validation apres sprint typo offline :
+
+```text
+flutter pub get
+dart format <fichiers theme modifies>
+flutter analyze
+flutter test
+flutter build apk --debug
+```
+
+Resultat :
+
+- Fonts locales declarees dans `pubspec.yaml` : OK
+- Appels `GoogleFonts.*` dans `lib/` : 0
+- `flutter analyze` : OK
+- `flutter test` : OK, 116 tests passes
+- `flutter build apk --debug` : OK
+
 ## Dette et risques ouverts
 
 ### Priorite haute
@@ -244,7 +263,7 @@ Resultat :
 
 ### Priorite moyenne
 
-- Ajouter les fichiers de polices offline pour stabiliser le rendu typographique sans runtime fetching.
+- Valider visuellement le rendu des polices locales sur emulateur ou telephone reel.
 - Nettoyer les imports/providers ou `core` connait trop certaines features.
 - Continuer l10n arabe : beaucoup de chaines restent FR ou partiellement encodees.
 - Decouper certains gros widgets si > 80 lignes quand le scope s'y prete.
