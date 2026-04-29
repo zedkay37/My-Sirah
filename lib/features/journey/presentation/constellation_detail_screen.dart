@@ -93,11 +93,13 @@ class _ConstellationContent extends StatelessWidget {
                 SizedBox(height: space.xs),
                 Text(
                   constellation.titleFr,
+                  textDirection: TextDirection.ltr,
                   style: typo.displayMedium.copyWith(color: colors.ink),
                 ),
                 SizedBox(height: space.sm),
                 Text(
                   constellation.descriptionFr,
+                  textDirection: TextDirection.ltr,
                   style: typo.body.copyWith(color: colors.muted, height: 1.45),
                 ),
               ],
@@ -182,6 +184,7 @@ class _StarNameTile extends StatelessWidget {
                   SizedBox(height: space.xs / 2),
                   Text(
                     name.transliteration,
+                    textDirection: TextDirection.ltr,
                     style: typo.body.copyWith(
                       color: colors.muted,
                       fontStyle: FontStyle.italic,

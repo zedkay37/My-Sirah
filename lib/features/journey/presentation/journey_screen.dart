@@ -112,11 +112,13 @@ class _ConstellationCard extends StatelessWidget {
                 children: [
                   Text(
                     constellation.titleFr,
+                    textDirection: TextDirection.ltr,
                     style: typo.bodyLarge.copyWith(color: colors.ink),
                   ),
                   SizedBox(height: space.xs / 2),
                   Text(
                     constellation.descriptionFr,
+                    textDirection: TextDirection.ltr,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: typo.caption.copyWith(color: colors.muted),

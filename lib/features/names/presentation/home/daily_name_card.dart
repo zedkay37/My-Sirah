@@ -70,6 +70,7 @@ class DailyNameCard extends ConsumerWidget {
                   SizedBox(height: space.md),
                   Text(
                     name.transliteration,
+                    textDirection: TextDirection.ltr,
                     style: typo.headline.copyWith(
                       fontStyle: FontStyle.italic,
                       color: colors.muted,
@@ -111,6 +112,7 @@ class _ConstellationLabel extends StatelessWidget {
     return Text(
       constellation.titleFr,
       textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
       style: typo.caption.copyWith(color: colors.accent),
     );
   }
@@ -134,6 +136,7 @@ class _EtymologyFade extends StatelessWidget {
             maxLines: 4,
             overflow: TextOverflow.clip,
             textAlign: TextAlign.center,
+            textDirection: TextDirection.ltr,
             style: typo.body.copyWith(color: colors.muted),
           ),
           Positioned.fill(
@@ -193,6 +196,7 @@ class _DailyActionPreview extends StatelessWidget {
                   SizedBox(height: space.xs / 2),
                   Text(
                     action.textFr,
+                    textDirection: TextDirection.ltr,
                     style: typo.body.copyWith(color: colors.ink, height: 1.4),
                   ),
                 ],

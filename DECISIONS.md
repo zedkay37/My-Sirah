@@ -204,6 +204,7 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Typographie | Augmenter la hauteur reservee aux grands titres arabes. | Eviter que la translitteration chevauche la calligraphie avec les polices locales. |
 | 2026-04-29 | Arbre | Reduire la densite de labels visibles dans les vues constellation/radiale. | Garder l'arbre exploratoire lisible sur mobile sans retirer les points interactifs. |
 | 2026-04-29 | Arbre | Rendre le header et les overlays plus compacts. | Eviter que la navigation et la legende masquent trop le graphe. |
+| 2026-04-29 | RTL / l10n | Forcer les contenus editoriaux FR en LTR sous interface arabe tant qu'ils ne sont pas traduits. | Eviter l'inversion visuelle du francais melange a l'arabe sans modifier `names.json` ni valider de contenu nouveau. |
 
 ## Validation technique recente
 
@@ -290,6 +291,23 @@ Resultat :
 - `flutter test` : OK, 116 tests passes
 - `flutter build apk --debug` : OK
 
+Derniere validation apres correctif RTL/LTR :
+
+```text
+dart format <fichiers modifies>
+flutter analyze --no-pub
+flutter test test/features/journey/name_experience_screen_test.dart test/features/journey/tafakkur_screen_test.dart test/features/journey/space_map_screen_test.dart test/features/journey/galaxy_map_screen_test.dart test/features/names/list_navigation_test.dart test/widget_test.dart
+flutter test
+flutter build apk --debug
+```
+
+Resultat :
+
+- `flutter analyze --no-pub` : OK
+- Tests cibles Journey/Nom vivant/Tafakkur/Home/Detail : OK, 22 tests passes
+- `flutter test` : OK, 116 tests passes
+- `flutter build apk --debug` : OK
+
 ## Dette et risques ouverts
 
 ### Priorite haute
@@ -303,7 +321,7 @@ Resultat :
 
 - Valider visuellement le rendu des polices locales sur emulateur ou telephone reel.
 - Nettoyer les imports/providers ou `core` connait trop certaines features.
-- Continuer l10n arabe : beaucoup de chaines restent FR ou partiellement encodees.
+- Continuer l10n arabe : beaucoup de chaines restent FR ou partiellement encodees. Les contenus sources FR sont forces en LTR en attendant une vraie traduction/revue.
 - Decouper certains gros widgets si > 80 lignes quand le scope s'y prete.
 
 ### Priorite basse

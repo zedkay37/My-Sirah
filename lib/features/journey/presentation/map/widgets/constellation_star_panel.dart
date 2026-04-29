@@ -108,6 +108,7 @@ class _PanelHeader extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           name.transliteration,
+          textDirection: TextDirection.ltr,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: context.typo.bodyLarge.copyWith(

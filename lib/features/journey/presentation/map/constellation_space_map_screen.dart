@@ -173,6 +173,7 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
                   Text(
                     title,
                     textAlign: TextAlign.center,
+                    textDirection: TextDirection.ltr,
                     style: context.typo.headline.copyWith(
                       color: Colors.white,
                       fontSize: isCompact ? 18 : null,
@@ -182,6 +183,7 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
                   Text(
                     constellation.descriptionFr,
                     textAlign: TextAlign.center,
+                    textDirection: TextDirection.ltr,
                     maxLines: isCompact ? 1 : 2,
                     overflow: TextOverflow.ellipsis,
                     style: context.typo.caption.copyWith(

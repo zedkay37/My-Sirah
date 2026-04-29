@@ -187,6 +187,7 @@ class _TafakkurContent extends ConsumerWidget {
                           : _TafakkurPageDisplay(
                               title: currentPage.title,
                               body: state.currentPhrase,
+                              bodyDirection: currentPage.bodyDirection,
                               index: state.currentIndex,
                               total: state.phrases.length,
                             ),
@@ -239,25 +240,34 @@ class _TafakkurContent extends ConsumerWidget {
     final experience = journey?.getExperienceForName(name.number);
     final story = experience == null ? null : _firstValidatedStory(experience);
     final action = journey?.getDailyActionForName(name.number, DateTime.now());
+    final appDirection = Directionality.of(context);
 
     return [
       _TafakkurPage(
         title: l10n.tafakkurPageName,
         body: '${name.arabic}\n\n${name.transliteration}\n\n${name.etymology}',
+        bodyDirection: TextDirection.ltr,
       ),
       _TafakkurPage(
         title: l10n.tafakkurPageStory,
         body: story == null
             ? name.commentary
             : '${story.titleFr}\n\n${story.bodyFr}',
+        bodyDirection: TextDirection.ltr,
       ),
       _TafakkurPage(
         title: l10n.tafakkurPageMeditation,
         body: experience?.tafakkurPromptFr ?? l10n.nameExperienceFallbackPrompt,
+        bodyDirection: experience?.tafakkurPromptFr == null
+            ? appDirection
+            : TextDirection.ltr,
       ),
       _TafakkurPage(
         title: l10n.tafakkurPageIntention,
         body: action?.textFr ?? l10n.nameExperienceFallbackAction,
+        bodyDirection: action?.textFr == null
+            ? appDirection
+            : TextDirection.ltr,
       ),
     ];
   }
@@ -305,6 +315,7 @@ class _CompleteView extends StatelessWidget {
                 Text(
                   pages[i].body,
                   textAlign: TextAlign.center,
+                  textDirection: pages[i].bodyDirection,
                   style: typo.bodyLarge.copyWith(
                     color: colors.ink,
                     height: 1.6,
@@ -340,22 +351,29 @@ class _CompleteView extends StatelessWidget {
 }
 
 class _TafakkurPage {
-  const _TafakkurPage({required this.title, required this.body});
+  const _TafakkurPage({
+    required this.title,
+    required this.body,
+    required this.bodyDirection,
+  });
 
   final String title;
   final String body;
+  final TextDirection bodyDirection;
 }
 
 class _TafakkurPageDisplay extends StatelessWidget {
   const _TafakkurPageDisplay({
     required this.title,
     required this.body,
+    required this.bodyDirection,
     required this.index,
     required this.total,
   });
 
   final String title;
   final String body;
+  final TextDirection bodyDirection;
   final int index;
   final int total;
 
@@ -401,6 +419,7 @@ class _TafakkurPageDisplay extends StatelessWidget {
                   Text(
                     body,
                     textAlign: TextAlign.center,
+                    textDirection: bodyDirection,
                     style: typo.bodyLarge.copyWith(
                       color: colors.ink,
                       fontSize: fontSize,

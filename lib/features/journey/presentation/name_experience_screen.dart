@@ -133,6 +133,7 @@ class _ExperienceContent extends StatelessWidget {
           Text(
             name.transliteration,
             textAlign: TextAlign.center,
+            textDirection: TextDirection.ltr,
             style: typo.displayMedium.copyWith(
               color: colors.ink,
               fontStyle: FontStyle.italic,
@@ -142,6 +143,7 @@ class _ExperienceContent extends StatelessWidget {
           Text(
             name.etymology,
             textAlign: TextAlign.center,
+            textDirection: TextDirection.ltr,
             style: typo.bodyLarge.copyWith(color: colors.muted, height: 1.45),
           ),
           SizedBox(height: space.xl),
@@ -174,6 +176,9 @@ class _ExperienceContent extends StatelessWidget {
                     name.commentary.isNotEmpty
                         ? name.commentary
                         : context.l10n.nameExperienceFallbackPrompt,
+                    textDirection: name.commentary.isNotEmpty
+                        ? TextDirection.ltr
+                        : null,
                     style: typo.bodyLarge.copyWith(
                       color: colors.ink,
                       height: 1.5,
@@ -188,6 +193,7 @@ class _ExperienceContent extends StatelessWidget {
                     SizedBox(height: space.xs),
                     Text(
                       name.references,
+                      textDirection: TextDirection.ltr,
                       style: typo.caption.copyWith(
                         color: colors.muted,
                         height: 1.35,
@@ -206,6 +212,9 @@ class _ExperienceContent extends StatelessWidget {
             child: Text(
               experience?.tafakkurPromptFr ??
                   context.l10n.nameExperienceFallbackPrompt,
+              textDirection: experience?.tafakkurPromptFr == null
+                  ? null
+                  : TextDirection.ltr,
               style: typo.bodyLarge.copyWith(color: colors.ink, height: 1.5),
             ),
           ),
@@ -297,6 +306,7 @@ class _ConstellationPill extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         child: Text(
           constellation.titleFr,
+          textDirection: TextDirection.ltr,
           style: typo.caption.copyWith(color: colors.ink),
         ),
       ),
@@ -324,16 +334,22 @@ class _StoryPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(story.titleFr, style: typo.headline.copyWith(color: colors.ink)),
+          Text(
+            story.titleFr,
+            textDirection: TextDirection.ltr,
+            style: typo.headline.copyWith(color: colors.ink),
+          ),
           SizedBox(height: space.md),
           Text(
             story.bodyFr,
+            textDirection: TextDirection.ltr,
             style: typo.bodyLarge.copyWith(color: colors.ink, height: 1.5),
           ),
           if (story.sourceNote.isNotEmpty) ...[
             SizedBox(height: space.md),
             Text(
               story.sourceNote,
+              textDirection: TextDirection.ltr,
               style: typo.caption.copyWith(color: colors.muted, height: 1.35),
             ),
           ],
@@ -349,6 +365,7 @@ class _StoryPanel extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: space.xs / 2),
                 child: Text(
                   sourceRef,
+                  textDirection: TextDirection.ltr,
                   style: typo.caption.copyWith(
                     color: colors.muted,
                     height: 1.35,
@@ -390,6 +407,7 @@ class _ActionPanel extends ConsumerWidget {
               children: [
                 Text(
                   action.textFr,
+                  textDirection: TextDirection.ltr,
                   style: typo.bodyLarge.copyWith(
                     color: colors.ink,
                     height: 1.45,

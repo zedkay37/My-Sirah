@@ -147,6 +147,7 @@ class _Back extends StatelessWidget {
         Text(
           name.transliteration,
           textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr,
           style: typo.headline.copyWith(fontStyle: FontStyle.italic),
         ),
         SizedBox(height: space.sm),
@@ -159,6 +160,7 @@ class _Back extends StatelessWidget {
         Text(
           name.etymology,
           textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr,
           maxLines: 4,
           overflow: TextOverflow.ellipsis,
           style: typo.body.copyWith(color: colors.muted),

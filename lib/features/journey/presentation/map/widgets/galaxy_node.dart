@@ -91,6 +91,7 @@ class GalaxyNode extends StatelessWidget {
                     Text(
                       title,
                       textAlign: TextAlign.center,
+                      textDirection: TextDirection.ltr,
                       style: typo.bodyLarge.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
@@ -100,6 +101,7 @@ class GalaxyNode extends StatelessWidget {
                     Text(
                       subtitle,
                       textAlign: TextAlign.center,
+                      textDirection: TextDirection.ltr,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: typo.caption.copyWith(

@@ -222,6 +222,7 @@ class _NameDetailPage extends StatelessWidget {
           Text(
             name.transliteration,
             textAlign: TextAlign.center,
+            textDirection: TextDirection.ltr,
             style: typo.displayMedium.copyWith(fontStyle: FontStyle.italic),
           ),
           SizedBox(height: space.md),
@@ -299,7 +300,7 @@ class _Section extends StatelessWidget {
       children: [
         SectionHeader(title: title),
         SizedBox(height: space.md),
-        Text(content, style: typo.bodyLarge),
+        Text(content, textDirection: TextDirection.ltr, style: typo.bodyLarge),
       ],
     );
   }
@@ -325,11 +326,20 @@ class _SourcesSection extends StatelessWidget {
       children: [
         SectionHeader(title: l10n.detailSectionSources),
         SizedBox(height: space.md),
-        if (primary.isNotEmpty) Text(primary, style: typo.bodyLarge),
+        if (primary.isNotEmpty)
+          Text(
+            primary,
+            textDirection: TextDirection.ltr,
+            style: typo.bodyLarge,
+          ),
         if (primary.isNotEmpty && secondary.isNotEmpty)
           SizedBox(height: space.sm),
         if (secondary.isNotEmpty)
-          Text(secondary, style: typo.body.copyWith(color: colors.muted)),
+          Text(
+            secondary,
+            textDirection: TextDirection.ltr,
+            style: typo.body.copyWith(color: colors.muted),
+          ),
       ],
     );
   }

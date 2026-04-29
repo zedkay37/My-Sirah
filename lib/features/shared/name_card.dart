@@ -72,6 +72,7 @@ class NameCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       name.transliteration,
+                      textDirection: TextDirection.ltr,
                       style: typo.body.copyWith(
                         fontStyle: FontStyle.italic,
                         color: colors.muted,
