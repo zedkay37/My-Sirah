@@ -237,9 +237,7 @@ class _TafakkurContent extends ConsumerWidget {
   ) {
     final l10n = context.l10n;
     final experience = journey?.getExperienceForName(name.number);
-    final story = experience?.stories.isEmpty == false
-        ? experience!.stories.first
-        : null;
+    final story = experience == null ? null : _firstValidatedStory(experience);
     final action = journey?.getDailyActionForName(name.number, DateTime.now());
 
     return [
@@ -259,9 +257,16 @@ class _TafakkurContent extends ConsumerWidget {
       ),
       _TafakkurPage(
         title: l10n.tafakkurPageIntention,
-        body: action ?? l10n.nameExperienceFallbackAction,
+        body: action?.textFr ?? l10n.nameExperienceFallbackAction,
       ),
     ];
+  }
+
+  NameStory? _firstValidatedStory(NameExperience experience) {
+    for (final story in experience.stories) {
+      if (story.editorialStatus == 'validated') return story;
+    }
+    return null;
   }
 }
 

@@ -39,51 +39,74 @@ class TreeListScreen extends ConsumerWidget {
     final allMembers = repo.getAll();
 
     // Grouping
-    final ancestors = allMembers.where((m) =>
-      m.role == FamilyRole.father ||
-      m.role == FamilyRole.mother ||
-      m.role == FamilyRole.paternalAscendant ||
-      m.role == FamilyRole.maternalAscendant
-    ).toList()..sort((a, b) => (a.generation ?? 999).compareTo(b.generation ?? 999));
+    final ancestors =
+        allMembers
+            .where(
+              (m) =>
+                  m.role == FamilyRole.father ||
+                  m.role == FamilyRole.mother ||
+                  m.role == FamilyRole.paternalAscendant ||
+                  m.role == FamilyRole.maternalAscendant,
+            )
+            .toList()
+          ..sort(
+            (a, b) => (a.generation ?? 999).compareTo(b.generation ?? 999),
+          );
 
     final wives = allMembers.where((m) => m.role == FamilyRole.wife).toList()
-      ..sort((a, b) => (a.marriageOrder ?? 999).compareTo(b.marriageOrder ?? 999));
+      ..sort(
+        (a, b) => (a.marriageOrder ?? 999).compareTo(b.marriageOrder ?? 999),
+      );
 
-    final children = allMembers.where((m) =>
-      m.role == FamilyRole.child ||
-      m.role == FamilyRole.grandchild
-    ).toList();
+    final children = allMembers
+        .where(
+          (m) => m.role == FamilyRole.child || m.role == FamilyRole.grandchild,
+        )
+        .toList();
 
-    final uncles = allMembers.where((m) =>
-      m.role == FamilyRole.uncle ||
-      m.role == FamilyRole.aunt
-    ).toList();
+    final uncles = allMembers
+        .where((m) => m.role == FamilyRole.uncle || m.role == FamilyRole.aunt)
+        .toList();
 
-    final other = allMembers.where((m) =>
-      !m.isBoundary &&
-      (m.role == FamilyRole.cousin || m.role == FamilyRole.traditionalAncestor)
-    ).toList();
+    final other = allMembers
+        .where(
+          (m) =>
+              !m.isBoundary &&
+              (m.role == FamilyRole.cousin ||
+                  m.role == FamilyRole.traditionalAncestor),
+        )
+        .toList();
 
     return CustomScrollView(
       slivers: [
         if (ancestors.isNotEmpty)
-          ..._buildSection(context, context.l10n.treeListSectionAncestors, ancestors),
+          ..._buildSection(
+            context,
+            context.l10n.treeListSectionAncestors,
+            ancestors,
+          ),
         if (wives.isNotEmpty)
           ..._buildSection(context, context.l10n.treeListSectionWives, wives),
         if (children.isNotEmpty)
-          ..._buildSection(context, context.l10n.treeListSectionChildren, children),
+          ..._buildSection(
+            context,
+            context.l10n.treeListSectionChildren,
+            children,
+          ),
         if (uncles.isNotEmpty)
           ..._buildSection(context, context.l10n.treeListSectionUncles, uncles),
         if (other.isNotEmpty)
           ..._buildSection(context, context.l10n.treeListSectionOther, other),
-        SliverToBoxAdapter(
-          child: SizedBox(height: context.space.xxl),
-        ),
+        SliverToBoxAdapter(child: SizedBox(height: context.space.xxl)),
       ],
     );
   }
 
-  List<Widget> _buildSection(BuildContext context, String title, List<FamilyMember> members) {
+  List<Widget> _buildSection(
+    BuildContext context,
+    String title,
+    List<FamilyMember> members,
+  ) {
     return [
       SliverToBoxAdapter(
         child: Container(
@@ -99,68 +122,81 @@ class TreeListScreen extends ConsumerWidget {
         ),
       ),
       SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final m = members[index];
-            final roleLabel = _roleLabel(m.role);
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Semantics(
-                  label: '${m.transliteration}, $roleLabel',
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: context.space.md,
-                      vertical: context.space.xs,
-                    ),
-                    title: Text(
-                      m.arabic,
-                      style: context.typo.arabicBody.copyWith(
-                        fontSize: 18,
-                        color: context.colors.ink,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                    subtitle: Text(
-                      m.transliteration,
-                      style: context.typo.caption.copyWith(color: context.colors.muted),
-                    ),
-                    trailing: Text(
-                      roleLabel,
-                      style: context.typo.caption.copyWith(color: context.colors.muted),
-                    ),
-                    onTap: () => context.push('/tree/person/${m.id}'),
+        delegate: SliverChildBuilderDelegate((context, index) {
+          final m = members[index];
+          final roleLabel = _roleLabel(m.role);
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Semantics(
+                label: '${m.transliteration}, $roleLabel',
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: context.space.md,
+                    vertical: context.space.xs,
                   ),
+                  title: Text(
+                    m.arabic,
+                    style: context.typo.arabicBody.copyWith(
+                      fontSize: 18,
+                      color: context.colors.ink,
+                    ),
+                    textDirection: TextDirection.rtl,
+                  ),
+                  subtitle: Text(
+                    m.transliteration,
+                    style: context.typo.caption.copyWith(
+                      color: context.colors.muted,
+                    ),
+                  ),
+                  trailing: Text(
+                    roleLabel,
+                    style: context.typo.caption.copyWith(
+                      color: context.colors.muted,
+                    ),
+                  ),
+                  onTap: () => context.push('/tree/person/${m.id}'),
                 ),
-                if (index < members.length - 1)
-                  Divider(
-                    color: context.colors.line,
-                    height: 1,
-                    indent: context.space.md,
-                  ),
-              ],
-            );
-          },
-          childCount: members.length,
-        ),
+              ),
+              if (index < members.length - 1)
+                Divider(
+                  color: context.colors.line,
+                  height: 1,
+                  indent: context.space.md,
+                ),
+            ],
+          );
+        }, childCount: members.length),
       ),
     ];
   }
 
   String _roleLabel(FamilyRole role) {
     switch (role) {
-      case FamilyRole.prophet: return 'Le Prophète ﷺ';
-      case FamilyRole.father: return 'Père du Prophète ﷺ';
-      case FamilyRole.mother: return 'Mère du Prophète ﷺ';
-      case FamilyRole.paternalAscendant: return 'Ancêtre paternel';
-      case FamilyRole.maternalAscendant: return 'Ancêtre maternel';
-      case FamilyRole.uncle: return 'Oncle du Prophète ﷺ';
-      case FamilyRole.aunt: return 'Tante du Prophète ﷺ';
-      case FamilyRole.wife: return 'Épouse du Prophète ﷺ';
-      case FamilyRole.child: return 'Enfant du Prophète ﷺ';
-      case FamilyRole.grandchild: return 'Petit-enfant du Prophète ﷺ';
-      case FamilyRole.cousin: return 'Cousin(e) du Prophète ﷺ';
-      case FamilyRole.traditionalAncestor: return 'Ancêtre (tradition)';
+      case FamilyRole.prophet:
+        return 'Le Prophète ﷺ';
+      case FamilyRole.father:
+        return 'Père du Prophète ﷺ';
+      case FamilyRole.mother:
+        return 'Mère du Prophète ﷺ';
+      case FamilyRole.paternalAscendant:
+        return 'Ancêtre paternel';
+      case FamilyRole.maternalAscendant:
+        return 'Ancêtre maternel';
+      case FamilyRole.uncle:
+        return 'Oncle du Prophète ﷺ';
+      case FamilyRole.aunt:
+        return 'Tante du Prophète ﷺ';
+      case FamilyRole.wife:
+        return 'Épouse du Prophète ﷺ';
+      case FamilyRole.child:
+        return 'Enfant du Prophète ﷺ';
+      case FamilyRole.grandchild:
+        return 'Petit-enfant du Prophète ﷺ';
+      case FamilyRole.cousin:
+        return 'Cousin(e) du Prophète ﷺ';
+      case FamilyRole.traditionalAncestor:
+        return 'Ancêtre (tradition)';
     }
   }
 }

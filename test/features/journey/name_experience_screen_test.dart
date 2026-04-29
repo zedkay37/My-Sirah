@@ -54,7 +54,13 @@ const _experience = NameExperience(
 
 const _actions = NameActionBank(
   theme: 'praise',
-  actions: ['Remercie quelqu’un aujourd’hui.'],
+  actions: [
+    NameActionItem(
+      id: 'praise_experience_action',
+      textFr: 'Remercie quelqu’un aujourd’hui.',
+      editorialStatus: 'validated',
+    ),
+  ],
 );
 
 Widget _wrap(
@@ -155,7 +161,16 @@ void main() {
       constellations: const [],
       experiences: const [],
       actionBanks: const [
-        NameActionBank(theme: 'general', actions: ['Agis.']),
+        NameActionBank(
+          theme: 'general',
+          actions: [
+            NameActionItem(
+              id: 'general_experience_action',
+              textFr: 'Agis.',
+              editorialStatus: 'needs_review',
+            ),
+          ],
+        ),
       ],
     );
     final settings = _StubSettingsNotifier();
@@ -173,7 +188,8 @@ void main() {
     expect(find.text('COMPRENDRE CE NOM'), findsOneWidget);
     expect(find.text('Le plus célèbre des noms.'), findsOneWidget);
     expect(find.text('Coran 3:144'), findsOneWidget);
-    expect(find.text('Agis.'), findsOneWidget);
+    expect(find.text('Agis.'), findsNothing);
+    expect(find.text('Action du jour'), findsNothing);
     expect(find.text('Aucun récit dédié'), findsNothing);
     expect(find.textContaining('placeholder'), findsNothing);
     expect(find.text('Entrer en tafakkur'), findsOneWidget);

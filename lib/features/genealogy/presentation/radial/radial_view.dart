@@ -57,7 +57,10 @@ class _RadialViewState extends ConsumerState<RadialView> {
         Positioned.fill(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final center = Offset(constraints.maxWidth / 2, constraints.maxHeight / 2);
+              final center = Offset(
+                constraints.maxWidth / 2,
+                constraints.maxHeight / 2,
+              );
               return InteractiveViewer(
                 transformationController: _transformationController,
                 minScale: 0.2,
@@ -69,7 +72,7 @@ class _RadialViewState extends ConsumerState<RadialView> {
                   height: constraints.maxHeight,
                   child: GestureDetector(
                     onTapDown: (details) {
-                      // Note: InteractiveViewer handles pan/zoom. 
+                      // Note: InteractiveViewer handles pan/zoom.
                       // onTapDown here is for our hit test.
                     },
                     child: RepaintBoundary(
@@ -85,13 +88,19 @@ class _RadialViewState extends ConsumerState<RadialView> {
                                 selectedId: selectedId,
                                 center: center,
                                 colors: context.colors,
-                                onTap: (_) {}, // Non utilisé ici, on gère le onTapUp directement
+                                onTap:
+                                    (
+                                      _,
+                                    ) {}, // Non utilisé ici, on gère le onTapUp directement
                               );
                               final hitId = painter.hitTestMembers(tapPosition);
                               _selectedId.value = hitId;
                             },
                             child: CustomPaint(
-                              size: Size(constraints.maxWidth, constraints.maxHeight),
+                              size: Size(
+                                constraints.maxWidth,
+                                constraints.maxHeight,
+                              ),
                               painter: RadialPainter(
                                 members: members,
                                 filter: activeFilter,
@@ -159,4 +168,3 @@ class _RadialViewState extends ConsumerState<RadialView> {
     );
   }
 }
-

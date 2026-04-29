@@ -14,10 +14,10 @@ class NameCategory {
   final int count;
 
   factory NameCategory.fromJson(Map<String, dynamic> json) => NameCategory(
-        slug: json['slug'] as String,
-        labelFr: json['labelFr'] as String,
-        count: json['count'] as int,
-      );
+    slug: json['slug'] as String,
+    labelFr: json['labelFr'] as String,
+    count: json['count'] as int,
+  );
 }
 
 class CategoriesJsonSource {

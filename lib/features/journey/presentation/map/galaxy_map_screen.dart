@@ -67,54 +67,31 @@ class _GalaxyMapContent extends StatelessWidget {
       ),
     );
     return StarfieldBackground(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final mapSize = Size(
-            constraints.maxWidth.clamp(720.0, 980.0).toDouble(),
-            constraints.maxHeight.clamp(620.0, 820.0).toDouble(),
-          );
-
-          return InteractiveViewer(
-            minScale: 0.82,
-            maxScale: 1.75,
-            boundaryMargin: const EdgeInsets.all(120),
-            child: Center(
-              child: RepaintBoundary(
-                child: SizedBox(
-                  width: mapSize.width,
-                  height: mapSize.height,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: mapSize.width * 0.5 - 140,
-                        top: mapSize.height * 0.42 - 140,
-                        child: GalaxyNode(
-                          title: activeDeck.titleFr,
-                          subtitle: activeDeck.subtitleFr,
-                          isActive: true,
-                          onTap: () =>
-                              context.push('/journey/deck/${activeDeck.id}'),
-                        ),
-                      ),
-                      Positioned(
-                        left: 28,
-                        right: 28,
-                        bottom: 24,
-                        child: Text(
-                          l10n.journeyGalaxyHint,
-                          textAlign: TextAlign.center,
-                          style: context.typo.caption.copyWith(
-                            color: Colors.white.withValues(alpha: 0.62),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      child: Stack(
+        children: [
+          Center(
+            child: RepaintBoundary(
+              child: GalaxyNode(
+                title: activeDeck.titleFr,
+                subtitle: activeDeck.subtitleFr,
+                isActive: true,
+                onTap: () => context.push('/journey/deck/${activeDeck.id}'),
               ),
             ),
-          );
-        },
+          ),
+          Positioned(
+            left: 28,
+            right: 28,
+            bottom: 24,
+            child: Text(
+              l10n.journeyGalaxyHint,
+              textAlign: TextAlign.center,
+              style: context.typo.caption.copyWith(
+                color: Colors.white.withValues(alpha: 0.62),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -48,13 +48,17 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
       body: repoAsync.when(
         data: (repo) {
           final member = repo.getById(widget.memberId);
-          
+
           if (member == null) {
             return Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.error_outline, size: 48, color: context.colors.error),
+                  Icon(
+                    Icons.error_outline,
+                    size: 48,
+                    color: context.colors.error,
+                  ),
                   SizedBox(height: context.space.md),
                   ElevatedButton(
                     onPressed: () => context.pop(),
@@ -66,7 +70,9 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
           }
 
           final userState = ref.watch(settingsProvider);
-          final isFavorite = userState.favoriteMembers.contains(widget.memberId);
+          final isFavorite = userState.favoriteMembers.contains(
+            widget.memberId,
+          );
 
           return CustomScrollView(
             slivers: [
@@ -83,10 +89,14 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
                   IconButton(
                     icon: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? context.colors.accent2 : context.colors.muted,
+                      color: isFavorite
+                          ? context.colors.accent2
+                          : context.colors.muted,
                     ),
                     onPressed: () {
-                      ref.read(genealogyNotifierProvider).toggleFavoriteMember(widget.memberId);
+                      ref
+                          .read(genealogyNotifierProvider)
+                          .toggleFavoriteMember(widget.memberId);
                     },
                   ),
                 ],
@@ -94,22 +104,23 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: context.space.md),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildHeader(context, member),
-                      SizedBox(height: context.space.xl),
-                      _buildRelationSection(context, member, repo),
-                      _buildMarkersSection(context, member),
-                      _buildNarrativeSection(context, member),
-                      _buildNamesBridgeSection(context, ref, member),
-                      _buildSeeAlsoSection(context, member, repo),
-                      SizedBox(height: context.space.xl),
-                    ],
-                  ).animate().fade(duration: 350.ms).slideY(
-                        begin: 0.03,
-                        curve: Curves.easeOut,
-                      ),
+                  child:
+                      Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _buildHeader(context, member),
+                              SizedBox(height: context.space.xl),
+                              _buildRelationSection(context, member, repo),
+                              _buildMarkersSection(context, member),
+                              _buildNarrativeSection(context, member),
+                              _buildNamesBridgeSection(context, ref, member),
+                              _buildSeeAlsoSection(context, member, repo),
+                              SizedBox(height: context.space.xl),
+                            ],
+                          )
+                          .animate()
+                          .fade(duration: 350.ms)
+                          .slideY(begin: 0.03, curve: Curves.easeOut),
                 ),
               ),
             ],
@@ -157,7 +168,11 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
     );
   }
 
-  Widget _buildRelationSection(BuildContext context, FamilyMember member, GenealogyRepository repo) {
+  Widget _buildRelationSection(
+    BuildContext context,
+    FamilyMember member,
+    GenealogyRepository repo,
+  ) {
     final path = repo.getPath(member.id, 'muhammad');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,16 +230,23 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
     );
   }
 
-  Widget _buildNamesBridgeSection(BuildContext context, WidgetRef ref, FamilyMember member) {
+  Widget _buildNamesBridgeSection(
+    BuildContext context,
+    WidgetRef ref,
+    FamilyMember member,
+  ) {
     final namesAsync = ref.watch(namesProvider);
     final names = namesAsync.valueOrNull ?? [];
-    
+
     if (names.isEmpty) return const SizedBox.shrink();
 
     final firstName = member.transliteration.split(' ').first.toLowerCase();
-    final relatedNames = names.where((n) {
-      return n.commentary.toLowerCase().contains(firstName);
-    }).take(5).toList();
+    final relatedNames = names
+        .where((n) {
+          return n.commentary.toLowerCase().contains(firstName);
+        })
+        .take(5)
+        .toList();
 
     if (relatedNames.isEmpty) return const SizedBox.shrink();
 
@@ -236,42 +258,48 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: relatedNames.map((n) => Padding(
-              padding: EdgeInsets.only(right: context.space.sm),
-              child: InkWell(
-                borderRadius: context.radii.smAll,
-                onTap: () => context.push('/name/${n.number}'),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.space.sm,
-                    vertical: context.space.xs,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.colors.bg2,
-                    borderRadius: context.radii.smAll,
-                    border: Border.all(color: context.colors.line),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        n.arabic,
-                        style: context.typo.arabicBody.copyWith(
-                          fontSize: 14,
-                          color: context.colors.ink,
+            children: relatedNames
+                .map(
+                  (n) => Padding(
+                    padding: EdgeInsets.only(right: context.space.sm),
+                    child: InkWell(
+                      borderRadius: context.radii.smAll,
+                      onTap: () => context.push('/name/${n.number}'),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.space.sm,
+                          vertical: context.space.xs,
                         ),
-                        textDirection: TextDirection.rtl,
+                        decoration: BoxDecoration(
+                          color: context.colors.bg2,
+                          borderRadius: context.radii.smAll,
+                          border: Border.all(color: context.colors.line),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              n.arabic,
+                              style: context.typo.arabicBody.copyWith(
+                                fontSize: 14,
+                                color: context.colors.ink,
+                              ),
+                              textDirection: TextDirection.rtl,
+                            ),
+                            SizedBox(width: context.space.xs),
+                            Text(
+                              n.number.toString().padLeft(3, '0'),
+                              style: context.typo.caption.copyWith(
+                                color: context.colors.muted,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(width: context.space.xs),
-                      Text(
-                        n.number.toString().padLeft(3, '0'),
-                        style: context.typo.caption.copyWith(color: context.colors.muted),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            )).toList(),
+                )
+                .toList(),
           ),
         ),
         SizedBox(height: context.space.lg),
@@ -279,7 +307,11 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
     );
   }
 
-  Widget _buildSeeAlsoSection(BuildContext context, FamilyMember member, GenealogyRepository repo) {
+  Widget _buildSeeAlsoSection(
+    BuildContext context,
+    FamilyMember member,
+    GenealogyRepository repo,
+  ) {
     final related = _getRelated(member, repo);
     if (related.isEmpty) {
       return const SizedBox.shrink();
@@ -293,62 +325,70 @@ class _PersonDetailScreenState extends ConsumerState<PersonDetailScreen> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: related.map((r) => Padding(
-              padding: EdgeInsets.only(right: context.space.sm),
-              child: InkWell(
-                borderRadius: context.radii.smAll,
-                onTap: () => context.push('/tree/person/${r.id}'),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.space.sm,
-                    vertical: context.space.xs,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.colors.bg2,
-                    borderRadius: context.radii.smAll,
-                    border: Border.all(color: context.colors.line),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        r.arabic,
-                        style: context.typo.arabicBody.copyWith(
-                          fontSize: 16,
-                          color: context.colors.ink,
+            children: related
+                .map(
+                  (r) => Padding(
+                    padding: EdgeInsets.only(right: context.space.sm),
+                    child: InkWell(
+                      borderRadius: context.radii.smAll,
+                      onTap: () => context.push('/tree/person/${r.id}'),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.space.sm,
+                          vertical: context.space.xs,
                         ),
-                        textDirection: TextDirection.rtl,
+                        decoration: BoxDecoration(
+                          color: context.colors.bg2,
+                          borderRadius: context.radii.smAll,
+                          border: Border.all(color: context.colors.line),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              r.arabic,
+                              style: context.typo.arabicBody.copyWith(
+                                fontSize: 16,
+                                color: context.colors.ink,
+                              ),
+                              textDirection: TextDirection.rtl,
+                            ),
+                            Text(
+                              r.transliteration,
+                              style: context.typo.caption.copyWith(
+                                color: context.colors.muted,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        r.transliteration,
-                        style: context.typo.caption.copyWith(color: context.colors.muted),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            )).toList(),
+                )
+                .toList(),
           ),
         ),
       ],
     );
   }
 
-  List<FamilyMember> _getRelated(FamilyMember member, GenealogyRepository repo) {
+  List<FamilyMember> _getRelated(
+    FamilyMember member,
+    GenealogyRepository repo,
+  ) {
     final ids = [
       member.parentId,
       member.motherId,
       member.spouseOf,
-      ...member.parentIds
+      ...member.parentIds,
     ].whereType<String>().toSet();
-    
+
     return ids
         .map((id) => repo.getById(id))
         .whereType<FamilyMember>()
         .take(8)
         .toList();
   }
-
 }
 
 class _SectionHeader extends StatelessWidget {

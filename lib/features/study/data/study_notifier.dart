@@ -5,23 +5,17 @@ class StudyNotifier {
   const StudyNotifier(this._ref);
   final Ref _ref;
 
-  Map<int, int> get leitnerBoxes =>
-      _ref.read(settingsProvider).leitnerBoxes;
+  Map<int, int> get leitnerBoxes => _ref.read(settingsProvider).leitnerBoxes;
 
-  String get studyMode =>
-      _ref.read(settingsProvider).studyMode;
+  String get studyMode => _ref.read(settingsProvider).studyMode;
 
   Set<String> get completedParcours =>
       _ref.read(settingsProvider).completedParcours;
 
   List<int> getItemsForReview(List<int> allNumbers) {
     final boxes = leitnerBoxes;
-    final level0 = allNumbers
-        .where((n) => (boxes[n] ?? 0) == 0)
-        .toList();
-    final level1 = allNumbers
-        .where((n) => (boxes[n] ?? 0) == 1)
-        .toList();
+    final level0 = allNumbers.where((n) => (boxes[n] ?? 0) == 0).toList();
+    final level1 = allNumbers.where((n) => (boxes[n] ?? 0) == 1).toList();
     return [...level0, ...level1];
   }
 

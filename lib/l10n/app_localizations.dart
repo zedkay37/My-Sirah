@@ -227,7 +227,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeExploreTodayName.
   ///
   /// In fr, this message translates to:
-  /// **'Entrer dans ce nom'**
+  /// **'Découvrir ce nom'**
   String get homeExploreTodayName;
 
   /// No description provided for @homeClassicNameTooltip.
@@ -235,6 +235,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Fiche classique'**
   String get homeClassicNameTooltip;
+
+  /// No description provided for @homeResumeTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reprendre mon chemin'**
+  String get homeResumeTitle;
+
+  /// No description provided for @homeResumeSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernière étoile explorée : {name}'**
+  String homeResumeSubtitle(String name);
+
+  /// No description provided for @homeJourneyTrace.
+  ///
+  /// In fr, this message translates to:
+  /// **'{viewed} découverts · {meditated} contemplés · {recognized} reconnus'**
+  String homeJourneyTrace(int viewed, int meditated, int recognized);
 
   /// No description provided for @homeContinueJourneyTitle.
   ///
@@ -805,6 +823,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Touchez une constellation pour voir ses étoiles.'**
   String get journeyDeckMapHint;
+
+  /// No description provided for @journeyMapZoomInTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zoomer'**
+  String get journeyMapZoomInTooltip;
+
+  /// No description provided for @journeyMapZoomOutTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dézoomer'**
+  String get journeyMapZoomOutTooltip;
+
+  /// No description provided for @journeyMapResetTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recentrer la carte'**
+  String get journeyMapResetTooltip;
 
   /// No description provided for @journeyLoadError.
   ///

@@ -5,6 +5,8 @@ import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/journey/data/repositories/journey_repository.dart';
 import 'package:sirah_app/features/journey/domain/name_progress_resolver.dart';
+import 'package:sirah_app/features/journey/presentation/map/widgets/journey_map_labels.dart';
+import 'package:sirah_app/features/journey/presentation/map/widgets/space_map_viewport.dart';
 import 'package:sirah_app/features/journey/presentation/map/widgets/starfield_background.dart';
 
 class DeckSpaceMapScreen extends ConsumerWidget {
@@ -69,63 +71,56 @@ class _DeckMapContent extends StatelessWidget {
     }
 
     final constellations = journey.getConstellations();
+    const mapSize = Size(1320, 980);
 
     return StarfieldBackground(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final mapSize = Size(
-            constraints.maxWidth.clamp(760.0, 1080.0).toDouble(),
-            constraints.maxHeight.clamp(660.0, 860.0).toDouble(),
-          );
-
-          return InteractiveViewer(
-            minScale: 0.75,
-            maxScale: 2.0,
-            boundaryMargin: const EdgeInsets.all(140),
-            child: Center(
-              child: RepaintBoundary(
-                child: SizedBox(
-                  width: mapSize.width,
-                  height: mapSize.height,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: _ConstellationLinksPainter(
-                            nodes: layout.constellations,
-                          ),
-                        ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: SpaceMapViewport(
+              mapSize: mapSize,
+              initialScale: 0.48,
+              minScale: 0.34,
+              maxScale: 2.2,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: _ConstellationLinksPainter(
+                        nodes: layout.constellations,
                       ),
-                      for (final constellation in constellations)
-                        if (layout.constellationNode(constellation.id) != null)
-                          _ConstellationNodeButton(
-                            deckId: deckId,
-                            constellation: constellation,
-                            node: layout.constellationNode(constellation.id)!,
-                            mapSize: mapSize,
-                            progress: progress
-                                .summarize(constellation.nameNumbers)
-                                .weightedProgress,
-                          ),
-                      Positioned(
-                        left: 28,
-                        right: 28,
-                        bottom: 24,
-                        child: Text(
-                          context.l10n.journeyDeckMapHint,
-                          textAlign: TextAlign.center,
-                          style: context.typo.caption.copyWith(
-                            color: Colors.white.withValues(alpha: 0.62),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
+                  for (final constellation in constellations)
+                    if (layout.constellationNode(constellation.id) != null)
+                      _ConstellationNodeButton(
+                        deckId: deckId,
+                        constellation: constellation,
+                        node: layout.constellationNode(constellation.id)!,
+                        mapSize: mapSize,
+                        progress: progress
+                            .summarize(constellation.nameNumbers)
+                            .weightedProgress,
+                      ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            left: 28,
+            right: 28,
+            bottom: 24,
+            child: IgnorePointer(
+              child: Text(
+                context.l10n.journeyDeckMapHint,
+                textAlign: TextAlign.center,
+                style: context.typo.caption.copyWith(
+                  color: Colors.white.withValues(alpha: 0.62),
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
@@ -149,6 +144,8 @@ class _ConstellationNodeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _hexToColor(constellation.colorHex);
+    final title = constellationDisplayTitle(constellation);
+    final arabicTitle = constellationArabicTitle(constellation);
     final diameter = (node.radius * mapSize.shortestSide * 1.95).clamp(
       88.0,
       148.0,
@@ -158,31 +155,64 @@ class _ConstellationNodeButton extends StatelessWidget {
     return Positioned(
       left: center.dx - diameter / 2,
       top: center.dy - diameter / 2,
-      child: GestureDetector(
-        onTap: () => context.push(
-          '/journey/deck/$deckId/constellation/${constellation.id}',
-        ),
-        child: SizedBox(
-          width: diameter,
-          height: diameter + 48,
-          child: Column(
-            children: [
-              CustomPaint(
-                size: Size.square(diameter),
-                painter: _ConstellationNodePainter(
-                  color: color,
-                  progress: progress,
+      child: Semantics(
+        button: true,
+        label: title,
+        child: GestureDetector(
+          onTap: () => context.push(
+            '/journey/deck/$deckId/constellation/${constellation.id}',
+          ),
+          child: SizedBox(
+            width: diameter,
+            height: diameter + 52,
+            child: Column(
+              children: [
+                SizedBox.square(
+                  dimension: diameter,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CustomPaint(
+                        size: Size.square(diameter),
+                        painter: _ConstellationNodePainter(
+                          color: color,
+                          progress: progress,
+                        ),
+                      ),
+                      if (arabicTitle == null)
+                        Icon(
+                          Icons.auto_awesome_rounded,
+                          color: Colors.white.withValues(alpha: 0.88),
+                          size: diameter * 0.30,
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.all(13),
+                          child: Text(
+                            arabicTitle,
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.typo.arabicBody.copyWith(
+                              color: Colors.white,
+                              height: 1.15,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                constellation.titleFr,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: context.typo.caption.copyWith(color: Colors.white),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.typo.caption.copyWith(color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ),
       ),

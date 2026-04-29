@@ -53,7 +53,16 @@ final _journey = JourneyRepository(
   constellations: const [_constellation],
   experiences: const [],
   actionBanks: const [
-    NameActionBank(theme: 'general', actions: ['Agis.']),
+    NameActionBank(
+      theme: 'general',
+      actions: [
+        NameActionItem(
+          id: 'general_journey_action',
+          textFr: 'Agis.',
+          editorialStatus: 'needs_review',
+        ),
+      ],
+    ),
   ],
 );
 

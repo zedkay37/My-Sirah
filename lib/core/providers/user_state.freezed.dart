@@ -14,7 +14,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserState {
 
- ThemeKey get theme; TextSize get textSize; Set<int> get favorites; Set<int> get learned; Set<int> get viewed; Set<int> get meditatedNames; Set<int> get practicedNames; Set<int> get recognizedNames; Map<int, DateTime> get lastSeen; DateTime? get onboardingCompletedAt; int? get dailyNotifHour; int get quizzesCompleted; int get totalQuizScore;// Genealogy module
+ ThemeKey get theme; TextSize get textSize; Set<int> get favorites;// Legacy Study/V1 compatibility only. Journey V2 product progression uses
+// viewed, meditatedNames, practicedNames, and recognizedNames.
+ Set<int> get learned; Set<int> get viewed; Set<int> get meditatedNames; Set<int> get practicedNames; Set<int> get recognizedNames; Map<int, DateTime> get lastSeen; DateTime? get onboardingCompletedAt; int? get dailyNotifHour; int get quizzesCompleted; int get totalQuizScore;// Genealogy module
  Set<String> get favoriteMembers; Set<String> get viewedMembers; String get preferredTreeView;// Study module — V1.3
  Map<int, int> get leitnerBoxes; Set<String> get completedParcours; String get studyMode;// Asmāʾ al-Ḥusnā — V1.4
  Set<int> get husnaLearned;
@@ -240,7 +242,11 @@ class _UserState implements UserState {
   return EqualUnmodifiableSetView(_favorites);
 }
 
+// Legacy Study/V1 compatibility only. Journey V2 product progression uses
+// viewed, meditatedNames, practicedNames, and recognizedNames.
  final  Set<int> _learned;
+// Legacy Study/V1 compatibility only. Journey V2 product progression uses
+// viewed, meditatedNames, practicedNames, and recognizedNames.
 @override@JsonKey() Set<int> get learned {
   if (_learned is EqualUnmodifiableSetView) return _learned;
   // ignore: implicit_dynamic_type

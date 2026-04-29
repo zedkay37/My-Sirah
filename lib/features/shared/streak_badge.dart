@@ -15,10 +15,7 @@ class StreakBadge extends StatelessWidget {
     final space = context.space;
 
     Widget badge = Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: space.sm,
-        vertical: space.xs,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: space.sm, vertical: space.xs),
       decoration: BoxDecoration(
         color: colors.warning.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
@@ -39,11 +36,18 @@ class StreakBadge extends StatelessWidget {
     if (animate) {
       badge = badge
           .animate()
-          .scale(begin: const Offset(1, 1), end: const Offset(1.3, 1.3),
-              duration: 200.ms, curve: Curves.easeOut)
+          .scale(
+            begin: const Offset(1, 1),
+            end: const Offset(1.3, 1.3),
+            duration: 200.ms,
+            curve: Curves.easeOut,
+          )
           .then()
-          .scale(begin: const Offset(1.3, 1.3), end: const Offset(1, 1),
-              duration: 150.ms);
+          .scale(
+            begin: const Offset(1.3, 1.3),
+            end: const Offset(1, 1),
+            duration: 150.ms,
+          );
     }
 
     return Semantics(

@@ -11,16 +11,18 @@ class QuizEntryScreen extends ConsumerWidget {
 
   void _startQcm(BuildContext context, WidgetRef ref) {
     ref.read(namesProvider).whenData((names) {
-      ref.read(quizSessionProvider.notifier).state =
-          QuizSession.qcm(QuizGenerator.generateQcm(names));
+      ref.read(quizSessionProvider.notifier).state = QuizSession.qcm(
+        QuizGenerator.generateQcm(names),
+      );
       context.push('/quiz/qcm');
     });
   }
 
   void _startFlashcards(BuildContext context, WidgetRef ref) {
     ref.read(namesProvider).whenData((names) {
-      ref.read(quizSessionProvider.notifier).state =
-          QuizSession.flashcards(QuizGenerator.pickRandom(names));
+      ref.read(quizSessionProvider.notifier).state = QuizSession.flashcards(
+        QuizGenerator.pickRandom(names),
+      );
       context.push('/quiz/flashcards');
     });
   }

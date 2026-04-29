@@ -73,10 +73,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeDailyActionTitle => 'Action du jour';
 
   @override
-  String get homeExploreTodayName => 'Entrer dans ce nom';
+  String get homeExploreTodayName => 'Découvrir ce nom';
 
   @override
   String get homeClassicNameTooltip => 'Fiche classique';
+
+  @override
+  String get homeResumeTitle => 'Reprendre mon chemin';
+
+  @override
+  String homeResumeSubtitle(String name) {
+    return 'Dernière étoile explorée : $name';
+  }
+
+  @override
+  String homeJourneyTrace(int viewed, int meditated, int recognized) {
+    return '$viewed découverts · $meditated contemplés · $recognized reconnus';
+  }
 
   @override
   String get homeContinueJourneyTitle => 'Continuer mon voyage';
@@ -391,6 +404,15 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get journeyDeckMapHint =>
       'Touchez une constellation pour voir ses étoiles.';
+
+  @override
+  String get journeyMapZoomInTooltip => 'Zoomer';
+
+  @override
+  String get journeyMapZoomOutTooltip => 'Dézoomer';
+
+  @override
+  String get journeyMapResetTooltip => 'Recentrer la carte';
 
   @override
   String get journeyLoadError => 'Impossible de charger le voyage';

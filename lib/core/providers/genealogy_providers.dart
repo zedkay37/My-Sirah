@@ -6,9 +6,9 @@ final genealogyRepositoryProvider = FutureProvider<GenealogyRepository>(
   (ref) => GenealogyRepository.load(),
 );
 
-final genealogyMembersProvider = FutureProvider<List<FamilyMember>>((ref) async {
+final genealogyMembersProvider = FutureProvider<List<FamilyMember>>((
+  ref,
+) async {
   final repo = await ref.watch(genealogyRepositoryProvider.future);
   return repo.getAll();
 });
-
-

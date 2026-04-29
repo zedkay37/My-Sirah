@@ -19,9 +19,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _ctrl = PageController();
 
   void _next() => _ctrl.nextPage(
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeInOut,
-      );
+    duration: const Duration(milliseconds: 350),
+    curve: Curves.easeInOut,
+  );
 
   Future<void> _finish() async {
     await ref.read(settingsProvider.notifier).setOnboardingComplete();
@@ -75,11 +75,13 @@ class _WelcomePage extends StatelessWidget {
               height: 1,
               margin: EdgeInsets.symmetric(horizontal: space.xl),
               decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  colors.accent.withValues(alpha: 0),
-                  colors.accent,
-                  colors.accent.withValues(alpha: 0),
-                ]),
+                gradient: LinearGradient(
+                  colors: [
+                    colors.accent.withValues(alpha: 0),
+                    colors.accent,
+                    colors.accent.withValues(alpha: 0),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: space.lg),
@@ -221,7 +223,7 @@ class _ThemePreviewCard extends StatelessWidget {
                     BoxShadow(
                       color: colors.accent.withValues(alpha: 0.25),
                       blurRadius: 12,
-                    )
+                    ),
                   ]
                 : null,
           ),

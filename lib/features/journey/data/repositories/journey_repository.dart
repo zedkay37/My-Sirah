@@ -61,14 +61,20 @@ class JourneyRepository {
     }
   }
 
-  List<String> getActionsForTheme(String theme) {
-    final bank = _actionBankForTheme(theme);
-    if (bank != null && bank.actions.isNotEmpty) return bank.actions;
-    return _actionBankForTheme('general')?.actions ?? const [];
+  List<NameActionItem> getActionsForTheme(
+    String theme, {
+    bool includeDrafts = false,
+  }) {
+    final actions = _actionBankForTheme(theme)?.actions ?? const [];
+    if (includeDrafts) return actions;
+    return actions
+        .where((action) => action.editorialStatus == 'validated')
+        .toList();
   }
 
-  String? getDailyActionForName(int number, DateTime date) {
-    final theme = getExperienceForName(number)?.practiceTheme ?? 'general';
+  NameActionItem? getDailyActionForName(int number, DateTime date) {
+    final theme = getExperienceForName(number)?.practiceTheme;
+    if (theme == null || theme == 'general') return null;
     final actions = getActionsForTheme(theme);
     if (actions.isEmpty) return null;
     final seed = _stableSeed('$number-${_dateKey(date)}-$theme');
@@ -89,6 +95,11 @@ class JourneyRepository {
       }
       if (constellation.nameNumbers.isEmpty) {
         issues.add('Constellation ${constellation.id} has no nameNumbers');
+      }
+      if (!_containsArabicScript(constellation.titleAr)) {
+        issues.add(
+          'Constellation ${constellation.id} titleAr must contain Arabic script',
+        );
       }
       final uniqueNumbers = constellation.nameNumbers.toSet();
       if (uniqueNumbers.length != constellation.nameNumbers.length) {
@@ -119,9 +130,28 @@ class JourneyRepository {
       }
     }
 
-    final actionThemes = _actionBanks.map((b) => b.theme).toSet();
-    if (!actionThemes.contains('general')) {
-      issues.add('Missing general action theme');
+    final actionThemes = <String>{};
+    final actionIds = <String>{};
+
+    for (final bank in _actionBanks) {
+      if (bank.theme.trim().isEmpty) {
+        issues.add('Action theme cannot be empty');
+      }
+      if (!actionThemes.add(bank.theme)) {
+        issues.add('Duplicate action theme: ${bank.theme}');
+      }
+      if (bank.actions.isEmpty) {
+        issues.add('Action theme ${bank.theme} has no actions');
+      }
+      for (final action in bank.actions) {
+        _validateActionItem(
+          issues: issues,
+          bankTheme: bank.theme,
+          action: action,
+          actionIds: actionIds,
+          validNameNumbers: validNameNumbers,
+        );
+      }
     }
 
     final experienceNumbers = <int>{};
@@ -147,10 +177,8 @@ class JourneyRepository {
       }
     }
 
-    for (final bank in _actionBanks) {
-      if (bank.actions.isEmpty) {
-        issues.add('Action theme ${bank.theme} has no actions');
-      }
+    if (!actionThemes.contains('general')) {
+      issues.add('Missing general action theme');
     }
 
     return issues;
@@ -176,5 +204,58 @@ class JourneyRepository {
       hash = (hash * 31 + unit) & 0x7fffffff;
     }
     return hash;
+  }
+
+  static void _validateActionItem({
+    required List<String> issues,
+    required String bankTheme,
+    required NameActionItem action,
+    required Set<String> actionIds,
+    required Set<int> validNameNumbers,
+  }) {
+    const validStatuses = {'draft', 'needs_review', 'validated'};
+    const validDurations = {'short', 'medium', 'long'};
+    const validDifficulties = {'simple', 'engaged', 'demanding'};
+
+    if (action.id.trim().isEmpty) {
+      issues.add('Action in theme $bankTheme has no id');
+    } else if (!actionIds.add(action.id)) {
+      issues.add('Duplicate action id: ${action.id}');
+    }
+    if (action.textFr.trim().isEmpty) {
+      issues.add('Action ${action.id} has no textFr');
+    }
+    if (!validStatuses.contains(action.editorialStatus)) {
+      issues.add(
+        'Action ${action.id} has invalid editorialStatus '
+        '${action.editorialStatus}',
+      );
+    }
+    if (!validDurations.contains(action.duration)) {
+      issues.add('Action ${action.id} has invalid duration ${action.duration}');
+    }
+    if (!validDifficulties.contains(action.difficulty)) {
+      issues.add(
+        'Action ${action.id} has invalid difficulty ${action.difficulty}',
+      );
+    }
+    for (final number in action.nameNumbers) {
+      if (!validNameNumbers.contains(number)) {
+        issues.add('Action ${action.id} references $number');
+      }
+    }
+  }
+
+  static bool _containsArabicScript(String value) {
+    for (final rune in value.runes) {
+      if ((rune >= 0x0600 && rune <= 0x06FF) ||
+          (rune >= 0x0750 && rune <= 0x077F) ||
+          (rune >= 0x08A0 && rune <= 0x08FF) ||
+          (rune >= 0xFB50 && rune <= 0xFDFF) ||
+          (rune >= 0xFE70 && rune <= 0xFEFF)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

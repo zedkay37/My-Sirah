@@ -58,6 +58,9 @@
   "journeySubtitle": "تقدم عبر مجموعات الأسماء، نجمة بعد نجمة.",
   "journeyGalaxyHint": "المس المجرة النشطة للدخول في الرحلة.",
   "journeyDeckMapHint": "المس مجموعة لرؤية نجومها.",
+  "journeyMapZoomInTooltip": "تكبير",
+  "journeyMapZoomOutTooltip": "تصغير",
+  "journeyMapResetTooltip": "إعادة تمركز الخريطة",
   "journeyLoadError": "تعذر تحميل الرحلة",
   "journeyNotFound": "المجموعة غير موجودة",
   "journeyProgress": "{viewed}/{total} نجوم تمت رؤيتها",
@@ -117,8 +120,31 @@
   "treeListView": "عرض القائمة",
   "homeTagline": "معرفة النبيّ ﷺ ومحبّته واتّباعه",
   "homeDailyActionTitle": "عمل اليوم",
-  "homeExploreTodayName": "ادخل في هذا الاسم",
+  "homeExploreTodayName": "اكتشف هذا الاسم",
   "homeClassicNameTooltip": "البطاقة الكلاسيكية",
+  "homeResumeTitle": "استئناف المسار",
+  "homeResumeSubtitle": "آخر نجمة زرتها: {name}",
+  "@homeResumeSubtitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeJourneyTrace": "{viewed} مكتشفة · {meditated} متأملة · {recognized} معروفة",
+  "@homeJourneyTrace": {
+    "placeholders": {
+      "viewed": {
+        "type": "int"
+      },
+      "meditated": {
+        "type": "int"
+      },
+      "recognized": {
+        "type": "int"
+      }
+    }
+  },
   "homeContinueJourneyTitle": "متابعة الرحلة",
   "homeContinueJourneyFallback": "المتابعة من اسم اليوم",
   "homeContinueJourneySubtitle": "النجم التالي في {constellation}",

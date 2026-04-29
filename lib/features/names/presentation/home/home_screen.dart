@@ -8,7 +8,7 @@ import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/core/utils/hijri_utils.dart';
-import 'package:sirah_app/features/journey/data/repositories/journey_repository.dart';
+import 'package:sirah_app/features/journey/domain/name_progress_resolver.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/names/presentation/home/daily_name_card.dart';
 
@@ -21,7 +21,10 @@ class HomeScreen extends ConsumerWidget {
     final space = context.space;
 
     final dailyName = ref.watch(dailyNameProvider);
+    final namesAsync = ref.watch(namesProvider);
     final journey = ref.watch(journeyRepositoryProvider);
+    final lastSeen = ref.watch(settingsProvider.select((s) => s.lastSeen));
+    final journeySummary = ref.watch(journeyProgressSummaryProvider);
 
     return Scaffold(
       backgroundColor: colors.bg,
@@ -53,20 +56,20 @@ class HomeScreen extends ConsumerWidget {
                   error: (_, __) => const _NameCardSkeleton(),
                 ),
               ),
-              if (dailyName.hasValue) ...[
+              if (namesAsync.hasValue && lastSeen.isNotEmpty) ...[
                 SizedBox(height: space.lg),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: space.md),
-                  child: _ContinueJourneyCard(
-                    name: dailyName.requireValue,
-                    journey: journey.valueOrNull,
+                  child: _ResumeJourneyCard(
+                    names: namesAsync.requireValue,
+                    lastSeen: lastSeen,
                   ),
                 ),
               ],
               SizedBox(height: space.lg),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: space.md),
-                child: const _HomeAccessRow(),
+                child: _JourneyTrace(summary: journeySummary),
               ),
               SizedBox(height: space.xl),
             ],
@@ -77,116 +80,27 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class _HomeAccessRow extends ConsumerWidget {
-  const _HomeAccessRow();
+class _ResumeJourneyCard extends StatelessWidget {
+  const _ResumeJourneyCard({required this.names, required this.lastSeen});
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    final space = context.space;
-    final reviewCount = ref.watch(
-      settingsProvider.select(
-        (s) => s.leitnerBoxes.values.where((v) => v < 2).length,
-      ),
-    );
-
-    return Row(
-      children: [
-        Expanded(
-          child: _HomeAccessCard(
-            icon: Icons.travel_explore_outlined,
-            title: l10n.navJourney,
-            subtitle: l10n.homeJourneyShortcutSubtitle,
-            onTap: () => context.push('/journey'),
-          ),
-        ),
-        SizedBox(width: space.sm),
-        Expanded(
-          child: _HomeAccessCard(
-            icon: reviewCount > 0
-                ? Icons.rate_review_outlined
-                : Icons.local_library_outlined,
-            title: l10n.navLibrary,
-            subtitle: reviewCount > 0
-                ? l10n.studyReviewSubtitle(reviewCount)
-                : l10n.homeLibraryShortcutSubtitle,
-            onTap: () => context.push('/library'),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _HomeAccessCard extends StatelessWidget {
-  const _HomeAccessCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
+  final List<ProphetName> names;
+  final Map<int, DateTime> lastSeen;
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final space = context.space;
-    final typo = context.typo;
+    final latest = _latestSeen();
+    if (latest == null) return const SizedBox.shrink();
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: context.radii.mdAll,
-      child: Container(
-        constraints: const BoxConstraints(minHeight: 112),
-        padding: EdgeInsets.all(space.md),
-        decoration: BoxDecoration(
-          color: colors.bg2,
-          borderRadius: context.radii.mdAll,
-          border: Border.all(color: colors.line),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: colors.accent),
-            SizedBox(height: space.sm),
-            Text(title, style: typo.bodyLarge.copyWith(color: colors.ink)),
-            SizedBox(height: space.xs / 2),
-            Text(
-              subtitle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: typo.caption.copyWith(color: colors.muted),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+    final name = _nameByNumber(latest.key);
+    if (name == null) return const SizedBox.shrink();
 
-class _ContinueJourneyCard extends StatelessWidget {
-  const _ContinueJourneyCard({required this.name, required this.journey});
-
-  final ProphetName name;
-  final JourneyRepository? journey;
-
-  @override
-  Widget build(BuildContext context) {
     final colors = context.colors;
     final space = context.space;
     final typo = context.typo;
     final l10n = context.l10n;
-    final constellation = journey
-        ?.getConstellationsForName(name.number)
-        .firstOrNull;
-    final nextNumber = _nextNumber(constellation, name.number);
 
     return InkWell(
-      onTap: () => context.push('/name/$nextNumber/experience'),
+      onTap: () => context.push('/name/${name.number}/experience'),
       borderRadius: context.radii.lgAll,
       child: Container(
         padding: EdgeInsets.all(space.md),
@@ -197,23 +111,19 @@ class _ContinueJourneyCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(Icons.travel_explore_outlined, color: colors.accent),
+            Icon(Icons.auto_awesome_motion_outlined, color: colors.accent),
             SizedBox(width: space.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    l10n.homeContinueJourneyTitle,
+                    l10n.homeResumeTitle,
                     style: typo.bodyLarge.copyWith(color: colors.ink),
                   ),
                   SizedBox(height: space.xs / 2),
                   Text(
-                    constellation == null
-                        ? l10n.homeContinueJourneyFallback
-                        : l10n.homeContinueJourneySubtitle(
-                            constellation.titleFr,
-                          ),
+                    l10n.homeResumeSubtitle(name.transliteration),
                     style: typo.caption.copyWith(color: colors.muted),
                   ),
                 ],
@@ -226,12 +136,57 @@ class _ContinueJourneyCard extends StatelessWidget {
     );
   }
 
-  int _nextNumber(NameConstellation? constellation, int currentNumber) {
-    final numbers = constellation?.nameNumbers ?? const <int>[];
-    if (numbers.isEmpty) return currentNumber;
-    final index = numbers.indexOf(currentNumber);
-    if (index < 0 || index == numbers.length - 1) return numbers.first;
-    return numbers[index + 1];
+  MapEntry<int, DateTime>? _latestSeen() {
+    if (lastSeen.isEmpty) return null;
+    return lastSeen.entries.reduce((a, b) => a.value.isAfter(b.value) ? a : b);
+  }
+
+  ProphetName? _nameByNumber(int number) {
+    for (final name in names) {
+      if (name.number == number) return name;
+    }
+    return null;
+  }
+}
+
+class _JourneyTrace extends StatelessWidget {
+  const _JourneyTrace({required this.summary});
+
+  final AsyncValue<NameProgressSummary> summary;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+
+    final value = summary.valueOrNull;
+    if (value == null) return const SizedBox.shrink();
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: space.md, vertical: space.sm),
+      decoration: BoxDecoration(
+        color: colors.bg2.withValues(alpha: 0.62),
+        borderRadius: context.radii.mdAll,
+        border: Border.all(color: colors.line),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.timeline_outlined, color: colors.muted, size: 18),
+          SizedBox(width: space.sm),
+          Expanded(
+            child: Text(
+              context.l10n.homeJourneyTrace(
+                value.viewed,
+                value.meditated,
+                value.recognized,
+              ),
+              style: typo.caption.copyWith(color: colors.muted),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

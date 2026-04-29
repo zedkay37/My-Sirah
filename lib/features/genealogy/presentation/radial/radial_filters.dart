@@ -6,7 +6,7 @@ enum GenealogyFilter {
   wivesAndChildren,
   ancestors,
   unclesAndAunts,
-  ahlAlBayt
+  ahlAlBayt,
 }
 
 class RadialFilters extends StatelessWidget {
@@ -28,22 +28,42 @@ class RadialFilters extends StatelessWidget {
         children: [
           _buildChip(context, GenealogyFilter.all, context.l10n.treeFilterAll),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.wivesAndChildren, context.l10n.treeFilterWivesAndChildren),
+          _buildChip(
+            context,
+            GenealogyFilter.wivesAndChildren,
+            context.l10n.treeFilterWivesAndChildren,
+          ),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.ancestors, context.l10n.treeFilterAncestors),
+          _buildChip(
+            context,
+            GenealogyFilter.ancestors,
+            context.l10n.treeFilterAncestors,
+          ),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.unclesAndAunts, context.l10n.treeFilterUnclesAndAunts),
+          _buildChip(
+            context,
+            GenealogyFilter.unclesAndAunts,
+            context.l10n.treeFilterUnclesAndAunts,
+          ),
           SizedBox(width: context.space.sm),
-          _buildChip(context, GenealogyFilter.ahlAlBayt, context.l10n.treeFilterAhlAlBayt),
+          _buildChip(
+            context,
+            GenealogyFilter.ahlAlBayt,
+            context.l10n.treeFilterAhlAlBayt,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildChip(BuildContext context, GenealogyFilter filter, String label) {
+  Widget _buildChip(
+    BuildContext context,
+    GenealogyFilter filter,
+    String label,
+  ) {
     final isActive = activeFilter == filter;
     final colors = context.colors;
-    
+
     return FilterChip(
       label: Text(label),
       labelStyle: context.typo.body.copyWith(
@@ -55,9 +75,7 @@ class RadialFilters extends StatelessWidget {
       selectedColor: colors.accent.withValues(alpha: 0.15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(context.radii.lg),
-        side: BorderSide(
-          color: isActive ? colors.accent : colors.line,
-        ),
+        side: BorderSide(color: isActive ? colors.accent : colors.line),
       ),
       showCheckmark: false,
     );

@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 
 class ModeSelector extends StatelessWidget {
-  const ModeSelector({
-    super.key,
-    required this.active,
-    required this.onSelect,
-  });
+  const ModeSelector({super.key, required this.active, required this.onSelect});
 
   final String active;
   final ValueChanged<String> onSelect;

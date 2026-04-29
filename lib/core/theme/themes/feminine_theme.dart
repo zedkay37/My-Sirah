@@ -59,6 +59,12 @@ ThemeData _build() {
       onPrimary: Colors.white,
       onSurface: colors.ink,
     ),
-    extensions: [colors, typo, AppSpacing.defaults, AppRadius.defaults, elevation],
+    extensions: [
+      colors,
+      typo,
+      AppSpacing.defaults,
+      AppRadius.defaults,
+      elevation,
+    ],
   );
 }

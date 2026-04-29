@@ -196,7 +196,7 @@
   {
     "id": "miraj",
     "titleFr": "Constellation - Voyage nocturne (Miʿrāj)",
-    "titleAr": "Voyage nocturne (Miʿrāj)",
+    "titleAr": "الإسراء والمعراج",
     "descriptionFr": "Noms de la catégorie existante « Voyage nocturne (Miʿrāj) ».",
     "nameNumbers": [
       42,
@@ -211,7 +211,7 @@
   {
     "id": "guidance",
     "titleFr": "Constellation - Attributs de guidance",
-    "titleAr": "Attributs de guidance",
+    "titleAr": "الهداية والإرشاد",
     "descriptionFr": "Noms de la catégorie existante « Attributs de guidance ».",
     "nameNumbers": [
       54,
@@ -272,7 +272,7 @@
   {
     "id": "devotion",
     "titleFr": "Constellation - Dévotion et adoration",
-    "titleAr": "Dévotion et adoration",
+    "titleAr": "العبودية والعبادة",
     "descriptionFr": "Noms de la catégorie existante « Dévotion et adoration ».",
     "nameNumbers": [
       88,

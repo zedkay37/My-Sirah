@@ -73,10 +73,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeDailyActionTitle => 'عمل اليوم';
 
   @override
-  String get homeExploreTodayName => 'ادخل في هذا الاسم';
+  String get homeExploreTodayName => 'اكتشف هذا الاسم';
 
   @override
   String get homeClassicNameTooltip => 'البطاقة الكلاسيكية';
+
+  @override
+  String get homeResumeTitle => 'استئناف المسار';
+
+  @override
+  String homeResumeSubtitle(String name) {
+    return 'آخر نجمة زرتها: $name';
+  }
+
+  @override
+  String homeJourneyTrace(int viewed, int meditated, int recognized) {
+    return '$viewed مكتشفة · $meditated متأملة · $recognized معروفة';
+  }
 
   @override
   String get homeContinueJourneyTitle => 'متابعة الرحلة';
@@ -388,6 +401,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get journeyDeckMapHint => 'المس مجموعة لرؤية نجومها.';
+
+  @override
+  String get journeyMapZoomInTooltip => 'تكبير';
+
+  @override
+  String get journeyMapZoomOutTooltip => 'تصغير';
+
+  @override
+  String get journeyMapResetTooltip => 'إعادة تمركز الخريطة';
 
   @override
   String get journeyLoadError => 'تعذر تحميل الرحلة';

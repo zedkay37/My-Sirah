@@ -17,11 +17,15 @@ class ReviewScreen extends ConsumerWidget {
     return namesAsync.when(
       loading: () => Scaffold(
         backgroundColor: context.colors.bg,
-        body: Center(child: CircularProgressIndicator(color: context.colors.accent)),
+        body: Center(
+          child: CircularProgressIndicator(color: context.colors.accent),
+        ),
       ),
       error: (_, __) => Scaffold(
         backgroundColor: context.colors.bg,
-        body: Center(child: Icon(Icons.error_outline, color: context.colors.muted)),
+        body: Center(
+          child: Icon(Icons.error_outline, color: context.colors.muted),
+        ),
       ),
       data: (names) {
         final allNumbers = names.map((n) => n.number).toList();

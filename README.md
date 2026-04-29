@@ -6,6 +6,9 @@ La source de vérité produit actuelle est la V2 Journey :
 
 > Voyage stellaire autour des noms du Prophète ﷺ.
 
+Le journal vivant des décisions et du contexte de développement est dans
+[`DECISIONS.md`](DECISIONS.md).
+
 Chaque nom est une étoile. Chaque constellation structure un thème. Chaque étoile mène vers un Nom vivant qui articule sens, compréhension, contemplation, intention et mémorisation douce.
 
 ## Vision Produit

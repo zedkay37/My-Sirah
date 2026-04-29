@@ -33,6 +33,7 @@ const _experience = NameExperience(
       titleFr: 'La confiance avant la révélation',
       bodyFr: 'Un récit contemplatif court.',
       sourceNote: 'Source éditoriale.',
+      editorialStatus: 'validated',
     ),
   ],
   tafakkurPromptFr: 'Que puis-je méditer aujourd’hui ?',
@@ -41,7 +42,13 @@ const _experience = NameExperience(
 
 const _actions = NameActionBank(
   theme: 'trust',
-  actions: ['Tiens une promesse simple.'],
+  actions: [
+    NameActionItem(
+      id: 'trust_tafakkur_action',
+      textFr: 'Tiens une promesse simple.',
+      editorialStatus: 'validated',
+    ),
+  ],
 );
 
 Widget _wrap({
@@ -115,7 +122,16 @@ void main() {
       constellations: const [],
       experiences: const [],
       actionBanks: const [
-        NameActionBank(theme: 'general', actions: ['Agis avec sincérité.']),
+        NameActionBank(
+          theme: 'general',
+          actions: [
+            NameActionItem(
+              id: 'general_tafakkur_action',
+              textFr: 'Agis avec sincérité.',
+              editorialStatus: 'needs_review',
+            ),
+          ],
+        ),
       ],
     );
 

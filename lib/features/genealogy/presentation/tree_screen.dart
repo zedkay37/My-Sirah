@@ -72,8 +72,9 @@ class _Header extends StatelessWidget {
           Expanded(
             child: Text(
               context.l10n.treeTitle,
-              style: context.typo.displayMedium
-                  .copyWith(color: context.colors.ink),
+              style: context.typo.displayMedium.copyWith(
+                color: context.colors.ink,
+              ),
             ),
           ),
           ModeSelector(active: mode, onSelect: onModeChange),
@@ -88,4 +89,3 @@ class _Header extends StatelessWidget {
     );
   }
 }
-

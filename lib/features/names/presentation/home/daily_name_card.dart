@@ -18,7 +18,7 @@ class DailyNameCard extends ConsumerWidget {
 
   final ProphetName name;
   final NameConstellation? constellation;
-  final String? action;
+  final NameActionItem? action;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,8 +82,10 @@ class DailyNameCard extends ConsumerWidget {
                   SizedBox(height: space.lg),
                   _EtymologyFade(text: name.etymology),
                   SizedBox(height: space.lg),
-                  _DailyActionPreview(action: action),
-                  SizedBox(height: space.lg),
+                  if (action != null) ...[
+                    _DailyActionPreview(action: action!),
+                    SizedBox(height: space.lg),
+                  ],
                   _RitualActions(nameNumber: name.number),
                 ],
               ),
@@ -153,11 +155,9 @@ class _EtymologyFade extends StatelessWidget {
 }
 
 class _DailyActionPreview extends StatelessWidget {
-  const _DailyActionPreview({
-    required this.action,
-  });
+  const _DailyActionPreview({required this.action});
 
-  final String? action;
+  final NameActionItem action;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +189,7 @@ class _DailyActionPreview extends StatelessWidget {
                   ),
                   SizedBox(height: space.xs / 2),
                   Text(
-                    action ?? l10n.nameExperienceFallbackAction,
+                    action.textFr,
                     style: typo.body.copyWith(color: colors.ink, height: 1.4),
                   ),
                 ],

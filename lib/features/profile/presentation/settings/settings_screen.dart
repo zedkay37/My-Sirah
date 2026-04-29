@@ -34,10 +34,7 @@ class SettingsScreen extends ConsumerWidget {
           // ── Thème ──────────────────────────────────────────────────────────
           SectionHeader(title: l10n.settingsSectionTheme),
           SizedBox(height: space.sm),
-          ThemePicker(
-            current: settings.theme,
-            onChanged: notifier.setTheme,
-          ),
+          ThemePicker(current: settings.theme, onChanged: notifier.setTheme),
           SizedBox(height: space.xl),
 
           // ── Notification ───────────────────────────────────────────────────
@@ -218,15 +215,9 @@ class _AboutTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            context.l10n.appTitle,
-            style: typo.headline,
-          ),
+          Text(context.l10n.appTitle, style: typo.headline),
           SizedBox(height: space.xs),
-          Text(
-            'v1.0.0',
-            style: typo.caption.copyWith(color: colors.muted),
-          ),
+          Text('v1.0.0', style: typo.caption.copyWith(color: colors.muted)),
           SizedBox(height: space.md),
           GestureDetector(
             onTap: () => launchUrl(

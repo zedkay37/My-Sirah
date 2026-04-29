@@ -234,8 +234,7 @@ class _CategoryFilterBar extends StatelessWidget {
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(radii.pill),
                   border: Border.all(
-                    color:
-                        selectedSlug == null ? colors.accent : colors.line,
+                    color: selectedSlug == null ? colors.accent : colors.line,
                   ),
                 ),
                 child: Text(
@@ -299,9 +298,7 @@ class _CategoryFilterChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelected ? catBg : Colors.transparent,
         borderRadius: BorderRadius.circular(radii.pill),
-        border: Border.all(
-          color: isSelected ? catColor : colors.line,
-        ),
+        border: Border.all(color: isSelected ? catColor : colors.line),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -309,10 +306,7 @@ class _CategoryFilterChip extends StatelessWidget {
           Container(
             width: 6,
             height: 6,
-            decoration: BoxDecoration(
-              color: catColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: catColor, shape: BoxShape.circle),
           ),
           SizedBox(width: space.xs),
           Text(

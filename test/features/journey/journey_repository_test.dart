@@ -40,12 +40,35 @@ const _experience = NameExperience(
 
 const _generalActions = NameActionBank(
   theme: 'general',
-  actions: ['Action générale A', 'Action générale B'],
+  actions: [
+    NameActionItem(
+      id: 'general_a',
+      textFr: 'Action générale A',
+      editorialStatus: 'needs_review',
+    ),
+    NameActionItem(
+      id: 'general_b',
+      textFr: 'Action générale B',
+      editorialStatus: 'validated',
+    ),
+  ],
 );
 
 const _missionActions = NameActionBank(
   theme: 'mission',
-  actions: ['Action mission A', 'Action mission B', 'Action mission C'],
+  actions: [
+    NameActionItem(
+      id: 'mission_a',
+      textFr: 'Action mission A',
+      editorialStatus: 'validated',
+    ),
+    NameActionItem(
+      id: 'mission_b',
+      textFr: 'Action mission B',
+      editorialStatus: 'validated',
+    ),
+    NameActionItem(id: 'mission_c', textFr: 'Action mission C'),
+  ],
 );
 
 JourneyRepository _repo({
@@ -92,11 +115,20 @@ void main() {
       expect(repo.getExperienceForName(2), isNull);
     });
 
-    test('getActionsForTheme falls back to general for unknown theme', () {
+    test('getActionsForTheme returns validated actions only', () {
       final repo = _repo();
 
-      expect(repo.getActionsForTheme('mission'), _missionActions.actions);
-      expect(repo.getActionsForTheme('unknown'), _generalActions.actions);
+      expect(repo.getActionsForTheme('mission').map((action) => action.id), [
+        'mission_a',
+        'mission_b',
+      ]);
+      expect(
+        repo
+            .getActionsForTheme('mission', includeDrafts: true)
+            .map((action) => action.id),
+        ['mission_a', 'mission_b', 'mission_c'],
+      );
+      expect(repo.getActionsForTheme('unknown'), isEmpty);
     });
 
     test('getDailyActionForName is deterministic for same name and date', () {
@@ -108,14 +140,19 @@ void main() {
 
       expect(first, isNotNull);
       expect(first, second);
-      expect(_missionActions.actions, contains(first));
+      expect(
+        _missionActions.actions.where(
+          (action) => action.editorialStatus == 'validated',
+        ),
+        contains(first),
+      );
     });
 
-    test('getDailyActionForName uses general fallback without experience', () {
+    test('getDailyActionForName stays empty without specific experience', () {
       final repo = _repo();
       final action = repo.getDailyActionForName(2, DateTime(2026, 4, 28));
 
-      expect(_generalActions.actions, contains(action));
+      expect(action, isNull);
     });
 
     test('validate returns no issues for coherent data', () {
@@ -192,6 +229,42 @@ void main() {
       );
     });
 
+    test('validate exposes malformed action metadata', () {
+      final repo = _repo(
+        actionBanks: const [
+          _generalActions,
+          NameActionBank(
+            theme: 'mission',
+            actions: [
+              NameActionItem(
+                id: 'general_a',
+                textFr: '',
+                editorialStatus: 'published',
+                duration: 'instant',
+                difficulty: 'hard',
+                nameNumbers: [999],
+              ),
+            ],
+          ),
+        ],
+      );
+
+      final issues = repo.validate(validNameNumbers: {1, 2, 3});
+
+      expect(issues, contains('Duplicate action id: general_a'));
+      expect(issues, contains('Action general_a has no textFr'));
+      expect(
+        issues.any((issue) => issue.contains('invalid editorialStatus')),
+        isTrue,
+      );
+      expect(issues.any((issue) => issue.contains('invalid duration')), isTrue);
+      expect(
+        issues.any((issue) => issue.contains('invalid difficulty')),
+        isTrue,
+      );
+      expect(issues, contains('Action general_a references 999'));
+    });
+
     test('load reads real assets and validates name references', () async {
       final repo = await JourneyRepository.load();
       final names = await NamesJsonSource.load();
@@ -200,7 +273,10 @@ void main() {
       final issues = repo.validate(validNameNumbers: validNameNumbers);
 
       expect(repo.getConstellations(), isNotEmpty);
-      expect(repo.getActionsForTheme('general'), isNotEmpty);
+      expect(
+        repo.getActionsForTheme('general', includeDrafts: true),
+        isNotEmpty,
+      );
       expect(repo.getExperienceForName(1), isNotNull);
       expect(issues, isEmpty);
     });

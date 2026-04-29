@@ -48,7 +48,9 @@ class RiverNode extends StatelessWidget {
           children: [
             Text(
               familyRoleLabel(context, member.role).toUpperCase(),
-              style: context.typo.overline.copyWith(color: context.colors.muted),
+              style: context.typo.overline.copyWith(
+                color: context.colors.muted,
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: context.space.xs),
@@ -76,25 +78,18 @@ class RiverNode extends StatelessWidget {
       aligned = Center(child: card);
     } else {
       aligned = Row(
-        children: isLeft
-            ? [card, const Spacer()]
-            : [const Spacer(), card],
+        children: isLeft ? [card, const Spacer()] : [const Spacer(), card],
       );
     }
 
     return Padding(
-      padding: EdgeInsets.only(bottom: context.space.md),
-      child: aligned,
-    ).animate().fade(
-          duration: 300.ms,
-          delay: (index * 40).ms,
-        ).slideY(
-          begin: 0.05,
-          duration: 300.ms,
-          delay: (index * 40).ms,
-        );
+          padding: EdgeInsets.only(bottom: context.space.md),
+          child: aligned,
+        )
+        .animate()
+        .fade(duration: 300.ms, delay: (index * 40).ms)
+        .slideY(begin: 0.05, duration: 300.ms, delay: (index * 40).ms);
   }
-
 }
 
 class Tributary extends StatelessWidget {
@@ -120,56 +115,52 @@ class Tributary extends StatelessWidget {
     final count = members.length;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: space.md),
-      child: Center(
-        child: GestureDetector(
-          onTap: () => _showSheet(context),
-          child: Container(
-            width: 200,
-            padding: EdgeInsets.symmetric(
-              horizontal: space.md,
-              vertical: space.sm,
-            ),
-            decoration: BoxDecoration(
-              color: colors.bg2,
-              borderRadius: BorderRadius.circular(radii.sm),
-              border: Border.all(
-                color: colors.muted.withValues(alpha: 0.4),
-                width: 1,
-                strokeAlign: BorderSide.strokeAlignInside,
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.account_tree_outlined,
-                  size: 14,
-                  color: colors.muted,
+          padding: EdgeInsets.only(bottom: space.md),
+          child: Center(
+            child: GestureDetector(
+              onTap: () => _showSheet(context),
+              child: Container(
+                width: 200,
+                padding: EdgeInsets.symmetric(
+                  horizontal: space.md,
+                  vertical: space.sm,
                 ),
-                SizedBox(width: space.xs),
-                Flexible(
-                  child: Text(
-                    context.l10n.treeRoleUnclesAuntsCount(count),
-                    style: typo.caption.copyWith(color: colors.muted),
-                    textAlign: TextAlign.center,
+                decoration: BoxDecoration(
+                  color: colors.bg2,
+                  borderRadius: BorderRadius.circular(radii.sm),
+                  border: Border.all(
+                    color: colors.muted.withValues(alpha: 0.4),
+                    width: 1,
+                    strokeAlign: BorderSide.strokeAlignInside,
                   ),
                 ),
-                SizedBox(width: space.xs),
-                Icon(Icons.chevron_right, size: 14, color: colors.muted),
-              ],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.account_tree_outlined,
+                      size: 14,
+                      color: colors.muted,
+                    ),
+                    SizedBox(width: space.xs),
+                    Flexible(
+                      child: Text(
+                        context.l10n.treeRoleUnclesAuntsCount(count),
+                        style: typo.caption.copyWith(color: colors.muted),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(width: space.xs),
+                    Icon(Icons.chevron_right, size: 14, color: colors.muted),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    ).animate().fade(
-          duration: 300.ms,
-          delay: (index * 40).ms,
-        ).slideY(
-          begin: 0.05,
-          duration: 300.ms,
-          delay: (index * 40).ms,
-        );
+        )
+        .animate()
+        .fade(duration: 300.ms, delay: (index * 40).ms)
+        .slideY(begin: 0.05, duration: 300.ms, delay: (index * 40).ms);
   }
 
   void _showSheet(BuildContext context) {
@@ -182,9 +173,7 @@ class Tributary extends StatelessWidget {
       context: context,
       backgroundColor: colors.bg,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(radii.lg),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(radii.lg)),
       ),
       builder: (ctx) => SafeArea(
         child: Column(
@@ -215,7 +204,8 @@ class Tributary extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: space.sm),
                 shrinkWrap: true,
                 itemCount: members.length,
-                separatorBuilder: (_, __) => const Divider(height: 1, indent: 16, endIndent: 16),
+                separatorBuilder: (_, __) =>
+                    const Divider(height: 1, indent: 16, endIndent: 16),
                 itemBuilder: (ctx, i) {
                   final m = members[i];
                   return ListTile(

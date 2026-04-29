@@ -8,14 +8,18 @@ import 'package:sirah_app/features/genealogy/presentation/river/river_node.dart'
 
 enum RiverStream { paternal, maternal, descendants }
 
-final riverStreamProvider = StateProvider<RiverStream>((ref) => RiverStream.paternal);
+final riverStreamProvider = StateProvider<RiverStream>(
+  (ref) => RiverStream.paternal,
+);
 
 sealed class _StreamEntry {}
+
 class _NodeEntry extends _StreamEntry {
   _NodeEntry(this.member, {this.isProphet = false});
   final FamilyMember member;
   final bool isProphet;
 }
+
 class _TributaryEntry extends _StreamEntry {
   _TributaryEntry(this.members);
   final List<FamilyMember> members;
@@ -29,7 +33,10 @@ class RiverView extends ConsumerStatefulWidget {
 }
 
 class _RiverViewState extends ConsumerState<RiverView> {
-  List<_StreamEntry> _buildStream(RiverStream stream, GenealogyRepository repo) {
+  List<_StreamEntry> _buildStream(
+    RiverStream stream,
+    GenealogyRepository repo,
+  ) {
     switch (stream) {
       case RiverStream.paternal:
         return _buildPaternalStream(repo);
@@ -43,12 +50,12 @@ class _RiverViewState extends ConsumerState<RiverView> {
   List<_StreamEntry> _buildPaternalStream(GenealogyRepository repo) {
     final entries = <_StreamEntry>[];
     final chain = <FamilyMember>[];
-    
+
     var current = repo.getById('muhammad');
     while (current != null) {
       chain.add(current);
       if (current.isBoundary || current.parentId == null) break;
-      
+
       final next = repo.getById(current.parentId!);
       if (next?.isTraditional == true) break;
       current = next;
@@ -58,12 +65,16 @@ class _RiverViewState extends ConsumerState<RiverView> {
     for (int i = 0; i < reversed.length; i++) {
       final m = reversed[i];
       entries.add(_NodeEntry(m, isProphet: m.role == FamilyRole.prophet));
-      
+
       if (m.id == 'abdulmuttalib') {
-        final unclesAunts = repo.getAll().where((x) => 
-          (x.role == FamilyRole.uncle || x.role == FamilyRole.aunt) && 
-          x.parentId == 'abdulmuttalib'
-        ).toList();
+        final unclesAunts = repo
+            .getAll()
+            .where(
+              (x) =>
+                  (x.role == FamilyRole.uncle || x.role == FamilyRole.aunt) &&
+                  x.parentId == 'abdulmuttalib',
+            )
+            .toList();
         if (unclesAunts.isNotEmpty) {
           entries.add(_TributaryEntry(unclesAunts));
         }
@@ -101,13 +112,15 @@ class _RiverViewState extends ConsumerState<RiverView> {
 
   List<_StreamEntry> _buildDescendantsStream(GenealogyRepository repo) {
     final entries = <_StreamEntry>[];
-    
+
     final prophet = repo.getProphet();
     entries.add(_NodeEntry(prophet, isProphet: true));
 
     final wives = repo.getByRole(FamilyRole.wife).toList()
-      ..sort((a, b) => (a.marriageOrder ?? 99).compareTo(b.marriageOrder ?? 99));
-    
+      ..sort(
+        (a, b) => (a.marriageOrder ?? 99).compareTo(b.marriageOrder ?? 99),
+      );
+
     for (final w in wives) {
       entries.add(_NodeEntry(w));
     }
@@ -148,11 +161,13 @@ class _RiverViewState extends ConsumerState<RiverView> {
                   children: [
                     const Positioned.fill(child: _RiverLine()),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: context.space.xl),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.space.xl,
+                      ),
                       child: Column(
                         children: [
                           for (int i = 0; i < entries.length; i++)
-                            _buildEntry(entries[i], i)
+                            _buildEntry(entries[i], i),
                         ],
                       ),
                     ),
@@ -179,11 +194,7 @@ class _RiverViewState extends ConsumerState<RiverView> {
       );
     } else if (entry is _TributaryEntry) {
       final isLeft = index % 2 == 0;
-      return Tributary(
-        members: entry.members,
-        isLeft: isLeft,
-        index: index,
-      );
+      return Tributary(members: entry.members, isLeft: isLeft, index: index);
     }
     return const SizedBox.shrink();
   }
@@ -244,7 +255,9 @@ class _StreamButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isActive ? context.colors.accent : context.colors.muted;
-    final bgColor = isActive ? context.colors.accent.withValues(alpha: 0.15) : context.colors.bg2;
+    final bgColor = isActive
+        ? context.colors.accent.withValues(alpha: 0.15)
+        : context.colors.bg2;
     final borderColor = isActive ? context.colors.accent : context.colors.line;
 
     return InkWell(
@@ -260,10 +273,7 @@ class _StreamButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(context.radii.pill),
           border: Border.all(color: borderColor),
         ),
-        child: Text(
-          label,
-          style: context.typo.button.copyWith(color: color),
-        ),
+        child: Text(label, style: context.typo.button.copyWith(color: color)),
       ),
     );
   }

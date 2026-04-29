@@ -25,8 +25,31 @@
   "homeTagline": "Connaître, aimer et suivre le Prophète ﷺ",
   "homeCategorySection": "Explorer par catégorie",
   "homeDailyActionTitle": "Action du jour",
-  "homeExploreTodayName": "Entrer dans ce nom",
+  "homeExploreTodayName": "Découvrir ce nom",
   "homeClassicNameTooltip": "Fiche classique",
+  "homeResumeTitle": "Reprendre mon chemin",
+  "homeResumeSubtitle": "Dernière étoile explorée : {name}",
+  "@homeResumeSubtitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeJourneyTrace": "{viewed} découverts · {meditated} contemplés · {recognized} reconnus",
+  "@homeJourneyTrace": {
+    "placeholders": {
+      "viewed": {
+        "type": "int"
+      },
+      "meditated": {
+        "type": "int"
+      },
+      "recognized": {
+        "type": "int"
+      }
+    }
+  },
   "homeContinueJourneyTitle": "Continuer mon voyage",
   "homeContinueJourneyFallback": "Reprendre depuis le nom du jour",
   "homeContinueJourneySubtitle": "Prochaine étoile dans {constellation}",
@@ -192,6 +215,9 @@
   "journeySubtitle": "Avancez par constellations de noms, une étoile après l’autre.",
   "journeyGalaxyHint": "Touchez la galaxie active pour entrer dans le voyage.",
   "journeyDeckMapHint": "Touchez une constellation pour voir ses étoiles.",
+  "journeyMapZoomInTooltip": "Zoomer",
+  "journeyMapZoomOutTooltip": "Dézoomer",
+  "journeyMapResetTooltip": "Recentrer la carte",
   "journeyLoadError": "Impossible de charger le voyage",
   "journeyNotFound": "Constellation introuvable",
   "journeyProgress": "{viewed}/{total} étoiles vues",

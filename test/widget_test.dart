@@ -56,14 +56,29 @@ const _testExperience = NameExperience(
 
 const _testActionBank = NameActionBank(
   theme: 'praise',
-  actions: ['Remercie quelqu’un aujourd’hui.'],
+  actions: [
+    NameActionItem(
+      id: 'praise_widget_action',
+      textFr: 'Remercie quelqu’un aujourd’hui.',
+      editorialStatus: 'validated',
+    ),
+  ],
 );
 
 final _testJourney = JourneyRepository(
   constellations: const [_testConstellation],
   experiences: const [_testExperience],
   actionBanks: const [
-    NameActionBank(theme: 'general', actions: ['Agis avec sincérité.']),
+    NameActionBank(
+      theme: 'general',
+      actions: [
+        NameActionItem(
+          id: 'general_widget_action',
+          textFr: 'Agis avec sincérité.',
+          editorialStatus: 'needs_review',
+        ),
+      ],
+    ),
     _testActionBank,
   ],
 );
@@ -189,12 +204,16 @@ void main() {
         const Duration(milliseconds: 500),
       ); // fin des animations
       expect(find.byType(HomeScreen), findsOneWidget);
-      expect(find.text('Entrer dans ce nom'), findsOneWidget);
+      expect(find.text('Découvrir ce nom'), findsOneWidget);
       expect(find.text('Remercie quelqu’un aujourd’hui.'), findsOneWidget);
       expect(find.text('Je l’ai vécue'), findsNothing);
-      expect(find.text('Continuer mon voyage'), findsOneWidget);
-      expect(find.text('Voyage'), findsOneWidget);
-      expect(find.text('Bibliothèque'), findsOneWidget);
+      expect(find.text('Continuer mon voyage'), findsNothing);
+      expect(find.text('Voyage'), findsNothing);
+      expect(find.text('Bibliothèque'), findsNothing);
+      expect(
+        find.text('0 découverts · 0 contemplés · 0 reconnus'),
+        findsOneWidget,
+      );
       expect(find.text('Explorer par catégorie'), findsNothing);
     });
   });

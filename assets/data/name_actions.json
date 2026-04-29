@@ -2,41 +2,161 @@
   {
     "theme": "general",
     "actions": [
-      "Commence une action simple avec une intention claire.",
-      "Adresse une parole utile et douce à quelqu'un.",
-      "Prends un moment court pour remercier Allah avec présence."
+      {
+        "id": "general_intention_001",
+        "textFr": "Commence une action simple avec une intention claire.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["intention"],
+        "nameNumbers": []
+      },
+      {
+        "id": "general_speech_001",
+        "textFr": "Adresse une parole utile et douce à quelqu'un.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["speech"],
+        "nameNumbers": []
+      },
+      {
+        "id": "general_gratitude_001",
+        "textFr": "Prends un moment court pour remercier Allah avec présence.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["gratitude"],
+        "nameNumbers": []
+      }
     ]
   },
   {
     "theme": "praise",
     "actions": [
-      "Remercie explicitement quelqu'un pour un bien reçu.",
-      "Transforme une plainte en une parole de gratitude.",
-      "Mentionne une bénédiction précise dans ta journée."
+      {
+        "id": "praise_gratitude_001",
+        "textFr": "Remercie explicitement quelqu'un pour un bien reçu.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["gratitude", "relationship"],
+        "nameNumbers": []
+      },
+      {
+        "id": "praise_gratitude_002",
+        "textFr": "Transforme une plainte en une parole de gratitude.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "gratitude"],
+        "nameNumbers": []
+      },
+      {
+        "id": "praise_gratitude_003",
+        "textFr": "Mentionne une bénédiction précise dans ta journée.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["gratitude"],
+        "nameNumbers": []
+      }
     ]
   },
   {
     "theme": "mission",
     "actions": [
-      "Applique aujourd'hui un enseignement prophétique concret.",
-      "Partage une parole bénéfique sans débat ni dureté.",
-      "Choisis une action qui clarifie ton intention."
+      {
+        "id": "mission_teaching_001",
+        "textFr": "Applique aujourd'hui un enseignement prophétique concret.",
+        "editorialStatus": "needs_review",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["practice"],
+        "nameNumbers": []
+      },
+      {
+        "id": "mission_speech_001",
+        "textFr": "Partage une parole bénéfique sans débat ni dureté.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "relationship"],
+        "nameNumbers": []
+      },
+      {
+        "id": "mission_intention_001",
+        "textFr": "Choisis une action qui clarifie ton intention.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["intention"],
+        "nameNumbers": []
+      }
     ]
   },
   {
     "theme": "trust",
     "actions": [
-      "Tiens une promesse, même petite.",
-      "Évite une exagération dans ta parole aujourd'hui.",
-      "Rends quelque chose confié avec soin."
+      {
+        "id": "trust_promise_001",
+        "textFr": "Tiens une promesse, même petite.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["relationship", "commitment"],
+        "nameNumbers": []
+      },
+      {
+        "id": "trust_speech_001",
+        "textFr": "Évite une exagération dans ta parole aujourd'hui.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech"],
+        "nameNumbers": []
+      },
+      {
+        "id": "trust_deposit_001",
+        "textFr": "Rends quelque chose confié avec soin.",
+        "editorialStatus": "needs_review",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["trust", "relationship"],
+        "nameNumbers": []
+      }
     ]
   },
   {
     "theme": "nobility",
     "actions": [
-      "Honore un lien familial par un message simple.",
-      "Réponds avec dignité là où tu pourrais réagir trop vite.",
-      "Fais une petite action discrète pour préserver l'honneur de quelqu'un."
+      {
+        "id": "nobility_family_001",
+        "textFr": "Honore un lien familial par un message simple.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["family", "relationship"],
+        "nameNumbers": []
+      },
+      {
+        "id": "nobility_response_001",
+        "textFr": "Réponds avec dignité là où tu pourrais réagir trop vite.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "character"],
+        "nameNumbers": []
+      },
+      {
+        "id": "nobility_discretion_001",
+        "textFr": "Fais une petite action discrète pour préserver l'honneur de quelqu'un.",
+        "editorialStatus": "needs_review",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["relationship", "character"],
+        "nameNumbers": []
+      }
     ]
   }
 ]

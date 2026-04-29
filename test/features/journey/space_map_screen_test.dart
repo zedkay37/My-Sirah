@@ -67,7 +67,16 @@ final _journey = JourneyRepository(
   constellations: const [_constellation],
   experiences: const [],
   actionBanks: const [
-    NameActionBank(theme: 'general', actions: ['Agis.']),
+    NameActionBank(
+      theme: 'general',
+      actions: [
+        NameActionItem(
+          id: 'general_space_map_action',
+          textFr: 'Agis.',
+          editorialStatus: 'needs_review',
+        ),
+      ],
+    ),
   ],
 );
 
@@ -120,6 +129,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Constellation de la Louange'), findsOneWidget);
+    expect(find.byTooltip('Zoomer'), findsOneWidget);
+    expect(find.byTooltip('Dézoomer'), findsOneWidget);
+    expect(find.byTooltip('Recentrer la carte'), findsOneWidget);
     expect(
       find.text('Touchez une constellation pour voir ses étoiles.'),
       findsOneWidget,
@@ -151,17 +163,20 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Muhammad'), findsOneWidget);
-    expect(find.text('Ahmad'), findsOneWidget);
-    expect(find.text('À découvrir'), findsOneWidget);
+    expect(find.bySemanticsLabel('Ahmad'), findsOneWidget);
     expect(find.text('Vue'), findsOneWidget);
-    expect(find.text('Méditée'), findsOneWidget);
-    expect(find.text('Vécue'), findsOneWidget);
-    expect(find.text('Reconnue'), findsOneWidget);
+    expect(find.text('Ahmad'), findsNothing);
 
-    await tester.tap(find.text('Muhammad'));
+    await tester.tap(find.bySemanticsLabel('Ahmad'));
     await tester.pumpAndSettle();
 
-    expect(find.text('name:1'), findsOneWidget);
+    expect(find.text('Ahmad'), findsOneWidget);
+    expect(find.text('À découvrir'), findsOneWidget);
+
+    await tester.tap(find.text('Découvrir ce nom'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('name:2'), findsOneWidget);
   });
 
   testWidgets('ConstellationSpaceMapScreen rejects mismatched deck layout', (

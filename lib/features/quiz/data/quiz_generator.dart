@@ -17,13 +17,11 @@ class QcmQuestion {
 }
 
 class QuizSession {
-  QuizSession.qcm(this.questions)
-      : type = QuizType.qcm,
-        names = const [];
+  QuizSession.qcm(this.questions) : type = QuizType.qcm, names = const [];
 
   QuizSession.flashcards(this.names)
-      : type = QuizType.flashcards,
-        questions = const [];
+    : type = QuizType.flashcards,
+      questions = const [];
 
   final QuizType type;
   final List<QcmQuestion> questions;
@@ -61,7 +59,10 @@ class QuizGenerator {
   // Masque la translittération dans le texte (insensible à la casse)
   static String _mask(String text, String transliteration) {
     if (transliteration.isEmpty || text.isEmpty) return text;
-    final pattern = RegExp(RegExp.escape(transliteration), caseSensitive: false);
+    final pattern = RegExp(
+      RegExp.escape(transliteration),
+      caseSensitive: false,
+    );
     return text.replaceAll(pattern, '[…]');
   }
 
@@ -71,28 +72,30 @@ class QuizGenerator {
     int count,
   ) {
     // Préférer des noms de la même catégorie pour rendre le quiz plus pertinent
-    final sameCategory = (all
-          .where(
-            (n) =>
-                n.categorySlug == target.categorySlug &&
-                n.number != target.number,
-          )
-          .toList()
-        ..shuffle())
-        .take(count)
-        .toList();
+    final sameCategory =
+        (all
+                .where(
+                  (n) =>
+                      n.categorySlug == target.categorySlug &&
+                      n.number != target.number,
+                )
+                .toList()
+              ..shuffle())
+            .take(count)
+            .toList();
 
     if (sameCategory.length >= count) return sameCategory;
 
     final needed = count - sameCategory.length;
-    final others = (all
-          .where(
-            (n) => n.number != target.number && !sameCategory.contains(n),
-          )
-          .toList()
-        ..shuffle())
-        .take(needed)
-        .toList();
+    final others =
+        (all
+                .where(
+                  (n) => n.number != target.number && !sameCategory.contains(n),
+                )
+                .toList()
+              ..shuffle())
+            .take(needed)
+            .toList();
 
     return [...sameCategory, ...others];
   }

@@ -66,15 +66,20 @@ class _NameExperienceScreenState extends ConsumerState<NameExperienceScreen> {
               name: name,
               constellations: journey.getConstellationsForName(name.number),
               experience: journey.getExperienceForName(name.number),
-              action: journey.getDailyActionForName(
-                name.number,
-                DateTime.now(),
-              ),
+              action: _specificActionFor(journey, name.number),
             ),
           );
         },
       ),
     );
+  }
+
+  NameActionItem? _specificActionFor(JourneyRepository journey, int number) {
+    final experience = journey.getExperienceForName(number);
+    if (experience == null || experience.practiceTheme == 'general') {
+      return null;
+    }
+    return journey.getDailyActionForName(number, DateTime.now());
   }
 
   ProphetName? _findName(List<ProphetName> names, int number) {
@@ -97,7 +102,7 @@ class _ExperienceContent extends StatelessWidget {
   final ProphetName name;
   final List<NameConstellation> constellations;
   final NameExperience? experience;
-  final String? action;
+  final NameActionItem? action;
 
   @override
   Widget build(BuildContext context) {
@@ -204,10 +209,12 @@ class _ExperienceContent extends StatelessWidget {
               style: typo.bodyLarge.copyWith(color: colors.ink, height: 1.5),
             ),
           ),
-          SizedBox(height: space.xl),
-          SectionHeader(title: context.l10n.nameExperienceActionOfDay),
-          SizedBox(height: space.md),
-          _ActionPanel(action: action, nameNumber: name.number),
+          if (action != null) ...[
+            SizedBox(height: space.xl),
+            SectionHeader(title: context.l10n.nameExperienceActionOfDay),
+            SizedBox(height: space.md),
+            _ActionPanel(action: action!, nameNumber: name.number),
+          ],
           SizedBox(height: space.xl),
           OutlinedButton.icon(
             onPressed: () => context.push('/name/${name.number}'),
@@ -338,7 +345,7 @@ class _StoryPanel extends StatelessWidget {
 class _ActionPanel extends ConsumerWidget {
   const _ActionPanel({required this.action, required this.nameNumber});
 
-  final String? action;
+  final NameActionItem action;
   final int nameNumber;
 
   @override
@@ -362,7 +369,7 @@ class _ActionPanel extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  action ?? context.l10n.nameExperienceFallbackAction,
+                  action.textFr,
                   style: typo.bodyLarge.copyWith(
                     color: colors.ink,
                     height: 1.45,

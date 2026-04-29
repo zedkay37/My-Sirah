@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NameActionBank {
 
- String get theme; List<String> get actions;
+ String get theme; List<NameActionItem> get actions;
 /// Create a copy of NameActionBank
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $NameActionBankCopyWith<$Res>  {
   factory $NameActionBankCopyWith(NameActionBank value, $Res Function(NameActionBank) _then) = _$NameActionBankCopyWithImpl;
 @useResult
 $Res call({
- String theme, List<String> actions
+ String theme, List<NameActionItem> actions
 });
 
 
@@ -69,7 +69,7 @@ class _$NameActionBankCopyWithImpl<$Res>
   return _then(_self.copyWith(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as String,actions: null == actions ? _self.actions : actions // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<NameActionItem>,
   ));
 }
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String theme,  List<String> actions)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String theme,  List<NameActionItem> actions)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NameActionBank() when $default != null:
 return $default(_that.theme,_that.actions);case _:
@@ -175,7 +175,7 @@ return $default(_that.theme,_that.actions);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String theme,  List<String> actions)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String theme,  List<NameActionItem> actions)  $default,) {final _that = this;
 switch (_that) {
 case _NameActionBank():
 return $default(_that.theme,_that.actions);case _:
@@ -195,7 +195,7 @@ return $default(_that.theme,_that.actions);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String theme,  List<String> actions)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String theme,  List<NameActionItem> actions)?  $default,) {final _that = this;
 switch (_that) {
 case _NameActionBank() when $default != null:
 return $default(_that.theme,_that.actions);case _:
@@ -210,12 +210,12 @@ return $default(_that.theme,_that.actions);case _:
 @JsonSerializable()
 
 class _NameActionBank implements NameActionBank {
-  const _NameActionBank({required this.theme, final  List<String> actions = const []}): _actions = actions;
+  const _NameActionBank({required this.theme, final  List<NameActionItem> actions = const []}): _actions = actions;
   factory _NameActionBank.fromJson(Map<String, dynamic> json) => _$NameActionBankFromJson(json);
 
 @override final  String theme;
- final  List<String> _actions;
-@override@JsonKey() List<String> get actions {
+ final  List<NameActionItem> _actions;
+@override@JsonKey() List<NameActionItem> get actions {
   if (_actions is EqualUnmodifiableListView) return _actions;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_actions);
@@ -255,7 +255,7 @@ abstract mixin class _$NameActionBankCopyWith<$Res> implements $NameActionBankCo
   factory _$NameActionBankCopyWith(_NameActionBank value, $Res Function(_NameActionBank) _then) = __$NameActionBankCopyWithImpl;
 @override @useResult
 $Res call({
- String theme, List<String> actions
+ String theme, List<NameActionItem> actions
 });
 
 
@@ -276,7 +276,303 @@ class __$NameActionBankCopyWithImpl<$Res>
   return _then(_NameActionBank(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as String,actions: null == actions ? _self._actions : actions // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<NameActionItem>,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$NameActionItem {
+
+ String get id; String get textFr; String get editorialStatus; String get duration; String get difficulty; List<String> get contexts; List<int> get nameNumbers; String get sourceNote;
+/// Create a copy of NameActionItem
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$NameActionItemCopyWith<NameActionItem> get copyWith => _$NameActionItemCopyWithImpl<NameActionItem>(this as NameActionItem, _$identity);
+
+  /// Serializes this NameActionItem to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NameActionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.textFr, textFr) || other.textFr == textFr)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other.contexts, contexts)&&const DeepCollectionEquality().equals(other.nameNumbers, nameNumbers)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,textFr,editorialStatus,duration,difficulty,const DeepCollectionEquality().hash(contexts),const DeepCollectionEquality().hash(nameNumbers),sourceNote);
+
+@override
+String toString() {
+  return 'NameActionItem(id: $id, textFr: $textFr, editorialStatus: $editorialStatus, duration: $duration, difficulty: $difficulty, contexts: $contexts, nameNumbers: $nameNumbers, sourceNote: $sourceNote)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $NameActionItemCopyWith<$Res>  {
+  factory $NameActionItemCopyWith(NameActionItem value, $Res Function(NameActionItem) _then) = _$NameActionItemCopyWithImpl;
+@useResult
+$Res call({
+ String id, String textFr, String editorialStatus, String duration, String difficulty, List<String> contexts, List<int> nameNumbers, String sourceNote
+});
+
+
+
+
+}
+/// @nodoc
+class _$NameActionItemCopyWithImpl<$Res>
+    implements $NameActionItemCopyWith<$Res> {
+  _$NameActionItemCopyWithImpl(this._self, this._then);
+
+  final NameActionItem _self;
+  final $Res Function(NameActionItem) _then;
+
+/// Create a copy of NameActionItem
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? textFr = null,Object? editorialStatus = null,Object? duration = null,Object? difficulty = null,Object? contexts = null,Object? nameNumbers = null,Object? sourceNote = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,textFr: null == textFr ? _self.textFr : textFr // ignore: cast_nullable_to_non_nullable
+as String,editorialStatus: null == editorialStatus ? _self.editorialStatus : editorialStatus // ignore: cast_nullable_to_non_nullable
+as String,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as String,difficulty: null == difficulty ? _self.difficulty : difficulty // ignore: cast_nullable_to_non_nullable
+as String,contexts: null == contexts ? _self.contexts : contexts // ignore: cast_nullable_to_non_nullable
+as List<String>,nameNumbers: null == nameNumbers ? _self.nameNumbers : nameNumbers // ignore: cast_nullable_to_non_nullable
+as List<int>,sourceNote: null == sourceNote ? _self.sourceNote : sourceNote // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [NameActionItem].
+extension NameActionItemPatterns on NameActionItem {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _NameActionItem value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _NameActionItem() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _NameActionItem value)  $default,){
+final _that = this;
+switch (_that) {
+case _NameActionItem():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _NameActionItem value)?  $default,){
+final _that = this;
+switch (_that) {
+case _NameActionItem() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _NameActionItem() when $default != null:
+return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote)  $default,) {final _that = this;
+switch (_that) {
+case _NameActionItem():
+return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String textFr,  String editorialStatus,  String duration,  String difficulty,  List<String> contexts,  List<int> nameNumbers,  String sourceNote)?  $default,) {final _that = this;
+switch (_that) {
+case _NameActionItem() when $default != null:
+return $default(_that.id,_that.textFr,_that.editorialStatus,_that.duration,_that.difficulty,_that.contexts,_that.nameNumbers,_that.sourceNote);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _NameActionItem implements NameActionItem {
+  const _NameActionItem({required this.id, required this.textFr, this.editorialStatus = 'needs_review', this.duration = 'short', this.difficulty = 'simple', final  List<String> contexts = const [], final  List<int> nameNumbers = const [], this.sourceNote = ''}): _contexts = contexts,_nameNumbers = nameNumbers;
+  factory _NameActionItem.fromJson(Map<String, dynamic> json) => _$NameActionItemFromJson(json);
+
+@override final  String id;
+@override final  String textFr;
+@override@JsonKey() final  String editorialStatus;
+@override@JsonKey() final  String duration;
+@override@JsonKey() final  String difficulty;
+ final  List<String> _contexts;
+@override@JsonKey() List<String> get contexts {
+  if (_contexts is EqualUnmodifiableListView) return _contexts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_contexts);
+}
+
+ final  List<int> _nameNumbers;
+@override@JsonKey() List<int> get nameNumbers {
+  if (_nameNumbers is EqualUnmodifiableListView) return _nameNumbers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_nameNumbers);
+}
+
+@override@JsonKey() final  String sourceNote;
+
+/// Create a copy of NameActionItem
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$NameActionItemCopyWith<_NameActionItem> get copyWith => __$NameActionItemCopyWithImpl<_NameActionItem>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$NameActionItemToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NameActionItem&&(identical(other.id, id) || other.id == id)&&(identical(other.textFr, textFr) || other.textFr == textFr)&&(identical(other.editorialStatus, editorialStatus) || other.editorialStatus == editorialStatus)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other._contexts, _contexts)&&const DeepCollectionEquality().equals(other._nameNumbers, _nameNumbers)&&(identical(other.sourceNote, sourceNote) || other.sourceNote == sourceNote));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,textFr,editorialStatus,duration,difficulty,const DeepCollectionEquality().hash(_contexts),const DeepCollectionEquality().hash(_nameNumbers),sourceNote);
+
+@override
+String toString() {
+  return 'NameActionItem(id: $id, textFr: $textFr, editorialStatus: $editorialStatus, duration: $duration, difficulty: $difficulty, contexts: $contexts, nameNumbers: $nameNumbers, sourceNote: $sourceNote)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$NameActionItemCopyWith<$Res> implements $NameActionItemCopyWith<$Res> {
+  factory _$NameActionItemCopyWith(_NameActionItem value, $Res Function(_NameActionItem) _then) = __$NameActionItemCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String textFr, String editorialStatus, String duration, String difficulty, List<String> contexts, List<int> nameNumbers, String sourceNote
+});
+
+
+
+
+}
+/// @nodoc
+class __$NameActionItemCopyWithImpl<$Res>
+    implements _$NameActionItemCopyWith<$Res> {
+  __$NameActionItemCopyWithImpl(this._self, this._then);
+
+  final _NameActionItem _self;
+  final $Res Function(_NameActionItem) _then;
+
+/// Create a copy of NameActionItem
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? textFr = null,Object? editorialStatus = null,Object? duration = null,Object? difficulty = null,Object? contexts = null,Object? nameNumbers = null,Object? sourceNote = null,}) {
+  return _then(_NameActionItem(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,textFr: null == textFr ? _self.textFr : textFr // ignore: cast_nullable_to_non_nullable
+as String,editorialStatus: null == editorialStatus ? _self.editorialStatus : editorialStatus // ignore: cast_nullable_to_non_nullable
+as String,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as String,difficulty: null == difficulty ? _self.difficulty : difficulty // ignore: cast_nullable_to_non_nullable
+as String,contexts: null == contexts ? _self._contexts : contexts // ignore: cast_nullable_to_non_nullable
+as List<String>,nameNumbers: null == nameNumbers ? _self._nameNumbers : nameNumbers // ignore: cast_nullable_to_non_nullable
+as List<int>,sourceNote: null == sourceNote ? _self.sourceNote : sourceNote // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
