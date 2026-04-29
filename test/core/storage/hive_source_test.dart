@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:sirah_app/core/providers/user_state.dart';
@@ -9,14 +10,22 @@ import 'package:sirah_app/core/theme/theme_key.dart';
 
 void main() {
   late Directory tempDir;
+  late FlutterExceptionHandler? previousOnError;
+  late List<FlutterErrorDetails> reportedErrors;
 
   setUp(() async {
+    previousOnError = FlutterError.onError;
+    reportedErrors = <FlutterErrorDetails>[];
+    FlutterError.onError = reportedErrors.add;
+
     tempDir = await Directory.systemTemp.createTemp('sirah_hive_test_');
     Hive.init(tempDir.path);
     await Hive.openBox<String>('settings');
   });
 
   tearDown(() async {
+    await HiveSource.flushMaintenanceWrites();
+    FlutterError.onError = previousOnError;
     await Hive.close();
     if (await tempDir.exists()) {
       await tempDir.delete(recursive: true);
@@ -65,8 +74,38 @@ void main() {
         await Hive.box<String>('settings').put('user_state', '{not-json');
 
         final state = HiveSource.read();
+        await HiveSource.flushMaintenanceWrites();
 
         expect(state, const UserState());
+        expect(reportedErrors, isNotEmpty);
+        expect(
+          Hive.box<String>('settings').get('user_state_corrupt_backup'),
+          '{not-json',
+        );
+      },
+    );
+
+    test(
+      'read recovers the last good state when current JSON is corrupted',
+      () async {
+        final saved = UserState(
+          favorites: const {7, 9},
+          viewed: const {7},
+          lastSeen: {7: DateTime.utc(2026, 4, 29, 8)},
+          dailyNotifHour: 6,
+        );
+        await HiveSource.write(saved);
+        await Hive.box<String>('settings').put('user_state', '{not-json');
+
+        final state = HiveSource.read();
+        await HiveSource.flushMaintenanceWrites();
+
+        expect(state, saved);
+        expect(reportedErrors, isNotEmpty);
+        expect(
+          Hive.box<String>('settings').get('user_state_corrupt_backup'),
+          '{not-json',
+        );
       },
     );
 
@@ -106,6 +145,18 @@ void main() {
       expect(state.recognizedNames, isEmpty);
       expect(state.leitnerBoxes, isEmpty);
       expect(state.husnaLearned, isEmpty);
+    });
+
+    test('read ignores invalid persisted notification hours', () async {
+      await Hive.box<String>('settings').put('user_state', '''
+        {
+          "dailyNotifHour": 42
+        }
+        ''');
+
+      final state = HiveSource.read();
+
+      expect(state.dailyNotifHour, isNull);
     });
 
     test(

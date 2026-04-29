@@ -40,6 +40,7 @@ class AppTypography extends ThemeExtension<AppTypography> {
     required TextStyle Function(TextStyle) applySerifDisplay,
     required Color inkColor,
   }) {
+    GoogleFonts.config.allowRuntimeFetching = false;
     final arabicBase = GoogleFonts.amiri(color: inkColor);
     final uiBase = GoogleFonts.inter(color: inkColor);
 

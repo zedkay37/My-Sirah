@@ -44,4 +44,36 @@ void main() {
     expect(find.text('Bibliothèque'), findsWidgets);
     expect(router.routerDelegate.currentConfiguration.uri.path, '/library');
   });
+
+  testWidgets('/quiz/result tolerates malformed extra payloads', (
+    tester,
+  ) async {
+    late GoRouter router;
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [settingsProvider.overrideWith(_StubSettingsNotifier.new)],
+        child: Consumer(
+          builder: (context, ref, _) {
+            router = ref.watch(appRouterProvider);
+            return MaterialApp.router(
+              theme: AppTheme.build(ThemeKey.light),
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: const Locale('fr'),
+              routerConfig: router,
+            );
+          },
+        ),
+      ),
+    );
+    await tester.pump();
+
+    router.go('/quiz/result', extra: 'bad-extra');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1100));
+
+    expect(find.text('Vous avez répondu correctement à 0/5'), findsOneWidget);
+    expect(router.routerDelegate.currentConfiguration.uri.path, '/quiz/result');
+  });
 }

@@ -55,7 +55,9 @@ class NotificationService {
 
   /// Schedule (or reschedule) a daily notification at [hour]:00 local time.
   static Future<void> scheduleDailyAt(int hour) async {
-    await _plugin.cancelAll();
+    if (hour < 0 || hour > 23) {
+      throw ArgumentError.value(hour, 'hour', 'Must be between 0 and 23');
+    }
 
     if (!kIsWeb && Platform.isIOS) {
       await _plugin
@@ -102,5 +104,5 @@ class NotificationService {
     );
   }
 
-  static Future<void> cancel() => _plugin.cancelAll();
+  static Future<void> cancel() => _plugin.cancel(id: _notifId);
 }

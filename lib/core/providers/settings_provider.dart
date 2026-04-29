@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sirah_app/core/notifications/notification_service.dart';
 import 'package:sirah_app/core/providers/user_state.dart';
@@ -10,8 +11,8 @@ class SettingsNotifier extends Notifier<UserState> {
   UserState build() => HiveSource.read();
 
   Future<void> _save(UserState next) async {
-    state = next;
     await HiveSource.write(next);
+    state = next;
   }
 
   Future<void> setTheme(ThemeKey theme) => _save(state.copyWith(theme: theme));
@@ -67,12 +68,36 @@ class SettingsNotifier extends Notifier<UserState> {
   }
 
   Future<void> setNotifHour(int? hour) async {
-    await _save(state.copyWith(dailyNotifHour: hour));
-    if (hour != null) {
-      await NotificationService.scheduleDailyAt(hour);
-    } else {
-      await NotificationService.cancel();
+    if (hour != null && (hour < 0 || hour > 23)) {
+      _reportSettingsError(
+        ArgumentError.value(hour, 'hour', 'Must be between 0 and 23'),
+        StackTrace.current,
+      );
+      return;
     }
+
+    try {
+      if (hour != null) {
+        await NotificationService.scheduleDailyAt(hour);
+      } else {
+        await NotificationService.cancel();
+      }
+      await _save(state.copyWith(dailyNotifHour: hour));
+    } catch (error, stackTrace) {
+      _reportSettingsError(error, stackTrace);
+    }
+  }
+
+  void _reportSettingsError(Object error, StackTrace stackTrace) {
+    debugPrint('Settings persistence/update failed: $error');
+    FlutterError.reportError(
+      FlutterErrorDetails(
+        exception: error,
+        stack: stackTrace,
+        library: 'sirah_app.settings',
+        context: ErrorDescription('while updating user settings'),
+      ),
+    );
   }
 
   Future<void> recordQuizResult(int correctAnswers) => _save(

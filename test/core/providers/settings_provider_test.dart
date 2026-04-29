@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_ce/hive.dart';
@@ -41,4 +42,20 @@ void main() {
       expect(state.lastSeen[7]!.isAfter(previous), isTrue);
     },
   );
+
+  test('setNotifHour ignores invalid hours without persisting them', () async {
+    final previousOnError = FlutterError.onError;
+    final reportedErrors = <FlutterErrorDetails>[];
+    FlutterError.onError = reportedErrors.add;
+    addTearDown(() => FlutterError.onError = previousOnError);
+
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+
+    await container.read(settingsProvider.notifier).setNotifHour(42);
+
+    expect(container.read(settingsProvider).dailyNotifHour, isNull);
+    expect(HiveSource.read().dailyNotifHour, isNull);
+    expect(reportedErrors, isNotEmpty);
+  });
 }

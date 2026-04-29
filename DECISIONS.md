@@ -192,24 +192,27 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Contenu | Ne pas afficher les recits `needs_review`. | Eviter de presenter du contenu non valide comme source. |
 | 2026-04-29 | Actions | Migrer les actions vers un modele editorial structure. | Preparer une grande banque precise et validable. |
 | 2026-04-29 | Actions | Ne servir que les actions `validated`. | Eviter les actions generiques/non relues. |
+| 2026-04-29 | Stabilite | Garder un `user_state_last_good` et sauvegarder le JSON corrompu. | Eviter la perte silencieuse de progression locale en cas de corruption Hive. |
+| 2026-04-29 | Stabilite | Rendre les notifications non bloquantes au demarrage. | Une erreur plugin/permission ne doit pas empecher l'app de s'ouvrir. |
+| 2026-04-29 | Notifications | Planifier avant de persister l'heure et refuser les heures invalides. | Eviter que l'UI annonce une notification active qui n'existe pas cote OS. |
+| 2026-04-29 | Navigation | Lire defensivement les `extra` de `/quiz/result`. | Les deep links ou appels incomplets ne doivent pas crasher l'ecran resultat. |
+| 2026-04-29 | Offline | Desactiver le runtime fetching de `GoogleFonts`. | Respecter l'objectif offline; les assets de polices restent a bundler pour un rendu parfait. |
 
 ## Validation technique recente
 
-Derniere validation apres migration actions :
+Derniere validation apres correctifs fondations :
 
 ```text
 flutter analyze
 flutter test
-dart format --output=none --set-exit-if-changed .
-git diff --check
+dart format --output=none --set-exit-if-changed <fichiers modifies>
 ```
 
 Resultat :
 
 - `flutter analyze` : OK
-- `flutter test` : OK, 112 tests passes
-- `dart format --output=none --set-exit-if-changed .` : OK
-- `git diff --check` : OK avec warnings CRLF connus sur certains fichiers
+- `flutter test` : OK, 116 tests passes
+- `dart format --output=none --set-exit-if-changed <fichiers modifies>` : OK
 
 Note importante : un `dart format .` precedent a normalise plusieurs fichiers deja existants. Le diff de la branche peut donc contenir du formatage hors logique metier.
 
@@ -224,7 +227,7 @@ Note importante : un `dart format .` precedent a normalise plusieurs fichiers de
 
 ### Priorite moyenne
 
-- Ajouter les fonts offline ou clarifier le risque `google_fonts` en offline.
+- Ajouter les fichiers de polices offline pour stabiliser le rendu typographique sans runtime fetching.
 - Nettoyer les imports/providers ou `core` connait trop certaines features.
 - Continuer l10n arabe : beaucoup de chaines restent FR ou partiellement encodees.
 - Decouper certains gros widgets si > 80 lignes quand le scope s'y prete.

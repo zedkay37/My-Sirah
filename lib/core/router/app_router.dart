@@ -326,13 +326,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/quiz/result',
         pageBuilder: (_, state) {
-          final extra = state.extra as Map<String, int>? ?? const {};
+          final extra = _quizResultPayload(state.extra);
           return _fadeSlide(
             state,
-            ResultScreen(
-              score: extra['score'] ?? 0,
-              total: extra['total'] ?? QuizGenerator.quizSize,
-            ),
+            ResultScreen(score: extra.score, total: extra.total),
           );
         },
       ),
@@ -351,6 +348,25 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 });
 
 // ── Transition helper ─────────────────────────────────────────────────────────
+
+({int score, int total}) _quizResultPayload(Object? extra) {
+  if (extra is! Map<Object?, Object?>) {
+    return (score: 0, total: QuizGenerator.quizSize);
+  }
+
+  final totalFromExtra = _intFromExtra(extra['total']);
+  final total = totalFromExtra == null || totalFromExtra <= 0
+      ? QuizGenerator.quizSize
+      : totalFromExtra;
+  final score = (_intFromExtra(extra['score']) ?? 0).clamp(0, total).toInt();
+  return (score: score, total: total);
+}
+
+int? _intFromExtra(Object? value) {
+  if (value is int) return value;
+  if (value is String) return int.tryParse(value);
+  return null;
+}
 
 CustomTransitionPage<void> _fadeSlide(GoRouterState state, Widget child) {
   return CustomTransitionPage<void>(
