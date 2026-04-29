@@ -1,5 +1,9 @@
 # Architecture Sirah Hub — Document de référence
 
+> Legacy note Sprint 10: this file still documents parts of the v1.5 architecture.
+> For product direction, Journey routing, content rules, l10n workflow and release
+> guardrails, use `README.md` as the current source of truth.
+
 > Mis à jour : 2026-04-27 · **v1.5.1**
 > Branche stable : `main` (tag v1.5)
 > Branche dev : `feat/experimental`
