@@ -239,7 +239,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeExploreTodayName.
   ///
   /// In fr, this message translates to:
-  /// **'Explorer ce nom'**
+  /// **'Entrer dans ce nom'**
   String get homeExploreTodayName;
 
   /// No description provided for @homeClassicNameTooltip.

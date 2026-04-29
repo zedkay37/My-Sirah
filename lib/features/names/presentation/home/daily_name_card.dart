@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sirah_app/core/providers/journey_providers.dart';
-import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/journey/data/repositories/journey_repository.dart';
-import 'package:sirah_app/features/journey/domain/name_progress_resolver.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/shared/arabic_text.dart';
 import 'package:sirah_app/features/shared/category_chip.dart';
@@ -32,10 +29,6 @@ class DailyNameCard extends ConsumerWidget {
     final l10n = context.l10n;
     final screenHeight = MediaQuery.of(context).size.height;
     final minHeight = (screenHeight * 0.52).clamp(430.0, 560.0);
-    final stage = ref
-        .watch(journeyProgressResolverProvider)
-        .stageFor(name.number);
-    final isPracticed = stage.weight >= JourneyNameStage.practiced.weight;
 
     return Semantics(
           label: '${name.transliteration}, nom du jour numéro ${name.number}',
@@ -89,13 +82,7 @@ class DailyNameCard extends ConsumerWidget {
                   SizedBox(height: space.lg),
                   _EtymologyFade(text: name.etymology),
                   SizedBox(height: space.lg),
-                  _DailyActionPreview(
-                    action: action,
-                    isPracticed: isPracticed,
-                    onPractice: () => ref
-                        .read(settingsProvider.notifier)
-                        .markNamePracticed(name.number),
-                  ),
+                  _DailyActionPreview(action: action),
                   SizedBox(height: space.lg),
                   _RitualActions(nameNumber: name.number),
                 ],
@@ -168,13 +155,9 @@ class _EtymologyFade extends StatelessWidget {
 class _DailyActionPreview extends StatelessWidget {
   const _DailyActionPreview({
     required this.action,
-    required this.isPracticed,
-    required this.onPractice,
   });
 
   final String? action;
-  final bool isPracticed;
-  final VoidCallback onPractice;
 
   @override
   Widget build(BuildContext context) {
@@ -208,23 +191,6 @@ class _DailyActionPreview extends StatelessWidget {
                   Text(
                     action ?? l10n.nameExperienceFallbackAction,
                     style: typo.body.copyWith(color: colors.ink, height: 1.4),
-                  ),
-                  SizedBox(height: space.sm),
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: OutlinedButton.icon(
-                      onPressed: isPracticed ? null : onPractice,
-                      icon: Icon(
-                        isPracticed
-                            ? Icons.check_circle_rounded
-                            : Icons.check_rounded,
-                      ),
-                      label: Text(
-                        isPracticed
-                            ? l10n.nameExperienceActionPracticed
-                            : l10n.nameExperienceMarkActionPracticed,
-                      ),
-                    ),
                   ),
                 ],
               ),

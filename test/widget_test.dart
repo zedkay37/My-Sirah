@@ -189,9 +189,9 @@ void main() {
         const Duration(milliseconds: 500),
       ); // fin des animations
       expect(find.byType(HomeScreen), findsOneWidget);
-      expect(find.text('Explorer ce nom'), findsOneWidget);
+      expect(find.text('Entrer dans ce nom'), findsOneWidget);
       expect(find.text('Remercie quelqu’un aujourd’hui.'), findsOneWidget);
-      expect(find.text('Je l’ai vécue'), findsOneWidget);
+      expect(find.text('Je l’ai vécue'), findsNothing);
       expect(find.text('Continuer mon voyage'), findsOneWidget);
       expect(find.text('Voyage'), findsOneWidget);
       expect(find.text('Bibliothèque'), findsOneWidget);

@@ -48,4 +48,21 @@ void main() {
       );
     }
   });
+
+  test('home daily card invites into name without practicing directly', () {
+    final source = File(
+      'lib/features/names/presentation/home/daily_name_card.dart',
+    ).readAsStringSync();
+
+    expect(
+      source,
+      contains("context.push('/name/\$nameNumber/experience')"),
+      reason: 'Home primary CTA should open Nom vivant.',
+    );
+    expect(
+      source,
+      isNot(contains('markNamePracticed')),
+      reason: 'Home should not validate practiced directly.',
+    );
+  });
 }

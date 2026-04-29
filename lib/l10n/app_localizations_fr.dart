@@ -79,7 +79,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeDailyActionTitle => 'Action du jour';
 
   @override
-  String get homeExploreTodayName => 'Explorer ce nom';
+  String get homeExploreTodayName => 'Entrer dans ce nom';
 
   @override
   String get homeClassicNameTooltip => 'Fiche classique';

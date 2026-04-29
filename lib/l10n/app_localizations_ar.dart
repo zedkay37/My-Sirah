@@ -79,7 +79,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeDailyActionTitle => 'عمل اليوم';
 
   @override
-  String get homeExploreTodayName => 'استكشف هذا الاسم';
+  String get homeExploreTodayName => 'ادخل في هذا الاسم';
 
   @override
   String get homeClassicNameTooltip => 'البطاقة الكلاسيكية';
