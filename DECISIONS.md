@@ -210,6 +210,7 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Arbre | Les labels des vues constellation/radiale apparaissent seulement au zoom fort ou lors d'une selection. | Eviter l'impression de noms affiches aleatoirement et garder la vue globale comme carte exploratoire. |
 | 2026-04-29 | UX wording | Remplacer le libelle public `Nom vivant` par `Fiche du nom` / `Voir la fiche`. | Le concept etait interne et peu explicite pour l'utilisateur. |
 | 2026-04-29 | Voyage | Compacter le panneau d'etoile selectionnee avec CTA `Voir la fiche`, statut sur la ligne du nom et arabe contenu. | Rendre le lien vers la fiche lisible sans grosse boite vide ni bouton fleche ambigu. |
+| 2026-04-29 | Voyage | Structurer le panneau d'etoile selectionnee en trois colonnes : nom, statut, fiche. | Mieux occuper l'espace horizontal et rendre chaque information immediatement identifiable. |
 
 ## Validation technique recente
 

@@ -44,14 +44,24 @@ class ConstellationStarPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: _PanelHeader(
+                  flex: 5,
+                  child: _NameColumn(
                     name: name,
-                    stageLabel: _stageLabel(context, stage),
                     color: color,
                     isCompact: isCompact,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 10),
+                Flexible(
+                  flex: 3,
+                  child: Center(
+                    child: _StageChip(
+                      label: _stageLabel(context, stage),
+                      color: color,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
                 _OpenNameButton(
                   color: color,
                   isCompact: isCompact,
@@ -77,16 +87,14 @@ class ConstellationStarPanel extends StatelessWidget {
   }
 }
 
-class _PanelHeader extends StatelessWidget {
-  const _PanelHeader({
+class _NameColumn extends StatelessWidget {
+  const _NameColumn({
     required this.name,
-    required this.stageLabel,
     required this.color,
     required this.isCompact,
   });
 
   final ProphetName name;
-  final String stageLabel;
   final Color color;
   final bool isCompact;
 
@@ -122,23 +130,15 @@ class _PanelHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Row(
-          children: [
-            Flexible(
-              child: Text(
-                name.transliteration,
-                textDirection: TextDirection.ltr,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: context.typo.bodyLarge.copyWith(
-                  color: colors.ink,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            _StageChip(label: stageLabel, color: color),
-          ],
+        Text(
+          name.transliteration,
+          textDirection: TextDirection.ltr,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: context.typo.bodyLarge.copyWith(
+            color: colors.ink,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ],
     );
@@ -161,7 +161,7 @@ class _OpenNameButton extends StatelessWidget {
     final colors = context.colors;
 
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: isCompact ? 132 : 154),
+      constraints: BoxConstraints(maxWidth: isCompact ? 126 : 146),
       child: FilledButton.icon(
         onPressed: onOpen,
         icon: const Icon(Icons.article_outlined),
