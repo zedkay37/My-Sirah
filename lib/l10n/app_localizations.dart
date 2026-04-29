@@ -473,7 +473,7 @@ abstract class AppLocalizations {
   /// No description provided for @quizReplayCta.
   ///
   /// In fr, this message translates to:
-  /// **'Rejouer'**
+  /// **'Choisir un exercice'**
   String get quizReplayCta;
 
   /// No description provided for @quizExploreNamesCta.

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/providers/user_state.dart';
 import 'package:sirah_app/features/study/data/study_notifier.dart';
+import 'package:sirah_app/features/study/presentation/review/review_controller.dart';
 
 // ── Stub SettingsNotifier (pas de Hive, pas de notifications) ─────────────────
 
@@ -147,6 +148,18 @@ void main() {
 
         final boxes = container.read(settingsProvider).leitnerBoxes;
         expect(boxes[7], 2);
+      });
+    });
+
+    group('review controller', () {
+      test('Je connais marque le nom comme reconnu', () async {
+        final container = _makeContainer(const UserState());
+        addTearDown(container.dispose);
+
+        await container.read(reviewControllerProvider([42]).notifier).know();
+
+        expect(container.read(settingsProvider).leitnerBoxes[42], 1);
+        expect(container.read(settingsProvider).recognizedNames, contains(42));
       });
     });
 

@@ -29,7 +29,10 @@ class ReviewController extends StateNotifier<ReviewState> {
 
   Future<void> know() async {
     final n = state.currentNameNumber;
-    if (n != null) await _leitner.levelUp(n);
+    if (n != null) {
+      await _leitner.levelUp(n);
+      await _leitner.markNameRecognized(n);
+    }
     _advance();
   }
 

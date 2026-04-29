@@ -28,6 +28,9 @@ class StudyNotifier {
   Future<void> levelUp(int nameNumber) =>
       _ref.read(settingsProvider.notifier).levelUp(nameNumber);
 
+  Future<void> markNameRecognized(int nameNumber) =>
+      _ref.read(settingsProvider.notifier).markNameRecognized(nameNumber);
+
   Future<void> levelDown(int nameNumber) =>
       _ref.read(settingsProvider.notifier).levelDown(nameNumber);
 

@@ -214,7 +214,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get quizReplayCta => 'Rejouer';
+  String get quizReplayCta => 'Choisir un exercice';
 
   @override
   String get quizExploreNamesCta => 'Explorer les noms';
