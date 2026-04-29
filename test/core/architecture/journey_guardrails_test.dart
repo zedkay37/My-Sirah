@@ -64,5 +64,10 @@ void main() {
       isNot(contains('markNamePracticed')),
       reason: 'Home should not validate practiced directly.',
     );
+    expect(
+      source,
+      isNot(contains('/tafakkur')),
+      reason: 'Home should send the daily ritual through Nom vivant first.',
+    );
   });
 }

@@ -197,7 +197,7 @@
       "total": { "type": "int" }
     }
   },
-  "journeyProgressDetailed": "{viewed} vues · {meditated} méditées · {practiced} vécues · {recognized} reconnues / {total}",
+  "journeyProgressDetailed": "{viewed} découvertes · {meditated} contemplées · {practiced} vécues · {recognized} reconnues / {total}",
   "@journeyProgressDetailed": {
     "placeholders": {
       "viewed": { "type": "int" },
@@ -270,7 +270,7 @@
   "tafakkurPause": "En pause",
   "tafakkurResume": "Reprendre",
   "tafakkurComplete": "Contemplation terminée",
-  "tafakkurReturn": "Retourner au nom",
+  "tafakkurReturn": "Retourner au nom vivant",
   "tafakkurPaceLabel": "Rythme de lecture",
   "tafakkurPaceSlow": "Lent — 12 secondes",
   "tafakkurPaceNormal": "Normal — 9 secondes",
@@ -340,7 +340,6 @@
   "nameExperienceActionOfDay": "Action du jour",
   "nameExperienceMarkActionPracticed": "Je l’ai vécue",
   "nameExperienceActionPracticed": "Action vécue",
-  "nameExperienceNoStory": "Aucun récit dédié n’est encore relié à ce nom. La fiche classique reste disponible pendant l’enrichissement éditorial.",
   "nameExperienceFallbackPrompt": "Que ce nom m’apprend-il aujourd’hui sur la connaissance, l’amour et l’imitation du Prophète ﷺ ?",
   "nameExperienceFallbackAction": "Prends un moment court pour vivre ce nom avec sincérité.",
   "nameExperienceEnterTafakkur": "Entrer en tafakkur",

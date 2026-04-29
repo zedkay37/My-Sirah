@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +16,7 @@ import 'package:sirah_app/l10n/app_localizations.dart';
 
 const _name1 = ProphetName(
   number: 1,
-  arabic: 'محمد',
+  arabic: 'Ù…Ø­Ù…Ø¯',
   transliteration: 'Muhammad',
   categorySlug: 'praise',
   categoryLabel: 'Louange',
@@ -29,7 +29,7 @@ const _name1 = ProphetName(
 
 const _name2 = ProphetName(
   number: 2,
-  arabic: 'أحمد',
+  arabic: 'Ø£Ø­Ù…Ø¯',
   transliteration: 'Ahmad',
   categorySlug: 'praise',
   categoryLabel: 'Louange',
@@ -43,7 +43,7 @@ const _name2 = ProphetName(
 const _constellation = NameConstellation(
   id: 'praise',
   titleFr: 'Constellation de la Louange',
-  titleAr: 'الحمد',
+  titleAr: 'Ø§Ù„Ø­Ù…Ø¯',
   descriptionFr: 'Les noms de la louange.',
   nameNumbers: [1, 2],
   colorHex: '#7C6FAB',
@@ -111,7 +111,7 @@ void main() {
     expect(find.text('Voyage'), findsOneWidget);
     expect(find.text('Constellation de la Louange'), findsOneWidget);
     expect(
-      find.text('2 vues · 1 méditées · 1 vécues · 1 reconnues / 2'),
+      find.text('2 découvertes · 1 contemplées · 1 vécues · 1 reconnues / 2'),
       findsOneWidget,
     );
   });

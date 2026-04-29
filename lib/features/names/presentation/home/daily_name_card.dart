@@ -209,38 +209,15 @@ class _RitualActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final space = context.space;
     final l10n = context.l10n;
 
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton.icon(
-            onPressed: () => context.push('/name/$nameNumber/experience'),
-            icon: const Icon(Icons.auto_awesome_outlined),
-            label: Text(l10n.homeExploreTodayName),
-          ),
-        ),
-        SizedBox(height: space.sm),
-        Row(
-          children: [
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () => context.push('/name/$nameNumber/tafakkur'),
-                icon: const Icon(Icons.self_improvement_rounded),
-                label: Text(l10n.nameExperienceEnterTafakkur),
-              ),
-            ),
-            SizedBox(width: space.sm),
-            IconButton.filledTonal(
-              tooltip: l10n.homeClassicNameTooltip,
-              onPressed: () => context.push('/name/$nameNumber'),
-              icon: const Icon(Icons.article_outlined),
-            ),
-          ],
-        ),
-      ],
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton.icon(
+        onPressed: () => context.push('/name/$nameNumber/experience'),
+        icon: const Icon(Icons.auto_awesome_outlined),
+        label: Text(l10n.homeExploreTodayName),
+      ),
     );
   }
 }

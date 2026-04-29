@@ -412,7 +412,7 @@ class AppLocalizationsFr extends AppLocalizations {
     int recognized,
     int total,
   ) {
-    return '$viewed vues · $meditated méditées · $practiced vécues · $recognized reconnues / $total';
+    return '$viewed découvertes · $meditated contemplées · $practiced vécues · $recognized reconnues / $total';
   }
 
   @override
@@ -580,7 +580,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tafakkurComplete => 'Contemplation terminée';
 
   @override
-  String get tafakkurReturn => 'Retourner au nom';
+  String get tafakkurReturn => 'Retourner au nom vivant';
 
   @override
   String get tafakkurPaceLabel => 'Rythme de lecture';
@@ -714,10 +714,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get nameExperienceActionPracticed => 'Action vécue';
-
-  @override
-  String get nameExperienceNoStory =>
-      'Aucun récit dédié n’est encore relié à ce nom. La fiche classique reste disponible pendant l’enrichissement éditorial.';
 
   @override
   String get nameExperienceFallbackPrompt =>

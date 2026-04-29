@@ -833,7 +833,7 @@ abstract class AppLocalizations {
   /// No description provided for @journeyProgressDetailed.
   ///
   /// In fr, this message translates to:
-  /// **'{viewed} vues · {meditated} méditées · {practiced} vécues · {recognized} reconnues / {total}'**
+  /// **'{viewed} découvertes · {meditated} contemplées · {practiced} vécues · {recognized} reconnues / {total}'**
   String journeyProgressDetailed(
     int viewed,
     int meditated,
@@ -1169,7 +1169,7 @@ abstract class AppLocalizations {
   /// No description provided for @tafakkurReturn.
   ///
   /// In fr, this message translates to:
-  /// **'Retourner au nom'**
+  /// **'Retourner au nom vivant'**
   String get tafakkurReturn;
 
   /// No description provided for @tafakkurPaceLabel.
@@ -1417,12 +1417,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Action vécue'**
   String get nameExperienceActionPracticed;
-
-  /// No description provided for @nameExperienceNoStory.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucun récit dédié n’est encore relié à ce nom. La fiche classique reste disponible pendant l’enrichissement éditorial.'**
-  String get nameExperienceNoStory;
 
   /// No description provided for @nameExperienceFallbackPrompt.
   ///

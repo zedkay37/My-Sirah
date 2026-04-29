@@ -409,7 +409,7 @@ class AppLocalizationsAr extends AppLocalizations {
     int recognized,
     int total,
   ) {
-    return '$viewed شوهدت · $meditated تم تأملها · $practiced عيشت · $recognized عرفت / $total';
+    return '$viewed مكتشفة · $meditated متأملة · $practiced معاشة · $recognized معروفة / $total';
   }
 
   @override
@@ -577,7 +577,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tafakkurComplete => 'انتهت التلاوة';
 
   @override
-  String get tafakkurReturn => 'العودة إلى الاسم';
+  String get tafakkurReturn => 'العودة إلى الاسم الحي';
 
   @override
   String get tafakkurPaceLabel => 'وتيرة القراءة';
@@ -711,10 +711,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nameExperienceActionPracticed => 'تم العمل بها';
-
-  @override
-  String get nameExperienceNoStory =>
-      'لا توجد بعد قصة مخصصة لهذا الاسم. تبقى البطاقة الكلاسيكية متاحة أثناء الإثراء التحريري.';
 
   @override
   String get nameExperienceFallbackPrompt =>

@@ -63,7 +63,7 @@
       }
     }
   },
-  "journeyProgressDetailed": "{viewed} شوهدت · {meditated} تم تأملها · {practiced} عيشت · {recognized} عرفت / {total}",
+  "journeyProgressDetailed": "{viewed} مكتشفة · {meditated} متأملة · {practiced} معاشة · {recognized} معروفة / {total}",
   "@journeyProgressDetailed": {
     "placeholders": {
       "viewed": {
@@ -145,7 +145,7 @@
   "tafakkurPause": "إيقاف مؤقت",
   "tafakkurResume": "استئناف",
   "tafakkurComplete": "انتهت التلاوة",
-  "tafakkurReturn": "العودة إلى الاسم",
+  "tafakkurReturn": "العودة إلى الاسم الحي",
   "tafakkurPaceLabel": "وتيرة القراءة",
   "tafakkurPaceSlow": "بطيء — 12 ثانية",
   "tafakkurPaceNormal": "عادي — 9 ثواني",
@@ -243,7 +243,6 @@
   "nameExperienceActionOfDay": "عمل اليوم",
   "nameExperienceMarkActionPracticed": "عشتها",
   "nameExperienceActionPracticed": "تم العمل بها",
-  "nameExperienceNoStory": "لا توجد بعد قصة مخصصة لهذا الاسم. تبقى البطاقة الكلاسيكية متاحة أثناء الإثراء التحريري.",
   "nameExperienceFallbackPrompt": "ماذا يعلمني هذا الاسم اليوم عن معرفة النبي ﷺ ومحبته والاقتداء به؟",
   "nameExperienceFallbackAction": "خذ لحظة قصيرة لتعيش هذا الاسم بصدق.",
   "nameExperienceEnterTafakkur": "الدخول في التفكر",
