@@ -110,12 +110,6 @@ abstract class AppLocalizations {
   /// **'Accueil'**
   String get navHome;
 
-  /// No description provided for @navDiscover.
-  ///
-  /// In fr, this message translates to:
-  /// **'Découvrir'**
-  String get navDiscover;
-
   /// No description provided for @navJourney.
   ///
   /// In fr, this message translates to:
@@ -223,12 +217,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Explorer par catégorie'**
   String get homeCategorySection;
-
-  /// No description provided for @homeDiscoverName.
-  ///
-  /// In fr, this message translates to:
-  /// **'Découvrir ce nom'**
-  String get homeDiscoverName;
 
   /// No description provided for @homeDailyActionTitle.
   ///

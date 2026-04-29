@@ -15,9 +15,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navHome => 'Accueil';
 
   @override
-  String get navDiscover => 'Découvrir';
-
-  @override
   String get navJourney => 'الرحلة';
 
   @override
@@ -71,9 +68,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get homeCategorySection => 'Explorer par catégorie';
-
-  @override
-  String get homeDiscoverName => 'Découvrir ce nom';
 
   @override
   String get homeDailyActionTitle => 'عمل اليوم';

@@ -259,7 +259,6 @@
   "nameExperienceNotFound": "الاسم غير موجود",
   "appTitle": "Sirah Hub",
   "navHome": "Accueil",
-  "navDiscover": "Découvrir",
   "navProfile": "Profil",
   "onboardingWelcomeTitle": "Les 201 noms du Prophète ﷺ",
   "onboardingWelcomeSubtitle": "Apprenez, méditez, connectez-vous.",
@@ -272,7 +271,6 @@
   "onboardingNotifLater": "Plus tard",
   "homeGreeting": "As-salāmu ʿalaykum",
   "homeCategorySection": "Explorer par catégorie",
-  "homeDiscoverName": "Découvrir ce nom",
   "homeCategoryViewed": "{viewed}/{total} découverts",
   "@homeCategoryViewed": {
     "placeholders": {
