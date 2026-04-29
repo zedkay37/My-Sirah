@@ -102,45 +102,50 @@ class _NameColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: isCompact ? 58 : 66,
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: AlignmentDirectional.centerStart,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 7, bottom: 2),
-                child: Text(
-                  name.arabic,
-                  textDirection: TextDirection.rtl,
-                  maxLines: 1,
-                  style: context.typo.arabicLarge.copyWith(
-                    color: color,
-                    fontSize: isCompact ? 40 : 46,
-                    height: 1.12,
+    return Padding(
+      padding: EdgeInsetsDirectional.only(start: isCompact ? 8 : 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: isCompact ? 58 : 66,
+            child: Align(
+              alignment: AlignmentDirectional.center,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 7, bottom: 2),
+                  child: Text(
+                    name.arabic,
+                    textDirection: TextDirection.rtl,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: context.typo.arabicLarge.copyWith(
+                      color: color,
+                      fontSize: isCompact ? 40 : 46,
+                      height: 1.12,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          name.transliteration,
-          textDirection: TextDirection.ltr,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.typo.bodyLarge.copyWith(
-            color: colors.ink,
-            fontWeight: FontWeight.w700,
+          const SizedBox(height: 4),
+          Text(
+            name.transliteration,
+            textDirection: TextDirection.ltr,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: context.typo.bodyLarge.copyWith(
+              color: colors.ink,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -198,13 +203,15 @@ class _StageChip extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.typo.caption.copyWith(
-            color: color,
-            fontWeight: FontWeight.w700,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            label,
+            maxLines: 1,
+            style: context.typo.caption.copyWith(
+              color: color,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ),
