@@ -13,6 +13,7 @@ class ConstellationPainter extends CustomPainter {
     required this.positions,
     required this.onTap,
     required this.edges,
+    required this.scale,
   });
 
   final List<FamilyMember> members;
@@ -24,6 +25,7 @@ class ConstellationPainter extends CustomPainter {
   final Map<String, Offset> positions;
   final ValueChanged<String?> onTap;
   final Map<String, List<String>> edges;
+  final double scale;
 
   Color _getColorForRole(FamilyRole role) {
     switch (role) {
@@ -204,14 +206,11 @@ class ConstellationPainter extends CustomPainter {
     required bool isConnectedToSelected,
   }) {
     if (isSelected || isPathStart || isHighlighted) return true;
+    if (scale < 1.45) return false;
     if (selectedId != null) return isConnectedToSelected;
+    if (member.isTraditional) return false;
 
-    return switch (member.role) {
-      FamilyRole.prophet || FamilyRole.father || FamilyRole.mother => true,
-      FamilyRole.wife => member.marriageOrder == 1,
-      FamilyRole.child => member.id == 'fatima',
-      _ => false,
-    };
+    return true;
   }
 
   void _drawLabels(
@@ -279,6 +278,7 @@ class ConstellationPainter extends CustomPainter {
         oldDelegate.highlightedPath != highlightedPath ||
         oldDelegate.colors != colors ||
         oldDelegate.center != center ||
+        oldDelegate.scale != scale ||
         oldDelegate.members != members;
   }
 }

@@ -55,7 +55,6 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
                 minScale: widget.minScale,
                 maxScale: widget.maxScale,
                 boundaryMargin: const EdgeInsets.all(360),
-                onInteractionEnd: (_) => _stabilizeTransform(),
                 child: RepaintBoundary(
                   child: SizedBox(
                     width: widget.mapSize.width,
@@ -109,11 +108,6 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
       widget.maxScale,
     );
 
-    if (nextScale <= widget.minScale * 1.01) {
-      _controller.value = _centeredTransformFor(viewport, widget.minScale);
-      return;
-    }
-
     final ratio = nextScale / currentScale;
     final focalPoint = _visibleCenter(viewport);
     final next = Matrix4.identity()
@@ -123,20 +117,6 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
 
     next.multiply(_controller.value);
     _controller.value = next;
-    _stabilizeTransform();
-  }
-
-  void _stabilizeTransform() {
-    final viewport = _lastViewport;
-    if (viewport == null) return;
-
-    final currentScale = _controller.value.getMaxScaleOnAxis();
-    if (currentScale <= widget.minScale * 1.04) {
-      _controller.value = _centeredTransformFor(
-        viewport,
-        currentScale.clamp(widget.minScale, widget.maxScale).toDouble(),
-      );
-    }
   }
 
   Offset _visibleCenter(Size viewport) {

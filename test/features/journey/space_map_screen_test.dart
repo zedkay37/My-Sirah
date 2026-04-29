@@ -171,9 +171,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Ahmad'), findsOneWidget);
-    expect(find.text('À découvrir'), findsOneWidget);
+    expect(find.text('À explorer'), findsOneWidget);
 
-    await tester.tap(find.text('Découvrir ce nom'));
+    await tester.tap(find.text('Explorer'));
     await tester.pumpAndSettle();
 
     expect(find.text('name:2'), findsOneWidget);

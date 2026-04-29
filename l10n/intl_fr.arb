@@ -215,6 +215,13 @@
   "journeySubtitle": "Avancez par constellations de noms, une étoile après l’autre.",
   "journeyGalaxyHint": "Touchez la galaxie active pour entrer dans le voyage.",
   "journeyDeckMapHint": "Touchez une constellation pour voir ses étoiles.",
+  "journeyConstellationPrompt": "Choisis une étoile de « {title} » et ouvre son nom vivant.",
+  "@journeyConstellationPrompt": {
+    "placeholders": {
+      "title": { "type": "String" }
+    }
+  },
+  "journeyOpenNameCta": "Explorer",
   "journeyMapZoomInTooltip": "Zoomer",
   "journeyMapZoomOutTooltip": "Dézoomer",
   "journeyMapResetTooltip": "Recentrer la carte",
@@ -241,7 +248,7 @@
   "journeyStarMeditated": "Méditée",
   "journeyStarPracticed": "Vécue",
   "journeyStarRecognized": "Reconnue",
-  "journeyStarUnknown": "À découvrir",
+  "journeyStarUnknown": "À explorer",
 
   "treeTitle": "Lignée prophétique",
   "treeModeRadial": "Orbites",

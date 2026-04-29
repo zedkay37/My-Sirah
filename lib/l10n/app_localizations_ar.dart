@@ -403,6 +403,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get journeyDeckMapHint => 'المس مجموعة لرؤية نجومها.';
 
   @override
+  String journeyConstellationPrompt(String title) {
+    return 'اختر نجمة من «$title» وافتح اسمها الحي.';
+  }
+
+  @override
+  String get journeyOpenNameCta => 'استكشاف';
+
+  @override
   String get journeyMapZoomInTooltip => 'تكبير';
 
   @override

@@ -40,22 +40,19 @@ class ConstellationStarPanel extends StatelessWidget {
           builder: (context, constraints) {
             final isCompact = constraints.maxWidth < 330;
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _PanelHeader(
-                  name: name,
-                  stageLabel: _stageLabel(context, stage),
-                  color: color,
-                  isCompact: isCompact,
+                Expanded(
+                  child: _PanelHeader(
+                    name: name,
+                    stageLabel: _stageLabel(context, stage),
+                    color: color,
+                    isCompact: isCompact,
+                  ),
                 ),
-                const SizedBox(height: 12),
-                FilledButton.icon(
-                  icon: const Icon(Icons.arrow_forward_rounded),
-                  label: Text(context.l10n.homeExploreTodayName),
-                  onPressed: onOpen,
-                ),
+                const SizedBox(width: 12),
+                _OpenNameButton(isCompact: isCompact, onOpen: onOpen),
               ],
             );
           },
@@ -93,8 +90,9 @@ class _PanelHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
 
-    final nameBlock = Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           name.arabic,
@@ -105,7 +103,7 @@ class _PanelHeader extends StatelessWidget {
             height: 1.1,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 2),
         Text(
           name.transliteration,
           textDirection: TextDirection.ltr,
@@ -116,27 +114,36 @@ class _PanelHeader extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+        const SizedBox(height: 8),
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: _StageChip(label: stageLabel, color: color),
+        ),
       ],
     );
+  }
+}
 
+class _OpenNameButton extends StatelessWidget {
+  const _OpenNameButton({required this.isCompact, required this.onOpen});
+
+  final bool isCompact;
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
     if (isCompact) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          nameBlock,
-          const SizedBox(height: 10),
-          _StageChip(label: stageLabel, color: color),
-        ],
+      return IconButton.filled(
+        tooltip: context.l10n.homeExploreTodayName,
+        onPressed: onOpen,
+        icon: const Icon(Icons.arrow_forward_rounded),
       );
     }
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(child: nameBlock),
-        const SizedBox(width: 12),
-        _StageChip(label: stageLabel, color: color),
-      ],
+    return FilledButton.icon(
+      onPressed: onOpen,
+      icon: const Icon(Icons.arrow_forward_rounded),
+      label: Text(context.l10n.journeyOpenNameCta),
     );
   }
 }

@@ -406,6 +406,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Touchez une constellation pour voir ses étoiles.';
 
   @override
+  String journeyConstellationPrompt(String title) {
+    return 'Choisis une étoile de « $title » et ouvre son nom vivant.';
+  }
+
+  @override
+  String get journeyOpenNameCta => 'Explorer';
+
+  @override
   String get journeyMapZoomInTooltip => 'Zoomer';
 
   @override
@@ -449,7 +457,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get journeyStarRecognized => 'Reconnue';
 
   @override
-  String get journeyStarUnknown => 'À découvrir';
+  String get journeyStarUnknown => 'À explorer';
 
   @override
   String get treeTitle => 'Lignée prophétique';

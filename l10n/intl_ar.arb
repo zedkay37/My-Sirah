@@ -58,6 +58,15 @@
   "journeySubtitle": "تقدم عبر مجموعات الأسماء، نجمة بعد نجمة.",
   "journeyGalaxyHint": "المس المجرة النشطة للدخول في الرحلة.",
   "journeyDeckMapHint": "المس مجموعة لرؤية نجومها.",
+  "journeyConstellationPrompt": "اختر نجمة من «{title}» وافتح اسمها الحي.",
+  "@journeyConstellationPrompt": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyOpenNameCta": "استكشاف",
   "journeyMapZoomInTooltip": "تكبير",
   "journeyMapZoomOutTooltip": "تصغير",
   "journeyMapResetTooltip": "إعادة تمركز الخريطة",

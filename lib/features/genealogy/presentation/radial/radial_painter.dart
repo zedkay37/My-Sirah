@@ -12,6 +12,7 @@ class RadialPainter extends CustomPainter {
     required this.center,
     required this.colors,
     required this.onTap,
+    required this.scale,
   }) {
     _updatePositions();
   }
@@ -22,6 +23,7 @@ class RadialPainter extends CustomPainter {
   final Offset center;
   final AppColors colors;
   final ValueChanged<String?> onTap;
+  final double scale;
 
   static List<FamilyMember>? _cachedMembers;
   static Offset? _cachedCenter;
@@ -183,13 +185,10 @@ class RadialPainter extends CustomPainter {
   }) {
     if (!inFilter) return false;
     if (isSelected) return true;
+    if (scale < 1.35) return false;
+    if (member.isTraditional || member.isBoundary) return false;
 
-    return switch (member.role) {
-      FamilyRole.prophet || FamilyRole.father || FamilyRole.mother => true,
-      FamilyRole.wife => member.marriageOrder == 1,
-      FamilyRole.child => member.id == 'fatima',
-      _ => false,
-    };
+    return true;
   }
 
   void _drawLabels(Canvas canvas, FamilyMember m, Offset pos, double opacity) {
@@ -250,6 +249,7 @@ class RadialPainter extends CustomPainter {
         oldDelegate.selectedId != selectedId ||
         oldDelegate.colors != colors ||
         oldDelegate.center != center ||
+        oldDelegate.scale != scale ||
         oldDelegate.members != members;
   }
 }

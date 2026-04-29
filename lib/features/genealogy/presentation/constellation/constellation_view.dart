@@ -22,19 +22,35 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
   final _selectedId = ValueNotifier<String?>(null);
   final _pathStart = ValueNotifier<String?>(null);
   final _highlightedPath = ValueNotifier<List<String>>([]);
+  final _scale = ValueNotifier<double>(1.0);
 
   Map<String, Offset>? _positionsCache;
   Map<String, List<String>>? _edgesCache;
   Offset? _lastCenter;
 
   @override
+  void initState() {
+    super.initState();
+    _transformationController.addListener(_syncScale);
+  }
+
+  @override
   void dispose() {
+    _transformationController.removeListener(_syncScale);
     _transformationController.dispose();
     _searchController.dispose();
     _selectedId.dispose();
     _pathStart.dispose();
     _highlightedPath.dispose();
+    _scale.dispose();
     super.dispose();
+  }
+
+  void _syncScale() {
+    final nextScale = _transformationController.value.getMaxScaleOnAxis();
+    if ((nextScale - _scale.value).abs() > 0.03) {
+      _scale.value = nextScale;
+    }
   }
 
   void _recenter() {
@@ -241,6 +257,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                             positions: _positionsCache!,
                             edges: _edgesCache!,
                             onTap: (_) {},
+                            scale: _scale.value,
                           );
                           final id = painter.hitTestMembers(
                             details.localPosition,
@@ -264,6 +281,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                             positions: _positionsCache!,
                             edges: _edgesCache!,
                             onTap: (_) {},
+                            scale: _scale.value,
                           );
                           final id = painter.hitTestMembers(
                             details.localPosition,
@@ -279,6 +297,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                               _selectedId,
                               _pathStart,
                               _highlightedPath,
+                              _scale,
                             ]),
                             builder: (context, _) {
                               return CustomPaint(
@@ -296,6 +315,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                                   positions: _positionsCache!,
                                   edges: _edgesCache!,
                                   onTap: (_) {},
+                                  scale: _scale.value,
                                 ),
                               );
                             },

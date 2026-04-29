@@ -102,6 +102,9 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
     final color = _hexToColor(constellation.colorHex);
     final title = constellationDisplayTitle(constellation);
     final arabicTitle = constellationArabicTitle(constellation);
+    final isArabicUi = Localizations.localeOf(context).languageCode == 'ar';
+    final promptTitle = isArabicUi && arabicTitle != null ? arabicTitle : title;
+    final prompt = context.l10n.journeyConstellationPrompt(promptTitle);
     final selectedNumber =
         _selectedNumber ?? (stars.isEmpty ? null : stars.first.number);
     final selectedName = selectedNumber == null
@@ -110,9 +113,9 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
     const mapSize = Size(1560, 1120);
     final screenHeight = MediaQuery.sizeOf(context).height;
     final isCompact = screenHeight < 720;
-    final titleTop = isCompact ? 10.0 : 20.0;
-    final titleReserve = isCompact ? 108.0 : 132.0;
-    final panelReserve = isCompact ? 144.0 : 176.0;
+    final titleTop = isCompact ? 4.0 : 8.0;
+    final titleReserve = isCompact ? 86.0 : 104.0;
+    final panelReserve = isCompact ? 110.0 : 130.0;
 
     return StarfieldBackground(
       child: Stack(
@@ -163,12 +166,15 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
                       arabicTitle,
                       textAlign: TextAlign.center,
                       textDirection: TextDirection.rtl,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: context.typo.arabicLarge.copyWith(
                         color: color,
-                        fontSize: isCompact ? 40 : null,
+                        fontSize: isCompact ? 30 : 38,
+                        height: 1.04,
                       ),
                     ),
-                    SizedBox(height: isCompact ? 2 : 6),
+                    SizedBox(height: isCompact ? 0 : 2),
                   ],
                   Text(
                     title,
@@ -176,18 +182,20 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
                     textDirection: TextDirection.ltr,
                     style: context.typo.headline.copyWith(
                       color: Colors.white,
-                      fontSize: isCompact ? 18 : null,
+                      fontSize: isCompact ? 17 : 20,
                     ),
                   ),
-                  SizedBox(height: isCompact ? 4 : 6),
+                  SizedBox(height: isCompact ? 2 : 4),
                   Text(
-                    constellation.descriptionFr,
+                    prompt,
                     textAlign: TextAlign.center,
-                    textDirection: TextDirection.ltr,
+                    textDirection: isArabicUi
+                        ? TextDirection.rtl
+                        : TextDirection.ltr,
                     maxLines: isCompact ? 1 : 2,
                     overflow: TextOverflow.ellipsis,
                     style: context.typo.caption.copyWith(
-                      color: Colors.white.withValues(alpha: 0.62),
+                      color: Colors.white.withValues(alpha: 0.70),
                     ),
                   ),
                 ],

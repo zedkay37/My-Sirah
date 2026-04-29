@@ -205,6 +205,9 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Arbre | Reduire la densite de labels visibles dans les vues constellation/radiale. | Garder l'arbre exploratoire lisible sur mobile sans retirer les points interactifs. |
 | 2026-04-29 | Arbre | Rendre le header et les overlays plus compacts. | Eviter que la navigation et la legende masquent trop le graphe. |
 | 2026-04-29 | RTL / l10n | Forcer les contenus editoriaux FR en LTR sous interface arabe tant qu'ils ne sont pas traduits. | Eviter l'inversion visuelle du francais melange a l'arabe sans modifier `names.json` ni valider de contenu nouveau. |
+| 2026-04-29 | Voyage | Retirer le recentrage automatique au zoom minimum des cartes spatiales. | Eviter la sensation d'aimantation en haut et rendre le pan/dezoom plus libre. |
+| 2026-04-29 | Voyage | Compactage du header constellation et remplacement du texte brut de categorie par une invitation contextualisee. | Donner plus d'espace a la carte et eviter les libelles techniques non pertinents pour l'utilisateur. |
+| 2026-04-29 | Arbre | Les labels des vues constellation/radiale apparaissent seulement au zoom fort ou lors d'une selection. | Eviter l'impression de noms affiches aleatoirement et garder la vue globale comme carte exploratoire. |
 
 ## Validation technique recente
 
@@ -305,6 +308,24 @@ Resultat :
 
 - `flutter analyze --no-pub` : OK
 - Tests cibles Journey/Nom vivant/Tafakkur/Home/Detail : OK, 22 tests passes
+- `flutter test` : OK, 116 tests passes
+- `flutter build apk --debug` : OK
+
+Derniere validation apres polish navigation spatiale / labels :
+
+```text
+dart format <fichiers modifies>
+flutter gen-l10n
+flutter analyze --no-pub
+flutter test test/features/journey/space_map_screen_test.dart test/features/journey/galaxy_map_screen_test.dart test/features/genealogy/genealogy_repository_test.dart test/features/profile/profile_navigation_test.dart
+flutter test
+flutter build apk --debug
+```
+
+Resultat :
+
+- `flutter analyze --no-pub` : OK
+- Tests cibles Journey/Genealogie/Profil : OK, 18 tests passes
 - `flutter test` : OK, 116 tests passes
 - `flutter build apk --debug` : OK
 

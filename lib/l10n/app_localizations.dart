@@ -824,6 +824,18 @@ abstract class AppLocalizations {
   /// **'Touchez une constellation pour voir ses étoiles.'**
   String get journeyDeckMapHint;
 
+  /// No description provided for @journeyConstellationPrompt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis une étoile de « {title} » et ouvre son nom vivant.'**
+  String journeyConstellationPrompt(String title);
+
+  /// No description provided for @journeyOpenNameCta.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorer'**
+  String get journeyOpenNameCta;
+
   /// No description provided for @journeyMapZoomInTooltip.
   ///
   /// In fr, this message translates to:
@@ -899,7 +911,7 @@ abstract class AppLocalizations {
   /// No description provided for @journeyStarUnknown.
   ///
   /// In fr, this message translates to:
-  /// **'À découvrir'**
+  /// **'À explorer'**
   String get journeyStarUnknown;
 
   /// No description provided for @treeTitle.
