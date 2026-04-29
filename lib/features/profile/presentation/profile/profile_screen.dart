@@ -227,42 +227,57 @@ class _JourneySummaryGrid extends StatelessWidget {
     final l10n = context.l10n;
     final space = context.space;
 
-    return Wrap(
-      spacing: space.sm,
-      runSpacing: space.sm,
-      children: [
-        _JourneyMetric(
-          icon: Icons.star_rounded,
-          label: l10n.profileJourneyViewed,
-          value: summary.viewed,
-        ),
-        _JourneyMetric(
-          icon: Icons.self_improvement_rounded,
-          label: l10n.profileJourneyMeditated,
-          value: summary.meditated,
-        ),
-        _JourneyMetric(
-          icon: Icons.check_circle_rounded,
-          label: l10n.profileJourneyPracticed,
-          value: summary.practiced,
-        ),
-        _JourneyMetric(
-          icon: Icons.workspace_premium_rounded,
-          label: l10n.profileJourneyRecognized,
-          value: summary.recognized,
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final twoColumns = constraints.maxWidth >= 320;
+        final tileWidth = twoColumns
+            ? (constraints.maxWidth - space.sm) / 2
+            : constraints.maxWidth;
+
+        return Wrap(
+          spacing: space.sm,
+          runSpacing: space.sm,
+          children: [
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.star_rounded,
+              label: l10n.profileJourneyViewed,
+              value: summary.viewed,
+            ),
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.self_improvement_rounded,
+              label: l10n.profileJourneyMeditated,
+              value: summary.meditated,
+            ),
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.check_circle_rounded,
+              label: l10n.profileJourneyPracticed,
+              value: summary.practiced,
+            ),
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.workspace_premium_rounded,
+              label: l10n.profileJourneyRecognized,
+              value: summary.recognized,
+            ),
+          ],
+        );
+      },
     );
   }
 }
 
 class _JourneyMetric extends StatelessWidget {
   const _JourneyMetric({
+    required this.width,
     required this.icon,
     required this.label,
     required this.value,
   });
 
+  final double width;
   final IconData icon;
   final String label;
   final int value;
@@ -275,7 +290,7 @@ class _JourneyMetric extends StatelessWidget {
     final radii = context.radii;
 
     return SizedBox(
-      width: 156,
+      width: width,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: colors.bg2,

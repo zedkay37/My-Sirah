@@ -197,6 +197,8 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | Notifications | Planifier avant de persister l'heure et refuser les heures invalides. | Eviter que l'UI annonce une notification active qui n'existe pas cote OS. |
 | 2026-04-29 | Navigation | Lire defensivement les `extra` de `/quiz/result`. | Les deep links ou appels incomplets ne doivent pas crasher l'ecran resultat. |
 | 2026-04-29 | Offline | Desactiver le runtime fetching de `GoogleFonts`. | Respecter l'objectif offline; les assets de polices restent a bundler pour un rendu parfait. |
+| 2026-04-29 | QA visuelle | Reserver des zones lisibles dans les cartes spatiales pour titres, controles et panneaux. | Eviter les chevauchements sur mobiles compacts sans changer la metaphore Journey. |
+| 2026-04-29 | QA visuelle | Rendre le panneau d'etoile, les actions du Nom vivant, les controles Tafakkur et les metriques Profil adaptatifs. | Garder une experience sobre premium sur petits ecrans et avec textes plus longs. |
 
 ## Validation technique recente
 
@@ -216,11 +218,26 @@ Resultat :
 
 Note importante : un `dart format .` precedent a normalise plusieurs fichiers deja existants. Le diff de la branche peut donc contenir du formatage hors logique metier.
 
+Derniere validation apres QA visuelle Journey :
+
+```text
+dart format <fichiers modifies>
+flutter analyze
+flutter test test/features/journey/space_map_screen_test.dart test/features/journey/galaxy_map_screen_test.dart test/features/journey/name_experience_screen_test.dart test/features/journey/tafakkur_screen_test.dart test/features/profile/profile_navigation_test.dart
+flutter test
+```
+
+Resultat :
+
+- `flutter analyze` : OK
+- Tests cibles Journey/Nom vivant/Tafakkur/Profil : OK, 13 tests passes
+- Suite complete : OK, 116 tests passes
+
 ## Dette et risques ouverts
 
 ### Priorite haute
 
-- Valider visuellement Accueil + Voyage sur emulateur ou telephone reel.
+- Valider sur emulateur ou telephone reel les retouches QA Journey deja passees en tests widget.
 - Definir une matrice editoriale d'actions avant de remplir massivement.
 - Completer `docs/content_backlog_journey.md` avec le nouveau modele `NameActionItem`.
 - Valider les 4 experiences existantes ou les garder masquees.

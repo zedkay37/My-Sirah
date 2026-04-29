@@ -11,6 +11,8 @@ class SpaceMapViewport extends StatefulWidget {
     this.initialScale,
     this.minScale = 0.4,
     this.maxScale = 2.4,
+    this.viewPadding = EdgeInsets.zero,
+    this.controlsPadding = const EdgeInsets.only(top: 12, right: 12),
   });
 
   final Size mapSize;
@@ -18,6 +20,8 @@ class SpaceMapViewport extends StatefulWidget {
   final double? initialScale;
   final double minScale;
   final double maxScale;
+  final EdgeInsets viewPadding;
+  final EdgeInsets controlsPadding;
 
   @override
   State<SpaceMapViewport> createState() => _SpaceMapViewportState();
@@ -26,6 +30,8 @@ class SpaceMapViewport extends StatefulWidget {
 class _SpaceMapViewportState extends State<SpaceMapViewport> {
   final _controller = TransformationController();
   Size? _lastViewport;
+  EdgeInsets? _lastViewPadding;
+  double? _lastInitialScale;
 
   @override
   void dispose() {
@@ -58,9 +64,8 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
                 ),
               ),
             ),
-            Positioned(
-              top: 12,
-              right: 12,
+            _PositionedControls(
+              padding: widget.controlsPadding,
               child: SpaceMapControls(
                 onZoomIn: () => _zoomBy(1.22),
                 onZoomOut: () => _zoomBy(0.82),
@@ -74,8 +79,14 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
   }
 
   void _setInitialTransform(Size viewport) {
-    if (_lastViewport == viewport) return;
+    if (_lastViewport == viewport &&
+        _lastViewPadding == widget.viewPadding &&
+        _lastInitialScale == widget.initialScale) {
+      return;
+    }
     _lastViewport = viewport;
+    _lastViewPadding = widget.viewPadding;
+    _lastInitialScale = widget.initialScale;
     _controller.value = _initialTransformFor(viewport);
   }
 
@@ -108,9 +119,15 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
   }
 
   Matrix4 _initialTransformFor(Size viewport) {
+    final visibleWidth = viewport.width - widget.viewPadding.horizontal;
+    final visibleHeight = viewport.height - widget.viewPadding.vertical;
+    final visibleSize = Size(
+      math.max(1, visibleWidth),
+      math.max(1, visibleHeight),
+    );
     final fittedScale = math.min(
-      viewport.width / widget.mapSize.width,
-      viewport.height / widget.mapSize.height,
+      visibleSize.width / widget.mapSize.width,
+      visibleSize.height / widget.mapSize.height,
     );
     final preferredScale = widget.initialScale == null
         ? fittedScale
@@ -119,11 +136,36 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
       math.max(preferredScale, widget.minScale),
       widget.maxScale,
     );
-    final dx = (viewport.width - widget.mapSize.width * scale) / 2;
-    final dy = (viewport.height - widget.mapSize.height * scale) / 2;
+    final dx =
+        widget.viewPadding.left +
+        (visibleSize.width - widget.mapSize.width * scale) / 2;
+    final dy =
+        widget.viewPadding.top +
+        (visibleSize.height - widget.mapSize.height * scale) / 2;
 
     return Matrix4.identity()
       ..translateByDouble(dx, dy, 0, 1)
       ..scaleByDouble(scale, scale, 1, 1);
+  }
+}
+
+class _PositionedControls extends StatelessWidget {
+  const _PositionedControls({required this.padding, required this.child});
+
+  final EdgeInsets padding;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final useBottom = padding.bottom > 0;
+    final useLeft = padding.left > 0;
+
+    return Positioned(
+      top: useBottom ? null : padding.top,
+      right: useLeft ? null : padding.right,
+      bottom: useBottom ? padding.bottom : null,
+      left: useLeft ? padding.left : null,
+      child: child,
+    );
   }
 }

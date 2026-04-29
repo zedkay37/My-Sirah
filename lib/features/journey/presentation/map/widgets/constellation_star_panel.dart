@@ -36,49 +36,29 @@ class ConstellationStarPanel extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isCompact = constraints.maxWidth < 330;
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name.arabic,
-                        textDirection: TextDirection.rtl,
-                        style: context.typo.arabicLarge.copyWith(
-                          color: color,
-                          height: 1.1,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        name.transliteration,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.typo.bodyLarge.copyWith(
-                          color: colors.ink,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
+                _PanelHeader(
+                  name: name,
+                  stageLabel: _stageLabel(context, stage),
+                  color: color,
+                  isCompact: isCompact,
                 ),
-                const SizedBox(width: 12),
-                _StageChip(label: _stageLabel(context, stage), color: color),
+                const SizedBox(height: 12),
+                FilledButton.icon(
+                  icon: const Icon(Icons.arrow_forward_rounded),
+                  label: Text(context.l10n.homeExploreTodayName),
+                  onPressed: onOpen,
+                ),
               ],
-            ),
-            const SizedBox(height: 12),
-            FilledButton.icon(
-              icon: const Icon(Icons.arrow_forward_rounded),
-              label: Text(context.l10n.homeExploreTodayName),
-              onPressed: onOpen,
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -93,6 +73,70 @@ class ConstellationStarPanel extends StatelessWidget {
       JourneyNameStage.viewed => l10n.journeyStarViewed,
       JourneyNameStage.unknown => l10n.journeyStarUnknown,
     };
+  }
+}
+
+class _PanelHeader extends StatelessWidget {
+  const _PanelHeader({
+    required this.name,
+    required this.stageLabel,
+    required this.color,
+    required this.isCompact,
+  });
+
+  final ProphetName name;
+  final String stageLabel;
+  final Color color;
+  final bool isCompact;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    final nameBlock = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          name.arabic,
+          textDirection: TextDirection.rtl,
+          style: context.typo.arabicLarge.copyWith(
+            color: color,
+            fontSize: isCompact ? 42 : null,
+            height: 1.1,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          name.transliteration,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: context.typo.bodyLarge.copyWith(
+            color: colors.ink,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    );
+
+    if (isCompact) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          nameBlock,
+          const SizedBox(height: 10),
+          _StageChip(label: stageLabel, color: color),
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: nameBlock),
+        const SizedBox(width: 12),
+        _StageChip(label: stageLabel, color: color),
+      ],
+    );
   }
 }
 

@@ -236,22 +236,42 @@ class _PrimaryActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final space = context.space;
 
-    return Row(
-      children: [
-        Expanded(
-          child: FilledButton.icon(
-            onPressed: () => context.push('/name/$nameNumber/tafakkur'),
-            icon: const Icon(Icons.self_improvement_rounded),
-            label: Text(context.l10n.nameExperienceEnterTafakkur),
-          ),
-        ),
-        SizedBox(width: space.sm),
-        IconButton.filledTonal(
-          tooltip: context.l10n.nameExperienceClassicTooltip,
-          onPressed: () => context.push('/name/$nameNumber'),
-          icon: const Icon(Icons.article_outlined),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isCompact = constraints.maxWidth < 340;
+        final tafakkurButton = FilledButton.icon(
+          onPressed: () => context.push('/name/$nameNumber/tafakkur'),
+          icon: const Icon(Icons.self_improvement_rounded),
+          label: Text(context.l10n.nameExperienceEnterTafakkur),
+        );
+
+        if (isCompact) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              tafakkurButton,
+              SizedBox(height: space.sm),
+              OutlinedButton.icon(
+                onPressed: () => context.push('/name/$nameNumber'),
+                icon: const Icon(Icons.article_outlined),
+                label: Text(context.l10n.nameExperienceOpenClassic),
+              ),
+            ],
+          );
+        }
+
+        return Row(
+          children: [
+            Expanded(child: tafakkurButton),
+            SizedBox(width: space.sm),
+            IconButton.filledTonal(
+              tooltip: context.l10n.nameExperienceClassicTooltip,
+              onPressed: () => context.push('/name/$nameNumber'),
+              icon: const Icon(Icons.article_outlined),
+            ),
+          ],
+        );
+      },
     );
   }
 }

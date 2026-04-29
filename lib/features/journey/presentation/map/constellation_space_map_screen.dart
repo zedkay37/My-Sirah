@@ -108,6 +108,11 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
         ? null
         : _nameByNumber(selectedNumber);
     const mapSize = Size(1560, 1120);
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    final isCompact = screenHeight < 720;
+    final titleTop = isCompact ? 10.0 : 20.0;
+    final titleReserve = isCompact ? 108.0 : 132.0;
+    final panelReserve = isCompact ? 144.0 : 176.0;
 
     return StarfieldBackground(
       child: Stack(
@@ -118,6 +123,11 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
               initialScale: 0.56,
               minScale: 0.34,
               maxScale: 2.35,
+              viewPadding: EdgeInsets.only(
+                top: titleReserve,
+                bottom: panelReserve,
+              ),
+              controlsPadding: EdgeInsets.only(top: titleReserve, right: 12),
               child: Stack(
                 children: [
                   Positioned.fill(
@@ -144,7 +154,7 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
           Positioned(
             left: 32,
             right: 32,
-            top: 20,
+            top: titleTop,
             child: IgnorePointer(
               child: Column(
                 children: [
@@ -153,20 +163,26 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
                       arabicTitle,
                       textAlign: TextAlign.center,
                       textDirection: TextDirection.rtl,
-                      style: context.typo.arabicLarge.copyWith(color: color),
+                      style: context.typo.arabicLarge.copyWith(
+                        color: color,
+                        fontSize: isCompact ? 40 : null,
+                      ),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: isCompact ? 2 : 6),
                   ],
                   Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: context.typo.headline.copyWith(color: Colors.white),
+                    style: context.typo.headline.copyWith(
+                      color: Colors.white,
+                      fontSize: isCompact ? 18 : null,
+                    ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: isCompact ? 4 : 6),
                   Text(
                     constellation.descriptionFr,
                     textAlign: TextAlign.center,
-                    maxLines: 2,
+                    maxLines: isCompact ? 1 : 2,
                     overflow: TextOverflow.ellipsis,
                     style: context.typo.caption.copyWith(
                       color: Colors.white.withValues(alpha: 0.62),
@@ -180,7 +196,7 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
             Positioned(
               left: 16,
               right: 16,
-              bottom: 16,
+              bottom: isCompact ? 10 : 16,
               child: ConstellationStarPanel(
                 name: selectedName,
                 stage: widget.progress.stageFor(selectedNumber),

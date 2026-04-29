@@ -483,18 +483,22 @@ class _BottomControls extends StatelessWidget {
             ],
           ),
           SizedBox(height: space.sm),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: space.md,
+            runSpacing: space.xs,
             children: [
-              AnimatedOpacity(
-                opacity: isPaused ? 1.0 : 0.0,
+              AnimatedSwitcher(
                 duration: reduceMotion
                     ? Duration.zero
                     : const Duration(milliseconds: 300),
-                child: Text(
-                  l10n.tafakkurPause,
-                  style: typo.caption.copyWith(color: colors.accent),
-                ),
+                child: isPaused
+                    ? Text(
+                        l10n.tafakkurPause,
+                        key: const ValueKey('paused'),
+                        style: typo.caption.copyWith(color: colors.accent),
+                      )
+                    : const SizedBox.shrink(key: ValueKey('playing')),
               ),
               Text(
                 l10n.tafakkurEstimatedDuration(estimatedMinutes),
