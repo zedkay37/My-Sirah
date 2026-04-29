@@ -200,6 +200,8 @@ Decision a prendre plus tard : definir la matrice editoriale complete avant de r
 | 2026-04-29 | QA visuelle | Reserver des zones lisibles dans les cartes spatiales pour titres, controles et panneaux. | Eviter les chevauchements sur mobiles compacts sans changer la metaphore Journey. |
 | 2026-04-29 | QA visuelle | Rendre le panneau d'etoile, les actions du Nom vivant, les controles Tafakkur et les metriques Profil adaptatifs. | Garder une experience sobre premium sur petits ecrans et avec textes plus longs. |
 | 2026-04-29 | Offline | Bundler Amiri, Amiri Quran, Crimson Pro, Inter et Playfair Display en assets locaux. | Stabiliser le rendu typographique et supprimer les appels `GoogleFonts.*` au runtime. |
+| 2026-04-29 | QA visuelle | Recentrer automatiquement les cartes spatiales au dezoom minimum. | Eviter l'effet de carte "collee" en haut apres un fort dezoom. |
+| 2026-04-29 | Typographie | Augmenter la hauteur reservee aux grands titres arabes. | Eviter que la translitteration chevauche la calligraphie avec les polices locales. |
 
 ## Validation technique recente
 
@@ -248,6 +250,23 @@ Resultat :
 
 - Fonts locales declarees dans `pubspec.yaml` : OK
 - Appels `GoogleFonts.*` dans `lib/` : 0
+- `flutter analyze` : OK
+- `flutter test` : OK, 116 tests passes
+- `flutter build apk --debug` : OK
+
+Derniere validation apres retours screenshots :
+
+```text
+dart format <fichiers modifies>
+flutter test test/features/journey/space_map_screen_test.dart test/features/journey/name_experience_screen_test.dart test/widget_test.dart test/features/names/list_navigation_test.dart
+flutter analyze
+flutter test
+flutter build apk --debug
+```
+
+Resultat :
+
+- Tests cibles cartes/Nom vivant/home/detail : OK, 17 tests passes
 - `flutter analyze` : OK
 - `flutter test` : OK, 116 tests passes
 - `flutter build apk --debug` : OK

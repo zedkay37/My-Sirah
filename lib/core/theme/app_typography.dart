@@ -66,7 +66,7 @@ class AppTypography extends ThemeExtension<AppTypography> {
       arabicHero: arabicQuranBase.copyWith(
         fontSize: 88,
         fontWeight: FontWeight.w400,
-        height: 1.1,
+        height: 1.28,
       ),
       arabicLarge: arabicBase.copyWith(
         fontSize: 56,

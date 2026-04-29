@@ -67,7 +67,7 @@ class DailyNameCard extends ConsumerWidget {
                     size: ArabicSize.hero,
                     withShadow: true,
                   ),
-                  SizedBox(height: space.sm),
+                  SizedBox(height: space.md),
                   Text(
                     name.transliteration,
                     style: typo.headline.copyWith(
@@ -142,8 +142,11 @@ class _EtymologyFade extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: const [0.3, 1.0],
-                  colors: [colors.bg2.withValues(alpha: 0), colors.bg2],
+                  stops: const [0.64, 1.0],
+                  colors: [
+                    colors.bg2.withValues(alpha: 0),
+                    colors.bg2.withValues(alpha: 0.88),
+                  ],
                 ),
               ),
             ),

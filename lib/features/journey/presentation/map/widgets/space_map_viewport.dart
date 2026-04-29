@@ -55,6 +55,7 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
                 minScale: widget.minScale,
                 maxScale: widget.maxScale,
                 boundaryMargin: const EdgeInsets.all(360),
+                onInteractionEnd: (_) => _stabilizeTransform(),
                 child: RepaintBoundary(
                   child: SizedBox(
                     width: widget.mapSize.width,
@@ -107,8 +108,14 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
       math.max(currentScale * factor, widget.minScale),
       widget.maxScale,
     );
+
+    if (nextScale <= widget.minScale * 1.01) {
+      _controller.value = _centeredTransformFor(viewport, widget.minScale);
+      return;
+    }
+
     final ratio = nextScale / currentScale;
-    final focalPoint = Offset(viewport.width / 2, viewport.height / 2);
+    final focalPoint = _visibleCenter(viewport);
     final next = Matrix4.identity()
       ..translateByDouble(focalPoint.dx, focalPoint.dy, 0, 1)
       ..scaleByDouble(ratio, ratio, 1, 1)
@@ -116,6 +123,35 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
 
     next.multiply(_controller.value);
     _controller.value = next;
+    _stabilizeTransform();
+  }
+
+  void _stabilizeTransform() {
+    final viewport = _lastViewport;
+    if (viewport == null) return;
+
+    final currentScale = _controller.value.getMaxScaleOnAxis();
+    if (currentScale <= widget.minScale * 1.04) {
+      _controller.value = _centeredTransformFor(
+        viewport,
+        currentScale.clamp(widget.minScale, widget.maxScale).toDouble(),
+      );
+    }
+  }
+
+  Offset _visibleCenter(Size viewport) {
+    final visibleWidth = math.max(
+      1,
+      viewport.width - widget.viewPadding.horizontal,
+    );
+    final visibleHeight = math.max(
+      1,
+      viewport.height - widget.viewPadding.vertical,
+    );
+    return Offset(
+      widget.viewPadding.left + visibleWidth / 2,
+      widget.viewPadding.top + visibleHeight / 2,
+    );
   }
 
   Matrix4 _initialTransformFor(Size viewport) {
@@ -135,6 +171,16 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
     final scale = math.min(
       math.max(preferredScale, widget.minScale),
       widget.maxScale,
+    );
+    return _centeredTransformFor(viewport, scale);
+  }
+
+  Matrix4 _centeredTransformFor(Size viewport, double scale) {
+    final visibleWidth = viewport.width - widget.viewPadding.horizontal;
+    final visibleHeight = viewport.height - widget.viewPadding.vertical;
+    final visibleSize = Size(
+      math.max(1, visibleWidth),
+      math.max(1, visibleHeight),
     );
     final dx =
         widget.viewPadding.left +
