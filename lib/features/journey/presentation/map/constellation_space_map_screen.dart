@@ -127,7 +127,7 @@ class _ConstellationMapContentState extends State<_ConstellationMapContent> {
             child: SpaceMapViewport(
               mapSize: mapSize,
               initialScale: 0.60,
-              minScale: 0.42,
+              minScale: 0.30,
               maxScale: 2.35,
               viewPadding: mapViewPadding,
               controlsPadding: EdgeInsets.only(top: controlsTop, right: 12),

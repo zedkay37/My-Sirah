@@ -32,17 +32,15 @@ class SpaceMapViewport extends StatefulWidget {
 }
 
 class _SpaceMapViewportState extends State<SpaceMapViewport> {
-  final _controller = TransformationController();
   Size? _lastViewport;
   EdgeInsets? _lastViewPadding;
   double? _lastInitialScale;
   double? _lastMapEdgeFade;
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  double _scale = 1;
+  Offset _offset = Offset.zero;
+  double _gestureStartScale = 1;
+  Offset _gestureStartOffset = Offset.zero;
+  Offset _gestureStartFocalPoint = Offset.zero;
 
   @override
   Widget build(BuildContext context) {
@@ -58,28 +56,44 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
             Positioned.fill(
               child: _SpaceMapEdgeFade(
                 fade: widget.viewportEdgeFade,
-                child: InteractiveViewer(
-                  transformationController: _controller,
-                  constrained: false,
-                  minScale: widget.minScale,
-                  maxScale: widget.maxScale,
-                  boundaryMargin: const EdgeInsets.all(360),
-                  child: RepaintBoundary(
-                    child: SizedBox(
-                      width: interactiveMapSize.width,
-                      height: interactiveMapSize.height,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Positioned(
-                            left: mapBleed,
-                            top: mapBleed,
-                            width: widget.mapSize.width,
-                            height: widget.mapSize.height,
-                            child: widget.child,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onScaleStart: _handleScaleStart,
+                  onScaleUpdate: _handleScaleUpdate,
+                  onScaleEnd: (_) => _settleTransform(),
+                  child: ClipRect(
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          left: _offset.dx,
+                          top: _offset.dy,
+                          width: interactiveMapSize.width * _scale,
+                          height: interactiveMapSize.height * _scale,
+                          child: RepaintBoundary(
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              alignment: Alignment.topLeft,
+                              child: SizedBox(
+                                width: interactiveMapSize.width,
+                                height: interactiveMapSize.height,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      left: mapBleed,
+                                      top: mapBleed,
+                                      width: widget.mapSize.width,
+                                      height: widget.mapSize.height,
+                                      child: widget.child,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -117,7 +131,10 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
     _lastViewPadding = widget.viewPadding;
     _lastInitialScale = widget.initialScale;
     _lastMapEdgeFade = widget.mapEdgeFade;
-    _controller.value = _initialTransformFor(viewport);
+
+    final transform = _initialTransformFor(viewport);
+    _scale = transform.scale;
+    _offset = transform.offset;
   }
 
   bool _sameViewport(Size? previous, Size next) {
@@ -129,39 +146,153 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
   void _resetTransform() {
     final viewport = _lastViewport;
     if (viewport == null) return;
-    _controller.value = _initialTransformFor(viewport);
+    final transform = _initialTransformFor(viewport);
+    setState(() {
+      _scale = transform.scale;
+      _offset = transform.offset;
+    });
   }
 
   void _zoomBy(double factor) {
     final viewport = _lastViewport;
     if (viewport == null) return;
 
-    final currentScale = _controller.value.getMaxScaleOnAxis();
-    if (currentScale == 0) return;
-
-    final nextScale = math.min(
-      math.max(currentScale * factor, widget.minScale),
-      widget.maxScale,
+    final nextScale = (_scale * factor).clamp(widget.minScale, widget.maxScale);
+    final nextOffset = _scaledOffsetAround(
+      focalPoint: _visibleCenter(viewport),
+      currentOffset: _offset,
+      currentScale: _scale,
+      nextScale: nextScale,
     );
 
-    final ratio = nextScale / currentScale;
-    final focalPoint = _visibleCenter(viewport);
-    final next = Matrix4.identity()
-      ..translateByDouble(focalPoint.dx, focalPoint.dy, 0, 1)
-      ..scaleByDouble(ratio, ratio, 1, 1)
-      ..translateByDouble(-focalPoint.dx, -focalPoint.dy, 0, 1);
+    setState(() {
+      _scale = nextScale;
+      _offset = _settledOffsetFor(
+        viewport: viewport,
+        scale: nextScale,
+        currentOffset: nextOffset,
+      );
+    });
+  }
 
-    next.multiply(_controller.value);
-    _controller.value = next;
+  void _handleScaleStart(ScaleStartDetails details) {
+    _gestureStartScale = _scale;
+    _gestureStartOffset = _offset;
+    _gestureStartFocalPoint = details.localFocalPoint;
+  }
+
+  void _handleScaleUpdate(ScaleUpdateDetails details) {
+    final viewport = _lastViewport;
+    if (viewport == null) return;
+
+    final nextScale = (_gestureStartScale * details.scale).clamp(
+      widget.minScale,
+      widget.maxScale,
+    );
+    final scaleOffset = _scaledOffsetAround(
+      focalPoint: _visibleCenter(viewport),
+      currentOffset: _gestureStartOffset,
+      currentScale: _gestureStartScale,
+      nextScale: nextScale,
+    );
+    final panDelta = details.localFocalPoint - _gestureStartFocalPoint;
+
+    setState(() {
+      _scale = nextScale;
+      _offset = _settledOffsetFor(
+        viewport: viewport,
+        scale: nextScale,
+        currentOffset: scaleOffset + panDelta,
+      );
+    });
+  }
+
+  void _settleTransform() {
+    final viewport = _lastViewport;
+    if (viewport == null) return;
+
+    final settledOffset = _settledOffsetFor(
+      viewport: viewport,
+      scale: _scale,
+      currentOffset: _offset,
+    );
+    if ((settledOffset - _offset).distance < 0.5) return;
+
+    setState(() {
+      _offset = settledOffset;
+    });
+  }
+
+  Offset _scaledOffsetAround({
+    required Offset focalPoint,
+    required Offset currentOffset,
+    required double currentScale,
+    required double nextScale,
+  }) {
+    if (currentScale <= 0) return currentOffset;
+
+    final focalPointInMap = (focalPoint - currentOffset) / currentScale;
+    return focalPoint - focalPointInMap * nextScale;
+  }
+
+  Offset _settledOffsetFor({
+    required Size viewport,
+    required double scale,
+    required Offset currentOffset,
+  }) {
+    final visibleLeft = widget.viewPadding.left;
+    final visibleTop = widget.viewPadding.top;
+    final visibleWidth = math.max(
+      1.0,
+      viewport.width - widget.viewPadding.horizontal,
+    );
+    final visibleHeight = math.max(
+      1.0,
+      viewport.height - widget.viewPadding.vertical,
+    );
+    final mapSize = _interactiveMapSize;
+    final scaledWidth = mapSize.width * scale;
+    final scaledHeight = mapSize.height * scale;
+
+    return Offset(
+      _settledAxisOffset(
+        currentOffset: currentOffset.dx,
+        visibleStart: visibleLeft,
+        visibleExtent: visibleWidth,
+        scaledExtent: scaledWidth,
+      ),
+      _settledAxisOffset(
+        currentOffset: currentOffset.dy,
+        visibleStart: visibleTop,
+        visibleExtent: visibleHeight,
+        scaledExtent: scaledHeight,
+      ),
+    );
+  }
+
+  double _settledAxisOffset({
+    required double currentOffset,
+    required double visibleStart,
+    required double visibleExtent,
+    required double scaledExtent,
+  }) {
+    final settleSlack = math.max(96.0, _mapBleed);
+    if (scaledExtent <= visibleExtent + settleSlack * 2) {
+      return visibleStart + (visibleExtent - scaledExtent) / 2;
+    }
+
+    final minOffset = visibleStart + visibleExtent - scaledExtent - settleSlack;
+    final maxOffset = visibleStart + settleSlack;
+    return currentOffset.clamp(minOffset, maxOffset).toDouble();
   }
 
   Offset _visibleCenter(Size viewport) {
     final visibleWidth = math.max(
-      1,
+      1.0,
       viewport.width - widget.viewPadding.horizontal,
     );
     final visibleHeight = math.max(
-      1,
+      1.0,
       viewport.height - widget.viewPadding.vertical,
     );
     return Offset(
@@ -170,12 +301,12 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
     );
   }
 
-  Matrix4 _initialTransformFor(Size viewport) {
+  _MapTransform _initialTransformFor(Size viewport) {
     final visibleWidth = viewport.width - widget.viewPadding.horizontal;
     final visibleHeight = viewport.height - widget.viewPadding.vertical;
     final visibleSize = Size(
-      math.max(1, visibleWidth),
-      math.max(1, visibleHeight),
+      math.max(1.0, visibleWidth),
+      math.max(1.0, visibleHeight),
     );
     final mapSize = _interactiveMapSize;
     final fittedScale = math.min(
@@ -189,15 +320,18 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
       math.max(preferredScale, widget.minScale),
       widget.maxScale,
     );
-    return _centeredTransformFor(viewport, scale);
+    return _MapTransform(
+      scale: scale,
+      offset: _centeredOffsetFor(viewport, scale),
+    );
   }
 
-  Matrix4 _centeredTransformFor(Size viewport, double scale) {
+  Offset _centeredOffsetFor(Size viewport, double scale) {
     final visibleWidth = viewport.width - widget.viewPadding.horizontal;
     final visibleHeight = viewport.height - widget.viewPadding.vertical;
     final visibleSize = Size(
-      math.max(1, visibleWidth),
-      math.max(1, visibleHeight),
+      math.max(1.0, visibleWidth),
+      math.max(1.0, visibleHeight),
     );
     final mapSize = _interactiveMapSize;
     final dx =
@@ -207,10 +341,15 @@ class _SpaceMapViewportState extends State<SpaceMapViewport> {
         widget.viewPadding.top +
         (visibleSize.height - mapSize.height * scale) / 2;
 
-    return Matrix4.identity()
-      ..translateByDouble(dx, dy, 0, 1)
-      ..scaleByDouble(scale, scale, 1, 1);
+    return Offset(dx, dy);
   }
+}
+
+class _MapTransform {
+  const _MapTransform({required this.scale, required this.offset});
+
+  final double scale;
+  final Offset offset;
 }
 
 class _SpaceMapEdgeFade extends StatelessWidget {
