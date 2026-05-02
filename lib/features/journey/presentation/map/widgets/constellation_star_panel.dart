@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/journey/domain/name_progress_resolver.dart';
@@ -45,15 +46,12 @@ class ConstellationStarPanel extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // Main content: calligraphy + transliteration + button
               Padding(
-                // top: 42 clears the chip badge (12 pos + ~22 chip height + 8 buffer)
                 padding: const EdgeInsets.fromLTRB(20, 42, 20, 14),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Calligraphy — fixed height, scales to fill width, never overflows
                     SizedBox(
                       height: 76,
                       width: double.infinity,
@@ -80,7 +78,6 @@ class ConstellationStarPanel extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    // Transliteration — italic, softer
                     Text(
                       name.transliteration,
                       textDirection: TextDirection.ltr,
@@ -98,7 +95,6 @@ class ConstellationStarPanel extends StatelessWidget {
                     const SizedBox(height: 12),
                     const Divider(color: Colors.white12, height: 1),
                     const SizedBox(height: 10),
-                    // Full-width action button
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
@@ -113,7 +109,10 @@ class ConstellationStarPanel extends StatelessWidget {
                         style: FilledButton.styleFrom(
                           backgroundColor: color.withValues(alpha: 0.22),
                           foregroundColor: colors.ink,
-                          side: BorderSide(color: color.withValues(alpha: 0.48), width: 1.2),
+                          side: BorderSide(
+                            color: color.withValues(alpha: 0.48),
+                            width: 1.2,
+                          ),
                           minimumSize: const Size(0, 44),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
@@ -124,7 +123,6 @@ class ConstellationStarPanel extends StatelessWidget {
                   ],
                 ),
               ),
-              // Stage chip — top-right corner badge
               Positioned(
                 top: 12,
                 right: 14,

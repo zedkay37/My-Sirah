@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
+import 'package:sirah_app/core/providers/husna_providers.dart';
 import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
@@ -92,6 +93,7 @@ Widget _wrap(Widget child, {List<Override> overrides = const []}) {
     overrides: [
       settingsProvider.overrideWith(() => _StubSettingsNotifier()),
       namesProvider.overrideWith((_) async => [_testName]),
+      husnaProvider.overrideWith((_) async => const []),
       categoriesProvider.overrideWith((_) async => [_testCategory]),
       dailyNameProvider.overrideWith((_) async => _testName),
       journeyRepositoryProvider.overrideWith((_) async => _testJourney),
@@ -305,11 +307,11 @@ void main() {
       expect(find.text('Ma lanterne'), findsOneWidget);
       expect(
         find.text(
-          'Sa lumière grandit avec les noms que tu rencontres, contemples et vis.',
+          'Sa lumière grandit avec les chemins que tu explores, contemples et vis.',
         ),
         findsOneWidget,
       );
-      expect(find.text('1/1 noms approchés'), findsOneWidget);
+      expect(find.text('1/1 contenus approchés'), findsOneWidget);
       expect(find.byKey(const ValueKey('profile-lantern')), findsOneWidget);
       expect(find.text('découvertes'), findsOneWidget);
       expect(find.text('contemplées'), findsOneWidget);

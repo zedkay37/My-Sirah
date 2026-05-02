@@ -56,15 +56,16 @@
   "profileSkyLegendPracticed": "معاش",
   "profileSkyLegendRecognized": "معروف",
   "profileLanternTitle": "مصباحي",
-  "profileLanternSubtitle": "يزداد نوره مع الأسماء التي تلقاها وتتأملها وتعيشها.",
-  "profileLanternProgress": "{lit}/{total} أسماء قريبة",
+  "profileLanternSubtitle": "يزداد نوره مع المسارات التي تستكشفها وتتأملها وتعيشها.",
+  "profileLanternProgress": "{lit}/{total} محتويات قريبة",
   "@profileLanternProgress": {
     "placeholders": {
       "lit": { "type": "int" },
       "total": { "type": "int" }
     }
   },
-  "profileLanternSemantics": "مصباح التقدم، {lit} أسماء قريبة من {total}",
+  "profileLanternSources": "أسماء النبي ﷺ · أسماء الله الحسنى",
+  "profileLanternSemantics": "مصباح التقدم، {lit} محتويات قريبة من {total}",
   "@profileLanternSemantics": {
     "placeholders": {
       "lit": { "type": "int" },

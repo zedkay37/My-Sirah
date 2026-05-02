@@ -184,15 +184,16 @@
   "profileSkyLegendPracticed": "vécu",
   "profileSkyLegendRecognized": "reconnu",
   "profileLanternTitle": "Ma lanterne",
-  "profileLanternSubtitle": "Sa lumière grandit avec les noms que tu rencontres, contemples et vis.",
-  "profileLanternProgress": "{lit}/{total} noms approchés",
+  "profileLanternSubtitle": "Sa lumière grandit avec les chemins que tu explores, contemples et vis.",
+  "profileLanternProgress": "{lit}/{total} contenus approchés",
   "@profileLanternProgress": {
     "placeholders": {
       "lit": { "type": "int" },
       "total": { "type": "int" }
     }
   },
-  "profileLanternSemantics": "Lanterne de progression, {lit} noms approchés sur {total}",
+  "profileLanternSources": "Noms du Prophète ﷺ · Asmāʾ al-Ḥusnā",
+  "profileLanternSemantics": "Lanterne de progression, {lit} contenus approchés sur {total}",
   "@profileLanternSemantics": {
     "placeholders": {
       "lit": { "type": "int" },

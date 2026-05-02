@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sirah_app/core/providers/husna_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/providers/user_state.dart';
@@ -44,6 +45,7 @@ Widget _wrap() {
     overrides: [
       settingsProvider.overrideWith(_StubSettingsNotifier.new),
       namesProvider.overrideWith((_) async => [_name]),
+      husnaProvider.overrideWith((_) async => const []),
     ],
     child: MaterialApp.router(
       theme: AppTheme.build(ThemeKey.light),
@@ -64,7 +66,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 120));
 
     expect(find.text('Ma lanterne'), findsOneWidget);
-    expect(find.text('1/1 noms approchés'), findsOneWidget);
+    expect(find.text('1/1 contenus approchés'), findsOneWidget);
     expect(find.byKey(const ValueKey('profile-lantern')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

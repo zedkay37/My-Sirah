@@ -531,10 +531,13 @@ Resultat :
 
 ## Decision 2026-05-02 - Beta release finale
 
-- La version applicative passe sur `2.0.0-beta.3+9`.
+- La version applicative passe sur `2.0.0-beta.4+10`.
 - Les headers noirs du Voyage sont retires sur les cartes galaxie et constellations : la navigation devient flottante sur le ciel pour preserver l'immersion.
 - Le bouton retour des cartes Voyage doit rester au-dessus de la couche interactive zoom/pan.
 - La page Profil conserve la lanterne comme representation personnelle, mais elle utilise uniquement les vraies donnees locales. Aucun mode preview ou progression fictive ne doit partir en beta.
+- La lanterne du Profil represente la progression globale des contenus explorables, pas seulement le Voyage des 201 noms : elle agrege les Noms du Prophete et Asma al-Husna aujourd'hui, puis chaque futur corpus devra s'y brancher explicitement. Les compteurs detailles Journey restent reserves aux 201 noms pour ne pas melanger les univers.
+- Tout futur contenu explorable ajoute a l'application doit declarer sa progression et alimenter automatiquement la lanterne du Profil. Pour un agent IA, un nouveau module n'est pas considere complet tant qu'il n'est pas connecte a cette illumination globale, sauf decision produit explicite contraire.
+- Le rendu de la lanterne peut utiliser une animation douce et un halo progressif, pilotes par cette progression globale. L'effet doit rester contemplatif, sans score spirituel, badge ni recompense bruyante.
 
 ## Dette et risques ouverts
 

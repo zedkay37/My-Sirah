@@ -325,16 +325,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profileLanternSubtitle =>
-      'Sa lumière grandit avec les noms que tu rencontres, contemples et vis.';
+      'Sa lumière grandit avec les chemins que tu explores, contemples et vis.';
 
   @override
   String profileLanternProgress(int lit, int total) {
-    return '$lit/$total noms approchés';
+    return '$lit/$total contenus approchés';
   }
 
   @override
+  String get profileLanternSources => 'Noms du Prophète ﷺ · Asmāʾ al-Ḥusnā';
+
+  @override
   String profileLanternSemantics(int lit, int total) {
-    return 'Lanterne de progression, $lit noms approchés sur $total';
+    return 'Lanterne de progression, $lit contenus approchés sur $total';
   }
 
   @override

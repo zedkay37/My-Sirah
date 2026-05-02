@@ -1,7 +1,7 @@
 name: sirah_app
 description: "Asmāʾ an-Nabī — Les 201 noms du Prophète Muḥammad ﷺ"
 publish_to: 'none'
-version: 2.0.0-beta.3+9
+version: 2.0.0-beta.4+10
 
 environment:
   sdk: ^3.9.2

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijri/hijri_calendar.dart';
+import 'package:sirah_app/core/providers/husna_providers.dart';
 import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
@@ -25,6 +26,7 @@ class ProfileScreen extends ConsumerWidget {
 
     final settings = ref.watch(settingsProvider);
     final namesAsync = ref.watch(namesProvider);
+    final husnaAsync = ref.watch(husnaProvider);
     final progressResolver = ref.watch(journeyProgressResolverProvider);
     final journeySummary =
         ref.watch(journeyProgressSummaryProvider).valueOrNull ??
@@ -77,6 +79,8 @@ class ProfileScreen extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(horizontal: space.md),
                   child: _PersonalLanternSection(
                     names: names,
+                    husnaLit: settings.husnaLearned.length,
+                    husnaTotal: husnaAsync.valueOrNull?.length ?? 99,
                     progress: progressResolver,
                     summary: journeySummary,
                     streak: streak,
@@ -150,12 +154,16 @@ class ProfileScreen extends ConsumerWidget {
 class _PersonalLanternSection extends StatelessWidget {
   const _PersonalLanternSection({
     required this.names,
+    required this.husnaLit,
+    required this.husnaTotal,
     required this.progress,
     required this.summary,
     required this.streak,
   });
 
   final List<ProphetName> names;
+  final int husnaLit;
+  final int husnaTotal;
   final NameProgressResolver progress;
   final NameProgressSummary summary;
   final int streak;
@@ -167,12 +175,16 @@ class _PersonalLanternSection extends StatelessWidget {
     final space = context.space;
     final l10n = context.l10n;
 
-    final total = summary.total == 0 ? names.length : summary.total;
-    final litCount = names
+    final prophetTotal = summary.total == 0 ? names.length : summary.total;
+    final prophetLit = names
         .where(
           (name) => progress.stageFor(name.number) != JourneyNameStage.unknown,
         )
         .length;
+    final safeHusnaTotal = math.max(0, husnaTotal);
+    final safeHusnaLit = husnaLit.clamp(0, safeHusnaTotal).toInt();
+    final total = prophetTotal + safeHusnaTotal;
+    final litCount = prophetLit + safeHusnaLit;
     final progressValue = total == 0
         ? 0.0
         : (litCount / total).clamp(0.0, 1.0).toDouble();
@@ -233,6 +245,15 @@ class _PersonalLanternSection extends StatelessWidget {
                       ),
                   ],
                 ),
+                SizedBox(height: space.xs),
+                Text(
+                  l10n.profileLanternSources,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: typo.caption.copyWith(
+                    color: colors.muted.withValues(alpha: 0.78),
+                  ),
+                ),
                 SizedBox(height: compact ? space.xs : space.sm),
                 _LanternProgressView(
                   progress: progressValue,
@@ -275,7 +296,7 @@ class _LanternProgressViewState extends State<_LanternProgressView>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 4600),
+      duration: const Duration(milliseconds: 5600),
     )..repeat();
   }
 
@@ -314,6 +335,7 @@ class _LanternProgressViewState extends State<_LanternProgressView>
                   line: colors.line,
                   accent: colors.accent,
                   accent2: colors.accent2,
+                  warning: colors.warning,
                 ),
                 child: const SizedBox.expand(),
               );
@@ -336,6 +358,7 @@ class _LanternPainter extends CustomPainter {
     required this.line,
     required this.accent,
     required this.accent2,
+    required this.warning,
   });
 
   final double animationValue;
@@ -347,26 +370,41 @@ class _LanternPainter extends CustomPainter {
   final Color line;
   final Color accent;
   final Color accent2;
+  final Color warning;
 
   @override
   void paint(Canvas canvas, Size size) {
     final p = progress.clamp(0.0, 1.0).toDouble();
     final center = Offset(size.width / 2, size.height * 0.54);
     final cycle = animationValue * math.pi * 2;
-    final sway = math.sin(cycle) * (0.035 + p * 0.025);
-    final bob = math.sin(cycle + math.pi / 3) * 3.2;
-    final glowBoost = Curves.easeOutCubic.transform(p);
-    final glowRadius = size.shortestSide * (0.30 + glowBoost * 0.34);
-    final glowAlpha = 0.14 + glowBoost * 0.42;
+
+    // Slow movement keeps the lantern alive without becoming playful.
+    final sway = math.sin(cycle) * (0.01 + p * 0.012);
+    final bob = math.sin(cycle) * (2.2 + p * 1.8);
+
+    // Make the glow stay discreet early, then open up after mid-progress.
+    final double glowFactor = p < 0.5
+        ? (p * 0.3) // < 50% -> very soft, discreet
+        : (0.15 + (p - 0.5) * 1.7).clamp(0.0, 1.0);
+
+    final glowRadius = size.shortestSide * (0.28 + glowFactor * 0.42);
+    final glowAlpha = (0.05 + glowFactor * 0.55).clamp(0.0, 0.65);
     final lanternCenter = center.translate(0, bob - size.height * 0.03);
 
-    _drawBackground(canvas, size, lanternCenter, glowRadius, glowAlpha);
+    _drawBackground(
+      canvas,
+      size,
+      lanternCenter,
+      glowRadius,
+      glowAlpha,
+      glowFactor,
+    );
 
     canvas.save();
     canvas.translate(lanternCenter.dx, lanternCenter.dy);
     canvas.rotate(sway);
     canvas.translate(-lanternCenter.dx, -lanternCenter.dy);
-    _drawLantern(canvas, size, lanternCenter, p);
+    _drawLantern(canvas, size, lanternCenter, p, cycle, glowFactor);
     canvas.restore();
   }
 
@@ -376,66 +414,76 @@ class _LanternPainter extends CustomPainter {
     Offset center,
     double glowRadius,
     double glowAlpha,
+    double glowFactor,
   ) {
+    // 1. Core Light source glow (inner tightly focused beam)
+    final innerRadius = glowRadius * 0.55;
+    canvas.drawCircle(
+      center,
+      innerRadius,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [
+            accent2.withValues(alpha: (glowAlpha * 1.35).clamp(0.0, 1.0)),
+            accent.withValues(alpha: (glowAlpha * 0.5).clamp(0.0, 1.0)),
+            bg.withValues(alpha: 0),
+          ],
+          stops: const [0.0, 0.35, 1.0],
+        ).createShader(Rect.fromCircle(center: center, radius: innerRadius)),
+    );
+
+    // 2. Wide ambient glow (more expansive when high progress)
     canvas.drawCircle(
       center,
       glowRadius,
       Paint()
         ..shader = RadialGradient(
           colors: [
-            accent2.withValues(alpha: glowAlpha),
-            accent.withValues(alpha: glowAlpha * 0.28),
+            accent2.withValues(alpha: glowAlpha * 0.65),
+            accent.withValues(alpha: glowAlpha * 0.22),
             bg.withValues(alpha: 0),
           ],
-          stops: const [0, 0.46, 1],
+          stops: const [0.0, 0.48, 1.0],
         ).createShader(Rect.fromCircle(center: center, radius: glowRadius)),
     );
 
-    final lowerGlowCenter = Offset(size.width / 2, size.height * 0.78);
-    final lowerGlowRadius = size.width * (0.34 + glowAlpha * 0.22);
+    // 3. Lower ambient oval reflection to create floor or surface aura
+    final lowerGlowCenter = Offset(size.width / 2, size.height * 0.82);
+    final lowerGlowRadius = size.width * (0.32 + glowFactor * 0.25);
     canvas.drawOval(
       Rect.fromCenter(
         center: lowerGlowCenter,
-        width: lowerGlowRadius * 1.55,
-        height: lowerGlowRadius * 0.72,
+        width: lowerGlowRadius * 1.62,
+        height: lowerGlowRadius * 0.76,
       ),
       Paint()
         ..shader =
             RadialGradient(
               colors: [
-                accent2.withValues(alpha: glowAlpha * 0.22),
-                accent.withValues(alpha: glowAlpha * 0.09),
+                accent2.withValues(alpha: glowAlpha * 0.28),
+                accent.withValues(alpha: glowAlpha * 0.08),
                 bg.withValues(alpha: 0),
               ],
-              stops: const [0, 0.45, 1],
+              stops: const [0.0, 0.42, 1.0],
             ).createShader(
               Rect.fromCircle(center: lowerGlowCenter, radius: lowerGlowRadius),
             ),
     );
-
-    final smallGlow = size.shortestSide * 0.18;
-    canvas.drawCircle(
-      center.translate(0, 8),
-      smallGlow,
-      Paint()
-        ..shader =
-            RadialGradient(
-              colors: [bg2.withValues(alpha: 0.40), bg.withValues(alpha: 0)],
-            ).createShader(
-              Rect.fromCircle(
-                center: center.translate(0, 8),
-                radius: smallGlow,
-              ),
-            ),
-    );
   }
 
-  void _drawLantern(Canvas canvas, Size size, Offset center, double p) {
-    final scale = ((size.shortestSide / 238) * (1.02 + p * 0.16))
-        .clamp(0.92, 1.32)
+  void _drawLantern(
+    Canvas canvas,
+    Size size,
+    Offset center,
+    double p,
+    double cycle,
+    double glowFactor,
+  ) {
+    final scale = ((size.shortestSide / 238) * (1.0 + p * 0.12))
+        .clamp(0.92, 1.28)
         .toDouble();
-    final bodyWidth = 74.0 * scale;
-    final bodyHeight = 106.0 * scale;
+    final bodyWidth = 76.0 * scale;
+    final bodyHeight = 108.0 * scale;
     final body = Rect.fromCenter(
       center: center,
       width: bodyWidth,
@@ -445,20 +493,21 @@ class _LanternPainter extends CustomPainter {
     final bottom = body.bottom;
     final middleX = body.center.dx;
 
+    // Chain drawing
     final chainPaint = Paint()
-      ..color = line.withValues(alpha: 0.82)
-      ..strokeWidth = 1.4 * scale
+      ..color = line.withValues(alpha: 0.85)
+      ..strokeWidth = 1.6 * scale
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
-    final anchor = Offset(middleX, top - 52 * scale);
-    final hook = Offset(middleX, top - 8 * scale);
+    final anchor = Offset(middleX, top - 46 * scale);
+    final hook = Offset(middleX, top - 6 * scale);
     canvas.drawLine(anchor, hook, chainPaint);
     canvas.drawArc(
       Rect.fromCenter(
-        center: Offset(middleX, top - 4 * scale),
-        width: 28 * scale,
-        height: 26 * scale,
+        center: Offset(middleX, top - 3 * scale),
+        width: 26 * scale,
+        height: 24 * scale,
       ),
       math.pi,
       math.pi,
@@ -466,48 +515,55 @@ class _LanternPainter extends CustomPainter {
       chainPaint,
     );
 
+    // Main Body Frame
     final bodyRRect = RRect.fromRectAndRadius(
       body,
-      Radius.circular(22 * scale),
+      Radius.circular(24 * scale),
     );
     canvas.drawRRect(bodyRRect, Paint()..color = bg2.withValues(alpha: 0.82));
     canvas.drawRRect(
       bodyRRect,
       Paint()
-        ..color = line.withValues(alpha: 0.86)
+        ..color = line.withValues(alpha: 0.85)
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.2 * scale,
+        ..strokeWidth = 1.3 * scale,
     );
 
+    // Cap & Base
     final capPaint = Paint()..color = accent2.withValues(alpha: 0.88);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromCenter(
-          center: Offset(middleX, top + 12 * scale),
-          width: bodyWidth * 0.74,
-          height: 14 * scale,
-        ),
-        Radius.circular(8 * scale),
-      ),
-      capPaint,
+    // Elaborate premium lantern dome cap
+    final capPath = Path();
+    capPath.moveTo(middleX - bodyWidth * 0.42, top + 15 * scale);
+    capPath.quadraticBezierTo(
+      middleX,
+      top - 4 * scale,
+      middleX + bodyWidth * 0.42,
+      top + 15 * scale,
     );
+    capPath.lineTo(middleX + bodyWidth * 0.32, top + 24 * scale);
+    capPath.lineTo(middleX - bodyWidth * 0.32, top + 24 * scale);
+    capPath.close();
+    canvas.drawPath(capPath, capPaint);
+
+    // Decorative base cap
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromCenter(
-          center: Offset(middleX, bottom - 10 * scale),
-          width: bodyWidth * 0.82,
-          height: 18 * scale,
+          center: Offset(middleX, bottom - 11 * scale),
+          width: bodyWidth * 0.84,
+          height: 16 * scale,
         ),
         Radius.circular(9 * scale),
       ),
       capPaint,
     );
 
+    // Glowing Inner Glass
     final glass = RRect.fromRectAndRadius(
       Rect.fromCenter(
-        center: center.translate(0, 2 * scale),
-        width: bodyWidth * 0.56,
-        height: bodyHeight * 0.58,
+        center: center.translate(0, 3 * scale),
+        width: bodyWidth * 0.58,
+        height: bodyHeight * 0.54,
       ),
       Radius.circular(16 * scale),
     );
@@ -516,8 +572,8 @@ class _LanternPainter extends CustomPainter {
       Paint()
         ..shader = RadialGradient(
           colors: [
-            accent2.withValues(alpha: 0.30 + p * 0.28),
-            accent.withValues(alpha: 0.10 + p * 0.08),
+            accent2.withValues(alpha: 0.32 + glowFactor * 0.32),
+            accent.withValues(alpha: 0.12 + glowFactor * 0.12),
             bg.withValues(alpha: 0.02),
           ],
         ).createShader(glass.outerRect),
@@ -525,66 +581,92 @@ class _LanternPainter extends CustomPainter {
     canvas.drawRRect(
       glass,
       Paint()
-        ..color = line.withValues(alpha: 0.50)
+        ..color = line.withValues(alpha: 0.52)
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.8 * scale,
+        ..strokeWidth = 0.9 * scale,
     );
 
-    final flameHeight = (24 + p * 20) * scale;
-    final flameWidth = (14 + p * 11) * scale;
-    final flameBase = center.translate(0, 22 * scale);
-    final flame = Path()
+    // Two flame layers give a warmer core while keeping the shape readable.
+    final breathe = math.sin(cycle) * 0.04;
+    final flameHeight = (26 + p * 18 + breathe * 12) * scale;
+    final flameWidth = (14 + p * 10 + breathe * 6) * scale;
+    final flameBase = center.translate(0, 20 * scale);
+
+    // Layer 1: Outer soft flame aura (amber/accent)
+    final outerFlame = Path()
       ..moveTo(flameBase.dx, flameBase.dy - flameHeight)
       ..cubicTo(
         flameBase.dx - flameWidth,
-        flameBase.dy - flameHeight * 0.55,
-        flameBase.dx - flameWidth * 0.74,
-        flameBase.dy - flameHeight * 0.05,
+        flameBase.dy - flameHeight * 0.58,
+        flameBase.dx - flameWidth * 0.72,
+        flameBase.dy - flameHeight * 0.08,
         flameBase.dx,
         flameBase.dy,
       )
       ..cubicTo(
-        flameBase.dx + flameWidth * 0.86,
+        flameBase.dx + flameWidth * 0.82,
         flameBase.dy - flameHeight * 0.18,
-        flameBase.dx + flameWidth * 0.68,
-        flameBase.dy - flameHeight * 0.72,
+        flameBase.dx + flameWidth * 0.66,
+        flameBase.dy - flameHeight * 0.74,
         flameBase.dx,
         flameBase.dy - flameHeight,
       );
-    canvas.drawPath(flame, Paint()..color = accent2);
+    canvas.drawPath(
+      outerFlame,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [
+            accent2.withValues(alpha: 0.95),
+            accent.withValues(alpha: 0.68),
+          ],
+        ).createShader(outerFlame.getBounds()),
+    );
 
-    final inner = Path()
-      ..moveTo(flameBase.dx, flameBase.dy - flameHeight * 0.68)
+    // Layer 2: bright inner flame.
+    final innerFlameHeight = flameHeight * 0.65;
+    final innerFlameWidth = flameWidth * 0.58;
+    final innerFlame = Path()
+      ..moveTo(flameBase.dx, flameBase.dy - innerFlameHeight)
       ..cubicTo(
-        flameBase.dx - flameWidth * 0.36,
-        flameBase.dy - flameHeight * 0.36,
-        flameBase.dx - flameWidth * 0.20,
-        flameBase.dy - flameHeight * 0.02,
+        flameBase.dx - innerFlameWidth,
+        flameBase.dy - innerFlameHeight * 0.55,
+        flameBase.dx - innerFlameWidth * 0.65,
+        flameBase.dy - innerFlameHeight * 0.05,
         flameBase.dx,
-        flameBase.dy - flameHeight * 0.05,
+        flameBase.dy,
       )
       ..cubicTo(
-        flameBase.dx + flameWidth * 0.34,
-        flameBase.dy - flameHeight * 0.18,
-        flameBase.dx + flameWidth * 0.22,
-        flameBase.dy - flameHeight * 0.50,
+        flameBase.dx + innerFlameWidth * 0.75,
+        flameBase.dy - innerFlameHeight * 0.16,
+        flameBase.dx + innerFlameWidth * 0.62,
+        flameBase.dy - innerFlameHeight * 0.72,
         flameBase.dx,
-        flameBase.dy - flameHeight * 0.68,
+        flameBase.dy - innerFlameHeight,
       );
-    canvas.drawPath(inner, Paint()..color = bg2.withValues(alpha: 0.78));
+    canvas.drawPath(
+      innerFlame,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [
+            warning.withValues(alpha: 0.96),
+            accent2.withValues(alpha: 0.88),
+          ],
+        ).createShader(innerFlame.getBounds()),
+    );
 
+    // Delicate metallic decorative side structures
     final sidePaint = Paint()
-      ..color = muted.withValues(alpha: 0.42)
-      ..strokeWidth = 1.0 * scale
+      ..color = muted.withValues(alpha: 0.44)
+      ..strokeWidth = 1.1 * scale
       ..style = PaintingStyle.stroke;
     canvas.drawLine(
-      Offset(body.left + 16 * scale, top + 24 * scale),
-      Offset(body.left + 12 * scale, bottom - 20 * scale),
+      Offset(body.left + 15 * scale, top + 22 * scale),
+      Offset(body.left + 11 * scale, bottom - 22 * scale),
       sidePaint,
     );
     canvas.drawLine(
-      Offset(body.right - 16 * scale, top + 24 * scale),
-      Offset(body.right - 12 * scale, bottom - 20 * scale),
+      Offset(body.right - 15 * scale, top + 22 * scale),
+      Offset(body.right - 11 * scale, bottom - 22 * scale),
       sidePaint,
     );
   }

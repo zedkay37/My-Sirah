@@ -652,19 +652,25 @@ abstract class AppLocalizations {
   /// No description provided for @profileLanternSubtitle.
   ///
   /// In fr, this message translates to:
-  /// **'Sa lumière grandit avec les noms que tu rencontres, contemples et vis.'**
+  /// **'Sa lumière grandit avec les chemins que tu explores, contemples et vis.'**
   String get profileLanternSubtitle;
 
   /// No description provided for @profileLanternProgress.
   ///
   /// In fr, this message translates to:
-  /// **'{lit}/{total} noms approchés'**
+  /// **'{lit}/{total} contenus approchés'**
   String profileLanternProgress(int lit, int total);
+
+  /// No description provided for @profileLanternSources.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noms du Prophète ﷺ · Asmāʾ al-Ḥusnā'**
+  String get profileLanternSources;
 
   /// No description provided for @profileLanternSemantics.
   ///
   /// In fr, this message translates to:
-  /// **'Lanterne de progression, {lit} noms approchés sur {total}'**
+  /// **'Lanterne de progression, {lit} contenus approchés sur {total}'**
   String profileLanternSemantics(int lit, int total);
 
   /// No description provided for @profileJourneyMirrorTitle.

@@ -324,16 +324,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileLanternSubtitle =>
-      'يزداد نوره مع الأسماء التي تلقاها وتتأملها وتعيشها.';
+      'يزداد نوره مع المسارات التي تستكشفها وتتأملها وتعيشها.';
 
   @override
   String profileLanternProgress(int lit, int total) {
-    return '$lit/$total أسماء قريبة';
+    return '$lit/$total محتويات قريبة';
   }
 
   @override
+  String get profileLanternSources => 'أسماء النبي ﷺ · أسماء الله الحسنى';
+
+  @override
   String profileLanternSemantics(int lit, int total) {
-    return 'مصباح التقدم، $lit أسماء قريبة من $total';
+    return 'مصباح التقدم، $lit محتويات قريبة من $total';
   }
 
   @override
