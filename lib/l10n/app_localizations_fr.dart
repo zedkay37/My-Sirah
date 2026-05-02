@@ -15,7 +15,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navHome => 'Accueil';
 
   @override
-  String get navDiscover => 'Découvrir';
+  String get navJourney => 'Voyage';
+
+  @override
+  String get navLibrary => 'Biblio';
 
   @override
   String get navProfile => 'Profil';
@@ -30,16 +33,45 @@ class AppLocalizationsFr extends AppLocalizations {
   String get errorBackHome => 'Retour à l\'accueil';
 
   @override
-  String get onboardingWelcomeTitle => 'Les 201 noms du Prophète ﷺ';
+  String get onboardingSealPhrase => 'مُحَمَّدٌ رَسُولُ اللهِ ﷺ';
 
   @override
-  String get onboardingWelcomeSubtitle => 'Apprenez, méditez, connectez-vous.';
+  String get onboardingWelcomeTitle => 'Explore les 201 noms du Prophète ﷺ';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Un voyage calme pour découvrir, contempler puis vivre un nom chaque jour.';
 
   @override
   String get onboardingWelcomeCta => 'Commencer';
 
   @override
-  String get onboardingThemeTitle => 'Choisissez votre ambiance';
+  String get onboardingJourneyTitle => 'Voyage';
+
+  @override
+  String get onboardingJourneySubtitle =>
+      'Avance dans un ciel de constellations.';
+
+  @override
+  String get onboardingTafakkurTitle => 'Tafakkur';
+
+  @override
+  String get onboardingTafakkurSubtitle =>
+      'Prends un moment de présence autour du nom.';
+
+  @override
+  String get onboardingActionTitle => 'Action';
+
+  @override
+  String get onboardingActionSubtitle =>
+      'Reçois un geste simple à vivre aujourd’hui.';
+
+  @override
+  String get onboardingThemeTitle => 'Choisis ton atmosphère';
+
+  @override
+  String get onboardingThemeSubtitle =>
+      'Tu pourras la changer plus tard dans les paramètres.';
 
   @override
   String get onboardingThemeCta => 'Continuer';
@@ -49,7 +81,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get onboardingNotifSubtitle =>
-      'Recevez le nom du jour à l\'heure qui vous convient';
+      'Un rappel discret peut t’aider à garder le lien sans pression.';
+
+  @override
+  String get onboardingNotifTimeLabel => 'Heure proposée';
+
+  @override
+  String get onboardingNotifChooseTime => 'Changer l’heure';
 
   @override
   String get onboardingNotifActivate => 'Activer les notifications';
@@ -67,16 +105,62 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeCategorySection => 'Explorer par catégorie';
 
   @override
-  String get homeDiscoverName => 'Découvrir ce nom';
+  String get homeDailyActionTitle => 'Action du jour';
 
   @override
-  String homeCategoryLearned(int learned, int total) {
-    return '$learned/$total appris';
+  String get homeExploreTodayName => 'Découvrir ce nom';
+
+  @override
+  String get homeClassicNameTooltip => 'Fiche classique';
+
+  @override
+  String get homeResumeTitle => 'Reprendre mon chemin';
+
+  @override
+  String homeResumeSubtitle(String name) {
+    return 'Dernière étoile explorée : $name';
+  }
+
+  @override
+  String homeResumeProgressSubtitle(
+    String name,
+    int viewed,
+    int meditated,
+    int recognized,
+  ) {
+    return '$name · $viewed découverts · $meditated contemplés · $recognized reconnus';
+  }
+
+  @override
+  String homeJourneyTrace(int viewed, int meditated, int recognized) {
+    return '$viewed découverts · $meditated contemplés · $recognized reconnus';
+  }
+
+  @override
+  String get homeContinueJourneyTitle => 'Continuer mon voyage';
+
+  @override
+  String get homeContinueJourneyFallback => 'Reprendre depuis le nom du jour';
+
+  @override
+  String homeContinueJourneySubtitle(String constellation) {
+    return 'Prochaine étoile dans $constellation';
+  }
+
+  @override
+  String get homeJourneyShortcutSubtitle => 'Entrer dans la carte stellaire';
+
+  @override
+  String get homeLibraryShortcutSubtitle => 'Listes, fiches et révisions';
+
+  @override
+  String homeCategoryViewed(int viewed, int total) {
+    return '$viewed/$total découverts';
   }
 
   @override
   String homeNameNumber(String number) {
-    return '#$number';
+    return 'N°$number';
   }
 
   @override
@@ -182,13 +266,106 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get quizReplayCta => 'Rejouer';
+  String get quizReplayCta => 'Choisir un exercice';
 
   @override
   String get quizExploreNamesCta => 'Explorer les noms';
 
   @override
-  String get profileLearnedSubtitle => 'sur 201 noms du Prophète ﷺ';
+  String profileJourneySubtitle(int viewed, int total) {
+    return '$viewed/$total étoiles découvertes';
+  }
+
+  @override
+  String get profileJourneyViewed => 'découvertes';
+
+  @override
+  String get profileJourneyMeditated => 'contemplées';
+
+  @override
+  String get profileJourneyPracticed => 'vécues';
+
+  @override
+  String get profileJourneyRecognized => 'reconnues';
+
+  @override
+  String get profileSkyTitle => 'Mon ciel';
+
+  @override
+  String get profileSkySubtitle =>
+      'Chaque étoile est un nom. Sa lumière grandit avec ton cheminement.';
+
+  @override
+  String profileSkyLitCount(int lit, int total) {
+    return '$lit/$total étoiles allumées';
+  }
+
+  @override
+  String profileSkySelectedHint(String name) {
+    return 'Ouvrir $name';
+  }
+
+  @override
+  String get profileSkyLegendUnknown => 'à rencontrer';
+
+  @override
+  String get profileSkyLegendViewed => 'rencontré';
+
+  @override
+  String get profileSkyLegendMeditated => 'contemplé';
+
+  @override
+  String get profileSkyLegendPracticed => 'vécu';
+
+  @override
+  String get profileSkyLegendRecognized => 'reconnu';
+
+  @override
+  String get profileLanternTitle => 'Ma lanterne';
+
+  @override
+  String get profileLanternSubtitle =>
+      'Sa lumière grandit avec les noms que tu rencontres, contemples et vis.';
+
+  @override
+  String profileLanternProgress(int lit, int total) {
+    return '$lit/$total noms approchés';
+  }
+
+  @override
+  String profileLanternSemantics(int lit, int total) {
+    return 'Lanterne de progression, $lit noms approchés sur $total';
+  }
+
+  @override
+  String get profileJourneyMirrorTitle =>
+      'Voyage autour des noms du Prophète ﷺ';
+
+  @override
+  String get profileJourneyMirrorSubtitle =>
+      'Un miroir simple de ce que tu as rencontré, contemplé et vécu.';
+
+  @override
+  String get profileMomentStarTitle => 'Prochaine étoile';
+
+  @override
+  String get profileMomentStarCta => 'Entrer dans ce nom';
+
+  @override
+  String get profileConstellationsTitle => 'Constellations';
+
+  @override
+  String profileConstellationProgress(int lit, int total) {
+    return '$lit/$total rencontrés';
+  }
+
+  @override
+  String get profileExploreFullSky => 'Explorer le ciel complet';
+
+  @override
+  String profileRitualStreak(int days) {
+    return 'Rituel quotidien · $days j';
+  }
 
   @override
   String get profileFavorites => 'Mes favoris';
@@ -203,7 +380,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsSectionTheme => 'Thème';
 
   @override
-  String get settingsThemeLight => 'Clair';
+  String get settingsThemeLight => 'Clair noble';
 
   @override
   String get settingsThemeDark => 'Sombre';
@@ -260,10 +437,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileConstellationTitle => 'Constellation';
 
   @override
-  String get profileLegendLearned => 'appris';
+  String get profileLegendViewed => 'vu';
 
   @override
-  String get profileLegendViewed => 'vu';
+  String get profileLegendMeditated => 'contemplé';
+
+  @override
+  String get profileLegendPracticed => 'vécu';
+
+  @override
+  String get profileLegendRecognized => 'reconnu';
 
   @override
   String get profileLegendUnknown => 'non découvert';
@@ -284,6 +467,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get husnaTitle => 'Asmāʾ al-Ḥusnā';
 
   @override
+  String get husnaAllNamesTab => 'Tous les noms';
+
+  @override
+  String get husnaPracticeTitle => 'S’entraîner avec les Noms d’Allah';
+
+  @override
+  String get husnaPracticeSubtitle =>
+      'QCM et flashcards pour mémoriser les sens.';
+
+  @override
+  String get husnaQuizTypeMCQDesc => 'Retrouvez le Nom à partir de son sens';
+
+  @override
+  String get husnaQuizTypeFlashcardsDesc =>
+      'Retournez les cartes pour réviser les Noms';
+
+  @override
   String get husnaSearchHint => 'Rechercher (arabe, translittération, sens…)';
 
   @override
@@ -300,6 +500,102 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get discoverHubSubtitle => 'Choisissez un domaine à explorer';
+
+  @override
+  String get libraryTitle => 'Bibliothèque';
+
+  @override
+  String get librarySubtitle => 'Retrouvez les corpus, listes et fiches.';
+
+  @override
+  String get libraryProphetNamesSubtitle =>
+      'Liste, fiches, tafakkur et entraînement.';
+
+  @override
+  String get libraryToolsTitle => 'Outils d’apprentissage';
+
+  @override
+  String get libraryLearnTab => 'Apprendre';
+
+  @override
+  String get libraryPracticeTab => 'S’entraîner';
+
+  @override
+  String libraryDeckProgress(int current, int total) {
+    return '$current/$total reconnus';
+  }
+
+  @override
+  String get journeyTitle => 'Voyage';
+
+  @override
+  String get journeyTitleAr => 'رحلة الأسماء';
+
+  @override
+  String get journeySubtitle =>
+      'Avancez par constellations de noms, une étoile après l’autre.';
+
+  @override
+  String get journeyGalaxyHint =>
+      'Touchez la galaxie active pour entrer dans le voyage.';
+
+  @override
+  String get journeyDeckMapHint =>
+      'Touchez une constellation pour voir ses étoiles.';
+
+  @override
+  String journeyConstellationPrompt(String title) {
+    return 'Choisis une étoile de « $title » pour ouvrir sa fiche.';
+  }
+
+  @override
+  String get journeyOpenNameCta => 'Voir la fiche';
+
+  @override
+  String get journeyMapZoomInTooltip => 'Zoomer';
+
+  @override
+  String get journeyMapZoomOutTooltip => 'Dézoomer';
+
+  @override
+  String get journeyMapResetTooltip => 'Recentrer la carte';
+
+  @override
+  String get journeyLoadError => 'Impossible de charger le voyage';
+
+  @override
+  String get journeyNotFound => 'Constellation introuvable';
+
+  @override
+  String journeyProgress(int viewed, int total) {
+    return '$viewed/$total étoiles vues';
+  }
+
+  @override
+  String journeyProgressDetailed(
+    int viewed,
+    int meditated,
+    int practiced,
+    int recognized,
+    int total,
+  ) {
+    return '$viewed découvertes · $meditated contemplées · $practiced vécues · $recognized reconnues / $total';
+  }
+
+  @override
+  String get journeyStarViewed => 'Vue';
+
+  @override
+  String get journeyStarMeditated => 'Méditée';
+
+  @override
+  String get journeyStarPracticed => 'Vécue';
+
+  @override
+  String get journeyStarRecognized => 'Reconnue';
+
+  @override
+  String get journeyStarUnknown => 'À explorer';
 
   @override
   String get treeTitle => 'Lignée prophétique';
@@ -451,7 +747,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tafakkurComplete => 'Contemplation terminée';
 
   @override
-  String get tafakkurReturn => 'Retourner au nom';
+  String get tafakkurReturn => 'Retourner à la fiche';
 
   @override
   String get tafakkurPaceLabel => 'Rythme de lecture';
@@ -478,6 +774,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tafakkurExitConfirmNo => 'Continuer';
+
+  @override
+  String get tafakkurPrevious => 'Page précédente';
+
+  @override
+  String get tafakkurNext => 'Page suivante';
+
+  @override
+  String get tafakkurSettingsTooltip => 'Régler le rythme';
+
+  @override
+  String tafakkurEstimatedDuration(int minutes) {
+    return '~$minutes min';
+  }
+
+  @override
+  String tafakkurPaceSummary(int seconds) {
+    return '$seconds s par page';
+  }
+
+  @override
+  String get tafakkurPageName => 'Le nom';
+
+  @override
+  String get tafakkurPageStory => 'Le récit';
+
+  @override
+  String get tafakkurPageMeditation => 'Méditer';
+
+  @override
+  String get tafakkurPageIntention => 'Intention';
+
+  @override
+  String get tafakkurSwipeHint => 'Glissez pour avancer ou revenir';
 
   @override
   String get studyTitle => 'Mode Étude';
@@ -527,4 +857,48 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get treeFilterAhlAlBayt => 'Ahl al-Bayt';
+
+  @override
+  String get nameExperienceTitle => 'Fiche du nom';
+
+  @override
+  String get nameExperienceOpen => 'Ouvrir la fiche';
+
+  @override
+  String get nameExperienceStory => 'Récit';
+
+  @override
+  String get nameExperienceUnderstand => 'Comprendre ce nom';
+
+  @override
+  String get nameExperienceTafakkur => 'Tafakkur';
+
+  @override
+  String get nameExperienceActionOfDay => 'Action du jour';
+
+  @override
+  String get nameExperienceMarkActionPracticed => 'Je l’ai vécue';
+
+  @override
+  String get nameExperienceActionPracticed => 'Action vécue';
+
+  @override
+  String get nameExperienceFallbackPrompt =>
+      'Que ce nom m’apprend-il aujourd’hui sur la connaissance, l’amour et l’imitation du Prophète ﷺ ?';
+
+  @override
+  String get nameExperienceFallbackAction =>
+      'Prends un moment court pour vivre ce nom avec sincérité.';
+
+  @override
+  String get nameExperienceEnterTafakkur => 'Entrer en tafakkur';
+
+  @override
+  String get nameExperienceClassicTooltip => 'Fiche classique';
+
+  @override
+  String get nameExperienceOpenClassic => 'Ouvrir la fiche classique';
+
+  @override
+  String get nameExperienceNotFound => 'Nom introuvable';
 }

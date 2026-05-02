@@ -21,12 +21,28 @@ class RadialView extends ConsumerStatefulWidget {
 class _RadialViewState extends ConsumerState<RadialView> {
   final _transformationController = TransformationController();
   final ValueNotifier<String?> _selectedId = ValueNotifier<String?>(null);
+  final _scale = ValueNotifier<double>(1.0);
+
+  @override
+  void initState() {
+    super.initState();
+    _transformationController.addListener(_syncScale);
+  }
 
   @override
   void dispose() {
+    _transformationController.removeListener(_syncScale);
     _transformationController.dispose();
     _selectedId.dispose();
+    _scale.dispose();
     super.dispose();
+  }
+
+  void _syncScale() {
+    final nextScale = _transformationController.value.getMaxScaleOnAxis();
+    if ((nextScale - _scale.value).abs() > 0.03) {
+      _scale.value = nextScale;
+    }
   }
 
   void _recenter() {
@@ -57,7 +73,10 @@ class _RadialViewState extends ConsumerState<RadialView> {
         Positioned.fill(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final center = Offset(constraints.maxWidth / 2, constraints.maxHeight / 2);
+              final center = Offset(
+                constraints.maxWidth / 2,
+                constraints.maxHeight / 2,
+              );
               return InteractiveViewer(
                 transformationController: _transformationController,
                 minScale: 0.2,
@@ -69,13 +88,14 @@ class _RadialViewState extends ConsumerState<RadialView> {
                   height: constraints.maxHeight,
                   child: GestureDetector(
                     onTapDown: (details) {
-                      // Note: InteractiveViewer handles pan/zoom. 
+                      // Note: InteractiveViewer handles pan/zoom.
                       // onTapDown here is for our hit test.
                     },
                     child: RepaintBoundary(
-                      child: ValueListenableBuilder<String?>(
-                        valueListenable: _selectedId,
-                        builder: (context, selectedId, child) {
+                      child: AnimatedBuilder(
+                        animation: Listenable.merge([_selectedId, _scale]),
+                        builder: (context, child) {
+                          final selectedId = _selectedId.value;
                           return GestureDetector(
                             onTapUp: (details) {
                               final tapPosition = details.localPosition;
@@ -85,13 +105,17 @@ class _RadialViewState extends ConsumerState<RadialView> {
                                 selectedId: selectedId,
                                 center: center,
                                 colors: context.colors,
-                                onTap: (_) {}, // Non utilisé ici, on gère le onTapUp directement
+                                onTap: (_) {},
+                                scale: _scale.value,
                               );
                               final hitId = painter.hitTestMembers(tapPosition);
                               _selectedId.value = hitId;
                             },
                             child: CustomPaint(
-                              size: Size(constraints.maxWidth, constraints.maxHeight),
+                              size: Size(
+                                constraints.maxWidth,
+                                constraints.maxHeight,
+                              ),
                               painter: RadialPainter(
                                 members: members,
                                 filter: activeFilter,
@@ -99,6 +123,7 @@ class _RadialViewState extends ConsumerState<RadialView> {
                                 center: center,
                                 colors: context.colors,
                                 onTap: (_) {},
+                                scale: _scale.value,
                               ),
                             ),
                           );
@@ -147,7 +172,7 @@ class _RadialViewState extends ConsumerState<RadialView> {
 
         // Bouton recentrer
         Positioned(
-          bottom: context.space.md,
+          bottom: context.space.lg,
           right: context.space.md,
           child: FloatingActionButton.small(
             onPressed: _recenter,
@@ -159,4 +184,3 @@ class _RadialViewState extends ConsumerState<RadialView> {
     );
   }
 }
-

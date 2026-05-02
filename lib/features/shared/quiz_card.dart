@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
-import 'package:sirah_app/features/names/data/models/prophet_name.dart';
+import 'package:sirah_app/features/quiz/data/quiz_generator.dart';
 import 'package:sirah_app/features/shared/arabic_text.dart';
 import 'package:sirah_app/features/shared/category_chip.dart';
 
@@ -11,12 +11,12 @@ import 'package:sirah_app/features/shared/category_chip.dart';
 class QuizCard extends StatefulWidget {
   const QuizCard({
     super.key,
-    required this.name,
+    required this.item,
     required this.isFlipped,
     required this.onFlip,
   });
 
-  final ProphetName name;
+  final PracticeItem item;
   final bool isFlipped;
   final VoidCallback onFlip;
 
@@ -69,11 +69,11 @@ class _QuizCardState extends State<QuizCard>
               ..rotateY(value * math.pi),
             alignment: Alignment.center,
             child: isFront
-                ? _CardFace(name: widget.name, isFront: true)
+                ? _CardFace(item: widget.item, isFront: true)
                 : Transform(
                     transform: Matrix4.identity()..rotateY(math.pi),
                     alignment: Alignment.center,
-                    child: _CardFace(name: widget.name, isFront: false),
+                    child: _CardFace(item: widget.item, isFront: false),
                   ),
           );
         },
@@ -85,9 +85,9 @@ class _QuizCardState extends State<QuizCard>
 // ── Faces ──────────────────────────────────────────────────────────────────────
 
 class _CardFace extends StatelessWidget {
-  const _CardFace({required this.name, required this.isFront});
+  const _CardFace({required this.item, required this.isFront});
 
-  final ProphetName name;
+  final PracticeItem item;
   final bool isFront;
 
   @override
@@ -106,14 +106,14 @@ class _CardFace extends StatelessWidget {
         ),
       ),
       padding: EdgeInsets.all(space.xl),
-      child: isFront ? _Front(name: name) : _Back(name: name),
+      child: isFront ? _Front(item: item) : _Back(item: item),
     );
   }
 }
 
 class _Front extends StatelessWidget {
-  const _Front({required this.name});
-  final ProphetName name;
+  const _Front({required this.item});
+  final PracticeItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,7 @@ class _Front extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ArabicText(text: name.arabic, size: ArabicSize.large, withShadow: true),
+        ArabicText(text: item.arabic, size: ArabicSize.large, withShadow: true),
         SizedBox(height: space.sm),
         Icon(Icons.touch_app_outlined, size: 20, color: colors.muted),
       ],
@@ -132,8 +132,8 @@ class _Front extends StatelessWidget {
 }
 
 class _Back extends StatelessWidget {
-  const _Back({required this.name});
-  final ProphetName name;
+  const _Back({required this.item});
+  final PracticeItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -145,20 +145,33 @@ class _Back extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          name.transliteration,
+          item.transliteration,
           textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr,
           style: typo.headline.copyWith(fontStyle: FontStyle.italic),
         ),
         SizedBox(height: space.sm),
-        CategoryChip(
-          slug: name.categorySlug,
-          label: name.categoryLabel,
-          variant: CategoryChipVariant.small,
-        ),
+        if (item.categorySlug case final slug?) ...[
+          CategoryChip(
+            slug: slug,
+            label: item.categoryLabel ?? '',
+            variant: CategoryChipVariant.small,
+          ),
+        ] else ...[
+          Text(
+            item.promptText,
+            textAlign: TextAlign.center,
+            textDirection: TextDirection.ltr,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: typo.body.copyWith(color: colors.ink),
+          ),
+        ],
         SizedBox(height: space.md),
         Text(
-          name.etymology,
+          item.detailText,
           textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr,
           maxLines: 4,
           overflow: TextOverflow.ellipsis,
           style: typo.body.copyWith(color: colors.muted),

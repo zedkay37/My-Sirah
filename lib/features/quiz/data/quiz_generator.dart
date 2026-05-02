@@ -1,36 +1,88 @@
+import 'package:sirah_app/features/asmaul_husna/data/models/husna_name.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
-
-// ── Types ─────────────────────────────────────────────────────────────────────
 
 enum QuizType { qcm, flashcards }
 
+enum PracticeDeckType { prophetNames, asmaulHusna }
+
+class PracticeItem {
+  const PracticeItem({
+    required this.id,
+    required this.arabic,
+    required this.transliteration,
+    required this.promptText,
+    required this.detailText,
+    required this.deckType,
+    this.categorySlug,
+    this.categoryLabel,
+  });
+
+  factory PracticeItem.fromProphetName(ProphetName name) {
+    return PracticeItem(
+      id: name.number,
+      arabic: name.arabic,
+      transliteration: name.transliteration,
+      promptText: name.commentary,
+      detailText: name.etymology,
+      deckType: PracticeDeckType.prophetNames,
+      categorySlug: name.categorySlug,
+      categoryLabel: name.categoryLabel,
+    );
+  }
+
+  factory PracticeItem.fromHusnaName(HusnaName name) {
+    final prompt = name.meaningFr.trim().isNotEmpty
+        ? name.meaningFr
+        : name.etymology.trim().isNotEmpty
+        ? name.etymology
+        : name.transliteration;
+    final detail = name.etymology.trim().isNotEmpty ? name.etymology : prompt;
+    return PracticeItem(
+      id: name.id,
+      arabic: name.arabic,
+      transliteration: name.transliteration,
+      promptText: prompt,
+      detailText: detail,
+      deckType: PracticeDeckType.asmaulHusna,
+    );
+  }
+
+  final int id;
+  final String arabic;
+  final String transliteration;
+  final String promptText;
+  final String detailText;
+  final PracticeDeckType deckType;
+  final String? categorySlug;
+  final String? categoryLabel;
+}
+
 class QcmQuestion {
   const QcmQuestion({
-    required this.name,
-    required this.maskedCommentary,
+    required this.item,
+    required this.prompt,
     required this.choices,
   });
 
-  final ProphetName name;
-  final String maskedCommentary;
-  final List<ProphetName> choices; // 4 choix, mélangés, 1 correct
+  final PracticeItem item;
+  final String prompt;
+  final List<PracticeItem> choices;
 }
 
 class QuizSession {
-  QuizSession.qcm(this.questions)
-      : type = QuizType.qcm,
-        names = const [];
+  QuizSession.qcm({required this.deckType, required this.questions})
+    : type = QuizType.qcm,
+      items = const [];
 
-  QuizSession.flashcards(this.names)
-      : type = QuizType.flashcards,
-        questions = const [];
+  QuizSession.flashcards({required this.deckType, required this.items})
+    : type = QuizType.flashcards,
+      questions = const [];
 
   final QuizType type;
+  final PracticeDeckType deckType;
   final List<QcmQuestion> questions;
-  final List<ProphetName> names;
+  final List<PracticeItem> items;
 }
-
-// ── Générateur ────────────────────────────────────────────────────────────────
 
 class QuizGenerator {
   QuizGenerator._();
@@ -44,56 +96,113 @@ class QuizGenerator {
   }
 
   static List<QcmQuestion> generateQcm(List<ProphetName> all) {
-    final selected = pickRandom(all);
-    return selected.map((name) => _buildQuestion(all, name)).toList();
+    return generateProphetQcm(all);
   }
 
-  static QcmQuestion _buildQuestion(List<ProphetName> all, ProphetName name) {
-    final distractors = _distractors(all, name, choiceCount - 1);
-    final choices = [name, ...distractors]..shuffle();
+  static List<PracticeItem> pickRandomProphet(List<ProphetName> all) {
+    return pickRandom(all).map(PracticeItem.fromProphetName).toList();
+  }
+
+  static List<QcmQuestion> generateProphetQcm(List<ProphetName> all) {
+    final selected = pickRandom(all);
+    return selected.map((name) => _buildProphetQuestion(all, name)).toList();
+  }
+
+  static List<PracticeItem> pickRandomHusna(List<HusnaName> all) {
+    final shuffled = [...all]..shuffle();
+    return shuffled.take(quizSize).map(PracticeItem.fromHusnaName).toList();
+  }
+
+  static List<QcmQuestion> generateHusnaQcm(List<HusnaName> all) {
+    final shuffled = [...all]..shuffle();
+    return shuffled
+        .take(quizSize)
+        .map((name) => _buildHusnaQuestion(all, name))
+        .toList();
+  }
+
+  static QcmQuestion _buildProphetQuestion(
+    List<ProphetName> all,
+    ProphetName name,
+  ) {
+    final item = PracticeItem.fromProphetName(name);
+    final choices = [
+      item,
+      ..._prophetDistractors(
+        all,
+        name,
+        choiceCount - 1,
+      ).map(PracticeItem.fromProphetName),
+    ]..shuffle();
     return QcmQuestion(
-      name: name,
-      maskedCommentary: _mask(name.commentary, name.transliteration),
+      item: item,
+      prompt: _mask(name.commentary, name.transliteration),
       choices: choices,
     );
   }
 
-  // Masque la translittération dans le texte (insensible à la casse)
-  static String _mask(String text, String transliteration) {
-    if (transliteration.isEmpty || text.isEmpty) return text;
-    final pattern = RegExp(RegExp.escape(transliteration), caseSensitive: false);
-    return text.replaceAll(pattern, '[…]');
+  static QcmQuestion _buildHusnaQuestion(List<HusnaName> all, HusnaName name) {
+    final item = PracticeItem.fromHusnaName(name);
+    final choices = [
+      item,
+      ..._husnaDistractors(
+        all,
+        name,
+        choiceCount - 1,
+      ).map(PracticeItem.fromHusnaName),
+    ]..shuffle();
+    return QcmQuestion(item: item, prompt: item.promptText, choices: choices);
   }
 
-  static List<ProphetName> _distractors(
+  static String _mask(String text, String transliteration) {
+    if (transliteration.isEmpty || text.isEmpty) return text;
+    final pattern = RegExp(
+      RegExp.escape(transliteration),
+      caseSensitive: false,
+    );
+    return text.replaceAll(pattern, '[...]');
+  }
+
+  static List<ProphetName> _prophetDistractors(
     List<ProphetName> all,
     ProphetName target,
     int count,
   ) {
-    // Préférer des noms de la même catégorie pour rendre le quiz plus pertinent
-    final sameCategory = (all
-          .where(
-            (n) =>
-                n.categorySlug == target.categorySlug &&
-                n.number != target.number,
-          )
-          .toList()
-        ..shuffle())
-        .take(count)
-        .toList();
+    final sameCategory =
+        (all
+                .where(
+                  (n) =>
+                      n.categorySlug == target.categorySlug &&
+                      n.number != target.number,
+                )
+                .toList()
+              ..shuffle())
+            .take(count)
+            .toList();
 
     if (sameCategory.length >= count) return sameCategory;
 
     final needed = count - sameCategory.length;
-    final others = (all
-          .where(
-            (n) => n.number != target.number && !sameCategory.contains(n),
-          )
-          .toList()
-        ..shuffle())
-        .take(needed)
-        .toList();
+    final others =
+        (all
+                .where(
+                  (n) => n.number != target.number && !sameCategory.contains(n),
+                )
+                .toList()
+              ..shuffle())
+            .take(needed)
+            .toList();
 
     return [...sameCategory, ...others];
+  }
+
+  static List<HusnaName> _husnaDistractors(
+    List<HusnaName> all,
+    HusnaName target,
+    int count,
+  ) {
+    return (all.where((name) => name.id != target.id).toList()..shuffle())
+        .take(count)
+        .toList();
   }
 }

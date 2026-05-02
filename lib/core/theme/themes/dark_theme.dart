@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sirah_app/core/theme/app_colors.dart';
 import 'package:sirah_app/core/theme/app_elevation.dart';
 import 'package:sirah_app/core/theme/app_radius.dart';
@@ -38,13 +37,8 @@ ThemeData _build() {
 
   final typo = AppTypography.buildArabic(
     inkColor: ink,
-    applySerifDisplay: (style) => GoogleFonts.crimsonPro(
-      fontSize: style.fontSize,
-      fontWeight: style.fontWeight,
-      color: style.color,
-      height: style.height,
-      letterSpacing: style.letterSpacing,
-    ),
+    applySerifDisplay: (style) =>
+        style.copyWith(fontFamily: AppFontFamilies.crimsonPro),
   );
 
   return ThemeData(
@@ -59,6 +53,12 @@ ThemeData _build() {
       onPrimary: const Color(0xFF141312),
       onSurface: colors.ink,
     ),
-    extensions: [colors, typo, AppSpacing.defaults, AppRadius.defaults, elevation],
+    extensions: [
+      colors,
+      typo,
+      AppSpacing.defaults,
+      AppRadius.defaults,
+      elevation,
+    ],
   );
 }

@@ -5,6 +5,75 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/).
 
 ---
 
+## [v2.0.0-beta.3] - 2026-05-02 - Beta release finale
+
+### Ameliorations
+
+- **Voyage** : suppression des barres noires de header sur galaxie et constellations au profit d'une navigation flottante immersive.
+- **Voyage** : bouton retour de constellation rendu fiable au-dessus de la couche zoom/pan.
+- **Voyage** : titre flottant plus visible et premium, avec accent or sur la page galaxie.
+- **Constellations** : meilleur espacement entre la calligraphie arabe et le titre francais pour eviter les chevauchements.
+- **Profil** : lanterne plus expressive avec halo et lumiere ambiante plus lisibles selon la progression reelle.
+
+### Release Android
+
+- Version applicative : `2.0.0-beta.3+9`.
+
+---
+
+## [v2.0.0-beta.2] - 2026-05-01 - Dernier patch beta avant diffusion elargie
+
+### Ajouts
+
+- **Asma al-Husna** : ajout des QCM et flashcards dans le deck Bibliotheque dedie, sans melanger avec le Voyage des 201 noms.
+- **Quiz multi-deck** : le moteur d'entrainement gere maintenant les noms du Prophete et Asma al-Husna avec la meme UX.
+- **Voyage** : illumination progressive des etoiles et des lignes selon le cheminement (`viewed`, `meditated`, `practiced`, `recognized`).
+- **Voyage immersif** : retrait de la consigne permanente en haut de constellation pour laisser plus de place a la carte.
+
+### Release Android
+
+- Version applicative : `2.0.0-beta.2+8`.
+
+### Validation
+
+- `flutter gen-l10n` execute.
+- `flutter analyze --no-pub` : aucune issue.
+- `flutter test` : 130 tests passent.
+- `flutter build apk --debug` : OK.
+- `flutter build apk --release` : OK.
+
+---
+
+## [v2.0.0-beta.1] — 2026-05-01 · Beta Android Journey V2
+
+### Ajouts
+
+- **Journey V2** : Voyage stellaire complet autour des 201 noms du Prophète ﷺ, organisé en 11 constellations.
+- **Nom vivant** : route principale `/name/:number/experience` avec sens, commentaire, tafakkur, action validée quand disponible et navigation vers la fiche.
+- **Profil V2** : synthèse de cheminement centrée sur la lanterne et les statuts `viewed`, `meditated`, `practiced`, `recognized`.
+- **Accueil beta** : nom du jour déterministe, action du jour validée si disponible, reprise du chemin et carte condensée.
+- **Bibliothèque clarifiée** : entrée par corpus, outils QCM/flashcards dans le deck concerné, suppression des entrées redondantes de révision libre/parcours non prêts.
+
+### Release Android
+
+- Version applicative : `2.0.0-beta.1+7`.
+- Icône launcher Android générée et intégrée.
+- Build release signé avec clé locale dédiée, sans fallback debug.
+- Bêta publique déclarée FR-only tant que la l10n arabe n'est pas revue.
+- Artifacts vérifiés : APK universel, APK split ABI et AAB.
+
+### Validation
+
+- `flutter analyze --no-pub` : aucune issue.
+- `flutter test` : 128 tests passent.
+- `flutter build apk --debug` : OK.
+- `flutter build apk --release` : OK.
+- `flutter build apk --release --split-per-abi` : OK.
+- `flutter build appbundle --release` : OK.
+- Signature APK vérifiée avec `apksigner`.
+
+---
+
 ## [v1.5.1] — 2026-04-27 · Robustesse Hive, notifications et l10n
 
 ### Correctifs

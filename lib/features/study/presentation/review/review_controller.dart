@@ -21,7 +21,7 @@ abstract class ReviewState with _$ReviewState {
 
 class ReviewController extends StateNotifier<ReviewState> {
   ReviewController(this._leitner, List<int> queue)
-      : super(ReviewState(queue: queue, isDone: queue.isEmpty));
+    : super(ReviewState(queue: queue, isDone: queue.isEmpty));
 
   final StudyNotifier _leitner;
 
@@ -29,7 +29,10 @@ class ReviewController extends StateNotifier<ReviewState> {
 
   Future<void> know() async {
     final n = state.currentNameNumber;
-    if (n != null) await _leitner.levelUp(n);
+    if (n != null) {
+      await _leitner.levelUp(n);
+      await _leitner.markNameRecognized(n);
+    }
     _advance();
   }
 
@@ -44,18 +47,12 @@ class ReviewController extends StateNotifier<ReviewState> {
     if (next >= state.queue.length) {
       state = state.copyWith(isDone: true);
     } else {
-      state = state.copyWith(
-        currentIndex: next,
-        isFlipped: false,
-      );
+      state = state.copyWith(currentIndex: next, isFlipped: false);
     }
   }
 }
 
 final reviewControllerProvider = StateNotifierProvider.autoDispose
     .family<ReviewController, ReviewState, List<int>>(
-  (ref, queue) => ReviewController(
-    ref.read(studyNotifierProvider),
-    queue,
-  ),
-);
+      (ref, queue) => ReviewController(ref.read(studyNotifierProvider), queue),
+    );

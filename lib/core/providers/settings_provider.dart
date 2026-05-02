@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sirah_app/core/notifications/notification_service.dart';
 import 'package:sirah_app/core/providers/user_state.dart';
@@ -10,8 +11,8 @@ class SettingsNotifier extends Notifier<UserState> {
   UserState build() => HiveSource.read();
 
   Future<void> _save(UserState next) async {
-    state = next;
     await HiveSource.write(next);
+    state = next;
   }
 
   Future<void> setTheme(ThemeKey theme) => _save(state.copyWith(theme: theme));
@@ -19,9 +20,8 @@ class SettingsNotifier extends Notifier<UserState> {
   Future<void> setTextSize(TextSize size) =>
       _save(state.copyWith(textSize: size));
 
-  Future<void> setOnboardingComplete() => _save(
-        state.copyWith(onboardingCompletedAt: DateTime.now()),
-      );
+  Future<void> setOnboardingComplete() =>
+      _save(state.copyWith(onboardingCompletedAt: DateTime.now()));
 
   Future<void> toggleFavorite(int number) {
     final favs = Set<int>.from(state.favorites);
@@ -34,7 +34,6 @@ class SettingsNotifier extends Notifier<UserState> {
   }
 
   Future<void> markViewed(int number) {
-    if (state.viewed.contains(number)) return Future.value();
     final viewed = Set<int>.from(state.viewed)..add(number);
     final lastSeen = Map<int, DateTime>.from(state.lastSeen)
       ..[number] = DateTime.now();
@@ -42,26 +41,71 @@ class SettingsNotifier extends Notifier<UserState> {
   }
 
   Future<void> markLearned(int number) {
+    // Legacy Study/V1 compatibility only. Do not use this as a Journey V2
+    // product signal; use markViewed/markNameMeditated/markNamePracticed/
+    // markNameRecognized and NameProgressResolver instead.
     if (state.learned.contains(number)) return Future.value();
     final learned = Set<int>.from(state.learned)..add(number);
     return _save(state.copyWith(learned: learned));
   }
 
+  Future<void> markNameMeditated(int number) {
+    if (state.meditatedNames.contains(number)) return Future.value();
+    final meditated = Set<int>.from(state.meditatedNames)..add(number);
+    return _save(state.copyWith(meditatedNames: meditated));
+  }
+
+  Future<void> markNamePracticed(int number) {
+    if (state.practicedNames.contains(number)) return Future.value();
+    final practiced = Set<int>.from(state.practicedNames)..add(number);
+    return _save(state.copyWith(practicedNames: practiced));
+  }
+
+  Future<void> markNameRecognized(int number) {
+    if (state.recognizedNames.contains(number)) return Future.value();
+    final recognized = Set<int>.from(state.recognizedNames)..add(number);
+    return _save(state.copyWith(recognizedNames: recognized));
+  }
+
   Future<void> setNotifHour(int? hour) async {
-    await _save(state.copyWith(dailyNotifHour: hour));
-    if (hour != null) {
-      await NotificationService.scheduleDailyAt(hour);
-    } else {
-      await NotificationService.cancel();
+    if (hour != null && (hour < 0 || hour > 23)) {
+      _reportSettingsError(
+        ArgumentError.value(hour, 'hour', 'Must be between 0 and 23'),
+        StackTrace.current,
+      );
+      return;
+    }
+
+    try {
+      if (hour != null) {
+        await NotificationService.scheduleDailyAt(hour);
+      } else {
+        await NotificationService.cancel();
+      }
+      await _save(state.copyWith(dailyNotifHour: hour));
+    } catch (error, stackTrace) {
+      _reportSettingsError(error, stackTrace);
     }
   }
 
+  void _reportSettingsError(Object error, StackTrace stackTrace) {
+    debugPrint('Settings persistence/update failed: $error');
+    FlutterError.reportError(
+      FlutterErrorDetails(
+        exception: error,
+        stack: stackTrace,
+        library: 'sirah_app.settings',
+        context: ErrorDescription('while updating user settings'),
+      ),
+    );
+  }
+
   Future<void> recordQuizResult(int correctAnswers) => _save(
-        state.copyWith(
-          quizzesCompleted: state.quizzesCompleted + 1,
-          totalQuizScore: state.totalQuizScore + correctAnswers,
-        ),
-      );
+    state.copyWith(
+      quizzesCompleted: state.quizzesCompleted + 1,
+      totalQuizScore: state.totalQuizScore + correctAnswers,
+    ),
+  );
 
   // ── Genealogy ─────────────────────────────────────────────────────────────
 

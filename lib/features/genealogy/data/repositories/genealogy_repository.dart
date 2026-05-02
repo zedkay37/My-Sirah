@@ -5,7 +5,7 @@ import 'package:sirah_app/features/genealogy/data/sources/genealogy_json_source.
 
 class GenealogyRepository {
   GenealogyRepository(this._members)
-      : _byId = {for (final m in _members) m.id: m};
+    : _byId = {for (final m in _members) m.id: m};
 
   final List<FamilyMember> _members;
   final Map<String, FamilyMember> _byId;
@@ -23,7 +23,9 @@ class GenealogyRepository {
   FamilyMember getProphet() {
     final prophet = _byId['muhammad'];
     if (prophet == null) {
-      throw StateError('genealogy.json is missing the required "muhammad" entry');
+      throw StateError(
+        'genealogy.json is missing the required "muhammad" entry',
+      );
     }
     return prophet;
   }
@@ -72,10 +74,10 @@ class GenealogyRepository {
 
       for (final neighbor in _graph[current] ?? const <String>{}) {
         if (neighbor == toId) {
-          return [...path, toId]
-              .map((id) => _byId[id])
-              .whereType<FamilyMember>()
-              .toList();
+          return [
+            ...path,
+            toId,
+          ].map((id) => _byId[id]).whereType<FamilyMember>().toList();
         }
         if (!visited.contains(neighbor)) {
           visited.add(neighbor);

@@ -21,12 +21,7 @@ class AppRadius extends ThemeExtension<AppRadius> {
   BorderRadius get pillAll => BorderRadius.circular(pill);
 
   @override
-  AppRadius copyWith({
-    double? sm,
-    double? md,
-    double? lg,
-    double? pill,
-  }) {
+  AppRadius copyWith({double? sm, double? md, double? lg, double? pill}) {
     return AppRadius(
       sm: sm ?? this.sm,
       md: md ?? this.md,

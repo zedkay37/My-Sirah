@@ -21,7 +21,7 @@ class PhraseDisplay extends StatelessWidget {
 
     final progress = total > 1 ? index / (total - 1) : 1.0;
     final targetFontSize = 17.0 + (progress * 14.0); // 17→31sp
-    final targetPadding = 28.0 + (progress * 20.0);  // 28→48px
+    final targetPadding = 28.0 + (progress * 20.0); // 28→48px
 
     return TweenAnimationBuilder<double>(
       tween: Tween(end: targetFontSize),
@@ -36,23 +36,25 @@ class PhraseDisplay extends StatelessWidget {
             return Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: padding),
-                child: Text(
-                  phrase,
-                  key: ValueKey(index),
-                  textAlign: TextAlign.center,
-                  style: typo.bodyLarge.copyWith(
-                    color: colors.ink,
-                    fontSize: fontSize,
-                    height: 1.6,
-                  ),
-                ).animate()
-                 .fadeIn(duration: 400.ms)
-                 .slideY(
-                   begin: 0.08,
-                   end: 0.0,
-                   duration: 400.ms,
-                   curve: Curves.easeOut,
-                 ),
+                child:
+                    Text(
+                          phrase,
+                          key: ValueKey(index),
+                          textAlign: TextAlign.center,
+                          style: typo.bodyLarge.copyWith(
+                            color: colors.ink,
+                            fontSize: fontSize,
+                            height: 1.6,
+                          ),
+                        )
+                        .animate()
+                        .fadeIn(duration: 400.ms)
+                        .slideY(
+                          begin: 0.08,
+                          end: 0.0,
+                          duration: 400.ms,
+                          curve: Curves.easeOut,
+                        ),
               ),
             );
           },

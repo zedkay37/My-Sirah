@@ -24,10 +24,7 @@ class TafakkurSettingsSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              l10n.tafakkurPaceLabel,
-              style: typo.headline,
-            ),
+            Text(l10n.tafakkurPaceLabel, style: typo.headline),
             const SizedBox(height: 16),
             _PaceOption(
               label: l10n.tafakkurPaceSlow,
@@ -89,7 +86,9 @@ class _PaceOption extends StatelessWidget {
         child: Row(
           children: [
             Icon(
-              isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+              isSelected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
               color: isSelected ? colors.accent : colors.muted,
             ),
             const SizedBox(width: 16),

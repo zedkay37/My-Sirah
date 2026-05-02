@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sirah_app/features/asmaul_husna/data/asmaa_notifier.dart';
 import 'package:sirah_app/features/names/data/names_notifier.dart';
 import 'package:sirah_app/features/study/data/study_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
-import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/quiz/data/quiz_generator.dart';
 import 'package:sirah_app/features/quiz/data/quiz_provider.dart';
 import 'package:sirah_app/features/shared/arabic_text.dart';
@@ -29,15 +29,14 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
   QcmQuestion get _question => _session.questions[_currentQ];
 
   bool _isCorrect(int index) =>
-      _question.choices[index].number == _question.name.number;
+      _question.choices[index].id == _question.item.id;
 
   void _select(int index) {
     if (_selectedIndex != null) return;
     setState(() => _selectedIndex = index);
     if (_isCorrect(index)) {
       _score++;
-      ref.read(namesNotifierProvider).markLearned(_question.name.number);
-      ref.read(studyNotifierProvider).levelUp(_question.name.number);
+      _markCorrect(_question.item);
     }
     _autoAdvanceTimer = Timer(const Duration(milliseconds: 1200), () {
       if (mounted) _next();
@@ -55,8 +54,23 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
     } else {
       context.pushReplacement(
         '/quiz/result',
-        extra: {'score': _score, 'total': total},
+        extra: {
+          'score': _score,
+          'total': total,
+          'deckType': _session.deckType.name,
+        },
       );
+    }
+  }
+
+  void _markCorrect(PracticeItem item) {
+    switch (_session.deckType) {
+      case PracticeDeckType.prophetNames:
+        ref.read(namesNotifierProvider).markLearned(item.id);
+        ref.read(namesNotifierProvider).markNameRecognized(item.id);
+        ref.read(studyNotifierProvider).levelUp(item.id);
+      case PracticeDeckType.asmaulHusna:
+        ref.read(asmaaNotifierProvider).markHusnaLearned(item.id);
     }
   }
 
@@ -72,6 +86,10 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
     final typo = context.typo;
     final space = context.space;
     final l10n = context.l10n;
+    final session = ref.watch(quizSessionProvider);
+    if (session == null) {
+      return const _MissingQuizSessionScreen();
+    }
     final total = _session.questions.length;
 
     return Scaffold(
@@ -109,10 +127,7 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
                 borderRadius: context.radii.lgAll,
                 border: Border.all(color: colors.line),
               ),
-              child: Text(
-                _question.maskedCommentary,
-                style: typo.bodyLarge,
-              ),
+              child: Text(_question.prompt, style: typo.bodyLarge),
             ),
             SizedBox(height: space.xl),
             // Choix
@@ -121,7 +136,7 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
               (i) => Padding(
                 padding: EdgeInsets.only(bottom: space.sm),
                 child: _ChoiceButton(
-                  name: _question.choices[i],
+                  item: _question.choices[i],
                   state: _choiceState(i),
                   onTap: () => _select(i),
                 ),
@@ -135,7 +150,9 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
                 child: FilledButton(
                   onPressed: _next,
                   child: Text(
-                    _currentQ < total - 1 ? l10n.qcmNext : l10n.quizExploreNamesCta,
+                    _currentQ < total - 1
+                        ? l10n.qcmNext
+                        : l10n.quizExploreNamesCta,
                   ),
                 ),
               ),
@@ -154,16 +171,62 @@ class _QcmScreenState extends ConsumerState<QcmScreen> {
   }
 }
 
+class _MissingQuizSessionScreen extends StatelessWidget {
+  const _MissingQuizSessionScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+
+    return Scaffold(
+      backgroundColor: colors.bg,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(space.lg),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.quiz_outlined, color: colors.muted, size: 44),
+                SizedBox(height: space.md),
+                Text(
+                  context.l10n.quizTitle,
+                  style: typo.headline.copyWith(color: colors.ink),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.sm),
+                Text(
+                  context.l10n.quizSubtitle,
+                  style: typo.body.copyWith(color: colors.muted),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.lg),
+                FilledButton.icon(
+                  onPressed: () => context.go('/library/deck/prophet_names'),
+                  icon: const Icon(Icons.local_library_outlined),
+                  label: Text(context.l10n.navLibrary),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 enum _ChoiceState { idle, correct, wrong, disabled }
 
 class _ChoiceButton extends StatelessWidget {
   const _ChoiceButton({
-    required this.name,
+    required this.item,
     required this.state,
     required this.onTap,
   });
 
-  final ProphetName name;
+  final PracticeItem item;
   final _ChoiceState state;
   final VoidCallback onTap;
 
@@ -176,30 +239,22 @@ class _ChoiceButton extends StatelessWidget {
 
     final (bg, border, labelColor) = switch (state) {
       _ChoiceState.correct => (
-          colors.success.withValues(alpha: 0.12),
-          colors.success,
-          colors.success,
-        ),
+        colors.success.withValues(alpha: 0.12),
+        colors.success,
+        colors.success,
+      ),
       _ChoiceState.wrong => (
-          colors.error.withValues(alpha: 0.12),
-          colors.error,
-          colors.error,
-        ),
-      _ChoiceState.disabled => (
-          Colors.transparent,
-          colors.line,
-          colors.muted,
-        ),
-      _ChoiceState.idle => (
-          colors.bg2,
-          colors.line,
-          colors.ink,
-        ),
+        colors.error.withValues(alpha: 0.12),
+        colors.error,
+        colors.error,
+      ),
+      _ChoiceState.disabled => (Colors.transparent, colors.line, colors.muted),
+      _ChoiceState.idle => (colors.bg2, colors.line, colors.ink),
     };
 
     return Semantics(
       button: state == _ChoiceState.idle,
-      label: name.transliteration,
+      label: item.transliteration,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
@@ -218,14 +273,14 @@ class _ChoiceButton extends StatelessWidget {
             child: Row(
               children: [
                 ArabicText(
-                  text: name.arabic,
+                  text: item.arabic,
                   size: ArabicSize.body,
                   textAlign: TextAlign.start,
                 ),
                 SizedBox(width: space.md),
                 Expanded(
                   child: Text(
-                    name.transliteration,
+                    item.transliteration,
                     style: typo.body.copyWith(
                       fontStyle: FontStyle.italic,
                       color: labelColor,
@@ -233,8 +288,11 @@ class _ChoiceButton extends StatelessWidget {
                   ),
                 ),
                 if (state == _ChoiceState.correct)
-                  Icon(Icons.check_circle_outline,
-                      color: colors.success, size: 20)
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: colors.success,
+                    size: 20,
+                  )
                 else if (state == _ChoiceState.wrong)
                   Icon(Icons.cancel_outlined, color: colors.error, size: 20),
               ],

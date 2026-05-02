@@ -17,11 +17,12 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _ctrl = PageController();
+  int _page = 0;
 
   void _next() => _ctrl.nextPage(
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeInOut,
-      );
+    duration: const Duration(milliseconds: 350),
+    curve: Curves.easeInOut,
+  );
 
   Future<void> _finish() async {
     await ref.read(settingsProvider.notifier).setOnboardingComplete();
@@ -36,22 +37,63 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final space = context.space;
+
     return Scaffold(
       backgroundColor: context.colors.bg,
-      body: PageView(
-        controller: _ctrl,
-        physics: const NeverScrollableScrollPhysics(),
+      body: Stack(
         children: [
-          _WelcomePage(onNext: _next),
-          _ThemePage(onNext: _next),
-          _NotifPage(onFinish: _finish),
+          PageView(
+            controller: _ctrl,
+            physics: const NeverScrollableScrollPhysics(),
+            onPageChanged: (page) => setState(() => _page = page),
+            children: [
+              _WelcomePage(onNext: _next),
+              _ThemePage(onNext: _next),
+              _NotifPage(onFinish: _finish),
+            ],
+          ),
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(space.xl, space.md, space.xl, 0),
+              child: _OnboardingDots(current: _page, total: 3),
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-// ── Page 1 : Bienvenue ─────────────────────────────────────────────────────────
+class _OnboardingDots extends StatelessWidget {
+  const _OnboardingDots({required this.current, required this.total});
+
+  final int current;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final space = context.space;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(total, (index) {
+        final selected = index == current;
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          margin: EdgeInsets.symmetric(horizontal: space.xs / 2),
+          width: selected ? 24 : 7,
+          height: 7,
+          decoration: BoxDecoration(
+            color: selected ? colors.accent : colors.line,
+            borderRadius: BorderRadius.circular(99),
+          ),
+        );
+      }),
+    );
+  }
+}
 
 class _WelcomePage extends StatelessWidget {
   const _WelcomePage({required this.onNext});
@@ -63,59 +105,249 @@ class _WelcomePage extends StatelessWidget {
     final typo = context.typo;
     final space = context.space;
     final l10n = context.l10n;
+    final compact = MediaQuery.of(context).size.height < 760;
 
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: space.xl),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(flex: 2),
-            Container(
-              height: 1,
-              margin: EdgeInsets.symmetric(horizontal: space.xl),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  colors.accent.withValues(alpha: 0),
-                  colors.accent,
-                  colors.accent.withValues(alpha: 0),
-                ]),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  space.xl,
+                  space.xxl,
+                  space.xl,
+                  space.xl,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: compact ? space.sm : space.lg),
+                    _OnboardingSkyPreview(
+                      child: ArabicText(
+                        text: l10n.onboardingSealPhrase,
+                        size: compact ? ArabicSize.medium : ArabicSize.large,
+                        withShadow: true,
+                      ),
+                    ),
+                    SizedBox(height: compact ? space.md : space.xl),
+                    Text(
+                      l10n.onboardingWelcomeTitle,
+                      textAlign: TextAlign.center,
+                      style: typo.displayMedium.copyWith(color: colors.ink),
+                    ),
+                    SizedBox(height: space.sm),
+                    Text(
+                      l10n.onboardingWelcomeSubtitle,
+                      textAlign: TextAlign.center,
+                      style: typo.bodyLarge.copyWith(color: colors.muted),
+                    ),
+                    SizedBox(height: compact ? space.md : space.xl),
+                    _OnboardingFeatureTile(
+                      icon: Icons.travel_explore_outlined,
+                      title: l10n.onboardingJourneyTitle,
+                      subtitle: l10n.onboardingJourneySubtitle,
+                    ),
+                    SizedBox(height: space.sm),
+                    _OnboardingFeatureTile(
+                      icon: Icons.menu_book_outlined,
+                      title: l10n.onboardingTafakkurTitle,
+                      subtitle: l10n.onboardingTafakkurSubtitle,
+                    ),
+                    SizedBox(height: space.sm),
+                    _OnboardingFeatureTile(
+                      icon: Icons.volunteer_activism_outlined,
+                      title: l10n.onboardingActionTitle,
+                      subtitle: l10n.onboardingActionSubtitle,
+                    ),
+                    SizedBox(height: compact ? space.md : space.xl),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: onNext,
+                        child: Text(l10n.onboardingWelcomeCta),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: space.lg),
-            const ArabicText(
-              text: 'مُحَمَّدٌ رَّسُولُ اللهِ ﷺ',
-              size: ArabicSize.large,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _OnboardingSkyPreview extends StatelessWidget {
+  const _OnboardingSkyPreview({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final space = context.space;
+
+    return AspectRatio(
+      aspectRatio: 1.45,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colors.bg2,
+          borderRadius: context.radii.lgAll,
+          border: Border.all(color: colors.line),
+          boxShadow: [
+            BoxShadow(
+              color: colors.accent.withValues(alpha: 0.08),
+              blurRadius: 28,
+              offset: const Offset(0, 16),
             ),
-            SizedBox(height: space.xl),
-            Text(
-              l10n.onboardingWelcomeTitle,
-              textAlign: TextAlign.center,
-              style: typo.displayMedium,
-            ),
-            SizedBox(height: space.md),
-            Text(
-              l10n.onboardingWelcomeSubtitle,
-              textAlign: TextAlign.center,
-              style: typo.bodyLarge.copyWith(color: colors.muted),
-            ),
-            const Spacer(flex: 3),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onNext,
-                child: Text(l10n.onboardingWelcomeCta),
-              ),
-            ),
-            SizedBox(height: space.xl),
           ],
+        ),
+        child: CustomPaint(
+          painter: _OnboardingSkyPainter(
+            accent: colors.accent,
+            accent2: colors.accent2,
+            muted: colors.muted,
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(space.lg),
+            child: Center(child: child),
+          ),
         ),
       ),
     );
   }
 }
 
-// ── Page 2 : Thème ─────────────────────────────────────────────────────────────
+class _OnboardingSkyPainter extends CustomPainter {
+  const _OnboardingSkyPainter({
+    required this.accent,
+    required this.accent2,
+    required this.muted,
+  });
+
+  final Color accent;
+  final Color accent2;
+  final Color muted;
+
+  static const _stars = <Offset>[
+    Offset(0.14, 0.22),
+    Offset(0.22, 0.58),
+    Offset(0.30, 0.36),
+    Offset(0.42, 0.72),
+    Offset(0.54, 0.24),
+    Offset(0.66, 0.62),
+    Offset(0.78, 0.34),
+    Offset(0.86, 0.68),
+  ];
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final halo = Paint()
+      ..shader =
+          RadialGradient(
+            colors: [
+              accent2.withValues(alpha: 0.16),
+              accent2.withValues(alpha: 0),
+            ],
+          ).createShader(
+            Rect.fromCircle(
+              center: size.center(Offset.zero),
+              radius: size.width,
+            ),
+          );
+    canvas.drawCircle(size.center(Offset.zero), size.width * 0.52, halo);
+
+    final line = Paint()
+      ..color = accent.withValues(alpha: 0.16)
+      ..strokeWidth = 1;
+    for (var index = 0; index < _stars.length - 1; index++) {
+      canvas.drawLine(
+        Offset(_stars[index].dx * size.width, _stars[index].dy * size.height),
+        Offset(
+          _stars[index + 1].dx * size.width,
+          _stars[index + 1].dy * size.height,
+        ),
+        line,
+      );
+    }
+
+    final star = Paint()..color = muted.withValues(alpha: 0.36);
+    final lit = Paint()..color = accent.withValues(alpha: 0.92);
+    for (final point in _stars) {
+      final center = Offset(point.dx * size.width, point.dy * size.height);
+      canvas.drawCircle(center, 2.4, star);
+    }
+    canvas.drawCircle(
+      Offset(_stars[4].dx * size.width, _stars[4].dy * size.height),
+      4.2,
+      lit,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _OnboardingSkyPainter oldDelegate) {
+    return oldDelegate.accent != accent ||
+        oldDelegate.accent2 != accent2 ||
+        oldDelegate.muted != muted;
+  }
+}
+
+class _OnboardingFeatureTile extends StatelessWidget {
+  const _OnboardingFeatureTile({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: colors.bg2.withValues(alpha: 0.76),
+        borderRadius: context.radii.mdAll,
+        border: Border.all(color: colors.line),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(space.sm),
+        child: Row(
+          children: [
+            Icon(icon, color: colors.accent, size: 22),
+            SizedBox(width: space.sm),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: typo.bodyLarge.copyWith(color: colors.ink),
+                  ),
+                  SizedBox(height: space.xs / 2),
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: typo.caption.copyWith(color: colors.muted),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class _ThemePage extends ConsumerWidget {
   const _ThemePage({required this.onNext});
@@ -123,6 +355,7 @@ class _ThemePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colors = context.colors;
     final typo = context.typo;
     final space = context.space;
     final l10n = context.l10n;
@@ -130,51 +363,82 @@ class _ThemePage extends ConsumerWidget {
     final notifier = ref.read(settingsProvider.notifier);
 
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: space.lg),
-        child: Column(
-          children: [
-            const Spacer(),
-            Text(
-              l10n.onboardingThemeTitle,
-              textAlign: TextAlign.center,
-              style: typo.displayMedium,
-            ),
-            SizedBox(height: space.xl),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _ThemePreviewCard(
-                  themeKey: ThemeKey.light,
-                  label: l10n.settingsThemeLight,
-                  isSelected: current == ThemeKey.light,
-                  onTap: () => notifier.setTheme(ThemeKey.light),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  space.lg,
+                  space.xxl,
+                  space.lg,
+                  space.xl,
                 ),
-                _ThemePreviewCard(
-                  themeKey: ThemeKey.dark,
-                  label: l10n.settingsThemeDark,
-                  isSelected: current == ThemeKey.dark,
-                  onTap: () => notifier.setTheme(ThemeKey.dark),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      l10n.onboardingThemeTitle,
+                      textAlign: TextAlign.center,
+                      style: typo.displayMedium.copyWith(color: colors.ink),
+                    ),
+                    SizedBox(height: space.sm),
+                    Text(
+                      l10n.onboardingThemeSubtitle,
+                      textAlign: TextAlign.center,
+                      style: typo.bodyLarge.copyWith(color: colors.muted),
+                    ),
+                    SizedBox(height: space.xl),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final cardWidth = constraints.maxWidth < 380
+                            ? (constraints.maxWidth - space.sm) / 2
+                            : (constraints.maxWidth - space.sm * 2) / 3;
+                        return Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: space.sm,
+                          runSpacing: space.sm,
+                          children: [
+                            _ThemePreviewCard(
+                              width: cardWidth,
+                              themeKey: ThemeKey.light,
+                              label: l10n.settingsThemeLight,
+                              isSelected: current == ThemeKey.light,
+                              onTap: () => notifier.setTheme(ThemeKey.light),
+                            ),
+                            _ThemePreviewCard(
+                              width: cardWidth,
+                              themeKey: ThemeKey.dark,
+                              label: l10n.settingsThemeDark,
+                              isSelected: current == ThemeKey.dark,
+                              onTap: () => notifier.setTheme(ThemeKey.dark),
+                            ),
+                            _ThemePreviewCard(
+                              width: cardWidth,
+                              themeKey: ThemeKey.feminine,
+                              label: l10n.settingsThemeFeminine,
+                              isSelected: current == ThemeKey.feminine,
+                              onTap: () => notifier.setTheme(ThemeKey.feminine),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    SizedBox(height: space.xl),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: onNext,
+                        child: Text(l10n.onboardingThemeCta),
+                      ),
+                    ),
+                  ],
                 ),
-                _ThemePreviewCard(
-                  themeKey: ThemeKey.feminine,
-                  label: l10n.settingsThemeFeminine,
-                  isSelected: current == ThemeKey.feminine,
-                  onTap: () => notifier.setTheme(ThemeKey.feminine),
-                ),
-              ],
-            ),
-            const Spacer(flex: 2),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onNext,
-                child: Text(l10n.onboardingThemeCta),
               ),
             ),
-            SizedBox(height: space.xl),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -182,12 +446,14 @@ class _ThemePage extends ConsumerWidget {
 
 class _ThemePreviewCard extends StatelessWidget {
   const _ThemePreviewCard({
+    required this.width,
     required this.themeKey,
     required this.label,
     required this.isSelected,
     required this.onTap,
   });
 
+  final double width;
   final ThemeKey themeKey;
   final String label;
   final bool isSelected;
@@ -195,21 +461,23 @@ class _ThemePreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Preview colors come from the target theme, not the active one — justified exception
     final preview = AppTheme.build(themeKey).extension<AppColors>()!;
     final colors = context.colors;
     final typo = context.typo;
     final radii = context.radii;
+    final space = context.space;
+    final labelColor = isSelected ? preview.accent : preview.ink;
 
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(radii.lg),
       child: Semantics(
         label: label,
         selected: isSelected,
         button: true,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: 96,
+          width: width.clamp(104.0, 132.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radii.lg),
             border: Border.all(
@@ -219,9 +487,10 @@ class _ThemePreviewCard extends StatelessWidget {
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: colors.accent.withValues(alpha: 0.25),
-                      blurRadius: 12,
-                    )
+                      color: colors.accent.withValues(alpha: 0.22),
+                      blurRadius: 16,
+                      offset: const Offset(0, 8),
+                    ),
                   ]
                 : null,
           ),
@@ -230,25 +499,38 @@ class _ThemePreviewCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                height: 80,
+                height: 88,
                 color: preview.bg,
                 child: Center(
-                  child: Text(
-                    'ﷴ',
-                    style: TextStyle(fontSize: 40, color: preview.accent),
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: preview.accent.withValues(alpha: 0.13),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.auto_awesome_outlined,
+                      color: preview.accent,
+                    ),
                   ),
                 ),
               ),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: EdgeInsets.symmetric(
+                  horizontal: space.xs,
+                  vertical: space.sm,
+                ),
                 color: preview.bg2,
                 child: Text(
                   label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: typo.caption.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: isSelected ? colors.accent : colors.ink,
+                    color: labelColor,
                   ),
                 ),
               ),
@@ -259,8 +541,6 @@ class _ThemePreviewCard extends StatelessWidget {
     );
   }
 }
-
-// ── Page 3 : Notifications ─────────────────────────────────────────────────────
 
 class _NotifPage extends ConsumerStatefulWidget {
   const _NotifPage({required this.onFinish});
@@ -273,15 +553,18 @@ class _NotifPage extends ConsumerStatefulWidget {
 class _NotifPageState extends ConsumerState<_NotifPage> {
   int _hour = 8;
 
-  Future<void> _activateAndFinish() async {
+  Future<void> _pickHour() async {
     final picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay(hour: _hour, minute: 0),
     );
-    if (picked != null) {
-      setState(() => _hour = picked.hour);
-      await ref.read(settingsProvider.notifier).setNotifHour(picked.hour);
-    }
+    if (picked == null) return;
+    setState(() => _hour = picked.hour);
+    await ref.read(settingsProvider.notifier).setNotifHour(picked.hour);
+  }
+
+  Future<void> _activateAndFinish() async {
+    await ref.read(settingsProvider.notifier).setNotifHour(_hour);
     if (mounted) await widget.onFinish();
   }
 
@@ -290,66 +573,132 @@ class _NotifPageState extends ConsumerState<_NotifPage> {
     final colors = context.colors;
     final typo = context.typo;
     final space = context.space;
-    final radii = context.radii;
     final l10n = context.l10n;
 
     return SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  space.xl,
+                  space.xxl,
+                  space.xl,
+                  space.xl,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _NotificationIcon(),
+                    SizedBox(height: space.lg),
+                    Text(
+                      l10n.onboardingNotifTitle,
+                      textAlign: TextAlign.center,
+                      style: typo.displayMedium.copyWith(color: colors.ink),
+                    ),
+                    SizedBox(height: space.sm),
+                    Text(
+                      l10n.onboardingNotifSubtitle,
+                      textAlign: TextAlign.center,
+                      style: typo.bodyLarge.copyWith(color: colors.muted),
+                    ),
+                    SizedBox(height: space.xl),
+                    InkWell(
+                      onTap: _pickHour,
+                      borderRadius: context.radii.lgAll,
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(space.md),
+                        decoration: BoxDecoration(
+                          color: colors.bg2,
+                          borderRadius: context.radii.lgAll,
+                          border: Border.all(color: colors.line),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.schedule_outlined, color: colors.accent),
+                            SizedBox(width: space.md),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    l10n.onboardingNotifTimeLabel,
+                                    style: typo.caption.copyWith(
+                                      color: colors.muted,
+                                    ),
+                                  ),
+                                  SizedBox(height: space.xs / 2),
+                                  Text(
+                                    '${_hour.toString().padLeft(2, '0')}:00',
+                                    style: typo.displayMedium.copyWith(
+                                      color: colors.accent,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Flexible(
+                              child: Text(
+                                l10n.onboardingNotifChooseTime,
+                                textAlign: TextAlign.end,
+                                style: typo.button.copyWith(
+                                  color: colors.accent,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: space.xl),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: _activateAndFinish,
+                        icon: const Icon(Icons.notifications_active_outlined),
+                        label: Text(l10n.onboardingNotifActivate),
+                      ),
+                    ),
+                    SizedBox(height: space.sm),
+                    TextButton(
+                      onPressed: widget.onFinish,
+                      child: Text(
+                        l10n.onboardingNotifLater,
+                        style: typo.button.copyWith(color: colors.muted),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _NotificationIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: colors.accent.withValues(alpha: 0.1),
+        shape: BoxShape.circle,
+        border: Border.all(color: colors.line),
+      ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: space.xl),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(flex: 2),
-            Icon(Icons.notifications_outlined, size: 64, color: colors.accent),
-            SizedBox(height: space.lg),
-            Text(
-              l10n.onboardingNotifTitle,
-              textAlign: TextAlign.center,
-              style: typo.displayMedium,
-            ),
-            SizedBox(height: space.sm),
-            Text(
-              l10n.onboardingNotifSubtitle,
-              textAlign: TextAlign.center,
-              style: typo.bodyLarge.copyWith(color: colors.muted),
-            ),
-            SizedBox(height: space.xl),
-            GestureDetector(
-              onTap: _activateAndFinish,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: space.xxl,
-                  vertical: space.md,
-                ),
-                decoration: BoxDecoration(
-                  color: colors.bg2,
-                  borderRadius: BorderRadius.circular(radii.lg),
-                  border: Border.all(color: colors.line),
-                ),
-                child: Text(
-                  '${_hour.toString().padLeft(2, '0')}:00',
-                  style: typo.displayLarge.copyWith(color: colors.accent),
-                ),
-              ),
-            ),
-            const Spacer(flex: 3),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: _activateAndFinish,
-                child: Text(l10n.onboardingNotifActivate),
-              ),
-            ),
-            SizedBox(height: space.sm),
-            TextButton(
-              onPressed: widget.onFinish,
-              child: Text(
-                l10n.onboardingNotifLater,
-                style: typo.button.copyWith(color: colors.muted),
-              ),
-            ),
-            SizedBox(height: space.xl),
-          ],
+        padding: EdgeInsets.all(context.space.lg),
+        child: Icon(
+          Icons.notifications_outlined,
+          size: 42,
+          color: colors.accent,
         ),
       ),
     );

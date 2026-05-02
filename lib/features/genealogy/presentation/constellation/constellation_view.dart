@@ -18,23 +18,39 @@ class ConstellationView extends ConsumerStatefulWidget {
 class _ConstellationViewState extends ConsumerState<ConstellationView> {
   final _transformationController = TransformationController();
   final _searchController = TextEditingController();
-  
+
   final _selectedId = ValueNotifier<String?>(null);
   final _pathStart = ValueNotifier<String?>(null);
   final _highlightedPath = ValueNotifier<List<String>>([]);
+  final _scale = ValueNotifier<double>(1.0);
 
   Map<String, Offset>? _positionsCache;
   Map<String, List<String>>? _edgesCache;
   Offset? _lastCenter;
 
   @override
+  void initState() {
+    super.initState();
+    _transformationController.addListener(_syncScale);
+  }
+
+  @override
   void dispose() {
+    _transformationController.removeListener(_syncScale);
     _transformationController.dispose();
     _searchController.dispose();
     _selectedId.dispose();
     _pathStart.dispose();
     _highlightedPath.dispose();
+    _scale.dispose();
     super.dispose();
+  }
+
+  void _syncScale() {
+    final nextScale = _transformationController.value.getMaxScaleOnAxis();
+    if ((nextScale - _scale.value).abs() > 0.03) {
+      _scale.value = nextScale;
+    }
   }
 
   void _recenter() {
@@ -47,7 +63,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
 
   void _focusOnMember(String id, Offset pos, Offset center) {
     _selectedId.value = id;
-    
+
     // Animer le canvas pour recentrer sur l'étoile
     // On calcule la translation pour amener pos au centre de l'écran
     final translation = center - pos;
@@ -63,7 +79,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
 
     _lastCenter = center;
     final edges = <String, List<String>>{};
-    
+
     void addEdge(String a, String b) {
       edges.putIfAbsent(a, () => []).add(b);
       edges.putIfAbsent(b, () => []).add(a);
@@ -80,7 +96,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
     _edgesCache = edges;
 
     final positions = <String, Offset>{};
-    
+
     // Group members
     final paternalGen3 = <FamilyMember>[];
     final maternal = <FamilyMember>[];
@@ -107,30 +123,58 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
         traditional.add(m);
       } else {
         switch (m.role) {
-          case FamilyRole.paternalAscendant: paternalGen3.add(m); break;
-          case FamilyRole.maternalAscendant: maternal.add(m); break;
-          case FamilyRole.wife: wives.add(m); break;
-          case FamilyRole.child: children.add(m); break;
-          case FamilyRole.grandchild: grandchildren.add(m); break;
+          case FamilyRole.paternalAscendant:
+            paternalGen3.add(m);
+            break;
+          case FamilyRole.maternalAscendant:
+            maternal.add(m);
+            break;
+          case FamilyRole.wife:
+            wives.add(m);
+            break;
+          case FamilyRole.child:
+            children.add(m);
+            break;
+          case FamilyRole.grandchild:
+            grandchildren.add(m);
+            break;
           case FamilyRole.uncle:
-          case FamilyRole.aunt: unclesAunts.add(m); break;
-          case FamilyRole.cousin: cousins.add(m); break;
-          default: break;
+          case FamilyRole.aunt:
+            unclesAunts.add(m);
+            break;
+          case FamilyRole.cousin:
+            cousins.add(m);
+            break;
+          default:
+            break;
         }
       }
     }
 
-    void distributeOnArc(List<FamilyMember> list, double startAngle, double endAngle, double rMin, double rMax) {
+    void distributeOnArc(
+      List<FamilyMember> list,
+      double startAngle,
+      double endAngle,
+      double rMin,
+      double rMax,
+    ) {
       if (list.isEmpty) return;
       for (int i = 0; i < list.length; i++) {
         final f = list.length == 1 ? 0.5 : i / (list.length - 1);
         final angle = startAngle + (endAngle - startAngle) * f;
         final r = rMin + (rMax - rMin) * (i % 2 == 0 ? 0.0 : 1.0); // zigzag
-        positions[list[i].id] = center + Offset(math.cos(angle) * r, math.sin(angle) * r);
+        positions[list[i].id] =
+            center + Offset(math.cos(angle) * r, math.sin(angle) * r);
       }
     }
 
-    void distributeInBox(List<FamilyMember> list, double xMin, double xMax, double yMin, double yMax) {
+    void distributeInBox(
+      List<FamilyMember> list,
+      double xMin,
+      double xMax,
+      double yMin,
+      double yMax,
+    ) {
       if (list.isEmpty) return;
       final cols = math.max(1, math.sqrt(list.length).ceil());
       final rows = (list.length / cols).ceil();
@@ -139,7 +183,9 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
         final r = i ~/ cols;
         final dx = cols == 1 ? 0.5 : c / (cols - 1);
         final dy = rows == 1 ? 0.5 : r / (rows - 1);
-        positions[list[i].id] = center + Offset(xMin + (xMax - xMin) * dx, yMin + (yMax - yMin) * dy);
+        positions[list[i].id] =
+            center +
+            Offset(xMin + (xMax - xMin) * dx, yMin + (yMax - yMin) * dy);
       }
     }
 
@@ -178,13 +224,16 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
     return repoAsync.when(
       data: (repo) {
         final members = repo.getAll();
-        
+
         return Stack(
           children: [
             Positioned.fill(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final center = Offset(constraints.maxWidth / 2, constraints.maxHeight / 2);
+                  final center = Offset(
+                    constraints.maxWidth / 2,
+                    constraints.maxHeight / 2,
+                  );
                   _buildCachesIfNeeded(members, center);
 
                   return InteractiveViewer(
@@ -208,8 +257,11 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                             positions: _positionsCache!,
                             edges: _edgesCache!,
                             onTap: (_) {},
+                            scale: _scale.value,
                           );
-                          final id = painter.hitTestMembers(details.localPosition);
+                          final id = painter.hitTestMembers(
+                            details.localPosition,
+                          );
                           if (id == null) {
                             _selectedId.value = null;
                             _pathStart.value = null;
@@ -229,8 +281,11 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                             positions: _positionsCache!,
                             edges: _edgesCache!,
                             onTap: (_) {},
+                            scale: _scale.value,
                           );
-                          final id = painter.hitTestMembers(details.localPosition);
+                          final id = painter.hitTestMembers(
+                            details.localPosition,
+                          );
                           if (id != null) {
                             _pathStart.value = id;
                             _highlightedPath.value = [];
@@ -238,10 +293,18 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                         },
                         child: RepaintBoundary(
                           child: AnimatedBuilder(
-                            animation: Listenable.merge([_selectedId, _pathStart, _highlightedPath]),
+                            animation: Listenable.merge([
+                              _selectedId,
+                              _pathStart,
+                              _highlightedPath,
+                              _scale,
+                            ]),
                             builder: (context, _) {
                               return CustomPaint(
-                                size: Size(constraints.maxWidth, constraints.maxHeight),
+                                size: Size(
+                                  constraints.maxWidth,
+                                  constraints.maxHeight,
+                                ),
                                 painter: ConstellationPainter(
                                   members: members,
                                   selectedId: _selectedId.value,
@@ -252,6 +315,7 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                                   positions: _positionsCache!,
                                   edges: _edgesCache!,
                                   onTap: (_) {},
+                                  scale: _scale.value,
                                 ),
                               );
                             },
@@ -281,7 +345,10 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
                       // Center approximation since LayoutBuilder size is not directly available here,
                       // we can use MediaQuery
                       final screenSize = MediaQuery.of(context).size;
-                      final center = Offset(screenSize.width / 2, screenSize.height / 2);
+                      final center = Offset(
+                        screenSize.width / 2,
+                        screenSize.height / 2,
+                      );
                       _focusOnMember(target.id, pos, center);
                     }
                   }
@@ -291,14 +358,14 @@ class _ConstellationViewState extends ConsumerState<ConstellationView> {
 
             // Légende
             Positioned(
-              bottom: context.space.md,
+              bottom: context.space.lg,
               left: context.space.md,
               child: _Legend(),
             ),
 
             // Bouton recentrer
             Positioned(
-              bottom: context.space.md,
+              bottom: context.space.lg,
               right: context.space.md,
               child: FloatingActionButton.small(
                 onPressed: _recenter,
@@ -373,11 +440,14 @@ class _Legend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(context.space.sm),
+      padding: EdgeInsets.symmetric(
+        horizontal: context.space.sm,
+        vertical: context.space.xs,
+      ),
       decoration: BoxDecoration(
-        color: context.colors.bg.withValues(alpha: 0.75),
+        color: context.colors.bg.withValues(alpha: 0.62),
         borderRadius: BorderRadius.circular(context.radii.sm),
-        border: Border.all(color: context.colors.line),
+        border: Border.all(color: context.colors.line.withValues(alpha: 0.55)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,7 +456,10 @@ class _Legend extends StatelessWidget {
           _LegendItem(color: context.colors.accent, label: 'Prophète ﷺ'),
           _LegendItem(color: context.colors.ink, label: 'Ascendants'),
           _LegendItem(color: context.colors.accent2, label: 'Épouses'),
-          _LegendItem(color: context.colors.accent.withValues(alpha: 0.8), label: 'Enfants'),
+          _LegendItem(
+            color: context.colors.accent.withValues(alpha: 0.8),
+            label: 'Enfants',
+          ),
           _LegendItem(color: context.colors.muted, label: 'Oncles & tantes'),
         ],
       ),
@@ -409,10 +482,7 @@ class _LegendItem extends StatelessWidget {
           Container(
             width: 8,
             height: 8,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           const SizedBox(width: 8),
           Text(

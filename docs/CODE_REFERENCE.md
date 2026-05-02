@@ -1,5 +1,9 @@
 # Code Documentation — Sirah Hub v1.5.1
 
+> Legacy note Sprint 10: this file still contains v1.5 implementation notes.
+> For current Journey V2 product direction, routing, l10n workflow and release
+> guardrails, use `README.md` as the source of truth before making decisions.
+
 > Référence complète pour développeurs. Lire en parallèle de `docs/ARCHITECTURE.md`.
 
 ---

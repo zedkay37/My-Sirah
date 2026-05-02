@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show File, Platform;
 
@@ -13,6 +14,10 @@ class HiveSource {
 
   static const String _boxName = 'settings';
   static const String _stateKey = 'user_state';
+  static const String _lastGoodStateKey = 'user_state_last_good';
+  static const String _corruptStateBackupKey = 'user_state_corrupt_backup';
+  static const String _corruptStateBackupAtKey = 'user_state_corrupt_backup_at';
+  static final Set<Future<void>> _pendingMaintenanceWrites = {};
 
   static Future<void> init() async {
     // On desktop, use a dedicated app-support directory and clear stale lock
@@ -38,16 +43,85 @@ class HiveSource {
   static UserState read() {
     final raw = _box.get(_stateKey);
     if (raw == null) return const UserState();
-    try {
-      final map = json.decode(raw) as Map<String, dynamic>;
-      return _fromMap(map);
-    } catch (_) {
-      return const UserState();
+    final state = _tryParseState(raw);
+    if (state != null) {
+      _trackMaintenanceWrite(_cacheLastGood(raw));
+      return state;
     }
+
+    _trackMaintenanceWrite(_preserveCorruptState(raw));
+
+    final lastGood = _box.get(_lastGoodStateKey);
+    if (lastGood == null || lastGood == raw) return const UserState();
+    final recovered = _tryParseState(lastGood);
+    if (recovered != null) return recovered;
+
+    return const UserState();
   }
 
   static Future<void> write(UserState state) async {
-    await _box.put(_stateKey, json.encode(_toMap(state)));
+    final encoded = json.encode(_toMap(state));
+    await _box.put(_stateKey, encoded);
+    await _box.put(_lastGoodStateKey, encoded);
+  }
+
+  @visibleForTesting
+  static Future<void> flushMaintenanceWrites() async {
+    while (_pendingMaintenanceWrites.isNotEmpty) {
+      await Future.wait(_pendingMaintenanceWrites.toList());
+    }
+  }
+
+  static UserState? _tryParseState(String raw) {
+    try {
+      final map = json.decode(raw) as Map<String, dynamic>;
+      return _fromMap(map);
+    } catch (error, stackTrace) {
+      debugPrint('HiveSource: failed to parse persisted user state: $error');
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stackTrace,
+          library: 'sirah_app.storage',
+          context: ErrorDescription('while reading persisted user state'),
+        ),
+      );
+      return null;
+    }
+  }
+
+  static Future<void> _cacheLastGood(String raw) async {
+    final box = _box;
+    if (box.get(_lastGoodStateKey) == raw) return;
+    await box.put(_lastGoodStateKey, raw);
+  }
+
+  static Future<void> _preserveCorruptState(String raw) async {
+    final box = _box;
+    if (box.get(_corruptStateBackupKey) == raw) return;
+    await box.put(_corruptStateBackupKey, raw);
+    await box.put(
+      _corruptStateBackupAtKey,
+      DateTime.now().toUtc().toIso8601String(),
+    );
+  }
+
+  static void _trackMaintenanceWrite(Future<void> future) {
+    late final Future<void> tracked;
+    tracked = future
+        .catchError((Object error, StackTrace stackTrace) {
+          debugPrint('HiveSource: maintenance write failed: $error');
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: error,
+              stack: stackTrace,
+              library: 'sirah_app.storage',
+              context: ErrorDescription('while maintaining persisted backups'),
+            ),
+          );
+        })
+        .whenComplete(() => _pendingMaintenanceWrites.remove(tracked));
+    _pendingMaintenanceWrites.add(tracked);
   }
 
   static Map<String, dynamic> _toMap(UserState s) => {
@@ -56,6 +130,9 @@ class HiveSource {
     'favorites': s.favorites.toList(),
     'learned': s.learned.toList(),
     'viewed': s.viewed.toList(),
+    'meditatedNames': s.meditatedNames.toList(),
+    'practicedNames': s.practicedNames.toList(),
+    'recognizedNames': s.recognizedNames.toList(),
     'lastSeen': s.lastSeen.map(
       (k, v) => MapEntry(k.toString(), v.toIso8601String()),
     ),
@@ -105,9 +182,12 @@ class HiveSource {
       favorites: _intSet(m['favorites']),
       learned: _intSet(m['learned']),
       viewed: _intSet(m['viewed']),
+      meditatedNames: _intSet(m['meditatedNames']),
+      practicedNames: _intSet(m['practicedNames']),
+      recognizedNames: _intSet(m['recognizedNames']),
       lastSeen: _lastSeenMap(m['lastSeen']),
       onboardingCompletedAt: _dateTime(m['onboardingCompletedAt']),
-      dailyNotifHour: _intValue(m['dailyNotifHour']),
+      dailyNotifHour: _hourValue(m['dailyNotifHour']),
       quizzesCompleted: _intValue(m['quizzesCompleted']) ?? 0,
       totalQuizScore: _intValue(m['totalQuizScore']) ?? 0,
       favoriteMembers: _stringSet(m['favoriteMembers']),
@@ -124,6 +204,12 @@ class HiveSource {
     if (value is int) return value;
     if (value is String) return int.tryParse(value);
     return null;
+  }
+
+  static int? _hourValue(Object? value) {
+    final hour = _intValue(value);
+    if (hour == null || hour < 0 || hour > 23) return null;
+    return hour;
   }
 
   static DateTime? _dateTime(Object? value) {

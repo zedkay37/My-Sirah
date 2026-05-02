@@ -37,10 +37,7 @@ class PathChip extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: children,
-      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: children),
     );
   }
 
@@ -67,9 +64,7 @@ class PathChip extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: context.typo.caption.copyWith(
-          color: context.colors.ink,
-        ),
+        style: context.typo.caption.copyWith(color: context.colors.ink),
       ),
     );
   }

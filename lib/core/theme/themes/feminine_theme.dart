@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sirah_app/core/theme/app_colors.dart';
 import 'package:sirah_app/core/theme/app_elevation.dart';
 import 'package:sirah_app/core/theme/app_radius.dart';
@@ -7,7 +6,7 @@ import 'package:sirah_app/core/theme/app_spacing.dart';
 import 'package:sirah_app/core/theme/app_typography.dart';
 
 // Thème C — Constellation colorée
-// bg lavande pâle, accent violet indigo, Playfair Display, shadow colorée
+// bg lavande pâle, accent violet indigo, serif Crimson Pro, shadow colorée
 final ThemeData feminineTheme = _build();
 
 ThemeData _build() {
@@ -38,13 +37,8 @@ ThemeData _build() {
 
   final typo = AppTypography.buildArabic(
     inkColor: ink,
-    applySerifDisplay: (style) => GoogleFonts.playfairDisplay(
-      fontSize: style.fontSize,
-      fontWeight: style.fontWeight,
-      color: style.color,
-      height: style.height,
-      letterSpacing: style.letterSpacing,
-    ),
+    applySerifDisplay: (style) =>
+        style.copyWith(fontFamily: AppFontFamilies.crimsonPro),
   );
 
   return ThemeData(
@@ -59,6 +53,12 @@ ThemeData _build() {
       onPrimary: Colors.white,
       onSurface: colors.ink,
     ),
-    extensions: [colors, typo, AppSpacing.defaults, AppRadius.defaults, elevation],
+    extensions: [
+      colors,
+      typo,
+      AppSpacing.defaults,
+      AppRadius.defaults,
+      elevation,
+    ],
   );
 }

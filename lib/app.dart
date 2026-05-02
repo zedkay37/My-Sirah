@@ -36,7 +36,8 @@ class App extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
+      // Public beta is FR-only until Arabic UI strings are fully reviewed.
+      supportedLocales: const [Locale('fr')],
     );
   }
 }

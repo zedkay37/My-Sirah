@@ -33,8 +33,7 @@ class AppColors extends ThemeExtension<AppColors> {
       categoryColors[slug] ?? const Color(0xFF888888);
 
   // Fond teinté à 10% pour les chips et backgrounds catégorie
-  Color categoryBg(String slug) =>
-      categoryColor(slug).withValues(alpha: 0.10);
+  Color categoryBg(String slug) => categoryColor(slug).withValues(alpha: 0.10);
 
   // Palette catégorie — light theme
   static const Map<String, Color> lightCategoryColors = {

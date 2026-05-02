@@ -13,7 +13,8 @@ class ParcoursDetailScreen extends ConsumerStatefulWidget {
   final String parcoursId;
 
   @override
-  ConsumerState<ParcoursDetailScreen> createState() => _ParcoursDetailScreenState();
+  ConsumerState<ParcoursDetailScreen> createState() =>
+      _ParcoursDetailScreenState();
 }
 
 class _ParcoursDetailScreenState extends ConsumerState<ParcoursDetailScreen> {
@@ -27,11 +28,15 @@ class _ParcoursDetailScreenState extends ConsumerState<ParcoursDetailScreen> {
     return parcoursAsync.when(
       loading: () => Scaffold(
         backgroundColor: context.colors.bg,
-        body: Center(child: CircularProgressIndicator(color: context.colors.accent)),
+        body: Center(
+          child: CircularProgressIndicator(color: context.colors.accent),
+        ),
       ),
       error: (_, __) => Scaffold(
         backgroundColor: context.colors.bg,
-        body: Center(child: Icon(Icons.error_outline, color: context.colors.muted)),
+        body: Center(
+          child: Icon(Icons.error_outline, color: context.colors.muted),
+        ),
       ),
       data: (list) {
         final parcours = list.firstWhere((p) => p.id == widget.parcoursId);
@@ -39,11 +44,15 @@ class _ParcoursDetailScreenState extends ConsumerState<ParcoursDetailScreen> {
         return namesAsync.when(
           loading: () => Scaffold(
             backgroundColor: context.colors.bg,
-            body: Center(child: CircularProgressIndicator(color: context.colors.accent)),
+            body: Center(
+              child: CircularProgressIndicator(color: context.colors.accent),
+            ),
           ),
           error: (_, __) => Scaffold(
             backgroundColor: context.colors.bg,
-            body: Center(child: Icon(Icons.error_outline, color: context.colors.muted)),
+            body: Center(
+              child: Icon(Icons.error_outline, color: context.colors.muted),
+            ),
           ),
           data: (names) {
             final parcoursNames = parcours.nameNumbers
@@ -129,7 +138,7 @@ class _DetailContent extends StatelessWidget {
               size: ArabicSize.hero,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: space.sm),
+            SizedBox(height: space.xl),
             Text(
               name.transliteration,
               style: typo.headline.copyWith(

@@ -26,3 +26,22 @@ abstract class ProphetName with _$ProphetName {
   factory ProphetName.fromJson(Map<String, dynamic> json) =>
       _$ProphetNameFromJson(json);
 }
+
+extension ProphetNameShortMeaning on ProphetName {
+  String get shortMeaningFr {
+    final normalized = etymology.replaceAll(RegExp(r'\s+'), ' ').trim();
+    if (normalized.isEmpty) return normalized;
+
+    final quote = RegExp(r'«\s*([^»]+?)\s*»').firstMatch(normalized);
+    if (quote != null) {
+      return '« ${quote.group(1)!.trim()} »';
+    }
+
+    final sentence = RegExp(r'[.!?](\s|$)').firstMatch(normalized);
+    if (sentence != null) {
+      return normalized.substring(0, sentence.end).trim();
+    }
+
+    return normalized;
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sirah_app/features/asmaul_husna/data/asmaa_notifier.dart';
 import 'package:sirah_app/features/names/data/names_notifier.dart';
 import 'package:sirah_app/features/study/data/study_notifier.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
@@ -25,12 +26,8 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
   void _flip() => setState(() => _isFlipped = !_isFlipped);
 
   void _know() {
-    ref
-        .read(namesNotifierProvider)
-        .markLearned(_session.names[_index].number);
-    ref
-        .read(studyNotifierProvider)
-        .levelUp(_session.names[_index].number);
+    final item = _session.items[_index];
+    _markKnown(item);
     _knownCount++;
     _advance();
   }
@@ -38,7 +35,7 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
   void _review() => _advance();
 
   void _advance() {
-    final total = _session.names.length;
+    final total = _session.items.length;
     if (_index < total - 1) {
       setState(() {
         _index++;
@@ -47,8 +44,23 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
     } else {
       context.pushReplacement(
         '/quiz/result',
-        extra: {'score': _knownCount, 'total': total},
+        extra: {
+          'score': _knownCount,
+          'total': total,
+          'deckType': _session.deckType.name,
+        },
       );
+    }
+  }
+
+  void _markKnown(PracticeItem item) {
+    switch (_session.deckType) {
+      case PracticeDeckType.prophetNames:
+        ref.read(namesNotifierProvider).markLearned(item.id);
+        ref.read(namesNotifierProvider).markNameRecognized(item.id);
+        ref.read(studyNotifierProvider).levelUp(item.id);
+      case PracticeDeckType.asmaulHusna:
+        ref.read(asmaaNotifierProvider).markHusnaLearned(item.id);
     }
   }
 
@@ -58,8 +70,12 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
     final typo = context.typo;
     final space = context.space;
     final l10n = context.l10n;
-    final total = _session.names.length;
-    final name = _session.names[_index];
+    final session = ref.watch(quizSessionProvider);
+    if (session == null) {
+      return const _MissingQuizSessionScreen();
+    }
+    final total = _session.items.length;
+    final item = _session.items[_index];
 
     return Scaffold(
       backgroundColor: colors.bg,
@@ -88,11 +104,7 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
             SizedBox(height: space.md),
             // Carte retournable
             Expanded(
-              child: QuizCard(
-                name: name,
-                isFlipped: _isFlipped,
-                onFlip: _flip,
-              ),
+              child: QuizCard(item: item, isFlipped: _isFlipped, onFlip: _flip),
             ),
             SizedBox(height: space.lg),
             // Boutons (visibles uniquement après retournement)
@@ -139,6 +151,52 @@ class _FlashcardsScreenState extends ConsumerState<FlashcardsScreen> {
             ),
             SizedBox(height: space.xl),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MissingQuizSessionScreen extends StatelessWidget {
+  const _MissingQuizSessionScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+
+    return Scaffold(
+      backgroundColor: colors.bg,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(space.lg),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.style_outlined, color: colors.muted, size: 44),
+                SizedBox(height: space.md),
+                Text(
+                  context.l10n.quizTypeFlashcards,
+                  style: typo.headline.copyWith(color: colors.ink),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.sm),
+                Text(
+                  context.l10n.quizTypeFlashcardsDesc,
+                  style: typo.body.copyWith(color: colors.muted),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: space.lg),
+                FilledButton.icon(
+                  onPressed: () => context.go('/library/deck/prophet_names'),
+                  icon: const Icon(Icons.local_library_outlined),
+                  label: Text(context.l10n.navLibrary),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

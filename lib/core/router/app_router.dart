@@ -7,13 +7,17 @@ import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/genealogy/presentation/detail/person_detail_screen.dart';
 import 'package:sirah_app/features/genealogy/presentation/list/tree_list_screen.dart';
 import 'package:sirah_app/features/genealogy/presentation/tree_screen.dart';
+import 'package:sirah_app/features/journey/presentation/constellation_detail_screen.dart';
+import 'package:sirah_app/features/journey/presentation/map/constellation_space_map_screen.dart';
+import 'package:sirah_app/features/journey/presentation/map/deck_space_map_screen.dart';
+import 'package:sirah_app/features/journey/presentation/map/galaxy_map_screen.dart';
+import 'package:sirah_app/features/journey/presentation/name_experience_screen.dart';
+import 'package:sirah_app/features/library/presentation/library_deck_screen.dart';
+import 'package:sirah_app/features/library/presentation/library_screen.dart';
 import 'package:sirah_app/features/names/presentation/detail/detail_screen.dart';
 import 'package:sirah_app/features/names/presentation/tafakkur/tafakkur_screen.dart';
 import 'package:sirah_app/features/names/presentation/home/home_screen.dart';
 import 'package:sirah_app/features/asmaul_husna/presentation/detail/husna_detail_screen.dart';
-import 'package:sirah_app/features/asmaul_husna/presentation/list/husna_list_screen.dart';
-import 'package:sirah_app/features/names/presentation/list/discover_screen.dart';
-import 'package:sirah_app/features/names/presentation/list/prophets_discover_screen.dart';
 import 'package:sirah_app/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:sirah_app/features/profile/presentation/favorites/favorites_screen.dart';
 import 'package:sirah_app/features/profile/presentation/profile/profile_screen.dart';
@@ -56,9 +60,14 @@ class _ShellScaffold extends StatelessWidget {
             label: l10n.navHome,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore, color: colors.accent),
-            label: l10n.navDiscover,
+            icon: const Icon(Icons.travel_explore_outlined),
+            selectedIcon: Icon(Icons.travel_explore, color: colors.accent),
+            label: l10n.navJourney,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.local_library_outlined),
+            selectedIcon: Icon(Icons.local_library, color: colors.accent),
+            label: l10n.navLibrary,
           ),
           NavigationDestination(
             icon: const Icon(Icons.person_outline),
@@ -122,6 +131,29 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/onboarding',
         builder: (_, __) => const OnboardingScreen(),
       ),
+      GoRoute(
+        path: '/discover',
+        redirect: (_, __) => '/library',
+        routes: [
+          GoRoute(
+            path: 'prophets',
+            redirect: (_, __) => '/library/deck/prophet_names',
+          ),
+          GoRoute(
+            path: 'husna',
+            redirect: (_, __) => '/library/deck/asmaul_husna',
+            routes: [
+              GoRoute(
+                path: ':id',
+                redirect: (_, state) {
+                  final id = state.pathParameters['id'] ?? '1';
+                  return '/library/deck/asmaul_husna/$id';
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
       StatefulShellRoute.indexedStack(
         builder: (_, __, shell) => _ShellScaffold(navigationShell: shell),
         branches: [
@@ -133,29 +165,65 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/discover',
-                builder: (_, __) => const DiscoverScreen(),
+                path: '/journey',
+                builder: (_, __) => const GalaxyMapScreen(),
                 routes: [
                   GoRoute(
-                    path: 'prophets',
-                    pageBuilder: (_, state) =>
-                        _fadeSlide(state, const ProphetsDiscoverScreen()),
-                  ),
-                  GoRoute(
-                    path: 'husna',
-                    pageBuilder: (_, state) =>
-                        _fadeSlide(state, const HusnaListScreen()),
+                    path: 'deck/:deckId',
+                    pageBuilder: (_, state) => _fadeSlide(
+                      state,
+                      DeckSpaceMapScreen(
+                        deckId: state.pathParameters['deckId']!,
+                      ),
+                    ),
                     routes: [
                       GoRoute(
-                        path: ':id',
-                        pageBuilder: (_, state) {
-                          final id =
-                              int.tryParse(state.pathParameters['id'] ?? '') ??
-                              1;
-                          return _fadeSlide(state, HusnaDetailScreen(id: id));
-                        },
+                        path: 'constellation/:id',
+                        pageBuilder: (_, state) => _fadeSlide(
+                          state,
+                          ConstellationSpaceMapScreen(
+                            deckId: state.pathParameters['deckId']!,
+                            constellationId: state.pathParameters['id']!,
+                          ),
+                        ),
                       ),
                     ],
+                  ),
+                  GoRoute(
+                    path: 'constellation/:id',
+                    pageBuilder: (_, state) => _fadeSlide(
+                      state,
+                      ConstellationDetailScreen(
+                        constellationId: state.pathParameters['id']!,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/library',
+                builder: (_, __) => const LibraryScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'deck/asmaul_husna/:id',
+                    pageBuilder: (_, state) {
+                      final id =
+                          int.tryParse(state.pathParameters['id'] ?? '') ?? 1;
+                      return _fadeSlide(state, HusnaDetailScreen(id: id));
+                    },
+                  ),
+                  GoRoute(
+                    path: 'deck/:deckId',
+                    pageBuilder: (_, state) => _fadeSlide(
+                      state,
+                      LibraryDeckScreen(
+                        deckId: state.pathParameters['deckId']!,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -227,6 +295,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
         routes: [
           GoRoute(
+            path: 'experience',
+            pageBuilder: (_, state) {
+              final number =
+                  int.tryParse(state.pathParameters['number'] ?? '') ?? 1;
+              return _fadeSlide(
+                state,
+                NameExperienceScreen(nameNumber: number),
+              );
+            },
+          ),
+          GoRoute(
             path: 'tafakkur',
             pageBuilder: (_, state) {
               final number =
@@ -247,12 +326,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/quiz/result',
         pageBuilder: (_, state) {
-          final extra = state.extra as Map<String, int>? ?? const {};
+          final extra = _quizResultPayload(state.extra);
           return _fadeSlide(
             state,
             ResultScreen(
-              score: extra['score'] ?? 0,
-              total: extra['total'] ?? QuizGenerator.quizSize,
+              score: extra.score,
+              total: extra.total,
+              deckType: extra.deckType,
             ),
           );
         },
@@ -272,6 +352,43 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 });
 
 // ── Transition helper ─────────────────────────────────────────────────────────
+
+({int score, int total, PracticeDeckType deckType}) _quizResultPayload(
+  Object? extra,
+) {
+  if (extra is! Map<Object?, Object?>) {
+    return (
+      score: 0,
+      total: QuizGenerator.quizSize,
+      deckType: PracticeDeckType.prophetNames,
+    );
+  }
+
+  final totalFromExtra = _intFromExtra(extra['total']);
+  final total = totalFromExtra == null || totalFromExtra <= 0
+      ? QuizGenerator.quizSize
+      : totalFromExtra;
+  final score = (_intFromExtra(extra['score']) ?? 0).clamp(0, total).toInt();
+  return (
+    score: score,
+    total: total,
+    deckType: _deckTypeFromExtra(extra['deckType']),
+  );
+}
+
+int? _intFromExtra(Object? value) {
+  if (value is int) return value;
+  if (value is String) return int.tryParse(value);
+  return null;
+}
+
+PracticeDeckType _deckTypeFromExtra(Object? value) {
+  if (value is! String) return PracticeDeckType.prophetNames;
+  for (final deckType in PracticeDeckType.values) {
+    if (deckType.name == value) return deckType;
+  }
+  return PracticeDeckType.prophetNames;
+}
 
 CustomTransitionPage<void> _fadeSlide(GoRouterState state, Widget child) {
   return CustomTransitionPage<void>(

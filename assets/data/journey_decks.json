@@ -1,0 +1,18 @@
+[
+  {
+    "id": "prophet_names",
+    "titleFr": "Noms du Prophète ﷺ",
+    "subtitleFr": "201 étoiles pour connaître et aimer le Prophète ﷺ",
+    "itemType": "prophet_name",
+    "totalItems": 201,
+    "status": "active"
+  },
+  {
+    "id": "asmaul_husna",
+    "titleFr": "Asmāʾ al-Ḥusnā",
+    "subtitleFr": "99 noms d’Allah",
+    "itemType": "husna_name",
+    "totalItems": 99,
+    "status": "library_only"
+  }
+]

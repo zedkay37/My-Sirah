@@ -5,6 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tafakkur_controller.freezed.dart';
 
+const tafakkurPageSeparator = '\n---tafakkur-page---\n';
+
 @freezed
 abstract class TafakkurState with _$TafakkurState {
   const factory TafakkurState({
@@ -23,13 +25,16 @@ abstract class TafakkurState with _$TafakkurState {
     return (currentIndex / phrases.length).clamp(0.0, 0.7);
   }
 
-  bool get isLastPhrase => phrases.isNotEmpty && currentIndex == phrases.length - 1;
+  bool get isLastPhrase =>
+      phrases.isNotEmpty && currentIndex == phrases.length - 1;
   String get currentPhrase => phrases.isNotEmpty ? phrases[currentIndex] : '';
-  int get remaining => phrases.isNotEmpty ? phrases.length - currentIndex - 1 : 0;
+  int get remaining =>
+      phrases.isNotEmpty ? phrases.length - currentIndex - 1 : 0;
 }
 
 class TafakkurController extends StateNotifier<TafakkurState> {
-  TafakkurController(String commentary) : super(const TafakkurState(phrases: [])) {
+  TafakkurController(String commentary)
+    : super(const TafakkurState(phrases: [])) {
     final phrases = _splitPhrases(commentary);
     state = state.copyWith(phrases: phrases);
     if (phrases.isNotEmpty) {
@@ -43,6 +48,14 @@ class TafakkurController extends StateNotifier<TafakkurState> {
 
   List<String> _splitPhrases(String commentary) {
     if (commentary.isEmpty) return [];
+    if (commentary.contains(tafakkurPageSeparator)) {
+      return commentary
+          .split(tafakkurPageSeparator)
+          .map((p) => p.trim())
+          .where((p) => p.isNotEmpty)
+          .toList();
+    }
+
     final pattern = RegExp(r'(?<=[.!?])\s+');
     final rawPhrases = commentary.split(pattern);
     final result = <String>[];
@@ -114,6 +127,27 @@ class TafakkurController extends StateNotifier<TafakkurState> {
     state = state.copyWith(paceSeconds: seconds, elapsedSeconds: 0);
   }
 
+  void next() {
+    if (state.isComplete) return;
+    if (state.isLastPhrase) {
+      state = state.copyWith(isComplete: true, elapsedSeconds: 0);
+      _timer?.cancel();
+      return;
+    }
+    state = state.copyWith(
+      currentIndex: state.currentIndex + 1,
+      elapsedSeconds: 0,
+    );
+  }
+
+  void previous() {
+    if (state.isComplete || state.currentIndex == 0) return;
+    state = state.copyWith(
+      currentIndex: state.currentIndex - 1,
+      elapsedSeconds: 0,
+    );
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -123,5 +157,5 @@ class TafakkurController extends StateNotifier<TafakkurState> {
 
 final tafakkurControllerProvider = StateNotifierProvider.autoDispose
     .family<TafakkurController, TafakkurState, String>(
-  (ref, commentary) => TafakkurController(commentary),
-);
+      (ref, commentary) => TafakkurController(commentary),
+    );

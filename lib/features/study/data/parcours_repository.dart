@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sirah_app/features/study/data/models/parcours.dart';
 
-export 'package:sirah_app/features/study/data/models/parcours.dart' show Parcours;
+export 'package:sirah_app/features/study/data/models/parcours.dart'
+    show Parcours;
 
 final parcoursProvider = FutureProvider<List<Parcours>>((ref) async {
   final raw = await rootBundle.loadString('assets/data/parcours.json');

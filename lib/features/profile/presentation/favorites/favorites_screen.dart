@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/features/names/data/names_notifier.dart';
@@ -19,7 +20,7 @@ class FavoritesScreen extends ConsumerWidget {
 
     final namesAsync = ref.watch(namesProvider);
     final favorites = ref.watch(settingsProvider.select((s) => s.favorites));
-    final learned = ref.watch(settingsProvider.select((s) => s.learned));
+    final progress = ref.watch(journeyProgressResolverProvider);
     final notifier = ref.read(namesNotifierProvider);
 
     return Scaffold(
@@ -32,12 +33,16 @@ class FavoritesScreen extends ConsumerWidget {
       ),
       body: namesAsync.when(
         loading: () => Center(
-          child: CircularProgressIndicator(color: colors.accent, strokeWidth: 2),
+          child: CircularProgressIndicator(
+            color: colors.accent,
+            strokeWidth: 2,
+          ),
         ),
         error: (_, __) => const SizedBox.shrink(),
         data: (names) {
-          final favNames =
-              names.where((n) => favorites.contains(n.number)).toList();
+          final favNames = names
+              .where((n) => favorites.contains(n.number))
+              .toList();
 
           if (favNames.isEmpty) {
             return Center(
@@ -52,7 +57,7 @@ class FavoritesScreen extends ConsumerWidget {
                   ),
                   SizedBox(height: space.sm),
                   TextButton(
-                    onPressed: () => context.go('/discover'),
+                    onPressed: () => context.go('/library/deck/prophet_names'),
                     child: Text(
                       l10n.favoritesEmptyCta,
                       style: typo.button.copyWith(color: colors.accent),
@@ -70,8 +75,8 @@ class FavoritesScreen extends ConsumerWidget {
               return NameCard(
                 name: name,
                 isFavorite: true,
-                isLearned: learned.contains(name.number),
-                onTap: () => context.push('/name/${name.number}'),
+                stage: progress.stageFor(name.number),
+                onTap: () => context.push('/name/${name.number}/experience'),
                 onFavoriteTap: () => notifier.toggleFavorite(name.number),
               );
             },

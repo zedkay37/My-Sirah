@@ -1,28 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sirah_app/core/providers/husna_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/quiz/data/quiz_generator.dart';
 import 'package:sirah_app/features/quiz/data/quiz_provider.dart';
 
 class QuizEntryScreen extends ConsumerWidget {
-  const QuizEntryScreen({super.key});
+  const QuizEntryScreen({
+    super.key,
+    this.deckType = PracticeDeckType.prophetNames,
+  });
+
+  final PracticeDeckType deckType;
 
   void _startQcm(BuildContext context, WidgetRef ref) {
-    ref.read(namesProvider).whenData((names) {
-      ref.read(quizSessionProvider.notifier).state =
-          QuizSession.qcm(QuizGenerator.generateQcm(names));
-      context.push('/quiz/qcm');
-    });
+    switch (deckType) {
+      case PracticeDeckType.prophetNames:
+        ref.read(namesProvider).whenData((names) {
+          ref.read(quizSessionProvider.notifier).state = QuizSession.qcm(
+            deckType: PracticeDeckType.prophetNames,
+            questions: QuizGenerator.generateProphetQcm(names),
+          );
+          context.push('/quiz/qcm');
+        });
+      case PracticeDeckType.asmaulHusna:
+        ref.read(husnaProvider).whenData((names) {
+          ref.read(quizSessionProvider.notifier).state = QuizSession.qcm(
+            deckType: PracticeDeckType.asmaulHusna,
+            questions: QuizGenerator.generateHusnaQcm(names),
+          );
+          context.push('/quiz/qcm');
+        });
+    }
   }
 
   void _startFlashcards(BuildContext context, WidgetRef ref) {
-    ref.read(namesProvider).whenData((names) {
-      ref.read(quizSessionProvider.notifier).state =
-          QuizSession.flashcards(QuizGenerator.pickRandom(names));
-      context.push('/quiz/flashcards');
-    });
+    switch (deckType) {
+      case PracticeDeckType.prophetNames:
+        ref.read(namesProvider).whenData((names) {
+          ref.read(quizSessionProvider.notifier).state = QuizSession.flashcards(
+            deckType: PracticeDeckType.prophetNames,
+            items: QuizGenerator.pickRandomProphet(names),
+          );
+          context.push('/quiz/flashcards');
+        });
+      case PracticeDeckType.asmaulHusna:
+        ref.read(husnaProvider).whenData((names) {
+          ref.read(quizSessionProvider.notifier).state = QuizSession.flashcards(
+            deckType: PracticeDeckType.asmaulHusna,
+            items: QuizGenerator.pickRandomHusna(names),
+          );
+          context.push('/quiz/flashcards');
+        });
+    }
   }
 
   @override
@@ -31,6 +63,22 @@ class QuizEntryScreen extends ConsumerWidget {
     final typo = context.typo;
     final space = context.space;
     final l10n = context.l10n;
+    final title = switch (deckType) {
+      PracticeDeckType.prophetNames => l10n.quizTitle,
+      PracticeDeckType.asmaulHusna => l10n.husnaPracticeTitle,
+    };
+    final subtitle = switch (deckType) {
+      PracticeDeckType.prophetNames => l10n.quizSubtitle,
+      PracticeDeckType.asmaulHusna => l10n.husnaPracticeSubtitle,
+    };
+    final qcmDescription = switch (deckType) {
+      PracticeDeckType.prophetNames => l10n.quizTypeMCQDesc,
+      PracticeDeckType.asmaulHusna => l10n.husnaQuizTypeMCQDesc,
+    };
+    final flashcardsDescription = switch (deckType) {
+      PracticeDeckType.prophetNames => l10n.quizTypeFlashcardsDesc,
+      PracticeDeckType.asmaulHusna => l10n.husnaQuizTypeFlashcardsDesc,
+    };
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(space.md),
@@ -38,24 +86,21 @@ class QuizEntryScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: space.lg),
-          Text(l10n.quizTitle, style: typo.displayMedium),
+          Text(title, style: typo.displayMedium),
           SizedBox(height: space.xs),
-          Text(
-            l10n.quizSubtitle,
-            style: typo.body.copyWith(color: colors.muted),
-          ),
+          Text(subtitle, style: typo.body.copyWith(color: colors.muted)),
           SizedBox(height: space.xl),
           _QuizTypeCard(
             icon: Icons.quiz_outlined,
             title: l10n.quizTypeMCQ,
-            description: l10n.quizTypeMCQDesc,
+            description: qcmDescription,
             onTap: () => _startQcm(context, ref),
           ),
           SizedBox(height: space.md),
           _QuizTypeCard(
             icon: Icons.style_outlined,
             title: l10n.quizTypeFlashcards,
-            description: l10n.quizTypeFlashcardsDesc,
+            description: flashcardsDescription,
             onTap: () => _startFlashcards(context, ref),
           ),
         ],

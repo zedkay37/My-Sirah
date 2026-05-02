@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sirah_app/core/theme/app_colors.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
+import 'package:sirah_app/features/journey/domain/name_progress_resolver.dart';
 import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/shared/arabic_text.dart';
 import 'package:sirah_app/features/shared/category_chip.dart';
@@ -11,14 +13,14 @@ class NameCard extends StatelessWidget {
     required this.isFavorite,
     required this.onTap,
     this.onFavoriteTap,
-    this.isLearned = false,
+    this.stage = JourneyNameStage.unknown,
   });
 
   final ProphetName name;
   final bool isFavorite;
   final VoidCallback onTap;
   final VoidCallback? onFavoriteTap;
-  final bool isLearned;
+  final JourneyNameStage stage;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,8 @@ class NameCard extends StatelessWidget {
     final space = context.space;
     final radii = context.radii;
     final l10n = context.l10n;
+    final stageColor = _stageColor(colors);
+    final hasJourneyProgress = stage != JourneyNameStage.unknown;
 
     return Semantics(
       button: true,
@@ -47,8 +51,10 @@ class NameCard extends StatelessWidget {
                 child: Text(
                   '#${name.number.toString().padLeft(3, '0')}',
                   style: typo.caption.copyWith(
-                    color: isLearned ? colors.accent : colors.muted,
-                    fontWeight: isLearned ? FontWeight.w600 : FontWeight.normal,
+                    color: hasJourneyProgress ? stageColor : colors.muted,
+                    fontWeight: hasJourneyProgress
+                        ? FontWeight.w600
+                        : FontWeight.normal,
                   ),
                 ),
               ),
@@ -66,6 +72,7 @@ class NameCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       name.transliteration,
+                      textDirection: TextDirection.ltr,
                       style: typo.body.copyWith(
                         fontStyle: FontStyle.italic,
                         color: colors.muted,
@@ -99,5 +106,15 @@ class NameCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _stageColor(AppColors colors) {
+    return switch (stage) {
+      JourneyNameStage.recognized => colors.accent,
+      JourneyNameStage.practiced => colors.success,
+      JourneyNameStage.meditated => colors.accent2,
+      JourneyNameStage.viewed => colors.warning,
+      JourneyNameStage.unknown => colors.muted,
+    };
   }
 }

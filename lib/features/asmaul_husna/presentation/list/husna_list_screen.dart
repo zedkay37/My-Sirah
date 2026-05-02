@@ -7,7 +7,9 @@ import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/features/asmaul_husna/data/models/husna_name.dart';
 
 class HusnaListScreen extends ConsumerStatefulWidget {
-  const HusnaListScreen({super.key});
+  const HusnaListScreen({super.key, this.showAppBar = true});
+
+  final bool showAppBar;
 
   @override
   ConsumerState<HusnaListScreen> createState() => _HusnaListScreenState();
@@ -50,6 +52,92 @@ class _HusnaListScreenState extends ConsumerState<HusnaListScreen> {
       settingsProvider.select((s) => s.husnaLearned),
     );
 
+    final body = Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(space.md, 0, space.md, space.sm),
+          child: TextField(
+            controller: _searchCtrl,
+            onChanged: (v) => setState(() => _query = v),
+            style: typo.body,
+            decoration: InputDecoration(
+              hintText: l10n.husnaSearchHint,
+              hintStyle: typo.body.copyWith(color: colors.muted),
+              prefixIcon: Icon(Icons.search_outlined, color: colors.muted),
+              suffixIcon: _query.isNotEmpty
+                  ? IconButton(
+                      icon: Icon(Icons.clear, color: colors.muted, size: 18),
+                      onPressed: () {
+                        _searchCtrl.clear();
+                        setState(() => _query = '');
+                      },
+                    )
+                  : null,
+              filled: true,
+              fillColor: colors.bg2,
+              border: OutlineInputBorder(
+                borderRadius: radii.pillAll,
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: radii.pillAll,
+                borderSide: BorderSide(color: colors.line),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: radii.pillAll,
+                borderSide: BorderSide(color: colors.accent),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: space.md,
+                vertical: space.sm,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: husnaAsync.when(
+            data: (names) {
+              final filtered = _filter(names);
+              if (filtered.isEmpty) {
+                return Center(
+                  child: Text(
+                    l10n.discoverNoResults,
+                    style: typo.body.copyWith(color: colors.muted),
+                  ),
+                );
+              }
+              return ListView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                itemCount: filtered.length,
+                itemBuilder: (ctx, i) {
+                  final name = filtered[i];
+                  final isLearned = husnaLearned.contains(name.id);
+                  return _HusnaCard(
+                    name: name,
+                    isLearned: isLearned,
+                    onTap: () =>
+                        context.push('/library/deck/asmaul_husna/${name.id}'),
+                  );
+                },
+              );
+            },
+            loading: () => Center(
+              child: CircularProgressIndicator(
+                color: colors.accent,
+                strokeWidth: 2,
+              ),
+            ),
+            error: (_, __) => const SizedBox.shrink(),
+          ),
+        ),
+      ],
+    );
+
+    if (!widget.showAppBar) {
+      return body;
+    }
+
     return Scaffold(
       backgroundColor: colors.bg,
       appBar: AppBar(
@@ -62,86 +150,7 @@ class _HusnaListScreenState extends ConsumerState<HusnaListScreen> {
           onPressed: () => context.pop(),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(space.md, 0, space.md, space.sm),
-            child: TextField(
-              controller: _searchCtrl,
-              onChanged: (v) => setState(() => _query = v),
-              style: typo.body,
-              decoration: InputDecoration(
-                hintText: l10n.husnaSearchHint,
-                hintStyle: typo.body.copyWith(color: colors.muted),
-                prefixIcon: Icon(Icons.search_outlined, color: colors.muted),
-                suffixIcon: _query.isNotEmpty
-                    ? IconButton(
-                        icon: Icon(Icons.clear, color: colors.muted, size: 18),
-                        onPressed: () {
-                          _searchCtrl.clear();
-                          setState(() => _query = '');
-                        },
-                      )
-                    : null,
-                filled: true,
-                fillColor: colors.bg2,
-                border: OutlineInputBorder(
-                  borderRadius: radii.pillAll,
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: radii.pillAll,
-                  borderSide: BorderSide(color: colors.line),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: radii.pillAll,
-                  borderSide: BorderSide(color: colors.accent),
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: space.md,
-                  vertical: space.sm,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: husnaAsync.when(
-              data: (names) {
-                final filtered = _filter(names);
-                if (filtered.isEmpty) {
-                  return Center(
-                    child: Text(
-                      l10n.discoverNoResults,
-                      style: typo.body.copyWith(color: colors.muted),
-                    ),
-                  );
-                }
-                return ListView.builder(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  itemCount: filtered.length,
-                  itemBuilder: (ctx, i) {
-                    final name = filtered[i];
-                    final isLearned = husnaLearned.contains(name.id);
-                    return _HusnaCard(
-                      name: name,
-                      isLearned: isLearned,
-                      onTap: () => context.push('/discover/husna/${name.id}'),
-                    );
-                  },
-                );
-              },
-              loading: () => Center(
-                child: CircularProgressIndicator(
-                  color: colors.accent,
-                  strokeWidth: 2,
-                ),
-              ),
-              error: (_, __) => const SizedBox.shrink(),
-            ),
-          ),
-        ],
-      ),
+      body: body,
     );
   }
 }

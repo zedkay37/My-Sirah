@@ -4,25 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hijri/hijri_calendar.dart';
+import 'package:sirah_app/core/providers/journey_providers.dart';
 import 'package:sirah_app/core/providers/names_providers.dart';
 import 'package:sirah_app/core/providers/settings_provider.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 import 'package:sirah_app/core/utils/hijri_utils.dart';
-import 'package:sirah_app/features/shared/progress_ring.dart';
-import 'package:sirah_app/features/shared/section_header.dart';
+import 'package:sirah_app/features/journey/domain/name_progress_resolver.dart';
+import 'package:sirah_app/features/names/data/models/prophet_name.dart';
 import 'package:sirah_app/features/shared/streak_badge.dart';
-import 'package:sirah_app/features/shared/theme_picker.dart';
-
-// Fibonacci spiral position shared by view + painter
-Offset _starPosition(int index, int total, Size size) {
-  final goldenAngle = math.pi * (3 - math.sqrt(5));
-  final r = math.sqrt((index + 0.5) / total) * 0.45;
-  final theta = index * goldenAngle;
-  return Offset(
-    size.width / 2 + r * size.width * math.cos(theta),
-    size.height / 2 + r * size.height * math.sin(theta),
-  );
-}
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -36,10 +25,12 @@ class ProfileScreen extends ConsumerWidget {
 
     final settings = ref.watch(settingsProvider);
     final namesAsync = ref.watch(namesProvider);
-
-    final learnedCount = settings.learned.length;
-    final total = namesAsync.maybeWhen(data: (names) => names.length, orElse: () => 201);
-    final progress = total > 0 ? learnedCount / total : 0.0;
+    final progressResolver = ref.watch(journeyProgressResolverProvider);
+    final journeySummary =
+        ref.watch(journeyProgressSummaryProvider).valueOrNull ??
+        progressResolver.summarize(
+          List<int>.generate(201, (index) => index + 1),
+        );
     final streak = _computeStreak(settings.lastSeen);
 
     return Scaffold(
@@ -51,9 +42,16 @@ class ProfileScreen extends ConsumerWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.homeGreeting, style: typo.headline),
+            Text(
+              l10n.homeGreeting,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: typo.headline,
+            ),
             Text(
               _hijriDate(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: typo.caption.copyWith(color: colors.muted),
             ),
           ],
@@ -74,85 +72,33 @@ class ProfileScreen extends ConsumerWidget {
           child: Column(
             children: [
               SizedBox(height: space.md),
-
-              // ── Progression principale ────────────────────────────────────
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: space.md),
-                child: Row(
-                  children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        ProgressRing(
-                          progress: progress,
-                          size: 80,
-                          strokeWidth: 6,
-                          color: colors.accent,
-                        ),
-                        Text('$learnedCount', style: typo.headline),
-                      ],
-                    ),
-                    SizedBox(width: space.lg),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l10n.profileLearnedSubtitle,
-                            style: typo.body.copyWith(color: colors.muted),
-                          ),
-                          SizedBox(height: space.xs),
-                          if (streak > 0) StreakBadge(days: streak),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: space.xl),
-
-              // ── Constellation ─────────────────────────────────────────────
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: space.md),
-                child: SectionHeader(title: l10n.profileConstellationTitle),
-              ),
-              SizedBox(height: space.sm),
               namesAsync.when(
                 data: (names) => Padding(
                   padding: EdgeInsets.symmetric(horizontal: space.md),
-                  child: _ConstellationView(
-                    totalNames: names.length,
-                    learnedNumbers: settings.learned,
-                    viewedNumbers: settings.viewed,
-                    onStarTap: (number) => context.push('/name/$number'),
+                  child: _PersonalLanternSection(
+                    names: names,
+                    progress: progressResolver,
+                    summary: journeySummary,
+                    streak: streak,
                   ),
                 ),
-                loading: () => const SizedBox(height: 300),
+                loading: () => SizedBox(
+                  height: 300,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: colors.accent,
+                      strokeWidth: 2,
+                    ),
+                  ),
+                ),
                 error: (_, __) => const SizedBox(height: 300),
               ),
-              SizedBox(height: space.sm),
+              SizedBox(height: space.lg),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: space.md),
-                child: _ConstellationLegend(),
+                child: _JourneySummaryGrid(summary: journeySummary),
               ),
               SizedBox(height: space.xl),
-
-              // ── Thème ─────────────────────────────────────────────────────
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: space.md),
-                child: SectionHeader(title: context.l10n.settingsSectionTheme),
-              ),
-              SizedBox(height: space.sm),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: space.md),
-                child: ThemePicker(
-                  current: settings.theme,
-                  onChanged: ref.read(settingsProvider.notifier).setTheme,
-                ),
-              ),
-              SizedBox(height: space.xl),
-
-              // ── Raccourcis ────────────────────────────────────────────────
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: space.md),
                 child: Column(
@@ -201,195 +147,564 @@ class ProfileScreen extends ConsumerWidget {
   }
 }
 
-// ── Constellation — 201 étoiles ───────────────────────────────────────────────
-
-class _ConstellationView extends StatelessWidget {
-  const _ConstellationView({
-    required this.totalNames,
-    required this.learnedNumbers,
-    required this.viewedNumbers,
-    required this.onStarTap,
+class _PersonalLanternSection extends StatelessWidget {
+  const _PersonalLanternSection({
+    required this.names,
+    required this.progress,
+    required this.summary,
+    required this.streak,
   });
 
-  final int totalNames;
-  final Set<int> learnedNumbers;
-  final Set<int> viewedNumbers;
-  final void Function(int number) onStarTap;
+  final List<ProphetName> names;
+  final NameProgressResolver progress;
+  final NameProgressSummary summary;
+  final int streak;
 
-  int? _hitTest(Offset localPos, Size size) {
-    const hitRadius = 14.0;
-    for (int i = 0; i < totalNames; i++) {
-      final pos = _starPosition(i, totalNames, size);
-      if ((localPos - pos).distance <= hitRadius) return i + 1;
-    }
-    return null;
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final space = context.space;
+    final l10n = context.l10n;
+
+    final total = summary.total == 0 ? names.length : summary.total;
+    final litCount = names
+        .where(
+          (name) => progress.stageFor(name.number) != JourneyNameStage.unknown,
+        )
+        .length;
+    final progressValue = total == 0
+        ? 0.0
+        : (litCount / total).clamp(0.0, 1.0).toDouble();
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final media = MediaQuery.of(context);
+        final compact =
+            constraints.maxWidth < 360 ||
+            media.size.height < 760 ||
+            media.textScaler.scale(1) > 1.15;
+
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            color: colors.bg2.withValues(alpha: 0.74),
+            borderRadius: context.radii.lgAll,
+            border: Border.all(color: colors.line),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(compact ? space.md : space.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l10n.profileLanternTitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: typo.headline.copyWith(
+                    color: colors.accent,
+                    height: 1.2,
+                  ),
+                ),
+                SizedBox(height: space.xs),
+                Text(
+                  l10n.profileLanternSubtitle,
+                  style: typo.body.copyWith(color: colors.muted, height: 1.35),
+                ),
+                SizedBox(height: space.sm),
+                Wrap(
+                  spacing: space.sm,
+                  runSpacing: space.xs,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      l10n.profileLanternProgress(litCount, total),
+                      style: typo.caption.copyWith(color: colors.muted),
+                    ),
+                    if (streak > 0)
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: constraints.maxWidth,
+                        ),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: StreakBadge(days: streak),
+                        ),
+                      ),
+                  ],
+                ),
+                SizedBox(height: compact ? space.xs : space.sm),
+                _LanternProgressView(
+                  progress: progressValue,
+                  litCount: litCount,
+                  total: total,
+                  compact: compact,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _LanternProgressView extends StatefulWidget {
+  const _LanternProgressView({
+    required this.progress,
+    required this.litCount,
+    required this.total,
+    required this.compact,
+  });
+
+  final double progress;
+  final int litCount;
+  final int total;
+  final bool compact;
+
+  @override
+  State<_LanternProgressView> createState() => _LanternProgressViewState();
+}
+
+class _LanternProgressViewState extends State<_LanternProgressView>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 4600),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final disableAnimations = MediaQuery.of(context).disableAnimations;
+    final height = widget.compact ? 210.0 : 248.0;
 
-    return AspectRatio(
-      aspectRatio: 1.0,
-      child: LayoutBuilder(
-        builder: (ctx, constraints) {
-          final size = Size(constraints.maxWidth, constraints.maxHeight);
-          return GestureDetector(
-            onTapDown: (details) {
-              final number = _hitTest(details.localPosition, size);
-              if (number != null) onStarTap(number);
+    return Semantics(
+      label: context.l10n.profileLanternSemantics(
+        widget.litCount,
+        widget.total,
+      ),
+      child: SizedBox(
+        height: height,
+        child: RepaintBoundary(
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, _) {
+              return CustomPaint(
+                key: const ValueKey('profile-lantern'),
+                painter: _LanternPainter(
+                  animationValue: disableAnimations ? 0 : _controller.value,
+                  progress: widget.progress,
+                  bg: colors.bg,
+                  bg2: colors.bg2,
+                  ink: colors.ink,
+                  muted: colors.muted,
+                  line: colors.line,
+                  accent: colors.accent,
+                  accent2: colors.accent2,
+                ),
+                child: const SizedBox.expand(),
+              );
             },
-            child: CustomPaint(
-              painter: _ConstellationPainter(
-                totalNames: totalNames,
-                learnedNumbers: learnedNumbers,
-                viewedNumbers: viewedNumbers,
-                accentColor: colors.accent,
-                viewedColor: colors.muted.withValues(alpha: 0.45),
-                unknownColor: colors.muted.withValues(alpha: 0.18),
-              ),
-              child: const SizedBox.expand(),
-            ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
 }
 
-class _ConstellationPainter extends CustomPainter {
-  const _ConstellationPainter({
-    required this.totalNames,
-    required this.learnedNumbers,
-    required this.viewedNumbers,
-    required this.accentColor,
-    required this.viewedColor,
-    required this.unknownColor,
+class _LanternPainter extends CustomPainter {
+  const _LanternPainter({
+    required this.animationValue,
+    required this.progress,
+    required this.bg,
+    required this.bg2,
+    required this.ink,
+    required this.muted,
+    required this.line,
+    required this.accent,
+    required this.accent2,
   });
 
-  final int totalNames;
-  final Set<int> learnedNumbers;
-  final Set<int> viewedNumbers;
-  final Color accentColor;
-  final Color viewedColor;
-  final Color unknownColor;
+  final double animationValue;
+  final double progress;
+  final Color bg;
+  final Color bg2;
+  final Color ink;
+  final Color muted;
+  final Color line;
+  final Color accent;
+  final Color accent2;
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (int i = 0; i < totalNames; i++) {
-      final number = i + 1;
-      final pos = _starPosition(i, totalNames, size);
-      final isLearned = learnedNumbers.contains(number);
-      final isViewed = viewedNumbers.contains(number);
+    final p = progress.clamp(0.0, 1.0).toDouble();
+    final center = Offset(size.width / 2, size.height * 0.54);
+    final cycle = animationValue * math.pi * 2;
+    final sway = math.sin(cycle) * (0.035 + p * 0.025);
+    final bob = math.sin(cycle + math.pi / 3) * 3.2;
+    final glowBoost = Curves.easeOutCubic.transform(p);
+    final glowRadius = size.shortestSide * (0.30 + glowBoost * 0.34);
+    final glowAlpha = 0.14 + glowBoost * 0.42;
+    final lanternCenter = center.translate(0, bob - size.height * 0.03);
 
-      if (isLearned) {
-        // Halo
-        canvas.drawCircle(
-          pos,
-          6.5,
-          Paint()
-            ..color = accentColor.withValues(alpha: 0.15)
-            ..style = PaintingStyle.fill,
-        );
-        // Point lumineux
-        canvas.drawCircle(pos, 3.5, Paint()..color = accentColor);
-      } else if (isViewed) {
-        // Point semi-brillant
-        canvas.drawCircle(
-          pos,
-          2.5,
-          Paint()
-            ..color = viewedColor
-            ..style = PaintingStyle.fill,
-        );
-        canvas.drawCircle(
-          pos,
-          2.5,
-          Paint()
-            ..color = viewedColor
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 0.5,
-        );
-      } else {
-        // Punctum discret
-        canvas.drawCircle(pos, 1.2, Paint()..color = unknownColor);
-      }
-    }
+    _drawBackground(canvas, size, lanternCenter, glowRadius, glowAlpha);
+
+    canvas.save();
+    canvas.translate(lanternCenter.dx, lanternCenter.dy);
+    canvas.rotate(sway);
+    canvas.translate(-lanternCenter.dx, -lanternCenter.dy);
+    _drawLantern(canvas, size, lanternCenter, p);
+    canvas.restore();
+  }
+
+  void _drawBackground(
+    Canvas canvas,
+    Size size,
+    Offset center,
+    double glowRadius,
+    double glowAlpha,
+  ) {
+    canvas.drawCircle(
+      center,
+      glowRadius,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [
+            accent2.withValues(alpha: glowAlpha),
+            accent.withValues(alpha: glowAlpha * 0.28),
+            bg.withValues(alpha: 0),
+          ],
+          stops: const [0, 0.46, 1],
+        ).createShader(Rect.fromCircle(center: center, radius: glowRadius)),
+    );
+
+    final lowerGlowCenter = Offset(size.width / 2, size.height * 0.78);
+    final lowerGlowRadius = size.width * (0.34 + glowAlpha * 0.22);
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: lowerGlowCenter,
+        width: lowerGlowRadius * 1.55,
+        height: lowerGlowRadius * 0.72,
+      ),
+      Paint()
+        ..shader =
+            RadialGradient(
+              colors: [
+                accent2.withValues(alpha: glowAlpha * 0.22),
+                accent.withValues(alpha: glowAlpha * 0.09),
+                bg.withValues(alpha: 0),
+              ],
+              stops: const [0, 0.45, 1],
+            ).createShader(
+              Rect.fromCircle(center: lowerGlowCenter, radius: lowerGlowRadius),
+            ),
+    );
+
+    final smallGlow = size.shortestSide * 0.18;
+    canvas.drawCircle(
+      center.translate(0, 8),
+      smallGlow,
+      Paint()
+        ..shader =
+            RadialGradient(
+              colors: [bg2.withValues(alpha: 0.40), bg.withValues(alpha: 0)],
+            ).createShader(
+              Rect.fromCircle(
+                center: center.translate(0, 8),
+                radius: smallGlow,
+              ),
+            ),
+    );
+  }
+
+  void _drawLantern(Canvas canvas, Size size, Offset center, double p) {
+    final scale = ((size.shortestSide / 238) * (1.02 + p * 0.16))
+        .clamp(0.92, 1.32)
+        .toDouble();
+    final bodyWidth = 74.0 * scale;
+    final bodyHeight = 106.0 * scale;
+    final body = Rect.fromCenter(
+      center: center,
+      width: bodyWidth,
+      height: bodyHeight,
+    );
+    final top = body.top;
+    final bottom = body.bottom;
+    final middleX = body.center.dx;
+
+    final chainPaint = Paint()
+      ..color = line.withValues(alpha: 0.82)
+      ..strokeWidth = 1.4 * scale
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    final anchor = Offset(middleX, top - 52 * scale);
+    final hook = Offset(middleX, top - 8 * scale);
+    canvas.drawLine(anchor, hook, chainPaint);
+    canvas.drawArc(
+      Rect.fromCenter(
+        center: Offset(middleX, top - 4 * scale),
+        width: 28 * scale,
+        height: 26 * scale,
+      ),
+      math.pi,
+      math.pi,
+      false,
+      chainPaint,
+    );
+
+    final bodyRRect = RRect.fromRectAndRadius(
+      body,
+      Radius.circular(22 * scale),
+    );
+    canvas.drawRRect(bodyRRect, Paint()..color = bg2.withValues(alpha: 0.82));
+    canvas.drawRRect(
+      bodyRRect,
+      Paint()
+        ..color = line.withValues(alpha: 0.86)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.2 * scale,
+    );
+
+    final capPaint = Paint()..color = accent2.withValues(alpha: 0.88);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(
+          center: Offset(middleX, top + 12 * scale),
+          width: bodyWidth * 0.74,
+          height: 14 * scale,
+        ),
+        Radius.circular(8 * scale),
+      ),
+      capPaint,
+    );
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(
+          center: Offset(middleX, bottom - 10 * scale),
+          width: bodyWidth * 0.82,
+          height: 18 * scale,
+        ),
+        Radius.circular(9 * scale),
+      ),
+      capPaint,
+    );
+
+    final glass = RRect.fromRectAndRadius(
+      Rect.fromCenter(
+        center: center.translate(0, 2 * scale),
+        width: bodyWidth * 0.56,
+        height: bodyHeight * 0.58,
+      ),
+      Radius.circular(16 * scale),
+    );
+    canvas.drawRRect(
+      glass,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [
+            accent2.withValues(alpha: 0.30 + p * 0.28),
+            accent.withValues(alpha: 0.10 + p * 0.08),
+            bg.withValues(alpha: 0.02),
+          ],
+        ).createShader(glass.outerRect),
+    );
+    canvas.drawRRect(
+      glass,
+      Paint()
+        ..color = line.withValues(alpha: 0.50)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 0.8 * scale,
+    );
+
+    final flameHeight = (24 + p * 20) * scale;
+    final flameWidth = (14 + p * 11) * scale;
+    final flameBase = center.translate(0, 22 * scale);
+    final flame = Path()
+      ..moveTo(flameBase.dx, flameBase.dy - flameHeight)
+      ..cubicTo(
+        flameBase.dx - flameWidth,
+        flameBase.dy - flameHeight * 0.55,
+        flameBase.dx - flameWidth * 0.74,
+        flameBase.dy - flameHeight * 0.05,
+        flameBase.dx,
+        flameBase.dy,
+      )
+      ..cubicTo(
+        flameBase.dx + flameWidth * 0.86,
+        flameBase.dy - flameHeight * 0.18,
+        flameBase.dx + flameWidth * 0.68,
+        flameBase.dy - flameHeight * 0.72,
+        flameBase.dx,
+        flameBase.dy - flameHeight,
+      );
+    canvas.drawPath(flame, Paint()..color = accent2);
+
+    final inner = Path()
+      ..moveTo(flameBase.dx, flameBase.dy - flameHeight * 0.68)
+      ..cubicTo(
+        flameBase.dx - flameWidth * 0.36,
+        flameBase.dy - flameHeight * 0.36,
+        flameBase.dx - flameWidth * 0.20,
+        flameBase.dy - flameHeight * 0.02,
+        flameBase.dx,
+        flameBase.dy - flameHeight * 0.05,
+      )
+      ..cubicTo(
+        flameBase.dx + flameWidth * 0.34,
+        flameBase.dy - flameHeight * 0.18,
+        flameBase.dx + flameWidth * 0.22,
+        flameBase.dy - flameHeight * 0.50,
+        flameBase.dx,
+        flameBase.dy - flameHeight * 0.68,
+      );
+    canvas.drawPath(inner, Paint()..color = bg2.withValues(alpha: 0.78));
+
+    final sidePaint = Paint()
+      ..color = muted.withValues(alpha: 0.42)
+      ..strokeWidth = 1.0 * scale
+      ..style = PaintingStyle.stroke;
+    canvas.drawLine(
+      Offset(body.left + 16 * scale, top + 24 * scale),
+      Offset(body.left + 12 * scale, bottom - 20 * scale),
+      sidePaint,
+    );
+    canvas.drawLine(
+      Offset(body.right - 16 * scale, top + 24 * scale),
+      Offset(body.right - 12 * scale, bottom - 20 * scale),
+      sidePaint,
+    );
   }
 
   @override
-  bool shouldRepaint(_ConstellationPainter old) =>
-      old.learnedNumbers != learnedNumbers ||
-      old.viewedNumbers != viewedNumbers ||
-      old.accentColor != accentColor;
+  bool shouldRepaint(_LanternPainter old) =>
+      old.animationValue != animationValue ||
+      old.progress != progress ||
+      old.bg != bg ||
+      old.bg2 != bg2 ||
+      old.ink != ink ||
+      old.muted != muted ||
+      old.line != line ||
+      old.accent != accent ||
+      old.accent2 != accent2;
 }
 
-// ── Légende constellation ──────────────────────────────────────────────────────
+class _JourneySummaryGrid extends StatelessWidget {
+  const _JourneySummaryGrid({required this.summary});
 
-class _ConstellationLegend extends StatelessWidget {
+  final NameProgressSummary summary;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final space = context.space;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final twoColumns = constraints.maxWidth >= 320;
+        final tileWidth = twoColumns
+            ? (constraints.maxWidth - space.sm) / 2
+            : constraints.maxWidth;
+
+        return Wrap(
+          spacing: space.sm,
+          runSpacing: space.sm,
+          children: [
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.star_rounded,
+              label: l10n.profileJourneyViewed,
+              value: summary.viewed,
+            ),
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.self_improvement_rounded,
+              label: l10n.profileJourneyMeditated,
+              value: summary.meditated,
+            ),
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.check_circle_rounded,
+              label: l10n.profileJourneyPracticed,
+              value: summary.practiced,
+            ),
+            _JourneyMetric(
+              width: tileWidth,
+              icon: Icons.workspace_premium_rounded,
+              label: l10n.profileJourneyRecognized,
+              value: summary.recognized,
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _JourneyMetric extends StatelessWidget {
+  const _JourneyMetric({
+    required this.width,
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final double width;
+  final IconData icon;
+  final String label;
+  final int value;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final typo = context.typo;
     final space = context.space;
+    final radii = context.radii;
 
-    final l10n = context.l10n;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _LegendItem(
-          color: colors.accent,
-          radius: 4,
-          label: l10n.profileLegendLearned,
+    return SizedBox(
+      width: width,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colors.bg2,
+          borderRadius: radii.mdAll,
+          border: Border.all(color: colors.line),
         ),
-        SizedBox(width: space.md),
-        _LegendItem(
-          color: colors.muted.withValues(alpha: 0.5),
-          radius: 3,
-          label: l10n.profileLegendViewed,
+        child: Padding(
+          padding: EdgeInsets.all(space.sm),
+          child: Row(
+            children: [
+              Icon(icon, color: colors.accent, size: 18),
+              SizedBox(width: space.xs),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: typo.caption.copyWith(color: colors.muted),
+                ),
+              ),
+              SizedBox(width: space.xs),
+              Text('$value', style: typo.body),
+            ],
+          ),
         ),
-        SizedBox(width: space.md),
-        _LegendItem(
-          color: colors.muted.withValues(alpha: 0.25),
-          radius: 2,
-          label: l10n.profileLegendUnknown,
-        ),
-      ],
+      ),
     );
   }
 }
-
-class _LegendItem extends StatelessWidget {
-  const _LegendItem({
-    required this.color,
-    required this.radius,
-    required this.label,
-  });
-
-  final Color color;
-  final double radius;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: radius * 2,
-          height: radius * 2,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: context.typo.caption.copyWith(color: context.colors.muted),
-        ),
-      ],
-    );
-  }
-}
-
-// ── Tuile de navigation ────────────────────────────────────────────────────────
 
 class _ProfileTile extends StatelessWidget {
   const _ProfileTile({
@@ -438,11 +753,7 @@ class _ProfileTile extends StatelessWidget {
                   style: typo.caption.copyWith(color: colors.muted),
                 ),
               SizedBox(width: space.xs),
-              Icon(
-                Icons.chevron_right,
-                color: colors.muted,
-                size: 20,
-              ),
+              Icon(Icons.chevron_right, color: colors.muted, size: 20),
             ],
           ),
         ),

@@ -15,10 +15,7 @@ class StreakBadge extends StatelessWidget {
     final space = context.space;
 
     Widget badge = Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: space.sm,
-        vertical: space.xs,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: space.sm, vertical: space.xs),
       decoration: BoxDecoration(
         color: colors.warning.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
@@ -26,11 +23,10 @@ class StreakBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.local_fire_department,
-              color: colors.warning, size: 16),
+          Icon(Icons.calendar_today_outlined, color: colors.warning, size: 16),
           SizedBox(width: space.xs),
           Text(
-            '$days',
+            context.l10n.profileRitualStreak(days),
             style: typo.button.copyWith(color: colors.warning),
           ),
         ],
@@ -40,13 +36,23 @@ class StreakBadge extends StatelessWidget {
     if (animate) {
       badge = badge
           .animate()
-          .scale(begin: const Offset(1, 1), end: const Offset(1.3, 1.3),
-              duration: 200.ms, curve: Curves.easeOut)
+          .scale(
+            begin: const Offset(1, 1),
+            end: const Offset(1.3, 1.3),
+            duration: 200.ms,
+            curve: Curves.easeOut,
+          )
           .then()
-          .scale(begin: const Offset(1.3, 1.3), end: const Offset(1, 1),
-              duration: 150.ms);
+          .scale(
+            begin: const Offset(1.3, 1.3),
+            end: const Offset(1, 1),
+            duration: 150.ms,
+          );
     }
 
-    return Semantics(label: '$days jours de suite', child: badge);
+    return Semantics(
+      label: context.l10n.profileRitualStreak(days),
+      child: badge,
+    );
   }
 }

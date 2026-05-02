@@ -27,12 +27,10 @@ class SectionHeader extends StatelessWidget {
   }
 
   Widget _ornament(Color color) => Container(
-        height: 1,
-        width: 24,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [color.withValues(alpha: 0), color],
-          ),
-        ),
-      );
+    height: 1,
+    width: 24,
+    decoration: BoxDecoration(
+      gradient: LinearGradient(colors: [color.withValues(alpha: 0), color]),
+    ),
+  );
 }

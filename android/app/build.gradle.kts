@@ -1,5 +1,6 @@
 import java.util.Properties
 import java.io.FileInputStream
+import org.gradle.api.GradleException
 
 plugins {
     id("com.android.application")
@@ -9,10 +10,27 @@ plugins {
 
 // Charge key.properties s'il existe (ignoré en CI / debug)
 val keyPropertiesFile = rootProject.file("key.properties")
+val hasReleaseSigning = keyPropertiesFile.exists()
 val keyProperties = Properties()
-if (keyPropertiesFile.exists()) {
+if (hasReleaseSigning) {
     keyProperties.load(FileInputStream(keyPropertiesFile))
 }
+
+val requestedReleaseBuild = gradle.startParameter.taskNames.any {
+    it.contains("Release", ignoreCase = true)
+}
+if (requestedReleaseBuild && !hasReleaseSigning) {
+    throw GradleException(
+        "Release signing is missing. Create android/key.properties before building a release artifact."
+    )
+}
+
+fun releaseSigningProperty(name: String): String =
+    keyProperties.getProperty(name)
+        ?: throw GradleException(
+            "Release signing property '$name' is missing in ${keyPropertiesFile.path}. " +
+                "Available keys: ${keyProperties.stringPropertyNames().joinToString(", ")}"
+        )
 
 android {
     namespace = "com.sirah.sirah_app"
@@ -30,12 +48,12 @@ android {
     }
 
     signingConfigs {
-        if (keyPropertiesFile.exists()) {
+        if (hasReleaseSigning) {
             create("release") {
-                keyAlias = keyProperties["keyAlias"] as String
-                keyPassword = keyProperties["keyPassword"] as String
-                storeFile = file(keyProperties["storeFile"] as String)
-                storePassword = keyProperties["storePassword"] as String
+                keyAlias = releaseSigningProperty("keyAlias")
+                keyPassword = releaseSigningProperty("keyPassword")
+                storeFile = file(releaseSigningProperty("storeFile"))
+                storePassword = releaseSigningProperty("storePassword")
             }
         }
     }
@@ -50,10 +68,9 @@ android {
 
     buildTypes {
         release {
-            signingConfig = if (keyPropertiesFile.exists())
-                signingConfigs.getByName("release")
-            else
-                signingConfigs.getByName("debug")
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 }

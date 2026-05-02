@@ -7,12 +7,10 @@ class GenealogyNotifier {
 
   Set<String> get favoriteMembers =>
       _ref.read(settingsProvider).favoriteMembers;
-      
-  Set<String> get viewedMembers =>
-      _ref.read(settingsProvider).viewedMembers;
 
-  String get preferredTreeView =>
-      _ref.read(settingsProvider).preferredTreeView;
+  Set<String> get viewedMembers => _ref.read(settingsProvider).viewedMembers;
+
+  String get preferredTreeView => _ref.read(settingsProvider).preferredTreeView;
 
   Future<void> toggleFavoriteMember(String id) =>
       _ref.read(settingsProvider.notifier).toggleFavoriteMember(id);

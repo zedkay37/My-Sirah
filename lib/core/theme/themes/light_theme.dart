@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sirah_app/core/theme/app_colors.dart';
 import 'package:sirah_app/core/theme/app_elevation.dart';
 import 'package:sirah_app/core/theme/app_radius.dart';
@@ -11,31 +10,26 @@ import 'package:sirah_app/core/theme/app_typography.dart';
 final ThemeData lightTheme = _build();
 
 ThemeData _build() {
-  const ink = Color(0xFF1F1D18);
+  const ink = Color(0xFF18221D);
 
   const colors = AppColors(
-    bg: Color(0xFFF5F1E8),
-    bg2: Color(0xFFEFE9DB),
+    bg: Color(0xFFFAF8F1),
+    bg2: Color(0xFFFFFFFF),
     ink: ink,
-    muted: Color(0xFF7A7A6F),
-    accent: Color(0xFF1F5942),
-    accent2: Color(0xFF8B5A2A),
-    line: Color(0xFFD8CCB4),
-    success: Color(0xFF2E7D5B),
-    warning: Color(0xFFB88A2A),
+    muted: Color(0xFF6F7169),
+    accent: Color(0xFF0F5A3F),
+    accent2: Color(0xFFC4963A),
+    line: Color(0xFFE4D9C7),
+    success: Color(0xFF2F7D5C),
+    warning: Color(0xFFC09432),
     error: Color(0xFFB83D3D),
     categoryColors: AppColors.lightCategoryColors,
   );
 
   final typo = AppTypography.buildArabic(
     inkColor: ink,
-    applySerifDisplay: (style) => GoogleFonts.crimsonPro(
-      fontSize: style.fontSize,
-      fontWeight: style.fontWeight,
-      color: style.color,
-      height: style.height,
-      letterSpacing: style.letterSpacing,
-    ),
+    applySerifDisplay: (style) =>
+        style.copyWith(fontFamily: AppFontFamilies.crimsonPro),
   );
 
   return ThemeData(

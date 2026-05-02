@@ -23,7 +23,11 @@ class ThemePicker extends StatelessWidget {
     final options = [
       (ThemeKey.light, l10n.settingsThemeLight, Icons.light_mode_outlined),
       (ThemeKey.dark, l10n.settingsThemeDark, Icons.dark_mode_outlined),
-      (ThemeKey.feminine, l10n.settingsThemeFeminine, Icons.auto_awesome_outlined),
+      (
+        ThemeKey.feminine,
+        l10n.settingsThemeFeminine,
+        Icons.auto_awesome_outlined,
+      ),
     ];
 
     return Row(

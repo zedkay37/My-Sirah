@@ -29,8 +29,10 @@ class ParcoursListScreen extends ConsumerWidget {
         title: Text(l10n.studyParcoursTitle, style: typo.headline),
       ),
       body: parcoursAsync.when(
-        loading: () => Center(child: CircularProgressIndicator(color: colors.accent)),
-        error: (_, __) => Center(child: Icon(Icons.error_outline, color: colors.muted)),
+        loading: () =>
+            Center(child: CircularProgressIndicator(color: colors.accent)),
+        error: (_, __) =>
+            Center(child: Icon(Icons.error_outline, color: colors.muted)),
         data: (list) => ListView.separated(
           padding: EdgeInsets.fromLTRB(
             space.md,
@@ -56,7 +58,6 @@ class ParcoursListScreen extends ConsumerWidget {
       ),
     );
   }
-
 }
 
 class _ParcoursCard extends StatelessWidget {
@@ -86,7 +87,9 @@ class _ParcoursCard extends StatelessWidget {
           color: colors.bg2,
           borderRadius: radii.lgAll,
           border: Border.all(
-            color: isCompleted ? accentColor.withValues(alpha: 0.6) : colors.line,
+            color: isCompleted
+                ? accentColor.withValues(alpha: 0.6)
+                : colors.line,
           ),
         ),
         child: Padding(

@@ -12,6 +12,7 @@ class RadialPainter extends CustomPainter {
     required this.center,
     required this.colors,
     required this.onTap,
+    required this.scale,
   }) {
     _updatePositions();
   }
@@ -22,6 +23,7 @@ class RadialPainter extends CustomPainter {
   final Offset center;
   final AppColors colors;
   final ValueChanged<String?> onTap;
+  final double scale;
 
   static List<FamilyMember>? _cachedMembers;
   static Offset? _cachedCenter;
@@ -29,7 +31,7 @@ class RadialPainter extends CustomPainter {
 
   void _updatePositions() {
     if (_cachedMembers == members && _cachedCenter == center) return;
-    
+
     _cachedMembers = members;
     _cachedCenter = center;
     _positions.clear();
@@ -47,14 +49,16 @@ class RadialPainter extends CustomPainter {
       final orbitIdx = entry.key;
       final orbitMembers = entry.value;
       final radius = radii[orbitIdx]!;
-      
+
       for (var i = 0; i < orbitMembers.length; i++) {
         final m = orbitMembers[i];
         if (radius == 0.0) {
           _positions[m.id] = center;
         } else {
           final angle = (i / orbitMembers.length) * 2 * math.pi - math.pi / 2;
-          _positions[m.id] = center + Offset(math.cos(angle) * radius, math.sin(angle) * radius);
+          _positions[m.id] =
+              center +
+              Offset(math.cos(angle) * radius, math.sin(angle) * radius);
         }
       }
     }
@@ -90,13 +94,23 @@ class RadialPainter extends CustomPainter {
       case GenealogyFilter.all:
         return true;
       case GenealogyFilter.wivesAndChildren:
-        return [FamilyRole.wife, FamilyRole.child, FamilyRole.grandchild].contains(m.role);
+        return [
+          FamilyRole.wife,
+          FamilyRole.child,
+          FamilyRole.grandchild,
+        ].contains(m.role);
       case GenealogyFilter.ancestors:
-        return [FamilyRole.father, FamilyRole.mother, FamilyRole.paternalAscendant, FamilyRole.maternalAscendant].contains(m.role);
+        return [
+          FamilyRole.father,
+          FamilyRole.mother,
+          FamilyRole.paternalAscendant,
+          FamilyRole.maternalAscendant,
+        ].contains(m.role);
       case GenealogyFilter.unclesAndAunts:
         return [FamilyRole.uncle, FamilyRole.aunt].contains(m.role);
       case GenealogyFilter.ahlAlBayt:
-        return ['ali', 'fatima', 'hasan', 'husayn', 'khadija'].contains(m.id) || m.role == FamilyRole.prophet;
+        return ['ali', 'fatima', 'hasan', 'husayn', 'khadija'].contains(m.id) ||
+            m.role == FamilyRole.prophet;
     }
   }
 
@@ -139,7 +153,7 @@ class RadialPainter extends CustomPainter {
       final inFilter = _isMemberInFilter(m);
       final isSelected = m.id == selectedId;
       final opacity = inFilter ? 1.0 : 0.15;
-      
+
       var radius = m.role == FamilyRole.prophet ? 10.0 : 5.0;
       if (isSelected) radius += 3.0;
 
@@ -157,10 +171,24 @@ class RadialPainter extends CustomPainter {
 
       canvas.drawCircle(pos, radius, dotPaint);
 
-      if (!m.isBoundary) {
+      if (!m.isBoundary &&
+          _shouldShowLabel(m, isSelected: isSelected, inFilter: inFilter)) {
         _drawLabels(canvas, m, pos, opacity);
       }
     }
+  }
+
+  bool _shouldShowLabel(
+    FamilyMember member, {
+    required bool isSelected,
+    required bool inFilter,
+  }) {
+    if (!inFilter) return false;
+    if (isSelected) return true;
+    if (scale < 1.35) return false;
+    if (member.isTraditional || member.isBoundary) return false;
+
+    return true;
   }
 
   void _drawLabels(Canvas canvas, FamilyMember m, Offset pos, double opacity) {
@@ -174,7 +202,9 @@ class RadialPainter extends CustomPainter {
         ),
       ),
       textDirection: TextDirection.rtl,
-    )..layout();
+      maxLines: 1,
+      ellipsis: '...',
+    )..layout(maxWidth: 88);
 
     final transPainter = TextPainter(
       text: TextSpan(
@@ -185,7 +215,9 @@ class RadialPainter extends CustomPainter {
         ),
       ),
       textDirection: TextDirection.ltr,
-    )..layout();
+      maxLines: 1,
+      ellipsis: '...',
+    )..layout(maxWidth: 104);
 
     arabicPainter.paint(
       canvas,
@@ -193,7 +225,10 @@ class RadialPainter extends CustomPainter {
     );
     transPainter.paint(
       canvas,
-      Offset(pos.dx - transPainter.width / 2, pos.dy + 8 + arabicPainter.height),
+      Offset(
+        pos.dx - transPainter.width / 2,
+        pos.dy + 8 + arabicPainter.height,
+      ),
     );
   }
 
@@ -211,9 +246,10 @@ class RadialPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant RadialPainter oldDelegate) {
     return oldDelegate.filter != filter ||
-           oldDelegate.selectedId != selectedId ||
-           oldDelegate.colors != colors ||
-           oldDelegate.center != center ||
-           oldDelegate.members != members;
+        oldDelegate.selectedId != selectedId ||
+        oldDelegate.colors != colors ||
+        oldDelegate.center != center ||
+        oldDelegate.scale != scale ||
+        oldDelegate.members != members;
   }
 }

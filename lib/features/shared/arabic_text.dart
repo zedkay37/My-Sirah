@@ -39,9 +39,7 @@ class ArabicText extends StatelessWidget {
     if (withShadow) {
       final glow = context.elevation.glow;
       if (glow != null) {
-        base = base.copyWith(
-          shadows: [Shadow(color: glow, blurRadius: 40)],
-        );
+        base = base.copyWith(shadows: [Shadow(color: glow, blurRadius: 40)]);
       }
     }
 

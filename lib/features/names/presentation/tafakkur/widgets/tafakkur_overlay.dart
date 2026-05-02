@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sirah_app/core/utils/build_context_x.dart';
 
 class TafakkurOverlay extends StatelessWidget {
-  const TafakkurOverlay({
-    super.key,
-    required this.darknessLevel,
-  });
+  const TafakkurOverlay({super.key, required this.darknessLevel});
 
   final double darknessLevel;
 

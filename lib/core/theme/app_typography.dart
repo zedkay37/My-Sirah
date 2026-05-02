@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+class AppFontFamilies {
+  const AppFontFamilies._();
+
+  static const amiri = 'Amiri';
+  static const amiriQuran = 'Amiri Quran';
+  static const crimsonPro = 'Crimson Pro';
+  static const inter = 'Inter';
+  static const playfairDisplay = 'Playfair Display';
+}
 
 class AppTypography extends ThemeExtension<AppTypography> {
   const AppTypography({
@@ -18,36 +27,46 @@ class AppTypography extends ThemeExtension<AppTypography> {
   });
 
   // ── Arabe ──────────────────────────────────────────────────────────────
-  final TextStyle arabicHero;    // 88sp — Amiri Quran, calligraphie hero
-  final TextStyle arabicLarge;   // 56sp
-  final TextStyle arabicMedium;  // 32sp
-  final TextStyle arabicBody;    // 22sp
+  final TextStyle arabicHero; // 88sp — Amiri Quran, calligraphie hero
+  final TextStyle arabicLarge; // 56sp
+  final TextStyle arabicMedium; // 32sp
+  final TextStyle arabicBody; // 22sp
 
   // ── Serif éditorial ────────────────────────────────────────────────────
-  final TextStyle displayLarge;  // 36sp
+  final TextStyle displayLarge; // 36sp
   final TextStyle displayMedium; // 28sp
-  final TextStyle headline;      // 20sp
-  final TextStyle bodyLarge;     // 16sp
-  final TextStyle body;          // 14sp
+  final TextStyle headline; // 20sp
+  final TextStyle bodyLarge; // 16sp
+  final TextStyle body; // 14sp
 
   // ── Sans-serif UI ──────────────────────────────────────────────────────
-  final TextStyle caption;       // 12sp
-  final TextStyle overline;      // 10sp uppercase letter-spaced
-  final TextStyle button;        // 14sp medium
+  final TextStyle caption; // 12sp
+  final TextStyle overline; // 10sp uppercase letter-spaced
+  final TextStyle button; // 14sp medium
 
   // Construit les styles arabes (communs aux 3 thèmes, seule la couleur change)
   static AppTypography buildArabic({
     required TextStyle Function(TextStyle) applySerifDisplay,
     required Color inkColor,
   }) {
-    final arabicBase = GoogleFonts.amiri(color: inkColor);
-    final uiBase = GoogleFonts.inter(color: inkColor);
+    final arabicQuranBase = TextStyle(
+      fontFamily: AppFontFamilies.amiriQuran,
+      color: inkColor,
+    );
+    final arabicBase = TextStyle(
+      fontFamily: AppFontFamilies.amiri,
+      color: inkColor,
+    );
+    final uiBase = TextStyle(
+      fontFamily: AppFontFamilies.inter,
+      color: inkColor,
+    );
 
     return AppTypography(
-      arabicHero: arabicBase.copyWith(
+      arabicHero: arabicQuranBase.copyWith(
         fontSize: 88,
-        fontWeight: FontWeight.w700,
-        height: 1.1,
+        fontWeight: FontWeight.w400,
+        height: 1.28,
       ),
       arabicLarge: arabicBase.copyWith(
         fontSize: 56,
@@ -74,10 +93,20 @@ class AppTypography extends ThemeExtension<AppTypography> {
         TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: inkColor),
       ),
       bodyLarge: applySerifDisplay(
-        TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: inkColor, height: 1.6),
+        TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: inkColor,
+          height: 1.6,
+        ),
       ),
       body: applySerifDisplay(
-        TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: inkColor, height: 1.6),
+        TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: inkColor,
+          height: 1.6,
+        ),
       ),
       caption: uiBase.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
       overline: uiBase.copyWith(

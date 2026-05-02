@@ -1,0 +1,614 @@
+[
+  {
+    "theme": "general",
+    "actions": [
+      {
+        "id": "general_intention_001",
+        "textFr": "Commence une action simple avec une intention claire.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["intention"],
+        "nameNumbers": []
+      },
+      {
+        "id": "general_speech_001",
+        "textFr": "Adresse une parole utile et douce à quelqu'un.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["speech"],
+        "nameNumbers": []
+      },
+      {
+        "id": "general_gratitude_001",
+        "textFr": "Prends un moment court pour remercier Allah avec présence.",
+        "editorialStatus": "needs_review",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["gratitude"],
+        "nameNumbers": []
+      }
+    ]
+  },
+  {
+    "theme": "praise",
+    "actions": [
+      {
+        "id": "praise_gratitude_001",
+        "textFr": "Remercie explicitement quelqu'un pour un bien reçu.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["gratitude", "relationship"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la louange.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : praise."
+      },
+      {
+        "id": "praise_gratitude_002",
+        "textFr": "Transforme une plainte en une parole de gratitude.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "gratitude"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la louange.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : praise."
+      },
+      {
+        "id": "praise_gratitude_003",
+        "textFr": "Mentionne une bénédiction précise dans ta journée.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["gratitude"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la louange.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : praise."
+      },
+      {
+        "id": "praise_name_001",
+        "textFr": "Associe le nom étudié à une parole de reconnaissance sincère.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["gratitude", "speech"],
+        "nameNumbers": [1],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au nom 1 et à la louange.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : praise, action liée au nom 1."
+      }
+    ]
+  },
+  {
+    "theme": "mission",
+    "actions": [
+      {
+        "id": "mission_teaching_001",
+        "textFr": "Applique aujourd'hui un enseignement prophétique concret.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["practice"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la mission prophétique.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : mission."
+      },
+      {
+        "id": "mission_speech_001",
+        "textFr": "Partage une parole bénéfique sans débat ni dureté.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "relationship"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la mission prophétique.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : mission."
+      },
+      {
+        "id": "mission_intention_001",
+        "textFr": "Choisis une action qui clarifie ton intention.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["intention"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la mission prophétique.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : mission."
+      },
+      {
+        "id": "mission_name_005",
+        "textFr": "Relie une décision du jour à l'idée de transmission responsable.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["practice", "responsibility"],
+        "nameNumbers": [5],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au nom 5 et à la mission prophétique.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : mission, action liée au nom 5."
+      }
+    ]
+  },
+  {
+    "theme": "trust",
+    "actions": [
+      {
+        "id": "trust_promise_001",
+        "textFr": "Tiens une promesse, même petite.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["relationship", "commitment"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la confiance et à la véracité.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : trust."
+      },
+      {
+        "id": "trust_speech_001",
+        "textFr": "Évite une exagération dans ta parole aujourd'hui.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la confiance et à la véracité.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : trust."
+      },
+      {
+        "id": "trust_deposit_001",
+        "textFr": "Rends quelque chose confié avec soin.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["trust", "relationship"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la confiance et à la véracité.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : trust."
+      },
+      {
+        "id": "trust_name_021",
+        "textFr": "Choisis une parole parfaitement vraie, dite avec douceur.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "truthfulness"],
+        "nameNumbers": [21],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au nom 21 et à la véracité.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : trust, action liée au nom 21."
+      }
+    ]
+  },
+  {
+    "theme": "nobility",
+    "actions": [
+      {
+        "id": "nobility_family_001",
+        "textFr": "Honore un lien familial par un message simple.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["family", "relationship"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à l'origine noble et à la dignité relationnelle.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : nobility."
+      },
+      {
+        "id": "nobility_response_001",
+        "textFr": "Réponds avec dignité là où tu pourrais réagir trop vite.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "character"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à l'origine noble et à la dignité relationnelle.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : nobility."
+      },
+      {
+        "id": "nobility_discretion_001",
+        "textFr": "Fais une petite action discrète pour préserver l'honneur de quelqu'un.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["relationship", "character"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à l'origine noble et à la dignité relationnelle.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : nobility."
+      },
+      {
+        "id": "nobility_name_078",
+        "textFr": "Pose un geste de respect envers un lien de famille ou de proximité.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["family", "relationship"],
+        "nameNumbers": [78],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au nom 78 et à la noblesse relationnelle.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : nobility, action liée au nom 78."
+      }
+    ]
+  },
+  {
+    "theme": "intercession",
+    "actions": [
+      {
+        "id": "intercession_dua_001",
+        "textFr": "Fais une invocation discrète pour quelqu'un qui traverse une difficulté.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["dua", "relationship"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à l'intercession et à la miséricorde.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : intercession."
+      },
+      {
+        "id": "intercession_mercy_001",
+        "textFr": "Cherche une manière de faciliter la charge d'une personne aujourd'hui.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["mercy", "service"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à l'intercession et à la miséricorde.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : intercession."
+      },
+      {
+        "id": "intercession_reconciliation_001",
+        "textFr": "Si cela est juste et possible, fais un pas discret vers l'apaisement d'une relation abîmée.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["mercy", "relationship", "reconciliation"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à l'intercession et à la miséricorde.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : intercession. Formulation adoucie pour éviter l'injonction."
+      }
+    ]
+  },
+  {
+    "theme": "eschatology",
+    "actions": [
+      {
+        "id": "eschatology_accounting_001",
+        "textFr": "Prends deux minutes pour revoir une action du jour avec sincérité.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["reflection", "accounting"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au rappel de l'au-delà et à la responsabilité.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : eschatology."
+      },
+      {
+        "id": "eschatology_priority_001",
+        "textFr": "Renonce à une distraction pour protéger un bien plus important.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["priority", "discipline"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au rappel de l'au-delà et à la responsabilité.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : eschatology."
+      },
+      {
+        "id": "eschatology_repair_001",
+        "textFr": "Répare aujourd'hui une petite négligence avant qu'elle ne s'installe.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["accounting", "repair"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au rappel de l'au-delà et à la responsabilité.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : eschatology. Ton gardé volontairement concret."
+      }
+    ]
+  },
+  {
+    "theme": "purity",
+    "actions": [
+      {
+        "id": "purity_cleanliness_001",
+        "textFr": "Soigne un espace que tu utilises souvent, même modestement.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["cleanliness", "care"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la pureté et à la tazkiya.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : purity."
+      },
+      {
+        "id": "purity_intention_001",
+        "textFr": "Avant une action habituelle, rectifie ton intention en silence.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["intention", "reflection"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la pureté et à la tazkiya.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : purity."
+      },
+      {
+        "id": "purity_speech_001",
+        "textFr": "Retire de ta parole une moquerie, une plainte ou une dureté inutile.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "character"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la pureté et à la tazkiya.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : purity. Formulation gardée douce."
+      }
+    ]
+  },
+  {
+    "theme": "virtues",
+    "actions": [
+      {
+        "id": "virtues_truth_001",
+        "textFr": "Dis une vérité utile sans dureté ni mise en scène.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "truthfulness"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée aux qualités morales.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : virtues."
+      },
+      {
+        "id": "virtues_patience_001",
+        "textFr": "Accueille un contretemps sans réponse brusque.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["patience", "character"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée aux qualités morales.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : virtues."
+      },
+      {
+        "id": "virtues_mercy_001",
+        "textFr": "Choisis une réponse qui préserve la personne autant que la vérité.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["mercy", "speech"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée aux qualités morales.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Deuxième vague Action Review V2 : virtues."
+      }
+    ]
+  },
+  {
+    "theme": "miraj",
+    "actions": [
+      {
+        "id": "miraj_prayer_001",
+        "textFr": "Accorde plus de calme et de présence à une prière obligatoire.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["prayer", "presence"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au Mi'raj et à la présence dans la prière.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : miraj."
+      },
+      {
+        "id": "miraj_presence_001",
+        "textFr": "Avant de commencer une prière, marque une pause consciente.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["prayer", "reflection"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au Mi'raj et à la présence dans la prière.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : miraj."
+      },
+      {
+        "id": "miraj_return_001",
+        "textFr": "Après une prière, choisis une action concrète qui en prolonge la présence.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "engaged",
+        "contexts": ["prayer", "practice"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée au Mi'raj et à la présence dans la prière.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : miraj."
+      }
+    ]
+  },
+  {
+    "theme": "guidance",
+    "actions": [
+      {
+        "id": "guidance_learning_001",
+        "textFr": "Apprends un détail fiable sur le nom exploré aujourd'hui.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "simple",
+        "contexts": ["learning", "reflection"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la guidance et à l'apprentissage fiable.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : guidance."
+      },
+      {
+        "id": "guidance_help_001",
+        "textFr": "Aide quelqu'un à clarifier une bonne action possible.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["guidance", "service"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la guidance et à l'apprentissage fiable.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : guidance."
+      },
+      {
+        "id": "guidance_question_001",
+        "textFr": "Pose une question sincère à une personne de confiance pour mieux agir.",
+        "editorialStatus": "validated",
+        "duration": "medium",
+        "difficulty": "simple",
+        "contexts": ["learning", "humility"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la guidance et à l'apprentissage fiable.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : guidance."
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "actions": [
+      {
+        "id": "light_smile_001",
+        "textFr": "Apporte de la douceur visible dans une rencontre ordinaire.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["relationship", "mercy"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la beauté et à la lumière.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : light."
+      },
+      {
+        "id": "light_clarity_001",
+        "textFr": "Clarifie une parole confuse avant qu'elle ne blesse ou n'éloigne.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["speech", "clarity"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la beauté et à la lumière.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : light."
+      },
+      {
+        "id": "light_presence_001",
+        "textFr": "Rends une présence plus lumineuse par une attention réelle à l'autre.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["relationship", "presence"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la beauté et à la lumière.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Lot pilote Action Review V2 : light. Ton sobre validé."
+      }
+    ]
+  },
+  {
+    "theme": "devotion",
+    "actions": [
+      {
+        "id": "devotion_worship_001",
+        "textFr": "Choisis une adoration courte et accomplis-la sans précipitation.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["worship", "presence"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la dévotion et à l'adoration.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : devotion."
+      },
+      {
+        "id": "devotion_consistency_001",
+        "textFr": "Répète une petite bonne action avec constance aujourd'hui.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "simple",
+        "contexts": ["worship", "consistency"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la dévotion et à l'adoration.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : devotion."
+      },
+      {
+        "id": "devotion_hidden_001",
+        "textFr": "Garde une bonne action entre Allah et toi, sans l'exposer.",
+        "editorialStatus": "validated",
+        "duration": "short",
+        "difficulty": "engaged",
+        "contexts": ["worship", "discretion"],
+        "nameNumbers": [],
+        "sourceNote": "Revue humaine utilisateur du 2026-04-30 : action validée comme invitation pratique sobre liée à la dévotion et à l'adoration.",
+        "reviewedBy": "project_owner",
+        "validatedAt": "2026-04-30",
+        "reviewNotes": "Troisième vague Action Review V2 : devotion. Formulation gardée intime et non performative."
+      }
+    ]
+  }
+]

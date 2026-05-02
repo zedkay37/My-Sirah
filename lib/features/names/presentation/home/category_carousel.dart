@@ -10,11 +10,11 @@ class CategoryCarousel extends ConsumerWidget {
   const CategoryCarousel({
     super.key,
     required this.categories,
-    required this.learnedCounts,
+    required this.viewedCounts,
   });
 
   final List<NameCategory> categories;
-  final Map<String, int> learnedCounts;
+  final Map<String, int> viewedCounts;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,10 +31,10 @@ class CategoryCarousel extends ConsumerWidget {
           final cat = categories[i];
           return _CategoryCard(
             category: cat,
-            learnedCount: learnedCounts[cat.slug] ?? 0,
+            viewedCount: viewedCounts[cat.slug] ?? 0,
             onTap: () {
               ref.read(categoryFilterProvider.notifier).state = cat.slug;
-              context.go('/discover');
+              context.go('/library/deck/prophet_names');
             },
           );
         },
@@ -46,12 +46,12 @@ class CategoryCarousel extends ConsumerWidget {
 class _CategoryCard extends StatelessWidget {
   const _CategoryCard({
     required this.category,
-    required this.learnedCount,
+    required this.viewedCount,
     required this.onTap,
   });
 
   final NameCategory category;
-  final int learnedCount;
+  final int viewedCount;
   final VoidCallback onTap;
 
   @override
@@ -64,11 +64,11 @@ class _CategoryCard extends StatelessWidget {
 
     final catColor = colors.categoryColor(category.slug);
     final catBg = colors.categoryBg(category.slug);
-    final progress =
-        category.count > 0 ? learnedCount / category.count : 0.0;
+    final progress = category.count > 0 ? viewedCount / category.count : 0.0;
 
     return Semantics(
-      label: '${category.labelFr}, $learnedCount sur ${category.count} appris',
+      label:
+          '${category.labelFr}, $viewedCount sur ${category.count} découverts',
       button: true,
       child: GestureDetector(
         onTap: onTap,
@@ -105,7 +105,7 @@ class _CategoryCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                l10n.homeCategoryLearned(learnedCount, category.count),
+                l10n.homeCategoryViewed(viewedCount, category.count),
                 style: typo.caption.copyWith(color: colors.muted),
               ),
             ],

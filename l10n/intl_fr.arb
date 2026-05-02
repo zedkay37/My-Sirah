@@ -4,34 +4,89 @@
   "appTitle": "Sirah Hub",
 
   "navHome": "Accueil",
-  "navDiscover": "Découvrir",
+  "navJourney": "Voyage",
+  "navLibrary": "Biblio",
   "navProfile": "Profil",
   "navTree": "Arbre",
   "errorPageNotFound": "Page introuvable",
   "errorBackHome": "Retour à l'accueil",
 
-  "onboardingWelcomeTitle": "Les 201 noms du Prophète ﷺ",
-  "onboardingWelcomeSubtitle": "Apprenez, méditez, connectez-vous.",
+  "onboardingSealPhrase": "مُحَمَّدٌ رَسُولُ اللهِ ﷺ",
+  "onboardingWelcomeTitle": "Explore les 201 noms du Prophète ﷺ",
+  "onboardingWelcomeSubtitle": "Un voyage calme pour découvrir, contempler puis vivre un nom chaque jour.",
   "onboardingWelcomeCta": "Commencer",
-  "onboardingThemeTitle": "Choisissez votre ambiance",
+  "onboardingJourneyTitle": "Voyage",
+  "onboardingJourneySubtitle": "Avance dans un ciel de constellations.",
+  "onboardingTafakkurTitle": "Tafakkur",
+  "onboardingTafakkurSubtitle": "Prends un moment de présence autour du nom.",
+  "onboardingActionTitle": "Action",
+  "onboardingActionSubtitle": "Reçois un geste simple à vivre aujourd’hui.",
+  "onboardingThemeTitle": "Choisis ton atmosphère",
+  "onboardingThemeSubtitle": "Tu pourras la changer plus tard dans les paramètres.",
   "onboardingThemeCta": "Continuer",
   "onboardingNotifTitle": "Un nom chaque jour",
-  "onboardingNotifSubtitle": "Recevez le nom du jour à l'heure qui vous convient",
+  "onboardingNotifSubtitle": "Un rappel discret peut t’aider à garder le lien sans pression.",
+  "onboardingNotifTimeLabel": "Heure proposée",
+  "onboardingNotifChooseTime": "Changer l’heure",
   "onboardingNotifActivate": "Activer les notifications",
   "onboardingNotifLater": "Plus tard",
 
   "homeGreeting": "As-salāmu ʿalaykum",
   "homeTagline": "Connaître, aimer et suivre le Prophète ﷺ",
   "homeCategorySection": "Explorer par catégorie",
-  "homeDiscoverName": "Découvrir ce nom",
-  "homeCategoryLearned": "{learned}/{total} appris",
-  "@homeCategoryLearned": {
+  "homeDailyActionTitle": "Action du jour",
+  "homeExploreTodayName": "Découvrir ce nom",
+  "homeClassicNameTooltip": "Fiche classique",
+  "homeResumeTitle": "Reprendre mon chemin",
+  "homeResumeSubtitle": "Dernière étoile explorée : {name}",
+  "@homeResumeSubtitle": {
     "placeholders": {
-      "learned": { "type": "int" },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeResumeProgressSubtitle": "{name} · {viewed} découverts · {meditated} contemplés · {recognized} reconnus",
+  "@homeResumeProgressSubtitle": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "viewed": { "type": "int" },
+      "meditated": { "type": "int" },
+      "recognized": { "type": "int" }
+    }
+  },
+  "homeJourneyTrace": "{viewed} découverts · {meditated} contemplés · {recognized} reconnus",
+  "@homeJourneyTrace": {
+    "placeholders": {
+      "viewed": {
+        "type": "int"
+      },
+      "meditated": {
+        "type": "int"
+      },
+      "recognized": {
+        "type": "int"
+      }
+    }
+  },
+  "homeContinueJourneyTitle": "Continuer mon voyage",
+  "homeContinueJourneyFallback": "Reprendre depuis le nom du jour",
+  "homeContinueJourneySubtitle": "Prochaine étoile dans {constellation}",
+  "@homeContinueJourneySubtitle": {
+    "placeholders": {
+      "constellation": { "type": "String" }
+    }
+  },
+  "homeJourneyShortcutSubtitle": "Entrer dans la carte stellaire",
+  "homeLibraryShortcutSubtitle": "Listes, fiches et révisions",
+  "homeCategoryViewed": "{viewed}/{total} découverts",
+  "@homeCategoryViewed": {
+    "placeholders": {
+      "viewed": { "type": "int" },
       "total": { "type": "int" }
     }
   },
-  "homeNameNumber": "#{number}",
+  "homeNameNumber": "N°{number}",
   "@homeNameNumber": {
     "placeholders": {
       "number": { "type": "String" }
@@ -94,16 +149,81 @@
       "total": { "type": "int" }
     }
   },
-  "quizReplayCta": "Rejouer",
+  "quizReplayCta": "Choisir un exercice",
   "quizExploreNamesCta": "Explorer les noms",
 
-  "profileLearnedSubtitle": "sur 201 noms du Prophète ﷺ",
+  "profileJourneySubtitle": "{viewed}/{total} étoiles découvertes",
+  "@profileJourneySubtitle": {
+    "placeholders": {
+      "viewed": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "profileJourneyViewed": "découvertes",
+  "profileJourneyMeditated": "contemplées",
+  "profileJourneyPracticed": "vécues",
+  "profileJourneyRecognized": "reconnues",
+  "profileSkyTitle": "Mon ciel",
+  "profileSkySubtitle": "Chaque étoile est un nom. Sa lumière grandit avec ton cheminement.",
+  "profileSkyLitCount": "{lit}/{total} étoiles allumées",
+  "@profileSkyLitCount": {
+    "placeholders": {
+      "lit": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "profileSkySelectedHint": "Ouvrir {name}",
+  "@profileSkySelectedHint": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "profileSkyLegendUnknown": "à rencontrer",
+  "profileSkyLegendViewed": "rencontré",
+  "profileSkyLegendMeditated": "contemplé",
+  "profileSkyLegendPracticed": "vécu",
+  "profileSkyLegendRecognized": "reconnu",
+  "profileLanternTitle": "Ma lanterne",
+  "profileLanternSubtitle": "Sa lumière grandit avec les noms que tu rencontres, contemples et vis.",
+  "profileLanternProgress": "{lit}/{total} noms approchés",
+  "@profileLanternProgress": {
+    "placeholders": {
+      "lit": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "profileLanternSemantics": "Lanterne de progression, {lit} noms approchés sur {total}",
+  "@profileLanternSemantics": {
+    "placeholders": {
+      "lit": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "profileJourneyMirrorTitle": "Voyage autour des noms du Prophète ﷺ",
+  "profileJourneyMirrorSubtitle": "Un miroir simple de ce que tu as rencontré, contemplé et vécu.",
+  "profileMomentStarTitle": "Prochaine étoile",
+  "profileMomentStarCta": "Entrer dans ce nom",
+  "profileConstellationsTitle": "Constellations",
+  "profileConstellationProgress": "{lit}/{total} rencontrés",
+  "@profileConstellationProgress": {
+    "placeholders": {
+      "lit": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "profileExploreFullSky": "Explorer le ciel complet",
+  "profileRitualStreak": "Rituel quotidien · {days} j",
+  "@profileRitualStreak": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
   "profileFavorites": "Mes favoris",
   "profileSettings": "Paramètres",
 
   "settingsTitle": "Paramètres",
   "settingsSectionTheme": "Thème",
-  "settingsThemeLight": "Clair",
+  "settingsThemeLight": "Clair noble",
   "settingsThemeDark": "Sombre",
   "settingsThemeFeminine": "Violet",
   "settingsSectionNotif": "Notification quotidienne",
@@ -127,8 +247,10 @@
   "settingsNotifDisable": "Désactiver",
 
   "profileConstellationTitle": "Constellation",
-  "profileLegendLearned": "appris",
   "profileLegendViewed": "vu",
+  "profileLegendMeditated": "contemplé",
+  "profileLegendPracticed": "vécu",
+  "profileLegendRecognized": "reconnu",
   "profileLegendUnknown": "non découvert",
 
   "detailLearningProgress": "Mémorisation en cours…",
@@ -138,12 +260,69 @@
 
   "discoverNoResults": "Aucun résultat",
   "husnaTitle": "Asmāʾ al-Ḥusnā",
+  "husnaAllNamesTab": "Tous les noms",
+  "husnaPracticeTitle": "S’entraîner avec les Noms d’Allah",
+  "husnaPracticeSubtitle": "QCM et flashcards pour mémoriser les sens.",
+  "husnaQuizTypeMCQDesc": "Retrouvez le Nom à partir de son sens",
+  "husnaQuizTypeFlashcardsDesc": "Retournez les cartes pour réviser les Noms",
   "husnaSearchHint": "Rechercher (arabe, translittération, sens…)",
   "husnaPrevious": "Précédent",
   "husnaNext": "Suivant",
   "husnaEtymology": "Étymologie",
   "husnaReference": "Référence",
   "discoverHubSubtitle": "Choisissez un domaine à explorer",
+  "libraryTitle": "Bibliothèque",
+  "librarySubtitle": "Retrouvez les corpus, listes et fiches.",
+  "libraryProphetNamesSubtitle": "Liste, fiches, tafakkur et entraînement.",
+  "libraryToolsTitle": "Outils d’apprentissage",
+  "libraryLearnTab": "Apprendre",
+  "libraryPracticeTab": "S’entraîner",
+  "libraryDeckProgress": "{current}/{total} reconnus",
+  "@libraryDeckProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "journeyTitle": "Voyage",
+  "journeyTitleAr": "رحلة الأسماء",
+  "journeySubtitle": "Avancez par constellations de noms, une étoile après l’autre.",
+  "journeyGalaxyHint": "Touchez la galaxie active pour entrer dans le voyage.",
+  "journeyDeckMapHint": "Touchez une constellation pour voir ses étoiles.",
+  "journeyConstellationPrompt": "Choisis une étoile de « {title} » pour ouvrir sa fiche.",
+  "@journeyConstellationPrompt": {
+    "placeholders": {
+      "title": { "type": "String" }
+    }
+  },
+  "journeyOpenNameCta": "Voir la fiche",
+  "journeyMapZoomInTooltip": "Zoomer",
+  "journeyMapZoomOutTooltip": "Dézoomer",
+  "journeyMapResetTooltip": "Recentrer la carte",
+  "journeyLoadError": "Impossible de charger le voyage",
+  "journeyNotFound": "Constellation introuvable",
+  "journeyProgress": "{viewed}/{total} étoiles vues",
+  "@journeyProgress": {
+    "placeholders": {
+      "viewed": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "journeyProgressDetailed": "{viewed} découvertes · {meditated} contemplées · {practiced} vécues · {recognized} reconnues / {total}",
+  "@journeyProgressDetailed": {
+    "placeholders": {
+      "viewed": { "type": "int" },
+      "meditated": { "type": "int" },
+      "practiced": { "type": "int" },
+      "recognized": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "journeyStarViewed": "Vue",
+  "journeyStarMeditated": "Méditée",
+  "journeyStarPracticed": "Vécue",
+  "journeyStarRecognized": "Reconnue",
+  "journeyStarUnknown": "À explorer",
 
   "treeTitle": "Lignée prophétique",
   "treeModeRadial": "Orbites",
@@ -202,7 +381,7 @@
   "tafakkurPause": "En pause",
   "tafakkurResume": "Reprendre",
   "tafakkurComplete": "Contemplation terminée",
-  "tafakkurReturn": "Retourner au nom",
+  "tafakkurReturn": "Retourner à la fiche",
   "tafakkurPaceLabel": "Rythme de lecture",
   "tafakkurPaceSlow": "Lent — 12 secondes",
   "tafakkurPaceNormal": "Normal — 9 secondes",
@@ -216,6 +395,26 @@
   "tafakkurExitConfirm": "Quitter la contemplation ?",
   "tafakkurExitConfirmYes": "Quitter",
   "tafakkurExitConfirmNo": "Continuer",
+  "tafakkurPrevious": "Page précédente",
+  "tafakkurNext": "Page suivante",
+  "tafakkurSettingsTooltip": "Régler le rythme",
+  "tafakkurEstimatedDuration": "~{minutes} min",
+  "@tafakkurEstimatedDuration": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "tafakkurPaceSummary": "{seconds} s par page",
+  "@tafakkurPaceSummary": {
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  },
+  "tafakkurPageName": "Le nom",
+  "tafakkurPageStory": "Le récit",
+  "tafakkurPageMeditation": "Méditer",
+  "tafakkurPageIntention": "Intention",
+  "tafakkurSwipeHint": "Glissez pour avancer ou revenir",
 
   "studyTitle": "Mode Étude",
   "studyParcoursTitle": "Parcours Thématiques",
@@ -242,5 +441,20 @@
   "treeFilterWivesAndChildren": "Épouses & enfants",
   "treeFilterAncestors": "Ascendants",
   "treeFilterUnclesAndAunts": "Oncles & tantes",
-  "treeFilterAhlAlBayt": "Ahl al-Bayt"
+  "treeFilterAhlAlBayt": "Ahl al-Bayt",
+
+  "nameExperienceTitle": "Fiche du nom",
+  "nameExperienceOpen": "Ouvrir la fiche",
+  "nameExperienceStory": "Récit",
+  "nameExperienceUnderstand": "Comprendre ce nom",
+  "nameExperienceTafakkur": "Tafakkur",
+  "nameExperienceActionOfDay": "Action du jour",
+  "nameExperienceMarkActionPracticed": "Je l’ai vécue",
+  "nameExperienceActionPracticed": "Action vécue",
+  "nameExperienceFallbackPrompt": "Que ce nom m’apprend-il aujourd’hui sur la connaissance, l’amour et l’imitation du Prophète ﷺ ?",
+  "nameExperienceFallbackAction": "Prends un moment court pour vivre ce nom avec sincérité.",
+  "nameExperienceEnterTafakkur": "Entrer en tafakkur",
+  "nameExperienceClassicTooltip": "Fiche classique",
+  "nameExperienceOpenClassic": "Ouvrir la fiche classique",
+  "nameExperienceNotFound": "Nom introuvable"
 }
